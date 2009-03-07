@@ -1,0 +1,23 @@
+<qpicross>
+    <title>Hey Dude!</title>
+    <height>3</height>
+    <width>3</width>
+    
+    <grid>
+        <line>
+            <cell>1</cell>
+            <cell>0</cell>
+            <cell>0</cell>
+        </line>
+        <line>
+            <cell>1</cell>
+            <cell>0</cell>
+            <cell>1</cell>
+        </line>
+        <line>
+            <cell>1</cell>
+            <cell>0</cell>
+            <cell>0</cell>
+        </line>
+    </grid>
+</qpicross>

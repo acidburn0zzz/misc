@@ -1,0 +1,16 @@
+TODO
+Option resoudre la grille dans Vue
+Sauvegarder / Charger les grilles
+Trouver un meilleur systeme pour les fichiers
+Terminer la génération de grilles
+Boucle des stylesheet plus rapide
+Changement de langue dynamique
+Utiliser les touches pour se deplacer dans la grille
+Ajuster la taille de la fenetre dans toggleDispos
+Afficher les boutons de tbDispos en forme de 3x3 (possible?)
+Classe OptionsVue
+    affDispos
+    affErr
+    affTemps
+    langue
+Terminer la resolution de la grille par essai/erreur

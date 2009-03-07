@@ -1,0 +1,400 @@
+#include <QMessageBox>
+
+
+
+
+
+#include <cstring>
+
+#include <QApplication>
+#include <QAction>
+#include <QComboBox>
+#include <QFileDialog>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QMenu>
+#include <QMenuBar>
+#include <QSpinBox>
+#include <QString>
+#include <QTabWidget>
+#include <QVBoxLayout>
+#include <QWidget>
+
+#include "state.h"
+#include "struct.h"
+#include "vue.h"
+
+Vue::Vue(QWidget *parent) : QMainWindow(parent) {
+    QString file = selectionFichier();
+    _state = new State(file.toStdString().c_str());
+    init();
+}
+
+Vue::Vue(const char *file, QWidget *parent) : QMainWindow(parent) {
+    _state = new State(file);
+    init();
+}
+
+Vue::~Vue() {
+    delete _state;
+}
+
+void Vue::init() {
+    centralWidget = new QWidget();
+    setCentralWidget(centralWidget);
+    setWindowTitle("Chrono Trigger SaveState Editor");
+    
+    centralLayout = new QVBoxLayout();
+    tabPersos = new QTabWidget(centralWidget);
+    
+    //Creation des menus
+    creerMenus();
+    
+    //Initialisation des tableaux d'objets pour les stats
+    wPersos = new QWidget[7];
+    
+    hlayPerso = new QHBoxLayout[7];
+    gridStatsBase = new QGridLayout[7];
+    gridStats = new QGridLayout[7];
+    gridItems = new QGridLayout[7];
+    
+    lblImage = new QLabel[7];
+    lblLevel = new QLabel[7];
+    lblExp = new QLabel[7];
+    lblCurrentHP = new QLabel[7];
+    lblMaxHP = new QLabel[7];
+    lblCurrentMP = new QLabel[7];
+    lblMaxMP = new QLabel[7];
+    lblPower = new QLabel[7];
+    lblStamina = new QLabel[7];
+    lblSpeed = new QLabel[7];
+    lblMagic = new QLabel[7];
+    lblHit = new QLabel[7];
+    lblEvade = new QLabel[7];
+    lblMagicDef = new QLabel[7];
+    lblHelmet = new QLabel[7];
+    lblArmor = new QLabel[7];
+    lblWeapon = new QLabel[7];
+    lblRelic = new QLabel[7];
+
+    sbLevel = new QSpinBox[7];
+    sbExp = new QSpinBox[7];
+    sbCurrentHP = new QSpinBox[7];
+    sbMaxHP = new QSpinBox[7];
+    sbCurrentMP = new QSpinBox[7];
+    sbMaxMP = new QSpinBox[7];
+    sbPower = new QSpinBox[7];
+    sbStamina = new QSpinBox[7];
+    sbSpeed = new QSpinBox[7];
+    sbMagic = new QSpinBox[7];
+    sbHit = new QSpinBox[7];
+    sbEvade = new QSpinBox[7];
+    sbMagicDef = new QSpinBox[7];
+    cmbHelmet = new QComboBox[7];
+    cmbArmor = new QComboBox[7];
+    cmbWeapon = new QComboBox[7];
+    cmbRelic = new QComboBox[7];
+    
+    //Initialisation des objets
+    for (int i=0; i<7; i++) {
+        //Options specifiques au perso
+        fillSpecificPerso(i);
+        
+        //Pourrait enlever ca pour utiliser chaque 1 fois
+        
+        QPixmap img(_imageFile);
+        img = img.scaled(QSize(100, 100), Qt::KeepAspectRatioByExpanding);
+        lblImage[i].setPixmap(img);
+        
+        lblLevel[i].setText("Level");
+        lblLevel[i].setParent(&wPersos[i]);
+        lblExp[i].setText("Experience");
+        lblExp[i].setParent(&wPersos[i]);
+        lblCurrentHP[i].setText("Current HP");
+        lblCurrentHP[i].setParent(&wPersos[i]);
+        lblMaxHP[i].setText("Max HP");
+        lblMaxHP[i].setParent(&wPersos[i]);
+        lblCurrentMP[i].setText("Current MP");
+        lblCurrentMP[i].setParent(&wPersos[i]);
+        lblMaxMP[i].setText("Max MP");
+        lblMaxMP[i].setParent(&wPersos[i]);
+        lblPower[i].setText("Power");
+        lblPower[i].setParent(&wPersos[i]);
+        lblStamina[i].setText("Stamina");
+        lblStamina[i].setParent(&wPersos[i]);
+        lblSpeed[i].setText("Speed");
+        lblSpeed[i].setParent(&wPersos[i]);
+        lblMagic[i].setText("Magic");
+        lblMagic[i].setParent(&wPersos[i]);
+        lblHit[i].setText("Hit");
+        lblHit[i].setParent(&wPersos[i]);
+        lblEvade[i].setText("Evade");
+        lblEvade[i].setParent(&wPersos[i]);
+        lblMagicDef[i].setText("Magic Def");
+        lblMagicDef[i].setParent(&wPersos[i]);
+        lblHelmet[i].setText("Helmet");
+        lblHelmet[i].setParent(&wPersos[i]);
+        lblArmor[i].setText("Armor");
+        lblArmor[i].setParent(&wPersos[i]);
+        lblWeapon[i].setText("Weapon");
+        lblWeapon[i].setParent(&wPersos[i]);
+        lblRelic[i].setText("Relic");
+        lblRelic[i].setParent(&wPersos[i]);
+        
+        sbLevel[i].setRange(0, 99);
+        sbExp[i].setRange(0, 9999999);
+        sbCurrentHP[i].setRange(0, 999);
+        sbMaxHP[i].setRange(0, 999);
+        sbCurrentMP[i].setRange(0, 99);
+        sbMaxMP[i].setRange(0, 99);
+        sbPower[i].setRange(0, 99);
+        sbStamina[i].setRange(0, 99);
+        sbSpeed[i].setRange(0, 16);
+        sbMagic[i].setRange(0, 99);
+        sbHit[i].setRange(0, 99);
+        sbEvade[i].setRange(0, 99);
+        sbMagicDef[i].setRange(0, 99);
+        
+        //Items communs a tous les persos
+        for (int j=0x7c; j<=0x93; j++)
+            cmbHelmet[i].addItem(itemList[j], j);
+        for (int j=0x5b; j<=0x7a; j++)
+            cmbArmor[i].addItem(itemList[j], j);
+        for (int j=0x95; j<=0xbb; j++)
+            cmbRelic[i].addItem(itemList[j], j);
+        
+        //Partie de gauche (Infos principales)
+        gridStatsBase[i].addWidget(&lblImage[i], 0, 0, 4, 1, Qt::AlignVCenter);
+        gridStatsBase[i].addWidget(&lblLevel[i], 0, 1, Qt::AlignBottom);
+        gridStatsBase[i].addWidget(&sbLevel[i], 1, 1, Qt::AlignTop);
+        gridStatsBase[i].addWidget(&lblExp[i], 2, 1, Qt::AlignBottom);
+        gridStatsBase[i].addWidget(&sbExp[i], 3, 1, Qt::AlignTop);
+        gridStatsBase[i].addWidget(&lblCurrentHP[i], 4, 0, Qt::AlignBottom);
+        gridStatsBase[i].addWidget(&sbCurrentHP[i], 5, 0, Qt::AlignTop);
+        gridStatsBase[i].addWidget(&lblMaxHP[i], 4, 1, Qt::AlignBottom);
+        gridStatsBase[i].addWidget(&sbMaxHP[i], 5, 1, Qt::AlignTop);
+        gridStatsBase[i].addWidget(&lblCurrentMP[i], 6, 0, Qt::AlignBottom);
+        gridStatsBase[i].addWidget(&sbCurrentMP[i], 7, 0, Qt::AlignTop);
+        gridStatsBase[i].addWidget(&lblMaxMP[i], 6, 1, Qt::AlignBottom);
+        gridStatsBase[i].addWidget(&sbMaxMP[i], 7, 1, Qt::AlignTop);
+        //gridStatsBase[i].addWidget();
+        
+        //Partie du milieu (Stats)
+        gridStats[i].addWidget(&lblPower[i], 0, 0, Qt::AlignBottom);
+        gridStats[i].addWidget(&sbPower[i], 1, 0, Qt::AlignTop);
+        gridStats[i].addWidget(&lblStamina[i], 2, 0, Qt::AlignBottom);
+        gridStats[i].addWidget(&sbStamina[i], 3, 0, Qt::AlignTop);
+        gridStats[i].addWidget(&lblSpeed[i], 4, 0, Qt::AlignBottom);
+        gridStats[i].addWidget(&sbSpeed[i], 5, 0, Qt::AlignTop);
+        gridStats[i].addWidget(&lblMagic[i], 0, 1, Qt::AlignBottom);
+        gridStats[i].addWidget(&sbMagic[i], 1, 1, Qt::AlignTop);
+        gridStats[i].addWidget(&lblHit[i], 2, 1, Qt::AlignBottom);
+        gridStats[i].addWidget(&sbHit[i], 3, 1, Qt::AlignTop);
+        gridStats[i].addWidget(&lblEvade[i], 4, 1, Qt::AlignBottom);
+        gridStats[i].addWidget(&sbEvade[i], 5, 1, Qt::AlignTop);
+        gridStats[i].addWidget(&lblMagicDef[i], 6, 0, Qt::AlignBottom);
+        gridStats[i].addWidget(&sbMagicDef[i], 7, 0, Qt::AlignTop);
+        
+        //Partie de gauche (Items)
+        gridItems[i].addWidget(&lblHelmet[i], 0, 0, Qt::AlignBottom);
+        gridItems[i].addWidget(&cmbHelmet[i], 1, 0, Qt::AlignTop);
+        gridItems[i].addWidget(&lblArmor[i], 2, 0, Qt::AlignBottom);
+        gridItems[i].addWidget(&cmbArmor[i], 3, 0, Qt::AlignTop);
+        gridItems[i].addWidget(&lblWeapon[i], 4, 0, Qt::AlignBottom);
+        gridItems[i].addWidget(&cmbWeapon[i], 5, 0, Qt::AlignTop);
+        gridItems[i].addWidget(&lblRelic[i], 6, 0, Qt::AlignBottom);
+        gridItems[i].addWidget(&cmbRelic[i], 7, 0, Qt::AlignTop);
+        
+        //Ajouter les 3 layouts au layout du widget du perso
+        hlayPerso[i].addLayout(&gridStatsBase[i]);
+        hlayPerso[i].addLayout(&gridStats[i]);
+        hlayPerso[i].addLayout(&gridItems[i]);
+        
+        //Ajouter le layout au widget du perso
+        wPersos[i].setLayout(&hlayPerso[i]);
+        
+        //Ajouter le widget du perso au Tab
+        tabPersos->addTab(&wPersos[i], _name);
+        
+        //Selectionner les bons items dans les listes
+        //selectItems(i);
+    }
+    
+    //Layout principal
+    centralLayout->addWidget(tabPersos, 1);
+    
+    centralWidget->setLayout(centralLayout);
+    this->setMinimumSize(400, 300);
+    
+    //Affichage des informations sur chaque persos
+    afficherInformations();
+    
+    this->show();
+}
+
+QString Vue::selectionFichier() {
+    return QFileDialog::getOpenFileName(0, tr("Ouvrir un fichier"), QString(), "Savestates (*.zs* *.00*)");
+}
+
+void Vue::creerMenus() {
+    actOuvrir = new QAction(tr("&Ouvrir"), this);
+    actOuvrir->setShortcut(tr("Ctrl+O"));
+    actOuvrir->setStatusTip(tr("Ouvrir une Save State"));
+    connect(actOuvrir, SIGNAL(triggered()), this, SLOT(ouvrirFichier()));
+    
+    actSauvegarder = new QAction(tr("&Enregistrer"), this);
+    actSauvegarder->setShortcut(tr("Ctrl+S"));
+    actSauvegarder->setStatusTip(tr("Enregistrer la Save State"));
+    connect(actSauvegarder, SIGNAL(triggered()), this, SLOT(enregistrerFichier()));
+    
+    actQuitter = new QAction(tr("&Quitter"), this);
+    actQuitter->setShortcut(tr("Ctrl+Q"));
+    actQuitter->setStatusTip(tr("Quitter"));
+    connect(actQuitter, SIGNAL(triggered()), qApp, SLOT(quit()));
+    
+    mnuFichier = new QMenu(tr("&Fichier"));
+    mnuFichier->addAction(actOuvrir);
+    mnuFichier->addAction(actSauvegarder);
+    mnuFichier->addAction(actQuitter);
+    menuBar()->addMenu(mnuFichier);
+    
+    actAbout = new QAction(tr("À &Propos de Chrono Editor"), this);
+    actAbout->setShortcut(tr("Ctrl+A"));
+    
+    actAboutQt = new QAction(tr("À Propos de &Qt"), this);
+    actAboutQt->setShortcut(tr("Ctrl+T"));
+    connect(actAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    
+    mnuAide = new QMenu(tr("&Aide"));
+    mnuAide->addAction(actAbout);
+    mnuAide->addAction(actAboutQt);
+    menuBar()->addMenu(mnuAide);
+}
+
+void Vue::fillSpecificPerso(char perso) {
+    switch (perso) {
+        case CRONO:
+            _name = "Crono";
+            _imageFile = "images/crono.png";
+            for (int i=0x01; i<=0x10; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            cmbWeapon[perso].addItem(itemList[0x4f], 0x4f);
+            for (int i=0x53; i<=0x55; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case MARLE:
+            _name = "Marle";
+            _imageFile = "images/marle.png";
+            for (int i=0x11; i<=0x1a; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case LUCCA:
+            _name = "Lucca";
+            _imageFile = "images/lucca.png";
+            for (int i=0x1f; i<=0x29; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case ROBO:
+            _name = "Robo";
+            _imageFile = "images/robo.png";
+            for (int i=0x2e; i<=0x39; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case FROG:
+            _name = "Frog";
+            _imageFile = "images/frog.png";
+            for (int i=0x3b; i<=0x43; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            for (int i=0x50; i<=0x52; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case AYLA:
+            _name = "Ayla";
+            _imageFile = "images/ayla.png";
+            for (int i=0x44; i<=0x48; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case MAGUS:
+            _name = "Magus";
+            _imageFile = "images/magus.png";
+            for (int i=0x4b; i<=0x4e; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+    }
+}
+
+void Vue::selectItems(char perso) {
+    //Helmet
+    for (int i=0; i<cmbHelmet[perso].count(); i++) {
+        if (cmbHelmet[perso].itemData(i) == _state->getChars()[perso].getHelmet()) {
+            cmbHelmet[perso].setCurrentIndex(i);
+        }
+    }
+    //Armor
+    for (int i=0; i<cmbArmor[perso].count(); i++) {
+        if (cmbArmor[perso].itemData(i) == _state->getChars()[perso].getArmor()) {
+            cmbArmor[perso].setCurrentIndex(i);
+        }
+    }
+    //Weapon
+    for (int i=0; i<cmbWeapon[perso].count(); i++) {
+        if (cmbWeapon[perso].itemData(i) == _state->getChars()[perso].getWeapon()) {
+            cmbWeapon[perso].setCurrentIndex(i);
+        }
+    }
+    //Relic
+    for (int i=0; i<cmbRelic[perso].count(); i++) {
+        if (cmbRelic[perso].itemData(i) == _state->getChars()[perso].getRelic()) {
+            cmbRelic[perso].setCurrentIndex(i);
+        }
+    }
+}
+
+void Vue::ouvrirFichier() {
+    QString file = selectionFichier();
+    delete _state;
+    _state = new State(file.toStdString().c_str());
+    
+    afficherInformations();
+}
+
+void Vue::enregistrerFichier() {
+    for (int i=0; i<7; i++) {
+        _state->getChars()[i].setLevel(sbLevel[i].value());
+        _state->getChars()[i].setExp(sbExp[i].value());
+        _state->getChars()[i].setCurrentHP(sbCurrentHP[i].value());
+        _state->getChars()[i].setMaxHP(sbMaxHP[i].value());
+        _state->getChars()[i].setCurrentMP(sbCurrentMP[i].value());
+        _state->getChars()[i].setMaxMP(sbMaxMP[i].value());
+        _state->getChars()[i].setPower(sbPower[i].value());
+        _state->getChars()[i].setStamina(sbStamina[i].value());
+        _state->getChars()[i].setSpeed(sbSpeed[i].value());
+        _state->getChars()[i].setMagic(sbMagic[i].value());
+        _state->getChars()[i].setHit(sbHit[i].value());
+        _state->getChars()[i].setEvade(sbEvade[i].value());
+        _state->getChars()[i].setMagicDef(sbMagicDef[i].value());
+    }
+    
+    _state->writeFile();
+}
+
+void Vue::afficherInformations() {
+    for (int i=0; i<7; i++) {
+        sbLevel[i].setValue(_state->getChars()[i].getLevel());
+        sbExp[i].setValue(_state->getChars()[i].getExp());
+        sbCurrentHP[i].setValue(_state->getChars()[i].getCurrentHP());
+        sbMaxHP[i].setValue(_state->getChars()[i].getMaxHP());
+        sbCurrentMP[i].setValue(_state->getChars()[i].getCurrentMP());
+        sbMaxMP[i].setValue(_state->getChars()[i].getMaxMP());
+        sbPower[i].setValue(_state->getChars()[i].getPower());
+        sbStamina[i].setValue(_state->getChars()[i].getStamina());
+        sbSpeed[i].setValue(_state->getChars()[i].getSpeed());
+        sbMagic[i].setValue(_state->getChars()[i].getMagic());
+        sbHit[i].setValue(_state->getChars()[i].getHit());
+        sbEvade[i].setValue(_state->getChars()[i].getEvade());
+        sbMagicDef[i].setValue(_state->getChars()[i].getMagicDef());
+    
+        selectItems(i);
+    }
+}
