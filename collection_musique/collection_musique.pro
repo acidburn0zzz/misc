@@ -9,12 +9,13 @@ INCLUDEPATH += .
 
 CONFIG += qt debug
 QT += sql
+DEFINES += DEBUG
 
 DESTDIR = ./bin
 MOC_DIR = ./moc
 OBJECTS_DIR = ./obj
 
 # Input
-HEADERS += customsqlmodel.h vue.h
-SOURCES += customsqlmodel.cpp main.cpp vue.cpp
+HEADERS += connexion.h customsqlmodel.h csvparser.h sqlparser.h vue.h
+SOURCES += customsqlmodel.cpp csvparser.cpp main.cpp sqlparser.cpp vue.cpp
 TRANSLATIONS += collection_musique_en.ts

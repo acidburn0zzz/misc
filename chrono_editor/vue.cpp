@@ -1,11 +1,3 @@
-#include <QMessageBox>
-
-
-
-
-
-#include <cstring>
-
 #include <QApplication>
 #include <QAction>
 #include <QComboBox>
@@ -15,11 +7,14 @@
 #include <QLabel>
 #include <QMenu>
 #include <QMenuBar>
+//~ #include <QMessageBox>
 #include <QSpinBox>
 #include <QString>
 #include <QTabWidget>
 #include <QVBoxLayout>
 #include <QWidget>
+
+#include <cstring>
 
 #include "state.h"
 #include "struct.h"
@@ -259,10 +254,10 @@ void Vue::creerMenus() {
     mnuFichier->addAction(actQuitter);
     menuBar()->addMenu(mnuFichier);
     
-    actAbout = new QAction(tr("À &Propos de Chrono Editor"), this);
+    actAbout = new QAction(tr("Ã€ &Propos de Chrono Editor"), this);
     actAbout->setShortcut(tr("Ctrl+A"));
     
-    actAboutQt = new QAction(tr("À Propos de &Qt"), this);
+    actAboutQt = new QAction(tr("Ã€ Propos de &Qt"), this);
     actAboutQt->setShortcut(tr("Ctrl+T"));
     connect(actAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     

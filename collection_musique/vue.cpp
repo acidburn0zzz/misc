@@ -3,6 +3,8 @@
 
 #include "customsqlmodel.h"
 #include "connexion.h"
+#include "csvparser.h"
+#include "sqlparser.h"
 #include "vue.h"
 
 Vue::Vue(Controleur *cont, QWidget *parent) : QMainWindow(parent) {
@@ -27,18 +29,39 @@ void Vue::init() {
     
     _centralLayout = new QVBoxLayout();
     
+    //Creation des menus
+    _mnuFile = new QMenu(tr("&File"), this);
+    _mnuImport = new QMenu(tr("&import"), this);
+    
+    _actImportCSV = new QAction(tr("CSV File"), this);
+    _actImportSQL = new QAction(tr("SQL File"), this);
+    _actQuit = new QAction(tr("&Quit"), this);
+    
+    connect(_actImportCSV, SIGNAL(triggered()), this, SLOT(importCSV()));
+    connect(_actImportSQL, SIGNAL(triggered()), this, SLOT(importSQL()));
+    connect(_actQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+    
+    menuBar()->addMenu(_mnuFile);
+    _mnuFile->addMenu(_mnuImport);
+    _mnuFile->addAction(_actQuit);
+    _mnuImport->addAction(_actImportCSV);
+    _mnuImport->addAction(_actImportSQL);
+    
     //Ajout des boutons
     _btnList = new QPushButton(tr("Liste"));
     _btnNbAlbums = new QPushButton(tr("Nb. Albums"));
     _btnInfos = new QPushButton(tr("Infos"));
+    _btnDelete = new QPushButton(tr("Delete"));
     connect(_btnList, SIGNAL(clicked()), this, SLOT(showList()));
     connect(_btnNbAlbums, SIGNAL(clicked()), this, SLOT(showNbAlbums()));
     connect(_btnInfos, SIGNAL(clicked()), this, SLOT(showInfos()));
+    connect(_btnDelete, SIGNAL(clicked()), this, SLOT(emptyTable()));
     
     _layBoutons = new QHBoxLayout();
     _layBoutons->addWidget(_btnList);
     _layBoutons->addWidget(_btnNbAlbums);
     _layBoutons->addWidget(_btnInfos);
+    _layBoutons->addWidget(_btnDelete);
     
     _centralLayout->addLayout(_layBoutons);
     
@@ -95,3 +118,20 @@ void Vue::showInfos() {
     _model->setHeaderData(5, Qt::Horizontal, tr("Moy long chanson"));
 }
 
+void Vue::emptyTable() {
+    QSqlQuery q;
+    q.exec("DELETE FROM collection");
+    showList();
+}
+
+void Vue::importCSV() {
+    CsvParser csv(this);
+    csv.import();
+    showList();
+}
+
+void Vue::importSQL() {
+    SqlParser sql(this);
+    sql.import();
+    showList();
+}
