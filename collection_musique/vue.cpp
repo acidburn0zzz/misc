@@ -3,6 +3,7 @@
 
 #include "customsqlmodel.h"
 #include "connexion.h"
+#include "login.h"
 #include "csvparser.h"
 #include "sqlparser.h"
 #include "vue.h"
@@ -23,6 +24,13 @@ Vue::~Vue() {
 }
 
 void Vue::init() {
+    //Connexion a la base
+    openSqlConnection();
+    
+    Login l(this);
+    if (l.exec() == 0)
+        exit(-1);
+    
     _centralWidget = new QWidget();
     this->setCentralWidget(_centralWidget);
     this->setWindowTitle(tr("Collection de musique"));
@@ -64,9 +72,6 @@ void Vue::init() {
     _layBoutons->addWidget(_btnDelete);
     
     _centralLayout->addLayout(_layBoutons);
-    
-    //Connexion a la base
-    openSqlConnection();
     
     //Modèle initial
     _model = new CustomSqlModel();

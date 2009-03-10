@@ -46,7 +46,7 @@ class Vue : public QMainWindow {
         QPushButton *_btnInfos;
         QPushButton *_btnDelete;
         
-        private slots:
+    private slots:
         void showList();
         void showNbAlbums();
         void showInfos();

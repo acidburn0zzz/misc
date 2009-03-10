@@ -16,6 +16,20 @@ MOC_DIR = ./moc
 OBJECTS_DIR = ./obj
 
 # Input
-HEADERS += connexion.h customsqlmodel.h csvparser.h sqlparser.h vue.h
-SOURCES += customsqlmodel.cpp csvparser.cpp main.cpp sqlparser.cpp vue.cpp
+HEADERS += brg_endian.h \
+           brg_types.h \
+           connexion.h \
+           csvparser.h \
+           customsqlmodel.h \
+           login.h \
+           sha2.h \
+           sqlparser.h \
+           vue.h
+SOURCES += csvparser.cpp \
+           customsqlmodel.cpp \
+           login.cpp \
+           main.cpp \
+           sha2.c \
+           sqlparser.cpp \
+           vue.cpp
 TRANSLATIONS += collection_musique_en.ts
