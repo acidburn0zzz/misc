@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
     
-    _ptr = malloc(PTR_SIZE);
+    _ptr = calloc(1, PTR_SIZE);
     _buf = malloc(fsize(file));
     
     ptr = _ptr;
