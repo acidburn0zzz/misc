@@ -1,10 +1,11 @@
 #include <QtGui>
 #include <QtSql>
 
-#include "customsqlmodel.h"
+#include "albummodel.h"
 #include "connexion.h"
-#include "login.h"
 #include "csvparser.h"
+#include "defaulttableview.h"
+#include "login.h"
 #include "sqlparser.h"
 #include "vue.h"
 
@@ -27,9 +28,11 @@ void Vue::init() {
     //Connexion a la base
     openSqlConnection();
     
+    #ifndef DEBUG
     Login l(this);
     if (l.exec() == 0)
         exit(-1);
+    #endif
     
     _centralWidget = new QWidget();
     this->setCentralWidget(_centralWidget);
@@ -74,13 +77,14 @@ void Vue::init() {
     _centralLayout->addLayout(_layBoutons);
     
     //Modèle initial
-    _model = new CustomSqlModel();
-    showList();
+    _model = new AlbumModel();
+    //~ showList();
     
     //Setup de la table (fixe)
-    _tabView = new QTableView();
+    _tabView = new DefaultTableView();
     _tabView->setModel(_model);
     _tabView->resizeColumnsToContents();
+    _tabView->sortByColumn(1, Qt::AscendingOrder);
     _centralLayout->addWidget(_tabView);
     
     _centralWidget->setLayout(_centralLayout);

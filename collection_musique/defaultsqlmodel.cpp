@@ -1,13 +1,13 @@
 #include <QtGui>
 
-#include "customsqlmodel.h"
+#include "defaultsqlmodel.h"
 
-CustomSqlModel::CustomSqlModel(QObject *parent)
-    : QSqlQueryModel(parent) {
+DefaultSqlModel::DefaultSqlModel(QObject *parent)
+        : QSqlQueryModel(parent) {
 }
 
-QVariant CustomSqlModel::data(const QModelIndex &index, int role) const {
-    QVariant value = QSqlQueryModel::data(index, role);
+QVariant DefaultSqlModel::data(const QModelIndex &index, int role) const {
+    //~ QVariant value = QSqlQueryModel::data(index, role);
     /*if (value.isValid() && role == Qt::DisplayRole) {
         if (index.column() == 0)
             return value.toString().prepend("#");
@@ -19,9 +19,11 @@ QVariant CustomSqlModel::data(const QModelIndex &index, int role) const {
         return qVariantFromValue(QBrush(QColor(224, 224, 224)));
     if (role == Qt::ForegroundRole)
         return qVariantFromValue(QBrush(QColor(Qt::black)));
-    /*if (role == Qt::FontRole) {
-        QFont f;
+    if (role == Qt::FontRole) {
+        QFont f = QSqlQueryModel::data(index, role).value<QFont>();
+        f.setPointSize(10);
+        //~ qDebug() << f.pointSize() << f.family();
         return qVariantFromValue(f);
-    }*/
-    return value;
+    }
+    return QSqlQueryModel::data(index, role);
 }

@@ -16,17 +16,21 @@ MOC_DIR = ./moc
 OBJECTS_DIR = ./obj
 
 # Input
-HEADERS += brg_endian.h \
+HEADERS += albummodel.h \
+           brg_endian.h \
            brg_types.h \
            connexion.h \
            csvparser.h \
-           customsqlmodel.h \
+           defaultsqlmodel.h \
+           defaulttableview.h \
            login.h \
            sha2.h \
            sqlparser.h \
            vue.h
-SOURCES += csvparser.cpp \
-           customsqlmodel.cpp \
+SOURCES += albummodel.cpp \
+           csvparser.cpp \
+           defaultsqlmodel.cpp \
+           defaulttableview.cpp \
            login.cpp \
            main.cpp \
            sha2.c \

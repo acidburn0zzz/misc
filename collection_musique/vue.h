@@ -8,13 +8,12 @@ class QHBoxLayout;
 class QLabel;
 class QMenu;
 class QPushButton;
-class QSqlQueryModel;
-class QTableView;
 class QVBoxLayout;
 class QWidget;
 
+class AlbumModel;
 class Controleur;
-class CustomSqlModel;
+class DefaultTableView;
 
 class Vue : public QMainWindow {
     Q_OBJECT;
@@ -38,8 +37,8 @@ class Vue : public QMainWindow {
         QWidget *_centralWidget;
         
         QString _query;
-        CustomSqlModel *_model;
-        QTableView *_tabView;
+        AlbumModel *_model;
+        DefaultTableView *_tabView;
         
         QPushButton *_btnList;
         QPushButton *_btnNbAlbums;
