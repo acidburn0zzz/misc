@@ -40,7 +40,14 @@ bool CsvParser::import() {
             q.addBindValue(QVariant(sl.at(2).toInt()));
             q.addBindValue(QVariant(sl.at(3)));
             q.addBindValue(QVariant(sl.at(4).toInt()));
-            q.addBindValue(QVariant(sl.at(5).toInt()));
+			
+			QStringList len = sl.at(5).split(":");
+			if (len.size() != 3) {
+				continue;
+			}
+			int length = len.at(0).toInt() * 3600 + len.at(1).toInt() * 60 + len.at(2).toInt();
+			q.addBindValue(length);
+			
             if (q.exec()) {
                 count++;
             }
