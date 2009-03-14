@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -O2 -pedantic -ansi
+CFLAGS = -Wall -O2 -pedantic -ansi -g
 CXXFLAGS = $(CFLAGS)
 
 PROGRAM = bfint
@@ -22,4 +22,4 @@ install:
 	$(INSTALL) -D $(PROGRAM) $(PREFIX)/bin/$(PROGRAM)
 
 clean:
-	$(RM) -f $(OBJS) $(PROGRAM) *~ *core
+	$(RM) -f $(OBJS) *~ *core

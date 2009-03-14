@@ -26,6 +26,8 @@ HEADERS += albummodel.h \
            login.h \
            sha2.h \
            sqlparser.h \
+           usersmodel.h \
+           usersview.h \
            vue.h
 SOURCES += albummodel.cpp \
            csvparser.cpp \
@@ -35,5 +37,7 @@ SOURCES += albummodel.cpp \
            main.cpp \
            sha2.c \
            sqlparser.cpp \
+           usersmodel.cpp \
+           usersview.cpp \
            vue.cpp
 TRANSLATIONS += collection_musique_en.ts

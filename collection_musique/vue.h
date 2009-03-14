@@ -43,12 +43,14 @@ class Vue : public QMainWindow {
         QPushButton *_btnList;
         QPushButton *_btnNbAlbums;
         QPushButton *_btnInfos;
+        QPushButton *_btnUsers;
         QPushButton *_btnDelete;
         
     private slots:
         void showList();
         void showNbAlbums();
         void showInfos();
+        void showUsers();
         void emptyTable();
         void importCSV();
         void importSQL();

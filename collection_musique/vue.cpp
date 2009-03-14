@@ -7,6 +7,7 @@
 #include "defaulttableview.h"
 #include "login.h"
 #include "sqlparser.h"
+#include "usersview.h"
 #include "vue.h"
 
 Vue::Vue(Controleur *cont, QWidget *parent) : QMainWindow(parent) {
@@ -17,6 +18,8 @@ Vue::~Vue() {
     delete _btnList;
     delete _btnNbAlbums;
     delete _btnInfos;
+    delete _btnUsers;
+    delete _btnDelete;
     delete _layBoutons;
     delete _tabView;
     delete _model;
@@ -62,16 +65,19 @@ void Vue::init() {
     _btnList = new QPushButton(tr("Liste"));
     _btnNbAlbums = new QPushButton(tr("Nb. Albums"));
     _btnInfos = new QPushButton(tr("Infos"));
+    _btnUsers = new QPushButton(tr("Users"));
     _btnDelete = new QPushButton(tr("Delete"));
     connect(_btnList, SIGNAL(clicked()), this, SLOT(showList()));
     connect(_btnNbAlbums, SIGNAL(clicked()), this, SLOT(showNbAlbums()));
     connect(_btnInfos, SIGNAL(clicked()), this, SLOT(showInfos()));
+    connect(_btnUsers, SIGNAL(clicked()), this, SLOT(showUsers()));
     connect(_btnDelete, SIGNAL(clicked()), this, SLOT(emptyTable()));
     
     _layBoutons = new QHBoxLayout();
     _layBoutons->addWidget(_btnList);
     _layBoutons->addWidget(_btnNbAlbums);
     _layBoutons->addWidget(_btnInfos);
+    _layBoutons->addWidget(_btnUsers);
     _layBoutons->addWidget(_btnDelete);
     
     _centralLayout->addLayout(_layBoutons);
@@ -125,6 +131,11 @@ void Vue::showInfos() {
     _model->setHeaderData(3, Qt::Horizontal, tr("Nb Pistes"));
     _model->setHeaderData(4, Qt::Horizontal, tr("Duree tot"));
     _model->setHeaderData(5, Qt::Horizontal, tr("Moy long chanson"));
+}
+
+void Vue::showUsers() {
+    UsersView v;
+    v.exec();
 }
 
 void Vue::emptyTable() {

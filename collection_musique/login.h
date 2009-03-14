@@ -25,8 +25,6 @@ class Login : public QDialog {
         QGridLayout *_layUser;
         QHBoxLayout *_layBoutons;
         
-        QWidget *_centralWidget;
-        
         QLabel *_lblUser;
         QLabel *_lblPass;
         QLineEdit *_txtUser;

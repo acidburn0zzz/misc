@@ -55,7 +55,7 @@ void Login::init() {
 }
 
 void Login::checkUser() {
-    sha256_ctx ctx[1];
+    sha256_ctx ctx;
 	unsigned char hval[SHA256_DIGEST_SIZE], *data;
     char passwd_hash[65];
     int len;
@@ -66,9 +66,9 @@ void Login::checkUser() {
     
     strncpy((char*)data, _txtPass->text().toStdString().c_str(), len);
     
-    sha256_begin(ctx);
-    sha256_hash(data, len, ctx);
-    sha256_end(hval, ctx);
+    sha256_begin(&ctx);
+    sha256_hash(data, len, &ctx);
+    sha256_end(hval, &ctx);
     
     delete data;
     for (int i=0; i<SHA256_DIGEST_SIZE; i++)

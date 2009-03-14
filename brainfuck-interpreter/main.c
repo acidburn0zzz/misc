@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include <malloc.h>
 
+const unsigned int PTR_SIZE = 0x8000;
+unsigned char *ptr, *buf, *_ptr, *_buf;
+
 int fsize(FILE *f);
+void interpret();
 
 int main(int argc, char *argv[]) {
-    unsigned char *ptr, *buf, *_ptr, *_buf;
-    unsigned char c, i;
-    const unsigned int PTR_SIZE = 0x8000;
+    /*unsigned char c, i;*/
     FILE *file;
     
     if (argc != 2) {
@@ -27,8 +29,28 @@ int main(int argc, char *argv[]) {
     ptr = _ptr;
     buf = _buf;
     
-    fread(buf, sizeof(char), fsize(file), file);
+    if (fread(buf, fsize(file), sizeof(char), file) != sizeof(char)) {
+        fprintf(stderr, "Error: Unable to read from file: %s\n", argv[1]);
+        return EXIT_FAILURE;
+    }
     
+    interpret(buf, ptr, _ptr);
+    
+    free(_buf);
+    free(_ptr);
+    return EXIT_SUCCESS;
+}
+
+int fsize(FILE *f) {
+    int size;
+    fseek(f, 0, SEEK_END);
+    size = ftell(f);
+    fseek(f, 0, SEEK_SET);
+    return size;
+}
+
+void interpret() {
+    unsigned char c, i;
     c = *buf;
     while (c != 0x00) {
         switch (c) {
@@ -63,8 +85,8 @@ int main(int argc, char *argv[]) {
                     i=1;
                     while (c != ']' && i != 0) {
                         c = *(++buf);
-                        if (c == '[') i++;
-                        if (c == ']') i--;
+                        if (c == '[')
+                            interpret(buf, ptr, _ptr);
                     }
                 }
                 break;
@@ -73,9 +95,11 @@ int main(int argc, char *argv[]) {
                     i=1;
                     while (c != '[' && i != 0) {
                         c = *(--buf);
-                        if (c == ']') i++;
-                        if (c == '[') i--;
+                        if (c == '[')
+                            interpret(buf, ptr, _ptr);
                     }
+                } else {
+                    return;
                 }
                 break;
             case '#': /*Ajout de moi : # = commentaire de ligne*/
@@ -84,16 +108,5 @@ int main(int argc, char *argv[]) {
         }
         c = *(++buf);
     }
-    
-    free(_buf);
-    free(_ptr);
-    return EXIT_SUCCESS;
-}
-
-int fsize(FILE *f) {
-    int size;
-    fseek(f, 0, SEEK_END);
-    size = ftell(f);
-    fseek(f, 0, SEEK_SET);
-    return size;
+    return;
 }
