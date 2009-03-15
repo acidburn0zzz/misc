@@ -2,14 +2,12 @@
 #include <stdlib.h>
 #include <malloc.h>
 
-const unsigned int PTR_SIZE = 0x8000;
-unsigned char *ptr, *buf, *_ptr, *_buf;
-
 int fsize(FILE *f);
-void interpret();
 
 int main(int argc, char *argv[]) {
-    /*unsigned char c, i;*/
+    unsigned char *ptr, *buf, *_ptr, *_buf, c;
+    int i;
+    const unsigned int PTR_SIZE = 0x8000;
     FILE *file;
     
     if (argc != 2) {
@@ -19,7 +17,7 @@ int main(int argc, char *argv[]) {
     
     file = fopen(argv[1], "r");
     if (file == NULL) {
-        printf("File %s not found\n", argv[1]);
+        fprintf(stderr, "Error: %s: File not found\n", argv[1]);
         return EXIT_FAILURE;
     }
     
@@ -34,7 +32,82 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
     
-    interpret(buf, ptr, _ptr);
+    c = *buf;
+    while (c != 0x00) {
+        switch (c) {
+            case '>':
+                ++ptr;
+                if (ptr >= _ptr + PTR_SIZE) {
+                    puts("\nError: Pointer can't go over 0x8000");
+                    exit(EXIT_FAILURE);
+                }
+                c = *(++buf);
+                break;
+            case '<':
+                --ptr;
+                if (ptr < _ptr) {
+                    puts("\nError: Pointer can't go under 0");
+                    exit(EXIT_FAILURE);
+                }
+                c = *(++buf);
+                break;
+            case '+':
+                ++(*ptr);
+                c = *(++buf);
+                break;
+            case '-':
+                --(*ptr);
+                c = *(++buf);
+                break;
+            case '.':
+                putchar(*ptr);
+                c = *(++buf);
+                break;
+            case ',':
+                *ptr = getchar();
+                c = *(++buf);
+                break;
+            case '[':
+                if (*ptr == 0) {
+                    i=0;
+                    c = *(++buf);
+                    while (c != ']' || i != 0) {
+                        if (c == '[')
+                            i++;
+                        if (c == ']')
+                            i--;
+                        c = *(++buf);
+                    }
+                } else {
+                    c = *(++buf);
+                }
+                break;
+            case ']':
+                if (*ptr != 0) {
+                    i=0;
+                    c = *(--buf);
+                    while (c != '[' || i != 0) {
+                        if (c == '[')
+                            i--;
+                        if (c == ']')
+                            i++;
+                        c = *(--buf);
+                    }
+                } else {
+                    c = *(++buf);
+                }
+                break;
+            #ifdef LINE_COMMENT
+            case '#': /*Ajout de moi : ; = commentaire de ligne*/
+            case ';': /*Ajout de moi : # = commentaire de ligne*/
+                while (c != 0x0a && c != 0x0d && c != 0x00)
+                    c = *(++buf);
+                break;
+            #endif
+            default:
+                c = *(++buf);
+        }
+    }
     
     free(_buf);
     free(_ptr);
@@ -47,66 +120,4 @@ int fsize(FILE *f) {
     size = ftell(f);
     fseek(f, 0, SEEK_SET);
     return size;
-}
-
-void interpret() {
-    unsigned char c, i;
-    c = *buf;
-    while (c != 0x00) {
-        switch (c) {
-            case '>':
-                ++ptr;
-                if (ptr >= _ptr + PTR_SIZE) {
-                    puts("Pointer can't go over 0x8000");
-                    exit(1);
-                }
-                break;
-            case '<':
-                --ptr;
-                if (ptr < _ptr) {
-                    puts("Pointer can't go under 0");
-                    exit(1);
-                }
-                break;
-            case '+':
-                ++(*ptr);
-                break;
-            case '-':
-                --(*ptr);
-                break;
-            case '.':
-                putchar(*ptr);
-                break;
-            case ',':
-                *ptr = getchar();
-                break;
-            case '[':
-                if (*ptr == 0) {
-                    i=1;
-                    while (c != ']' && i != 0) {
-                        c = *(++buf);
-                        if (c == '[')
-                            interpret(buf, ptr, _ptr);
-                    }
-                }
-                break;
-            case ']':
-                if (*ptr != 0) {
-                    i=1;
-                    while (c != '[' && i != 0) {
-                        c = *(--buf);
-                        if (c == '[')
-                            interpret(buf, ptr, _ptr);
-                    }
-                } else {
-                    return;
-                }
-                break;
-            case '#': /*Ajout de moi : # = commentaire de ligne*/
-                while (c != 0x0a && c != 0x0d && c != 0x00)
-                    c = *(++buf);
-        }
-        c = *(++buf);
-    }
-    return;
 }
