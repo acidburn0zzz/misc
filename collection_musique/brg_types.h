@@ -121,6 +121,13 @@ extern "C" {
 #  endif
 #endif
 
+/* Ugly tweak but works */
+#ifndef BRG_UI64
+#  define BRG_UI64
+#  define li_64(h) 0x##h##ull
+   typedef unsigned long long uint_64t;
+#endif
+
 #if defined( NEED_UINT_64T ) && !defined( BRG_UI64 )
 #  error Please define uint_64t as an unsigned 64 bit type in brg_types.h
 #endif
