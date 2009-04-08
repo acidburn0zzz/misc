@@ -3,9 +3,11 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = expo_science
+TARGET = expo
 DEPENDPATH += .
-INCLUDEPATH += .
+INCLUDEPATH += ./libsha2
+unix:LIBS += -L./libsha2 -lsha2
+win32:LIBS += .\libsha2\libsha2.lib
 
 CONFIG += qt debug
 QT += sql
@@ -18,11 +20,9 @@ OBJECTS_DIR = ./obj
 # Input
 HEADERS += defaultsqlmodel.h \
            defaulttableview.h \
-           mainwindow.h \
-           sha2.h
+           mainwindow.h
 SOURCES += defaultsqlmodel.cpp \
            defaulttableview.cpp \
            main.cpp \
-           mainwindow.cpp \
-           sha2.c
+           mainwindow.cpp
 #TRANSLATIONS += expo_science_en.ts
