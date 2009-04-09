@@ -1,5 +1,21 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS p_type;
+DROP TABLE IF EXISTS p_suivi_atelier;
+DROP TABLE IF EXISTS p_region;
+DROP TABLE IF EXISTS p_local;
+DROP TABLE IF EXISTS p_inscription_archive;
+DROP TABLE IF EXISTS p_inscription;
+DROP TABLE IF EXISTS p_exposant_archive;
+DROP TABLE IF EXISTS p_exposant;
+DROP TABLE IF EXISTS p_expo;
+DROP TABLE IF EXISTS p_evaluation;
+DROP TABLE IF EXISTS p_ecole;
+DROP TABLE IF EXISTS p_critere;
+DROP TABLE IF EXISTS p_categorie;
+DROP TABLE IF EXISTS p_auditeur;
+DROP TABLE IF EXISTS p_atelier;
+
 CREATE TABLE p_type (
     notype INTEGER PRIMARY KEY AUTOINCREMENT,
     nomtype TEXT NOT NULL
@@ -43,13 +59,13 @@ CREATE TABLE p_inscription (
     mode_paiement TEXT,
     no_carte TEXT,
     no_cheque INTEGER,
-    text_expire TEXT,
+    date_expire TEXT,
     acquitter INTEGER,
     confirmationenvoyee INTEGER,
     
-    CONSTRAINT p_inscription_pk UNIQUE (noauditeur, noatel)
-    CONSTRAINT p_inscription_atelier_fk FOREIGN KEY (noatel) REFERENCES p_atelier (noatel),
-    CONSTRAINT p_inscription_auditeur_fk FOREIGN KEY (noauditeur) REFERENCES p_auditeur (noauditeur)
+    CONSTRAINT p_inscription_pk UNIQUE (noauditeur, noatel),
+    CONSTRAINT p_inscription_auditeur_fk FOREIGN KEY (noauditeur) REFERENCES p_auditeur (noauditeur),
+    CONSTRAINT p_inscription_atelier_fk FOREIGN KEY (noatel) REFERENCES p_atelier (noatel)
 );
 
 CREATE TABLE p_exposant_archive (
@@ -149,6 +165,9 @@ CREATE TABLE p_auditeur (
     courriel TEXT,
     statut TEXT,
     
+    --Pas certain
+    CONSTRAINT p_atelier_p_region_fk FOREIGN KEY (noregion) REFERENCES p_region (noregion),
+    
     CONSTRAINT statut CHECK (statut = 'R' OR statut = 'r' OR statut = 'E' OR statut = 'e')
 );
 
@@ -180,5 +199,54 @@ CREATE TABLE p_atelier (
     CONSTRAINT langue CHECK (langue = 'A' OR langue = 'F' OR langue = 'a' OR langue = 'f'),
     CONSTRAINT portable CHECK (portable = 1 OR portable = 0)
 );
+
+INSERT INTO p_type (nomtype) VALUES ('Séminaire');
+INSERT INTO p_type (nomtype) VALUES ('Plénière');
+INSERT INTO p_type (nomtype) VALUES ('Interactif');
+
+INSERT INTO p_region (nomregion) VALUES ('Montréal');
+INSERT INTO p_region (nomregion) VALUES ('Laval');
+INSERT INTO p_region (nomregion) VALUES ('Québec');
+INSERT INTO p_region (nomregion) VALUES ('Sherbrooke');
+INSERT INTO p_region (nomregion) VALUES ('Abitibi');
+
+INSERT INTO p_local VALUES ('A5.30', 50);
+INSERT INTO p_local VALUES ('A5.31', 45);
+INSERT INTO p_local VALUES ('A5.32', 40);
+INSERT INTO p_local VALUES ('A5.33', 35);
+INSERT INTO p_local VALUES ('A5.34', 30);
+
+INSERT INTO p_inscription (noauditeur, noatel, dateinscription, mode_paiement, no_carte, no_cheque, date_expire, acquitter, confirmationenvoyee)
+    VALUES (1, 1, '25-12-0000', 'Cheque', '', 12, "25-12-0002", 1, 1);
+INSERT INTO p_inscription (noauditeur, noatel, dateinscription, mode_paiement, no_carte, no_cheque, date_expire, acquitter, confirmationenvoyee)
+    VALUES (1, 2, '25-12-0000', 'Cheque', '', 12, "25-12-0002", 1, 1);
+INSERT INTO p_inscription (noauditeur, noatel, dateinscription, mode_paiement, no_carte, no_cheque, date_expire, acquitter, confirmationenvoyee)
+    VALUES (1, 3, '25-12-0000', 'Cheque', '', 12, "25-12-0002", 1, 1);
+INSERT INTO p_inscription (noauditeur, noatel, dateinscription, mode_paiement, no_carte, no_cheque, date_expire, acquitter, confirmationenvoyee)
+    VALUES (1, 4, '25-12-0000', 'Cheque', '', 12, "25-12-0002", 1, 1);
+INSERT INTO p_inscription (noauditeur, noatel, dateinscription, mode_paiement, no_carte, no_cheque, date_expire, acquitter, confirmationenvoyee)
+    VALUES (1, 5, '25-12-0000', 'Cheque', '', 12, "25-12-0002", 1, 1);
+    
+INSERT INTO p_auditeur (codeauditeur, motdepasse, nom, prenom, juge, rue, ville, code_postal, noregion, telephone, courriel, statut)
+    VALUES ('1', 'patate', 'Wong', 'Elvis', 0, 'Taillon', 'Montréal', 'H1L 4K5', 1, 5143553179, 'patate@patate.com', 'E');
+INSERT INTO p_auditeur (codeauditeur, motdepasse, nom, prenom, juge, rue, ville, code_postal, noregion, telephone, courriel, statut)
+    VALUES ('1', 'patate', 'Presley', 'Elvis', 0, 'Taillon', 'Montréal', 'H1L 4K5', 1, 5143553179, 'patate@patate.com', 'e');
+INSERT INTO p_auditeur (codeauditeur, motdepasse, nom, prenom, juge, rue, ville, code_postal, noregion, telephone, courriel, statut)
+    VALUES ('1', 'patate', 'Gratton', 'Elvis', 1, 'Taillon', 'Montréal', 'H1L 4K5', 1, 5143553179, 'patate@patate.com', 'R');
+INSERT INTO p_auditeur (codeauditeur, motdepasse, nom, prenom, juge, rue, ville, code_postal, noregion, telephone, courriel, statut)
+    VALUES ('1', 'patate', 'Gingras', 'Elvis', 0, 'Taillon', 'Montréal', 'H1L 4K5', 1, 5143553179, 'patate@patate.com', 'r');
+--INSERT INTO p_atelier (titre, langue, acetate_elec, portable, duree, nbmaximum, nolocal, dateatel, creepar, datecreation, coutetudiant, coutregulier, nocategorie, notype, noexposant)
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '25-12-2001', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '25-12-2001', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '25-12-2001', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '25-12-2001', 4, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '25-12-2001', 5, 2, 5);
+
+SELECT * FROM p_atelier;
 
 COMMIT;

@@ -1,8 +1,13 @@
 #include <QtGui>
 
 #include "mainwindow.h"
+#include "modelegestionatelier.h"
+#include "defaultsqlmodel.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+/* TEMP */
+#include "defaulttableview.h"
+
+MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) : QMainWindow(parent, flags) {
     init();
 }
 
@@ -19,11 +24,9 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::init() {
-    //Connexion a la base
-    //~ openSqlConnection();
-    
     //Initialisation de l'affichage
     this->setWindowTitle(tr("Liste des ateliers"));
+    this->setMinimumSize(800, 600);
     
     _btnAtelier = new QPushButton(tr("Atelier"));
     _btnExposant = new QPushButton(tr("Exposant"));
@@ -40,10 +43,15 @@ void MainWindow::init() {
     
     _lblTitre = new QLabel(tr("TITRE"));
     
+    DefaultTableView *t = new DefaultTableView();
+    ModeleGestionAtelier *m = new ModeleGestionAtelier();
+    m->init();
+    t->setModel(m);
+    
     _layCentral = new QVBoxLayout();
     _layCentral->addLayout(_layBoutons);
     _layCentral->addWidget(_lblTitre);
-    
+    _layCentral->addWidget(t);
     
     _wdCentral = new QWidget();
     this->setCentralWidget(_wdCentral);
@@ -55,8 +63,6 @@ void MainWindow::init() {
     connect(_btnCategorie, SIGNAL(clicked()), this, SLOT(inDev()));
     connect(_btnEcole, SIGNAL(clicked()), this, SLOT(inDev()));
     connect(_btnAuditeurs, SIGNAL(clicked()), this, SLOT(inDev()));
-    
-    //~ this->setMinimumSize(800, 600);
 }
 
 void MainWindow::inDev() {

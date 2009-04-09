@@ -20,9 +20,15 @@ OBJECTS_DIR = ./obj
 # Input
 HEADERS += defaultsqlmodel.h \
            defaulttableview.h \
-           mainwindow.h
+           mainwindow.h \
+           modelegestionatelier.h \
+           tablegestionatelier.h \
+           vuegestionatelier.h
 SOURCES += defaultsqlmodel.cpp \
            defaulttableview.cpp \
            main.cpp \
-           mainwindow.cpp
+           mainwindow.cpp \
+           modelegestionatelier.cpp \
+           tablegestionatelier.cpp \
+           vuegestionatelier.cpp
 #TRANSLATIONS += expo_science_en.ts
