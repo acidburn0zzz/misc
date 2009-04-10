@@ -3,16 +3,23 @@
 
 #include "defaultsqlmodel.h"
 
+#include <QStringList>
+
 class ModeleGestionAtelier : public DefaultSqlModel {
     Q_OBJECT
     
-    //~ enum cols {ID, ARTIST, ALBUM, YEAR, GENRE, TRACKS, LENGTH};
+    enum cols {NOATEL, TITRE, JOUR, HEURE, LOCAL, LANGUE, TYPE, CAT, DISPO};
 
     public:
     ModeleGestionAtelier(QObject *parent = 0);
 
+    QVariant data(const QModelIndex &item, int role = Qt::DisplayRole) const;
+
     void init();
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
+    
+    private:
+    QStringList _listeJours;
 };
 
 #endif //__MODELEGESTIONATELIER_H__

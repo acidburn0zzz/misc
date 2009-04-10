@@ -13,10 +13,10 @@ PREFIX = /usr/local
 all:	$(PROGRAM)
 
 bfint: $(OBJS)
-	$(CC) $(CXXFLAGS) -g -o $(PROGRAM) $(OBJS)
+	$(CC) $(CFLAGS) -g -o $(PROGRAM) $(OBJS)
 
 release: $(OBJS)
-	$(CC) $(CXXFLAGS) -s -o $(PROGRAM) $(OBJS)
+	$(CC) $(CFLAGS) -s -o $(PROGRAM) $(OBJS)
 
 install:
 	$(INSTALL) -D $(PROGRAM) $(PREFIX)/bin/$(PROGRAM)

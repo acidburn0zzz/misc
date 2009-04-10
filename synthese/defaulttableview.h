@@ -10,6 +10,9 @@ class DefaultTableView : public QTableView {
 
     public:
         DefaultTableView(QWidget *parent = 0);
+        
+    public slots:
+        void setSelectedIndex(const QModelIndex & index);
 };
 
 #endif //__DEFAULTTABLEVIEW_H__

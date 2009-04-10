@@ -180,7 +180,7 @@ CREATE TABLE p_atelier (
     duree INTEGER,
     nbmaximum INTEGER,
     nolocal TEXT,
-    dateatel TEXT,
+    dateatel TEXT, --Au format 'YYYY-MM-DD HH:MM:SS'
     creepar TEXT,
     datecreation TEXT,
     coutetudiant INTEGER,
@@ -237,16 +237,18 @@ INSERT INTO p_auditeur (codeauditeur, motdepasse, nom, prenom, juge, rue, ville,
     VALUES ('1', 'patate', 'Gingras', 'Elvis', 0, 'Taillon', 'Montréal', 'H1L 4K5', 1, 5143553179, 'patate@patate.com', 'r');
 --INSERT INTO p_atelier (titre, langue, acetate_elec, portable, duree, nbmaximum, nolocal, dateatel, creepar, datecreation, coutetudiant, coutregulier, nocategorie, notype, noexposant)
 INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
-    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '25-12-2001', 1, 1, 1);
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
 INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
-    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '25-12-2001', 2, 2, 2);
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
 INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
-    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '25-12-2001', 3, 3, 3);
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
 INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
-    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '25-12-2001', 4, 1, 4);
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 4, 1, 4);
 INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
-    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '25-12-2001', 5, 2, 5);
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 5, 2, 5);
 
-SELECT * FROM p_atelier;
+INSERT INTO p_categorie (nom ,description) VALUES ("Chimie Organique", "Chimie Organique");
+INSERT INTO p_categorie (nom ,description) VALUES ("Sciences Humaines", "Sciences Humaines");
+INSERT INTO p_categorie (nom ,description) VALUES ("Sciences de la Nature", "Sciences de la Nature");
 
 COMMIT;

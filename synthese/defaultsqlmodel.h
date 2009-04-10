@@ -13,6 +13,11 @@ class DefaultSqlModel : public QSqlQueryModel {
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
     
     virtual void init();
+    void setSelectedIndex(const QModelIndex & index);
+    
+    private:
+    int _currentColumn;
+    int _currentRow;
 };
 
 #endif //__DEFAULTSQLMODEL_H__

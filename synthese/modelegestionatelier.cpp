@@ -7,15 +7,27 @@ ModeleGestionAtelier::ModeleGestionAtelier(QObject *parent) : DefaultSqlModel(pa
     init();
 }
 
+QVariant ModeleGestionAtelier::data(const QModelIndex &index, int role) const {
+    QVariant value = DefaultSqlModel::data(index, role);
+    if (role == Qt::DisplayRole) {
+        if (index.column() == JOUR)
+            return QVariant::fromValue(_listeJours[value.toInt()]);
+    }
+    
+    return value;
+}
+
 void ModeleGestionAtelier::init() {
     QSqlRecord rec;
     
-    this->setQuery("SELECT noatel, titre, langue, duree, nolocal, dateatel, nocategorie, notype, noexposant FROM p_atelier ORDER BY noatel");
+    this->setQuery("SELECT a.noatel, a.titre, strftime('%w', a.dateatel) jour, strftime('%H', a.dateatel) heure, a.nolocal, a.langue, t.nomtype, c.nom, a.nbmaximum FROM p_atelier a, p_type t ON a.notype = t.notype, p_categorie c ON a.nocategorie = c.nocategorie ORDER BY a.noatel");
     rec = this->record();
     
     for (int i=0; i<rec.count(); i++) {
         this->setHeaderData(i, Qt::Horizontal, rec.fieldName(i));
     }
+    
+    _listeJours << tr("Dimanche") << tr("Lundi") << tr("Mardi") << tr("Mercredi") << tr("Jeudi") << tr("Vendredi") << tr("Samedi");
 }
 
 void ModeleGestionAtelier::sort(int column, Qt::SortOrder order) {

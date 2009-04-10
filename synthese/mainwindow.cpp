@@ -1,11 +1,10 @@
 #include <QtGui>
 
 #include "mainwindow.h"
-#include "modelegestionatelier.h"
-#include "defaultsqlmodel.h"
 
 /* TEMP */
 #include "defaulttableview.h"
+#include "modelegestionatelier.h"
 
 MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) : QMainWindow(parent, flags) {
     init();
