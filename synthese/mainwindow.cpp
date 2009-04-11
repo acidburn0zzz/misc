@@ -29,7 +29,7 @@ void MainWindow::init() {
     _btnExposant = new QPushButton(tr("Ex&posant"));
     _btnCategorie = new QPushButton(tr("&Categorie"));
     _btnEcole = new QPushButton(tr("Ec&ole"));
-    _btnAuditeurs = new QPushButton(tr("&Auditeur"));
+    _btnAuditeurs = new QPushButton(tr("A&uditeur"));
     
     _layBoutons = new QHBoxLayout();
     _layBoutons->addWidget(_btnAtelier);

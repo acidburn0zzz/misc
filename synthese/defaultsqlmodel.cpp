@@ -12,7 +12,7 @@ QVariant DefaultSqlModel::data(const QModelIndex &index, int role) const {
     if (role == Qt::BackgroundRole && index.row() == _currentRow)
         return QVariant::fromValue(QBrush(QColor(192, 255, 192)));
     if (role == Qt::BackgroundRole && index.row()%2 == 1)
-        return QVariant::fromValue(QBrush(QColor(240, 240, 240)));
+        return QVariant::fromValue(QBrush(QColor(224, 224, 224)));
     if (role == Qt::ForegroundRole)
         return QVariant::fromValue(QBrush(QColor(Qt::black)));
     if (role == Qt::FontRole) {
