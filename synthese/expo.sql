@@ -223,7 +223,7 @@ INSERT INTO p_inscription (noauditeur, noatel, dateinscription, mode_paiement, n
 INSERT INTO p_inscription (noauditeur, noatel, dateinscription, mode_paiement, no_carte, no_cheque, date_expire, acquitter, confirmationenvoyee)
     VALUES (1, 3, '25-12-0000', 'Cheque', '', 12, "25-12-0002", 1, 1);
 INSERT INTO p_inscription (noauditeur, noatel, dateinscription, mode_paiement, no_carte, no_cheque, date_expire, acquitter, confirmationenvoyee)
-    VALUES (1, 4, '25-12-0000', 'Cheque', '', 12, "25-12-0002", 1, 1);
+    VALUES (2, 1, '25-12-0000', 'Cheque', '', 12, "25-12-0002", 1, 1);
 INSERT INTO p_inscription (noauditeur, noatel, dateinscription, mode_paiement, no_carte, no_cheque, date_expire, acquitter, confirmationenvoyee)
     VALUES (1, 5, '25-12-0000', 'Cheque', '', 12, "25-12-0002", 1, 1);
     
@@ -243,12 +243,327 @@ INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, d
 INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
     VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
 INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
-    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 4, 1, 4);
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
 INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
-    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 5, 2, 5);
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
 
 INSERT INTO p_categorie (nom ,description) VALUES ("Chimie Organique", "Chimie Organique");
 INSERT INTO p_categorie (nom ,description) VALUES ("Sciences Humaines", "Sciences Humaines");
 INSERT INTO p_categorie (nom ,description) VALUES ("Sciences de la Nature", "Sciences de la Nature");
+
+
+
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Le Biocaburant', 'F', 1, 60, 25, 'A5.30', '2001-12-25 10:00:00', 1, 1, 1);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('La Biosphère', 'F', 1, 60, 25, 'A5.31', '2002-12-25 11:00:00', 2, 2, 2);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Database', 'A', 1, 60, 25, 'A5.32', '2003-12-25 12:00:00', 3, 3, 3);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('Java', 'F', 1, 60, 25, 'A5.33', '2004-12-25 13:00:00', 1, 1, 4);
+INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
+    VALUES ('C++', 'F', 1, 60, 25, 'A5.34', '2009-04-10 14:00:00', 2, 2, 5);
+
+
 
 COMMIT;

@@ -10,7 +10,7 @@ QVariant DefaultSqlModel::data(const QModelIndex &index, int role) const {
     QVariant value = QSqlQueryModel::data(index, role);
     
     if (role == Qt::BackgroundRole && index.row() == _currentRow)
-        return QVariant::fromValue(QBrush(QColor(224, 224, 224)));
+        return QVariant::fromValue(QBrush(QColor(192, 255, 192)));
     if (role == Qt::BackgroundRole && index.row()%2 == 1)
         return QVariant::fromValue(QBrush(QColor(240, 240, 240)));
     if (role == Qt::ForegroundRole)
@@ -42,4 +42,12 @@ void DefaultSqlModel::init() {
 void DefaultSqlModel::setSelectedIndex(const QModelIndex &index) {
     _currentColumn = index.column();
     _currentRow = index.row();
+}
+
+int DefaultSqlModel::getSelectedColumn() {
+    return _currentColumn;
+}
+
+int DefaultSqlModel::getSelectedRow() {
+    return _currentRow;
 }

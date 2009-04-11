@@ -9,9 +9,15 @@ ModeleGestionAtelier::ModeleGestionAtelier(QObject *parent) : DefaultSqlModel(pa
 
 QVariant ModeleGestionAtelier::data(const QModelIndex &index, int role) const {
     QVariant value = DefaultSqlModel::data(index, role);
-    if (role == Qt::DisplayRole) {
+    if (value.isValid() && role == Qt::DisplayRole) {
         if (index.column() == JOUR)
             return QVariant::fromValue(_listeJours[value.toInt()]);
+    }
+    if (value.isValid() && role == Qt::ForegroundRole) {
+        if (index.column() == NOATEL && record(index.row()).value(DISPO) == 0)
+            return QVariant::fromValue(QBrush(QColor(Qt::red)));
+        if (index.column() == DISPO && record(index.row()).value(DISPO) == 0)
+            return QVariant::fromValue(QBrush(QColor(Qt::red)));
     }
     
     return value;
@@ -19,8 +25,21 @@ QVariant ModeleGestionAtelier::data(const QModelIndex &index, int role) const {
 
 void ModeleGestionAtelier::init() {
     QSqlRecord rec;
+    QString sQuery;
     
-    this->setQuery("SELECT a.noatel, a.titre, strftime('%w', a.dateatel) jour, strftime('%H', a.dateatel) heure, a.nolocal, a.langue, t.nomtype, c.nom, a.nbmaximum FROM p_atelier a, p_type t ON a.notype = t.notype, p_categorie c ON a.nocategorie = c.nocategorie ORDER BY a.noatel");
+    sQuery  = "SELECT a.noatel No, ";
+    sQuery += "a.titre Titre, ";
+    sQuery += "strftime('%w', a.dateatel) Jour, ";
+    sQuery += "strftime('%H', a.dateatel) Heure, ";
+    sQuery += "a.nolocal Local, ";
+    sQuery += "a.langue Langue, ";
+    sQuery += "t.nomtype Type, ";
+    sQuery += "c.nom Categorie, ";
+    sQuery += "a.nbmaximum - (SELECT COUNT(noatel) FROM p_inscription i WHERE i.noatel = a.noatel) Disponibilite ";
+    sQuery += "FROM p_atelier a, p_type t ON a.notype = t.notype, ";
+    sQuery += "p_categorie c ON a.nocategorie = c.nocategorie ORDER BY a.noatel";
+    
+    this->setQuery(sQuery);
     rec = this->record();
     
     for (int i=0; i<rec.count(); i++) {
@@ -31,36 +50,54 @@ void ModeleGestionAtelier::init() {
 }
 
 void ModeleGestionAtelier::sort(int column, Qt::SortOrder order) {
-    //~ QString query = "SELECT id, artiste, album, annee, genre, pistes, time(duree, 'unixepoch') FROM collection ORDER BY ";
+    QString sQuery;
     
-    //~ switch (column) {
-        //~ case ID:
-            //~ query += "id ";
-            //~ break;
-        //~ case ARTIST:
-            //~ query += "artiste ";
-            //~ break;
-        //~ case ALBUM:
-            //~ query += "album ";
-            //~ break;
-        //~ case YEAR:
-            //~ query += "annee ";
-            //~ break;
-        //~ case GENRE:
-            //~ query += "genre ";
-            //~ break;
-        //~ case TRACKS:
-            //~ query += "pistes ";
-            //~ break;
-        //~ case LENGTH:
-            //~ query += "duree ";
-            //~ break;
-    //~ }
+    sQuery  = "SELECT a.noatel No, ";
+    sQuery += "a.titre Titre, ";
+    sQuery += "strftime('%w', a.dateatel) Jour, ";
+    sQuery += "strftime('%H', a.dateatel) Heure, ";
+    sQuery += "a.nolocal Local, ";
+    sQuery += "a.langue Langue, ";
+    sQuery += "t.nomtype Type, ";
+    sQuery += "c.nom Categorie, ";
+    sQuery += "a.nbmaximum - (SELECT COUNT(noatel) FROM p_inscription i WHERE i.noatel = a.noatel) Disponibilite ";
+    sQuery += "FROM p_atelier a, p_type t ON a.notype = t.notype, ";
+    sQuery += "p_categorie c ON a.nocategorie = c.nocategorie ORDER BY ";
     
-    //~ if (order == Qt::AscendingOrder)
-        //~ query += "ASC";
-    //~ else
-        //~ query += "DESC";
+    switch (column) {
+        case NOATEL:
+            sQuery += "No ";
+            break;
+        case TITRE:
+            sQuery += "Titre ";
+            break;
+        case JOUR:
+            sQuery += "Jour ";
+            break;
+        case HEURE:
+            sQuery += "Heure ";
+            break;
+        case LOCAL:
+            sQuery += "Local ";
+            break;
+        case LANGUE:
+            sQuery += "Langue ";
+            break;
+        case TYPE:
+            sQuery += "Type ";
+            break;
+        case CAT:
+            sQuery += "Categorie ";
+            break;
+        case DISPO:
+            sQuery += "Disponibilite ";
+            break;
+    }
     
-    //~ this->setQuery(query);
+    if (order == Qt::AscendingOrder)
+        sQuery += "ASC";
+    else
+        sQuery += "DESC";
+    
+    this->setQuery(sQuery);
 }

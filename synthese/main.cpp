@@ -3,6 +3,8 @@
 
 #include "mainwindow.h"
 
+#include "vuegestionatelier.h"
+
 int main(int argc, char *argv[]) {
     int ret;
     QSqlDatabase db;

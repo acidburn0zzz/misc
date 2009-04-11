@@ -31,4 +31,4 @@ SOURCES += defaultsqlmodel.cpp \
            modelegestionatelier.cpp \
            tablegestionatelier.cpp \
            vuegestionatelier.cpp
-#TRANSLATIONS += expo_science_en.ts
+TRANSLATIONS += expo_science_en.ts

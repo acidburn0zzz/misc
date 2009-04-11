@@ -2,9 +2,7 @@
 
 #include "mainwindow.h"
 
-/* TEMP */
-#include "defaulttableview.h"
-#include "modelegestionatelier.h"
+#include "vuegestionatelier.h"
 
 MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) : QMainWindow(parent, flags) {
     init();
@@ -27,11 +25,11 @@ void MainWindow::init() {
     this->setWindowTitle(tr("Liste des ateliers"));
     this->setMinimumSize(800, 600);
     
-    _btnAtelier = new QPushButton(tr("Atelier"));
-    _btnExposant = new QPushButton(tr("Exposant"));
-    _btnCategorie = new QPushButton(tr("Categorie"));
-    _btnEcole = new QPushButton(tr("Ecole"));
-    _btnAuditeurs = new QPushButton(tr("Auditeur"));
+    _btnAtelier = new QPushButton(tr("&Atelier"));
+    _btnExposant = new QPushButton(tr("Ex&posant"));
+    _btnCategorie = new QPushButton(tr("&Categorie"));
+    _btnEcole = new QPushButton(tr("Ec&ole"));
+    _btnAuditeurs = new QPushButton(tr("&Auditeur"));
     
     _layBoutons = new QHBoxLayout();
     _layBoutons->addWidget(_btnAtelier);
@@ -40,12 +38,12 @@ void MainWindow::init() {
     _layBoutons->addWidget(_btnEcole);
     _layBoutons->addWidget(_btnAuditeurs);
     
+    /* Reduit les boutons au maximum */
+    _layBoutons->addStretch(this->width());
+    
     _lblTitre = new QLabel(tr("TITRE"));
     
-    DefaultTableView *t = new DefaultTableView();
-    ModeleGestionAtelier *m = new ModeleGestionAtelier();
-    m->init();
-    t->setModel(m);
+    VueGestionAtelier *t = new VueGestionAtelier();
     
     _layCentral = new QVBoxLayout();
     _layCentral->addLayout(_layBoutons);
