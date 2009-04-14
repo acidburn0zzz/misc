@@ -17,7 +17,6 @@ QVariant DefaultSqlModel::data(const QModelIndex &index, int role) const {
     if (role == Qt::ForegroundRole)
         return QVariant::fromValue(QBrush(QColor(Qt::black)));
     if (role == Qt::FontRole) {
-        //~ QFont f = QSqlQueryModel::data(index, role).value<QFont>();
         QFont f = value.value<QFont>();
         f.setPointSize(10);
         return QVariant::fromValue(f);
@@ -52,11 +51,6 @@ int DefaultSqlModel::getSelectedColumn() {
 int DefaultSqlModel::getSelectedRow() {
     return _currentRow;
 }
-
-void DefaultSqlModel::deleteRow(int row) {
-    /*Doit etre reimplementee*/
-}
-    
 
 void DefaultSqlModel::commit() {
     QSqlQuery q;

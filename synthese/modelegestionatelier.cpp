@@ -105,19 +105,20 @@ void ModeleGestionAtelier::sort(int column, Qt::SortOrder order) {
     this->setQuery(sQuery);
 }
 
-void ModeleGestionAtelier::deleteRow(int row) {
-    /* voir http://www.qtcentre.org/forum/f-qt-programming-2/t-qtableview-refresh-problem-4991.html */
-    //~ beginRemoveRows(QModelIndex(), row, row);
-    QSqlRecord rec = record(row);
+bool ModeleGestionAtelier::removeRows(int row, int count, const QModelIndex & parent) {
+    bool success;
+    QString sQuery;
     QSqlQuery q;
-    QString query;
     
-    query  = "DELETE FROM p_atelier WHERE noatel = " + rec.value(NOATEL).toString();
+    beginRemoveRows(parent, row, row + (count - 1));
     
-    qDebug() << query;
+    sQuery  = "DELETE FROM p_atelier WHERE noatel=";
+    sQuery += index(row, 0, parent).data().toString();
     
-    if (!q.exec(query))
-        qDebug() << lastError().text();
+    qDebug() << sQuery;
+    success = q.exec(sQuery);
+    qDebug() << success;
     
-    //~ endRemoveRows();
+    endRemoveRows();
+    return success;
 }

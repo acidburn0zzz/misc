@@ -83,8 +83,13 @@ void VueGestionAtelier::updateNbAteliers(const QModelIndex & parent, int start, 
 }
 
 void VueGestionAtelier::supprimerAtelier() {
-    int no = _modele->getSelectedRow();
-    _modele->deleteRow(no);
+    int row = _modele->getSelectedRow();
+    _modele->removeRows(row, 1);
+    /* Il faut cacher manuellement la rangee */
+    //~ _table->setRowHidden(row, true);
+    
+    /* Aller chercher le sorting actuel */
+    _modele->sort(0);
 }
 
 void VueGestionAtelier::commitQuit() {
