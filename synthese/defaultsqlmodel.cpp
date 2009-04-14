@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <QtSql>
 
 #include "defaultsqlmodel.h"
 
@@ -50,4 +51,19 @@ int DefaultSqlModel::getSelectedColumn() {
 
 int DefaultSqlModel::getSelectedRow() {
     return _currentRow;
+}
+
+void DefaultSqlModel::deleteRow(int row) {
+    /*Doit etre reimplementee*/
+}
+    
+
+void DefaultSqlModel::commit() {
+    QSqlQuery q;
+    q.exec("COMMIT");
+}
+
+void DefaultSqlModel::rollback() {
+    QSqlQuery q;
+    q.exec("ROLLBACK");
 }

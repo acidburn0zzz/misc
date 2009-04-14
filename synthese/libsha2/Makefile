@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -O2 -g -ansi -static -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE
+CFLAGS=-Wall -O2 -s -pedantic -ansi -static -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE
 AR=ar
 RANLIB=ranlib
 

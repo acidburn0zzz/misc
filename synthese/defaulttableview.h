@@ -1,6 +1,7 @@
 #ifndef __DEFAULTTABLEVIEW_H__
 #define __DEFAULTTABLEVIEW_H__
 
+#include <QModelIndex>
 #include <QTableView>
 
 class QWidget;

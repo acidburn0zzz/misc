@@ -5,6 +5,7 @@
 
 DefaultTableView::DefaultTableView(QWidget *parent) : QTableView(parent) {
     this->setSortingEnabled(true);
+    this->setSelectionMode(QAbstractItemView::SingleSelection);
     connect(this, SIGNAL(pressed(const QModelIndex &)), this, SLOT(setSelectedIndex(const QModelIndex &)));
 }
 

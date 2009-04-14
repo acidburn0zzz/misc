@@ -17,6 +17,7 @@ class ModeleGestionAtelier : public DefaultSqlModel {
 
     void init();
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
+    void deleteRow(int row);
     
     private:
     QStringList _listeJours;

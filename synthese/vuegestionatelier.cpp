@@ -13,6 +13,7 @@ VueGestionAtelier::~VueGestionAtelier() {
     delete _btnModifier;
     delete _btnSupprimer;
     delete _btnInscription;
+    delete _btnQuitter;
     delete _btnX;
     delete _lblNbAteliers;
     delete _txtNbAteliers;
@@ -35,12 +36,14 @@ void VueGestionAtelier::init() {
     _btnModifier = new QPushButton(tr("&Modifier"));
     _btnSupprimer = new QPushButton(tr("&Supprimer"));
     _btnInscription = new QPushButton(tr("&Inscription"));
+    _btnQuitter = new QPushButton(tr("&Quitter"));
     _btnX = new QPushButton(tr("&X"));
     _btnX->setMaximumWidth(25);
     
     _lblNbAteliers = new QLabel(tr("Nombre total d'ateliers"));
     _txtNbAteliers = new QLineEdit();
     _txtNbAteliers->setMaximumWidth(40);
+    _txtNbAteliers->setReadOnly(true);
     _txtNbAteliers->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     _txtNbAteliers->setText(QString::number(_modele->rowCount()));
     
@@ -50,6 +53,7 @@ void VueGestionAtelier::init() {
     _layBoutons->addWidget(_btnSupprimer);
     _layBoutons->addWidget(_btnInscription);
     _layBoutons->addStretch(this->width());
+    _layBoutons->addWidget(_btnQuitter);
     _layBoutons->addWidget(_btnX);
     
     _layNbAteliers = new QHBoxLayout();
@@ -66,9 +70,29 @@ void VueGestionAtelier::init() {
     
     connect(_modele, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this, SLOT(updateNbAteliers(const QModelIndex &, int, int)));
     connect(_modele, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this, SLOT(updateNbAteliers(const QModelIndex &, int, int)));
+    
+    connect(_btnSupprimer, SIGNAL(clicked()), this, SLOT(supprimerAtelier()));
+    
+    connect(_btnQuitter, SIGNAL(clicked()), this, SLOT(commitQuit()));
+    connect(_btnX, SIGNAL(clicked()), this, SLOT(cancelQuit()));
 }
 
 void VueGestionAtelier::updateNbAteliers(const QModelIndex & parent, int start, int end) {
     //TODO: Verifier si l'update se fait bien
     _txtNbAteliers->setText(QString::number(_modele->rowCount()));
+}
+
+void VueGestionAtelier::supprimerAtelier() {
+    int no = _modele->getSelectedRow();
+    _modele->deleteRow(no);
+}
+
+void VueGestionAtelier::commitQuit() {
+    _modele->commit();
+    qApp->quit();
+}
+
+void VueGestionAtelier::cancelQuit() {
+    _modele->rollback();
+    qApp->quit();
 }

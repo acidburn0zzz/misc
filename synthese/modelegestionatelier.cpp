@@ -24,8 +24,11 @@ QVariant ModeleGestionAtelier::data(const QModelIndex &index, int role) const {
 }
 
 void ModeleGestionAtelier::init() {
+    QSqlQuery q;
     QSqlRecord rec;
     QString sQuery;
+    
+    q.exec("BEGIN;");
     
     sQuery  = "SELECT a.noatel No, ";
     sQuery += "a.titre Titre, ";
@@ -100,4 +103,21 @@ void ModeleGestionAtelier::sort(int column, Qt::SortOrder order) {
         sQuery += "DESC";
     
     this->setQuery(sQuery);
+}
+
+void ModeleGestionAtelier::deleteRow(int row) {
+    /* voir http://www.qtcentre.org/forum/f-qt-programming-2/t-qtableview-refresh-problem-4991.html */
+    //~ beginRemoveRows(QModelIndex(), row, row);
+    QSqlRecord rec = record(row);
+    QSqlQuery q;
+    QString query;
+    
+    query  = "DELETE FROM p_atelier WHERE noatel = " + rec.value(NOATEL).toString();
+    
+    qDebug() << query;
+    
+    if (!q.exec(query))
+        qDebug() << lastError().text();
+    
+    //~ endRemoveRows();
 }

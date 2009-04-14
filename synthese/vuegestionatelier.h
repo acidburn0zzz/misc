@@ -31,6 +31,7 @@ class VueGestionAtelier : public QWidget {
     QPushButton *_btnSupprimer;
     QPushButton *_btnInscription;
     QPushButton *_btnX;
+    QPushButton *_btnQuitter;
     
     QLabel *_lblNbAteliers;
     QLineEdit *_txtNbAteliers;
@@ -41,6 +42,9 @@ class VueGestionAtelier : public QWidget {
     
     public slots:
     void updateNbAteliers(const QModelIndex & parent, int start, int end);
+    void supprimerAtelier();
+    void cancelQuit();
+    void commitQuit();
 };
 
 #endif //__VUEGESTIONATELIER_H__

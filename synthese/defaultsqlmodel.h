@@ -16,6 +16,9 @@ class DefaultSqlModel : public QSqlQueryModel {
     void setSelectedIndex(const QModelIndex & index);
     int getSelectedColumn();
     int getSelectedRow();
+    virtual void deleteRow(int row);
+    void commit();
+    void rollback();
     
     private:
     int _currentColumn;
