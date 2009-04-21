@@ -54,6 +54,7 @@ void ModeleGestionAtelier::init() {
 
 void ModeleGestionAtelier::sort(int column, Qt::SortOrder order) {
     QString sQuery;
+    QSqlRecord rec = this->record();
     
     sQuery  = "SELECT a.noatel No, ";
     sQuery += "a.titre Titre, ";
@@ -67,35 +68,7 @@ void ModeleGestionAtelier::sort(int column, Qt::SortOrder order) {
     sQuery += "FROM p_atelier a, p_type t ON a.notype = t.notype, ";
     sQuery += "p_categorie c ON a.nocategorie = c.nocategorie ORDER BY ";
     
-    switch (column) {
-        case NOATEL:
-            sQuery += "No ";
-            break;
-        case TITRE:
-            sQuery += "Titre ";
-            break;
-        case JOUR:
-            sQuery += "Jour ";
-            break;
-        case HEURE:
-            sQuery += "Heure ";
-            break;
-        case LOCAL:
-            sQuery += "Local ";
-            break;
-        case LANGUE:
-            sQuery += "Langue ";
-            break;
-        case TYPE:
-            sQuery += "Type ";
-            break;
-        case CAT:
-            sQuery += "Categorie ";
-            break;
-        case DISPO:
-            sQuery += "Disponibilite ";
-            break;
-    }
+    sQuery += rec.fieldName(column) + " ";
     
     if (order == Qt::AscendingOrder)
         sQuery += "ASC";

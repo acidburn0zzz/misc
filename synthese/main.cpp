@@ -3,7 +3,7 @@
 
 #include "mainwindow.h"
 
-#include "vuegestionatelier.h"
+#include "vueatelier.h"
 
 int main(int argc, char *argv[]) {
     int ret;
@@ -18,7 +18,12 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     
-    MainWindow *w = new MainWindow();
+    //~ MainWindow *w = new MainWindow();
+    //~ w->setVisible(true);
+//~ #ifndef DEBUG
+    //~ w->setWindowState(Qt::WindowMaximized);
+//~ #endif
+    VueAtelier *w = new VueAtelier();
     w->setVisible(true);
 #ifndef DEBUG
     w->setWindowState(Qt::WindowMaximized);

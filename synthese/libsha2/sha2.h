@@ -90,11 +90,11 @@ VOID_RETURN sha256(unsigned char hval[], const unsigned char data[], unsigned lo
 
 #ifndef SHA_64BIT
 
-typedef struct
-{   union
-    { sha256_ctx  ctx256[1];
-    } uu[1];
-    uint_32t    sha2_len;
+typedef struct {
+   union {
+      sha256_ctx ctx256[1];
+   } uu[1];
+    uint_32t sha2_len;
 } sha2_ctx;
 
 #define SHA2_MAX_DIGEST_SIZE    SHA256_DIGEST_SIZE
@@ -109,20 +109,20 @@ typedef struct
 
 /* type to hold the SHA384 (and SHA512) context */
 
-typedef struct
-{   uint_64t count[2];
-    uint_64t hash[8];
-    uint_64t wbuf[16];
+typedef struct {
+   uint_64t count[2];
+   uint_64t hash[8];
+   uint_64t wbuf[16];
 } sha512_ctx;
 
 typedef sha512_ctx  sha384_ctx;
 
-typedef struct
-{   union
-    { sha256_ctx  ctx256[1];
-      sha512_ctx  ctx512[1];
-    } uu[1];
-    uint_32t    sha2_len;
+typedef struct {
+   union {
+      sha256_ctx ctx256[1];
+      sha512_ctx ctx512[1];
+   } uu[1];
+   uint_32t sha2_len;
 } sha2_ctx;
 
 VOID_RETURN sha512_compile(sha512_ctx ctx[1]);

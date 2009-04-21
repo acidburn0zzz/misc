@@ -74,7 +74,7 @@
     <message>
         <location filename="modelegestionatelier.cpp" line="49"/>
         <source>Jeudi</source>
-        <translation>Turhsday</translation>
+        <translation>Thursday</translation>
     </message>
     <message>
         <location filename="modelegestionatelier.cpp" line="49"/>
