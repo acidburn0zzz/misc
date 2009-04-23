@@ -20,47 +20,24 @@ VueAtelier::VueAtelier(bool isModif, int noAtel, QWidget *parent, Qt::WindowFlag
 }
 
 VueAtelier::~VueAtelier() {
-    delete _lblHeader;
-    delete _lblNoAtel;
-    delete _lblTitre;
-    delete _lblType;
-    delete _lblNomExpo;
-    delete _lblNomCat;
-    delete _lblNbMax;
-    delete _lblLangue;
-    delete _lblNoLocal;
-    delete _lblJour;
-    delete _lblHeure;
-    delete _lblDuree;
-    delete _lblCoutAdulte;
-    delete _lblCoutEnfant;
+    QLayoutItem *child;
     
-    delete _txtNoAtel;
-    delete _txtTitre;
-    delete _txtNbMax;
-    delete _txtCoutAdulte;
-    delete _txtCoutEnfant;
-    
-    delete _cmbType;
-    delete _cmbNomExpo;
-    delete _cmbNomCat;
-    delete _cmbNoLocal;
-    delete _cmbJour;
-    delete _cmbHeure;
-    delete _cmbDuree;
-    
-    delete _radFrancais;
-    delete _radAnglais;
-    
-    delete _chkAcetate;
-    delete _chkRetro;
-    delete _chkOrdinateur;
-    
-    delete _btnAnnuler;
-    delete _btnTerminer;
-    
+    for (int i=_layOptions->count() - 1; i>=0; i--) {
+        child = _layOptions->takeAt(i);
+        delete child;
+    }
     delete _layOptions;
+    
+    for (int i=_layBoutons->count() - 1; i>=0; i--) {
+        child = _layBoutons->takeAt(i);
+        delete child;
+    }
     delete _layBoutons;
+    
+    for (int i=_layCentral->count() - 1; i>=0; i--) {
+        child = _layCentral->takeAt(i);
+        delete child;
+    }
     delete _layCentral;
     
     delete _model;
@@ -122,9 +99,8 @@ void VueAtelier::init() {
     _layBoutons->addWidget(_btnAnnuler);
     _layBoutons->addWidget(_btnTerminer);
     
-    _layCentral = new QGridLayout();
+    _layCentral = new QGridLayout(this);
     _layCentral->addWidget(_lblHeader, 0, 0, 1, 4, Qt::AlignCenter);
-    _layCentral->addWidget(_lblHeader, 0, 0);
     _layCentral->addWidget(_lblNoAtel, 1, 0);
     _layCentral->addWidget(_txtNoAtel, 1, 1);
     _layCentral->addWidget(_lblNoLocal, 1, 2);

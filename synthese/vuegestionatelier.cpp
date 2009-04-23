@@ -10,7 +10,7 @@ VueGestionAtelier::VueGestionAtelier(QWidget *parent) : QWidget(parent) {
 }
 
 VueGestionAtelier::~VueGestionAtelier() {
-    delete _btnNouveau;
+    /*delete _btnNouveau;
     delete _btnModifier;
     delete _btnSupprimer;
     delete _btnInscription;
@@ -24,7 +24,30 @@ VueGestionAtelier::~VueGestionAtelier() {
     
     delete _layBoutons;
     delete _layNbAteliers;
+    delete _layCentral;*/
+    
+    QLayoutItem *child;
+    
+    for (int i=_layBoutons->count() - 1; i>=0; i--) {
+        child = _layBoutons->takeAt(i);
+        delete child;
+    }
+    delete _layBoutons;
+    
+    for (int i=_layNbAteliers->count() - 1; i>=0; i--) {
+        child = _layNbAteliers->takeAt(i);
+        delete child;
+    }
+    delete _layNbAteliers;
+    
+    for (int i=_layCentral->count() - 1; i>=0; i--) {
+        child = _layCentral->takeAt(i);
+        delete child;
+    }
     delete _layCentral;
+    
+    delete _modele;
+    qDebug() << "Purge";
 }
 
 void VueGestionAtelier::init() {
@@ -62,7 +85,7 @@ void VueGestionAtelier::init() {
     _layNbAteliers->addWidget(_lblNbAteliers);
     _layNbAteliers->addWidget(_txtNbAteliers);
     
-    _layCentral = new QVBoxLayout();
+    _layCentral = new QVBoxLayout(this);
     _layCentral->addLayout(_layBoutons);
     _layCentral->addWidget(_table);
     _layCentral->addLayout(_layNbAteliers);
@@ -86,8 +109,8 @@ void VueGestionAtelier::updateNbAteliers(const QModelIndex & parent, int start, 
 }
 
 void VueGestionAtelier::ajouterAtelier() {
-    VueAtelier *v = new VueAtelier();
-    if (v->exec()) {
+    VueAtelier v;
+    if (v.exec()) {
         
     } else {
         
@@ -96,8 +119,8 @@ void VueGestionAtelier::ajouterAtelier() {
 
 void VueGestionAtelier::modifierAtelier() {
     int row = _modele->getSelectedRow() + 1;
-    VueAtelier *v = new VueAtelier(true, row);
-    if (v->exec()) {
+    VueAtelier v(true, row);
+    if (v.exec()) {
         
     } else {
         

@@ -38,7 +38,6 @@ class VueAtelier : public QDialog {
     QLabel *_lblNomExpo;
     QLabel *_lblNomCat;
     QLabel *_lblNbMax;
-    QLabel *_lblLangue;
     QLabel *_lblNoLocal;
     QLabel *_lblJour;
     QLabel *_lblHeure;

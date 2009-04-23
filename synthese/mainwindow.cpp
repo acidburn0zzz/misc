@@ -43,7 +43,7 @@ void MainWindow::init() {
     
     _lblTitre = new QLabel(tr("TITRE"));
     
-    VueGestionAtelier *t = new VueGestionAtelier();
+    VueGestionAtelier *t = new VueGestionAtelier(this);
     
     _layCentral = new QVBoxLayout();
     _layCentral->addLayout(_layBoutons);

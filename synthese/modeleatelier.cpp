@@ -8,7 +8,7 @@ ModeleAtelier::ModeleAtelier() {
     _query.first();
     _noAtel = _query.value(0).toInt() + 1;
     
-    //~ fillListes();
+    fillListes();
 }
 
 ModeleAtelier::ModeleAtelier(int noAtel) {
@@ -31,7 +31,6 @@ ModeleAtelier::ModeleAtelier(int noAtel) {
     q += "FROM p_atelier a ";
     q += "WHERE a.noatel = " + QString::number(noAtel);
     
-    //~ qDebug()<< q;
     _query.exec(q);
     _query.first();
     

@@ -43,8 +43,6 @@ void ModeleGestionAtelier::init() {
     sQuery += "p_local l ON a.nolocal = l.idlocal, ";
     sQuery += "p_categorie c ON a.nocategorie = c.nocategorie ORDER BY a.noatel";
     
-    qDebug() << sQuery;
-    
     this->setQuery(sQuery);
     rec = this->record();
     
