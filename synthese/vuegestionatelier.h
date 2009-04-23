@@ -42,6 +42,8 @@ class VueGestionAtelier : public QWidget {
     
     public slots:
     void updateNbAteliers(const QModelIndex & parent, int start, int end);
+    void ajouterAtelier();
+    void modifierAtelier();
     void supprimerAtelier();
     void cancelQuit();
     void commitQuit();

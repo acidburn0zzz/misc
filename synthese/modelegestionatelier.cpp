@@ -34,13 +34,16 @@ void ModeleGestionAtelier::init() {
     sQuery += "a.titre Titre, ";
     sQuery += "strftime('%w', a.dateatel) Jour, ";
     sQuery += "strftime('%H', a.dateatel) Heure, ";
-    sQuery += "a.nolocal Local, ";
+    sQuery += "l.nolocal Local, ";
     sQuery += "a.langue Langue, ";
     sQuery += "t.nomtype Type, ";
     sQuery += "c.nom Categorie, ";
     sQuery += "a.nbmaximum - (SELECT COUNT(noatel) FROM p_inscription i WHERE i.noatel = a.noatel) Disponibilite ";
     sQuery += "FROM p_atelier a, p_type t ON a.notype = t.notype, ";
+    sQuery += "p_local l ON a.nolocal = l.idlocal, ";
     sQuery += "p_categorie c ON a.nocategorie = c.nocategorie ORDER BY a.noatel";
+    
+    qDebug() << sQuery;
     
     this->setQuery(sQuery);
     rec = this->record();

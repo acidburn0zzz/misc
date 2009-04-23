@@ -1,9 +1,22 @@
 #include <QtGui>
 
+#include "modeleatelier.h"
 #include "vueatelier.h"
 
-VueAtelier::VueAtelier(QWidget *parent, Qt::WindowFlags flags) : QDialog(parent, flags) {
+VueAtelier::VueAtelier(bool isModif, int noAtel, QWidget *parent, Qt::WindowFlags flags) : QDialog(parent, flags) {
+    _isModif = isModif;
+    _noAtel = noAtel;
+    
     init();
+    this->setModal(true);
+    
+    if (_isModif) {
+        _model = new ModeleAtelier(_noAtel);
+    } else {
+        _model = new ModeleAtelier();
+    }
+    
+    fillInfosAtel();
 }
 
 VueAtelier::~VueAtelier() {
@@ -49,10 +62,15 @@ VueAtelier::~VueAtelier() {
     delete _layOptions;
     delete _layBoutons;
     delete _layCentral;
+    
+    delete _model;
 }
 
 void VueAtelier::init() {
-    this->setWindowTitle(tr("Ajout/Modification d'un atelier"));
+    if (_isModif)
+        this->setWindowTitle(tr("Modification d'un atelier"));
+    else
+        this->setWindowTitle(tr("Ajout d'un atelier"));
     
     //Affichage
     _lblHeader = new QLabel(tr("Information sur l'atelier"));
@@ -70,6 +88,7 @@ void VueAtelier::init() {
     _lblCoutEnfant = new QLabel(tr("Cout Enfant"));
     
     _txtNoAtel = new QLineEdit();
+    _txtNoAtel->setEnabled(false);
     _txtTitre = new QLineEdit();
     _txtNbMax = new QLineEdit();
     _txtCoutAdulte = new QLineEdit();
@@ -91,7 +110,6 @@ void VueAtelier::init() {
     
     _btnAnnuler = new QPushButton(tr("Annuler"));
     _btnTerminer = new QPushButton(tr("Terminer"));
-    
     
     _layOptions = new QHBoxLayout();
     _layOptions->addWidget(_radFrancais);
@@ -134,5 +152,59 @@ void VueAtelier::init() {
     _layCentral->addLayout(_layOptions, 7, 0, 1, 4);
     _layCentral->addLayout(_layBoutons, 8, 0, 1, 4, Qt::AlignRight);
     
+    connect(_btnAnnuler, SIGNAL(clicked()), this, SLOT(reject()));
+    connect(_btnTerminer, SIGNAL(clicked()), this, SLOT(valider()));
+    
     this->setLayout(_layCentral);
+}
+
+void VueAtelier::fillInfosAtel() {
+    _txtNoAtel->setText(QString::number(_model->getNoAtel()));
+    
+    
+    _cmbType->insertItems(0, _model->getTypes());
+    _cmbNomExpo->insertItems(0, _model->getExposants());
+    _cmbNomCat->insertItems(0, _model->getCategories());
+    _cmbNoLocal->insertItems(0, _model->getLocaux());
+    _cmbJour->insertItems(0, _model->getJours());
+    _cmbHeure->insertItems(0, _model->getHeures());
+    _cmbDuree->insertItems(0, _model->getDurees());
+    
+    if (_isModif) {
+        _txtTitre->setText(_model->getTitre());
+        _txtNbMax->setText(QString::number(_model->getNbMax()));
+        _txtCoutAdulte->setText(QString::number(_model->getCoutAdulte()));
+        _txtCoutEnfant->setText(QString::number(_model->getCoutEnfant()));
+        
+        _cmbType->setCurrentIndex(_model->getType() - 1);
+        _cmbNomExpo->setCurrentIndex(_model->getNoExpo() - 1);
+        _cmbNomCat->setCurrentIndex(_model->getNoCat() - 1);
+        _cmbNoLocal->setCurrentIndex(_model->getNoLocal() - 1);
+        _cmbJour->setCurrentIndex(_model->getJour());
+        _cmbHeure->setCurrentIndex(_model->getHeure() - 10); /* 10h est a l'index 0 */
+        
+        switch (_model->getDuree()) {
+            case 30:
+                _cmbDuree->setCurrentIndex(0);
+                break;
+            case 45:
+                _cmbDuree->setCurrentIndex(1);
+                break;
+            case 60:
+                _cmbDuree->setCurrentIndex(2);
+                break;
+            case 90:
+                _cmbDuree->setCurrentIndex(3);
+                break;
+        }
+        
+        if (_model->getLangue().toLower() == "f")
+            _radFrancais->setChecked(true);
+        else
+            _radAnglais->setChecked(true);
+    }
+}
+
+void VueAtelier::valider() {
+    this->accept();
 }

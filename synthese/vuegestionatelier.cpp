@@ -3,6 +3,7 @@
 #include "modelegestionatelier.h"
 #include "tablegestionatelier.h"
 #include "vuegestionatelier.h"
+#include "vueatelier.h"
 
 VueGestionAtelier::VueGestionAtelier(QWidget *parent) : QWidget(parent) {
     init();
@@ -71,6 +72,8 @@ void VueGestionAtelier::init() {
     connect(_modele, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this, SLOT(updateNbAteliers(const QModelIndex &, int, int)));
     connect(_modele, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this, SLOT(updateNbAteliers(const QModelIndex &, int, int)));
     
+    connect(_btnNouveau, SIGNAL(clicked()), this, SLOT(ajouterAtelier()));
+    connect(_btnModifier, SIGNAL(clicked()), this, SLOT(modifierAtelier()));
     connect(_btnSupprimer, SIGNAL(clicked()), this, SLOT(supprimerAtelier()));
     
     connect(_btnQuitter, SIGNAL(clicked()), this, SLOT(commitQuit()));
@@ -80,6 +83,25 @@ void VueGestionAtelier::init() {
 void VueGestionAtelier::updateNbAteliers(const QModelIndex & parent, int start, int end) {
     //TODO: Verifier si l'update se fait bien
     _txtNbAteliers->setText(QString::number(_modele->rowCount()));
+}
+
+void VueGestionAtelier::ajouterAtelier() {
+    VueAtelier *v = new VueAtelier();
+    if (v->exec()) {
+        
+    } else {
+        
+    }
+}
+
+void VueGestionAtelier::modifierAtelier() {
+    int row = _modele->getSelectedRow() + 1;
+    VueAtelier *v = new VueAtelier(true, row);
+    if (v->exec()) {
+        
+    } else {
+        
+    }
 }
 
 void VueGestionAtelier::supprimerAtelier() {

@@ -18,16 +18,16 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     
-    //~ MainWindow *w = new MainWindow();
-    //~ w->setVisible(true);
-//~ #ifndef DEBUG
-    //~ w->setWindowState(Qt::WindowMaximized);
-//~ #endif
-    VueAtelier *w = new VueAtelier();
+    MainWindow *w = new MainWindow();
     w->setVisible(true);
 #ifndef DEBUG
     w->setWindowState(Qt::WindowMaximized);
 #endif
+    //~ VueAtelier *w = new VueAtelier(true, 158);
+    //~ w->setVisible(true);
+//~ #ifndef DEBUG
+    //~ w->setWindowState(Qt::WindowMaximized);
+//~ #endif
     
     ret = app.exec();
     

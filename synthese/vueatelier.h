@@ -13,15 +13,23 @@ class QPushButton;
 class QRadioButton;
 class QVBoxLayout;
 
+class ModeleAtelier;
+
 class VueAtelier : public QDialog {
     Q_OBJECT;
     
     public:
-    VueAtelier(QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    VueAtelier(bool isModif = false, int noAtel = 0, QWidget *parent = 0, Qt::WindowFlags flags = Qt::Dialog);
     ~VueAtelier();
 
     private:
     void init();
+    void fillInfosAtel();
+    
+    bool _isModif;
+    int _noAtel;
+    
+    ModeleAtelier *_model;
     
     QLabel *_lblHeader;
     QLabel *_lblNoAtel;
@@ -67,6 +75,7 @@ class VueAtelier : public QDialog {
     QHBoxLayout *_layBoutons;
     
     private slots:
+    void valider();
 };
 
 #endif //__VUEATELIER_H__
