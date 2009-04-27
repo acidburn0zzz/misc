@@ -1,7 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -O2 -g -ansi -static -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE
-AR=ar.exe
-RANLIB=ranlib.exe
+AR=ar.exe rcs
 
 LIB=libsha2.lib
 LIBSRC=sha2.c
@@ -10,8 +9,7 @@ LIBOBJ=$(LIBSRC:.c=.o)
 all:	libsha2.lib
 
 libsha2.lib: $(LIBOBJ)
-	$(AR) rc libsha2.lib $(LIBOBJ)
-	$(RANLIB) libsha2.lib
+	$(AR) libsha2.lib $(LIBOBJ)
 
 .c.o:
 	$(CC) $(CFLAGS) -static -c $< -o $@
