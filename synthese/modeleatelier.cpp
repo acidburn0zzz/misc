@@ -16,20 +16,22 @@ ModeleAtelier::ModeleAtelier(int noAtel) {
     
     /* On remplit les infos */
     QString q;
-    q = "SELECT a.titre Titre, ";
-    q += "strftime('%w', a.dateatel) Jour, ";
-    q += "strftime('%H', a.dateatel) Heure, ";
-    q += "a.duree Duree, ";
-    q += "a.nolocal Local, ";
-    q += "a.langue Langue, ";
-    q += "a.notype Type, ";
-    q += "a.nocategorie Categorie, ";
-    q += "a.nbmaximum Max, ";
-    q += "a.coutRegulier CoutAdulte, ";
-    q += "a.coutEtudiant CoutEnfant, ";
-    q += "a.noExposant Exposant ";
-    q += "FROM p_atelier a ";
-    q += "WHERE a.noatel = " + QString::number(noAtel);
+    q = "SELECT titre Titre, ";
+    q += "strftime('%w', dateatel) Jour, ";
+    q += "strftime('%H', dateatel) Heure, ";
+    q += "duree Duree, ";
+    q += "nolocal Local, ";
+    q += "langue Langue, ";
+    q += "notype Type, ";
+    q += "nocategorie Categorie, ";
+    q += "nbmaximum Max, ";
+    q += "coutRegulier CoutAdulte, ";
+    q += "coutEtudiant CoutEnfant, ";
+    q += "noExposant Exposant, ";
+    q += "acetate_elec Acetate, ";
+    q += "portable Portable ";
+    q += "FROM p_atelier ";
+    q += "WHERE noatel = " + QString::number(noAtel);
     
     _query.exec(q);
     _query.first();
@@ -46,6 +48,9 @@ ModeleAtelier::ModeleAtelier(int noAtel) {
     _coutEnfant = _query.value(9).toInt();
     _nbMax = _query.value(10).toInt();
     _noExpo = _query.value(11).toInt();
+    _acetate = _query.value(12).toInt();
+    _retro = _query.value(13).toInt();
+    _ordi = _query.value(14).toInt();
     
     fillListes();
 }
@@ -77,12 +82,6 @@ void ModeleAtelier::fillListes() {
         _categories.append(_query.value(0).toString());
         _query.next();
     }
-    
-    /*
-    QStringList _jours;
-    QStringList _heures;
-    QStringList _durees;
-    */
     
     /* Locaux */
     _query.exec("SELECT nolocal || ' (' || capacite || ')' FROM p_local ORDER BY idlocal");
@@ -202,6 +201,30 @@ int ModeleAtelier::getCoutEnfant() {
 
 void ModeleAtelier::setCoutEnfant(int cout) {
     _coutEnfant = cout;
+}
+
+int ModeleAtelier::getAcetate() {
+    return _acetate;
+}
+
+void ModeleAtelier::setAcetate(int acetate) {
+    _acetate = acetate;
+}
+
+int ModeleAtelier::getRetro() {
+    return _retro;
+}
+
+void ModeleAtelier::setRetro(int retro) {
+    _retro = retro;
+}
+
+int ModeleAtelier::getOrdi() {
+    return _ordi;
+}
+
+void ModeleAtelier::setOrdi(int ordi) {
+    _ordi = ordi;
 }
 
 QStringList ModeleAtelier::getTypes() {

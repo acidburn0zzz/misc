@@ -18,10 +18,17 @@ class DefaultSqlModel : public QSqlQueryModel {
     int getSelectedRow();
     void commit();
     void rollback();
+    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
+    bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());
     
     private:
     int _currentColumn;
     int _currentRow;
+    
+    protected:
+    QString _query;
+    QString _tableName;
+    QString _tableId;
 };
 
 #endif //__DEFAULTSQLMODEL_H__

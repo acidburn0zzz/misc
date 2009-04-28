@@ -14,10 +14,6 @@ class ModeleGestionAtelier : public DefaultSqlModel {
     ModeleGestionAtelier(QObject *parent = 0);
 
     QVariant data(const QModelIndex &item, int role = Qt::DisplayRole) const;
-
-    void init();
-    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
-    bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());
     
     private:
     QStringList _listeJours;

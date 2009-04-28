@@ -36,7 +36,21 @@ QVariant DefaultSqlModel::headerData(int section, Qt::Orientation orientation, i
 }
 
 void DefaultSqlModel::init() {
-    /*Doit etre reimplementee*/
+    QSqlQuery q;
+    QSqlRecord rec;
+    
+    q.exec("BEGIN;");
+    
+    this->setQuery(_query);
+    rec = this->record();
+    
+    for (int i=0; i<rec.count(); i++) {
+        this->setHeaderData(i, Qt::Horizontal, rec.fieldName(i));
+    }
+    
+    /* On se positionne par defaut sur le premier enregistrement */
+    _currentColumn = 0;
+    _currentRow = 0;
 }
 
 void DefaultSqlModel::setSelectedIndex(const QModelIndex &index) {
@@ -60,4 +74,34 @@ void DefaultSqlModel::commit() {
 void DefaultSqlModel::rollback() {
     QSqlQuery q;
     q.exec("ROLLBACK");
+}
+
+void DefaultSqlModel::sort(int column, Qt::SortOrder order) {
+    QString sQuery = _query;
+    QSqlRecord rec = this->record();
+    
+    sQuery += " ORDER BY " + rec.fieldName(column) + " ";
+    
+    if (order == Qt::AscendingOrder)
+        sQuery += "ASC";
+    else
+        sQuery += "DESC";
+    
+    this->setQuery(sQuery);
+}
+
+bool DefaultSqlModel::removeRows(int row, int count, const QModelIndex & parent) {
+    bool success;
+    QString sQuery;
+    QSqlQuery q;
+    
+    beginRemoveRows(parent, row, row + (count - 1));
+    
+    sQuery  = "DELETE FROM " + _tableName + " WHERE " + _tableId + "=";
+    sQuery += index(row, 0, parent).data().toString();
+    
+    success = q.exec(sQuery);
+    
+    endRemoveRows();
+    return success;
 }

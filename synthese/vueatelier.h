@@ -64,7 +64,7 @@ class VueAtelier : public QDialog {
     
     QCheckBox *_chkAcetate;
     QCheckBox *_chkRetro;
-    QCheckBox *_chkOrdinateur;
+    QCheckBox *_chkOrdi;
     
     QPushButton *_btnAnnuler;
     QPushButton *_btnTerminer;

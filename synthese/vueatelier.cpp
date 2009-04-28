@@ -83,7 +83,7 @@ void VueAtelier::init() {
     _radAnglais = new QRadioButton(tr("Anglais"));
     _chkAcetate = new QCheckBox(tr("Acetate Electronique"));
     _chkRetro = new QCheckBox(tr("Retroprojecteur"));
-    _chkOrdinateur = new QCheckBox(tr("Ordinateur"));
+    _chkOrdi = new QCheckBox(tr("Ordinateur"));
     
     _btnAnnuler = new QPushButton(tr("Annuler"));
     _btnTerminer = new QPushButton(tr("Terminer"));
@@ -93,7 +93,7 @@ void VueAtelier::init() {
     _layOptions->addWidget(_radAnglais);
     _layOptions->addWidget(_chkAcetate);
     _layOptions->addWidget(_chkRetro);
-    _layOptions->addWidget(_chkOrdinateur);
+    _layOptions->addWidget(_chkOrdi);
     
     _layBoutons = new QHBoxLayout();
     _layBoutons->addWidget(_btnAnnuler);
@@ -137,7 +137,6 @@ void VueAtelier::init() {
 void VueAtelier::fillInfosAtel() {
     _txtNoAtel->setText(QString::number(_model->getNoAtel()));
     
-    
     _cmbType->insertItems(0, _model->getTypes());
     _cmbNomExpo->insertItems(0, _model->getExposants());
     _cmbNomCat->insertItems(0, _model->getCategories());
@@ -178,6 +177,26 @@ void VueAtelier::fillInfosAtel() {
             _radFrancais->setChecked(true);
         else
             _radAnglais->setChecked(true);
+        
+        if (_model->getAcetate() != 0)
+            _chkAcetate->setChecked(true);
+        else
+            _chkAcetate->setChecked(false);
+        
+        if (_model->getRetro() != 0)
+            _chkRetro->setChecked(true);
+        else
+            _chkRetro->setChecked(false);
+        
+        if (_model->getRetro() != 0)
+            _chkRetro->setChecked(true);
+        else
+            _chkRetro->setChecked(false);
+        
+        if (_model->getOrdi() != 0)
+            _chkOrdi->setChecked(true);
+        else
+            _chkOrdi->setChecked(false);
     }
 }
 

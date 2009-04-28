@@ -10,22 +10,6 @@ VueGestionAtelier::VueGestionAtelier(QWidget *parent) : QWidget(parent) {
 }
 
 VueGestionAtelier::~VueGestionAtelier() {
-    /*delete _btnNouveau;
-    delete _btnModifier;
-    delete _btnSupprimer;
-    delete _btnInscription;
-    delete _btnQuitter;
-    delete _btnX;
-    delete _lblNbAteliers;
-    delete _txtNbAteliers;
-    
-    delete _modele;
-    delete _table;
-    
-    delete _layBoutons;
-    delete _layNbAteliers;
-    delete _layCentral;*/
-    
     QLayoutItem *child;
     
     for (int i=_layBoutons->count() - 1; i>=0; i--) {
@@ -47,7 +31,6 @@ VueGestionAtelier::~VueGestionAtelier() {
     delete _layCentral;
     
     delete _modele;
-    qDebug() << "Purge";
 }
 
 void VueGestionAtelier::init() {

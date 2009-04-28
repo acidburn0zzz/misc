@@ -1,8 +1,3 @@
-/********
-AJOUTER
-support acetate, retro et ordi
-********/
-
 #ifndef __MODELEATELIER_H__
 #define __MODELEATELIER_H__
 
@@ -32,6 +27,9 @@ class ModeleAtelier : public QObject {
     int     getDuree();
     int     getCoutAdulte();
     int     getCoutEnfant();
+    int     getAcetate();
+    int     getRetro();
+    int     getOrdi();
     
     void setNoAtel(int noAtel);
     void setTitre(QString titre);
@@ -46,6 +44,9 @@ class ModeleAtelier : public QObject {
     void setDuree(int duree);
     void setCoutAdulte(int cout);
     void setCoutEnfant(int cout);
+    void setAcetate(int acetate);
+    void setRetro(int retro);
+    void setOrdi(int ordi);
     
     QStringList getTypes();
     QStringList getExposants();
@@ -73,6 +74,9 @@ class ModeleAtelier : public QObject {
     int     _duree;
     int     _coutAdulte;
     int     _coutEnfant;
+    int     _acetate;
+    int     _retro;
+    int     _ordi;
     
     QStringList _types;
     QStringList _exposants;
