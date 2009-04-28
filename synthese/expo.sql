@@ -178,6 +178,7 @@ CREATE TABLE p_atelier (
     langue TEXT,
     acetate_elec INTEGER,
     portable INTEGER,
+    retro INTEGER,
     duree INTEGER,
     nbmaximum INTEGER,
     nolocal TEXT,

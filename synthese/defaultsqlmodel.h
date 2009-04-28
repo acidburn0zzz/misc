@@ -11,20 +11,23 @@ class DefaultSqlModel : public QSqlQueryModel {
 
     QVariant data(const QModelIndex &item, int role = Qt::DisplayRole) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-    
+
     virtual void init();
     void setSelectedIndex(const QModelIndex & index);
     int getSelectedColumn();
     int getSelectedRow();
     void commit();
     void rollback();
+    void sort(); //Trie avec les memes conditions qu'avant
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
     bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());
-    
+
     private:
     int _currentColumn;
     int _currentRow;
-    
+    int _sortColumn;
+    bool _sortAsc;
+
     protected:
     QString _query;
     QString _tableName;
