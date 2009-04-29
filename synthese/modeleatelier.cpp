@@ -1,64 +1,40 @@
-//TODO: Rendre le tout plus general
-
 #include <QtSql>
+#include <ctime>
+#include <cstdio>
 
 #include "modeleatelier.h"
 
-ModeleAtelier::ModeleAtelier() {
-    /* On va chercher le no du prochain atelier */
-    _query.exec("SELECT seq FROM sqlite_sequence WHERE name='p_atelier'");
-    _query.first();
-    _noAtel = _query.value(0).toInt() + 1;
+ModeleAtelier::ModeleAtelier(int id) : ModeleAjoutUpdate() {
+    _tableName = "p_atelier";
+    _tableId = "noAtel";
 
     fillListes();
-}
 
-ModeleAtelier::ModeleAtelier(int noAtel) {
-    _noAtel = noAtel;
-
-    /* On remplit les infos */
-    QString q;
-    q = "SELECT titre Titre, ";
-    q += "strftime('%w', dateatel) Jour, ";
-    q += "strftime('%H', dateatel) Heure, ";
-    q += "duree Duree, ";
-    q += "nolocal Local, ";
-    q += "langue Langue, ";
-    q += "notype Type, ";
-    q += "nocategorie Categorie, ";
-    q += "nbmaximum Max, ";
-    q += "coutRegulier CoutAdulte, ";
-    q += "coutEtudiant CoutEnfant, ";
-    q += "noExposant Exposant, ";
-    q += "acetate_elec Acetate, ";
-    q += "retro Retro, ";
-    q += "portable Portable ";
-    q += "FROM p_atelier ";
-    q += "WHERE noatel = " + QString::number(_noAtel);
-
-    _query.exec(q);
-    _query.first();
-
-    _titre = _query.value(0).toString();
-    _jour = _query.value(1).toInt();
-    _heure = _query.value(2).toInt();
-    _duree = _query.value(3).toInt();
-    _noLocal = _query.value(4).toInt();
-    _langue = _query.value(5).toString();
-    _noType = _query.value(6).toInt();
-    _noCat = _query.value(7).toInt();
-    _coutAdulte = _query.value(8).toInt();
-    _coutEnfant = _query.value(9).toInt();
-    _nbMax = _query.value(10).toInt();
-    _noExpo = _query.value(11).toInt();
-    _acetate = _query.value(12).toInt();
-    _retro = _query.value(13).toInt();
-    _ordi = _query.value(14).toInt();
-
-    fillListes();
+    if (id != -1)
+        init(id);
+    else
+        init();
 }
 
 void ModeleAtelier::fillListes() {
+    /* Liste de valeurs unique a cette table */
+    _columnTypes.push_back("str");    _columnNames.push_back("titre");
+    _columnTypes.push_back("int");    _columnNames.push_back("notype");
+    _columnTypes.push_back("int");    _columnNames.push_back("noexposant");
+    _columnTypes.push_back("int");    _columnNames.push_back("nocategorie");
+    _columnTypes.push_back("int");    _columnNames.push_back("nbmaximum");
+    _columnTypes.push_back("int");    _columnNames.push_back("nolocal");
+//    _columnTypes.push_back("int");    _columnNames.push_back("strftime('%w', dateatel)");
+//    _columnTypes.push_back("int");    _columnNames.push_back("strftime('%H', dateatel)");
+    _columnTypes.push_back("str");    _columnNames.push_back("dateatel");
+    _columnTypes.push_back("int");    _columnNames.push_back("duree");
+    _columnTypes.push_back("int");    _columnNames.push_back("coutregulier");
+    _columnTypes.push_back("int");    _columnNames.push_back("coutetudiant");
+    _columnTypes.push_back("str");    _columnNames.push_back("langue");
+    _columnTypes.push_back("int");    _columnNames.push_back("acetate_elec");
+    _columnTypes.push_back("int");    _columnNames.push_back("retro");
+    _columnTypes.push_back("int");    _columnNames.push_back("portable");
+
     /* Types */
     _query.exec("SELECT nomtype FROM p_type ORDER BY notype");
     _query.first();
@@ -96,7 +72,7 @@ void ModeleAtelier::fillListes() {
     }
 
     /* Jours */
-    _jours << tr("Dimanche") << tr("Lundi") << tr("Mardi") << tr("Mercredi") << tr("Jeudi") << tr("Vendredi") << tr("Samedi");
+    _jours << tr("Vendredi") << tr("Samedi") << tr("Dimanche");
 
     /* Heures */
     for (int i=10; i<=15; i++)
@@ -106,229 +82,117 @@ void ModeleAtelier::fillListes() {
     _durees << "30" << "45" << "60" << "90";
 }
 
-bool ModeleAtelier::addAtelier() {
-    QSqlQuery q;
-    QString sQuery;
-    bool ret;
+void ModeleAtelier::parseDate() {
+    int yy, mm, dd, hour, min, sec;
+    struct tm *s_time;
+    time_t rawtime;
+    QString date = _values[DATE].toString();
 
-    //TODO: ajouter la date
-    sQuery  = "INSERT INTO p_atelier (";
-    sQuery += "titre, ";
-//    sQuery += "dateatel, ";
-    sQuery += "duree, ";
-    sQuery += "nolocal, ";
-    sQuery += "langue, ";
-    sQuery += "notype, ";
-    sQuery += "nocategorie, ";
-    sQuery += "nbmaximum, ";
-    sQuery += "coutRegulier, ";
-    sQuery += "coutEtudiant, ";
-    sQuery += "noExposant, ";
-    sQuery += "acetate_elec, ";
-    sQuery += "portable, ";
-    sQuery += "retro) ";
-//    sQuery += "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    sQuery += "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    sscanf(date.toStdString().c_str(), "%d-%d-%d %d:%d:%d", &yy, &mm, &dd, &hour, &min, &sec);
 
-    q.addBindValue(_titre);
-//    q.addBindValue();
-    q.addBindValue(_duree);
-    q.addBindValue(_noLocal);
-    q.addBindValue(_langue);
-    q.addBindValue(_noType);
-    q.addBindValue(_noCat);
-    q.addBindValue(_nbMax);
-    q.addBindValue(_coutAdulte);
-    q.addBindValue(_coutEnfant);
-    q.addBindValue(_noExpo);
-    q.addBindValue(_acetate);
-    q.addBindValue(_ordi);
-    q.addBindValue(_retro);
+    time(&rawtime);
+//    s_time = localtime(&rawtime);
+    s_time = gmtime(&rawtime);
 
-    QList<QVariant> list = q.boundValues().values();
-    for (int i = 0; i < list.size(); ++i)
-        qDebug() << i << ": " << list.at(i).toString().toAscii().data() << endl;
+    s_time->tm_year = yy-1900;
+    s_time->tm_mon = mm-1;
+    s_time->tm_mday = dd;
+    s_time->tm_hour = hour;
+    s_time->tm_min = min;
+    s_time->tm_sec = sec;
 
-    qDebug() << sQuery;
+    /* Genere la journee de la semaine */
+    mktime(s_time);
 
-    qDebug() << q.lastQuery();
-    ret = q.exec();
-    if (!ret)
-        qDebug() << __FILE__ << ":" << __LINE__ << ":" << q.lastError().text();
-    qDebug() << q.lastQuery();
-
-    return ret;
+    _heure = hour; /* Pour une raison inconnue, l'heure n'est pas toujours valide dans s_time */
+    _jour = s_time->tm_wday;
 }
 
-bool ModeleAtelier::updateAtelier() {
-    QSqlQuery q;
-    QString sQuery;
-    bool ret;
+QString ModeleAtelier::genererDate(int heure, int jour) {
+    //Mise a jour des attributs du modele
+    _heure = heure;
+    switch (jour) {
+        case 0: //vendredi
+            _jour = 5;
+            break;
+        case 1: //samedi
+            _jour = 6;
+            break;
+        case 2: //dimanche
+            _jour = 0;
+            break;
+    }
+    //Genere une date bidon avec pour reference
+    //vendredi = 01/05/2009
+    char date[255];
+    sprintf(date, "2009-05-%.2d %.2d:00:00", 1 + jour, heure);
 
-    //TODO: ajouter la date
-    sQuery  = "UPDATE p_atelier SET ";
-    sQuery += "titre=:titre, ";
-//    sQuery += "dateatel=:dateatel, ";
-    sQuery += "duree=:duree, ";
-    sQuery += "nolocal=:nolocal, ";
-    sQuery += "langue=:langue, ";
-    sQuery += "notype=:notype, ";
-    sQuery += "nocategorie=:nocat, ";
-    sQuery += "nbmaximum=:nbmax, ";
-    sQuery += "coutRegulier=:couta, ";
-    sQuery += "coutEtudiant=:coute, ";
-    sQuery += "noExposant=:noexpo, ";
-    sQuery += "acetate_elec=:acetate, ";
-    sQuery += "portable=:portable, ";
-    sQuery += "retro=:retro ";
-    sQuery += "WHERE noatel=:noatel";
-
-    q.prepare(sQuery);
-    q.bindValue(":titre", _titre);
-//    q.bindValue(":dateatel", );
-    q.bindValue(":duree", _duree);
-    q.bindValue(":nolocal", _noLocal);
-    q.bindValue(":langue", _langue);
-    q.bindValue(":notype", _noType);
-    q.bindValue(":nocat", _noCat);
-    q.bindValue(":nbmax", _nbMax);
-    q.bindValue(":couta", _coutAdulte);
-    q.bindValue(":coute", _coutEnfant);
-    q.bindValue(":noexpo", _noExpo);
-    q.bindValue(":acetate", _acetate);
-    q.bindValue(":portable", _ordi);
-    q.bindValue(":retro", _retro);
-    q.bindValue(":noatel", _noAtel);
-
-    ret = q.exec();
-    if (!ret)
-        qDebug() << __FILE__ << ":" << __LINE__ << ":" << "Update Fail :(";
-
-    return ret;
-}
-
-int ModeleAtelier::getNoAtel() {
-    return _noAtel;
-}
-
-QString ModeleAtelier::getTitre() {
-    return _titre;
-}
-
-void ModeleAtelier::setTitre(QString titre) {
-    _titre = titre;
-}
-
-int ModeleAtelier::getType() {
-    return _noType;
-}
-
-void ModeleAtelier::setType(int type) {
-    _noType = type;
-}
-
-int ModeleAtelier::getNoExpo() {
-    return _noExpo;
-}
-
-void ModeleAtelier::setNoExpo(int noExpo) {
-    _noExpo = noExpo;
-}
-
-int ModeleAtelier::getNoCat() {
-    return _noCat;
-}
-
-void ModeleAtelier::setNoCat(int noCat) {
-    _noCat = noCat;
-}
-
-int ModeleAtelier::getNbMax() {
-    return _nbMax;
-}
-
-void ModeleAtelier::setNbMax(int nbMax) {
-    _nbMax = nbMax;
-}
-
-QString ModeleAtelier::getLangue() {
-    return _langue;
-}
-
-void ModeleAtelier::setLangue(QString langue) {
-    _langue = langue;
-}
-
-int ModeleAtelier::getNoLocal() {
-    return _noLocal;
-}
-
-void ModeleAtelier::setNoLocal(int noLocal) {
-    _noLocal = noLocal;
-}
-
-int ModeleAtelier::getJour() {
-    return _jour;
-}
-
-void ModeleAtelier::setJour(int jour) {
-    _jour = jour;
+    return QString(date);
 }
 
 int ModeleAtelier::getHeure() {
     return _heure;
 }
 
-void ModeleAtelier::setHeure(int heure) {
-    _heure = heure;
+int ModeleAtelier::getJour() {
+    return _jour;
 }
 
-int ModeleAtelier::getDuree() {
-    return _duree;
+bool ModeleAtelier::capaciteValide() {
+    int capLocal;
+    _query.exec("SELECT capacite FROM p_local WHERE idlocal=" + _values[NOLOCAL].toString());
+    _query.first();
+
+    if (_query.isValid()) {
+        capLocal = _query.value(0).toInt();
+    }
+
+    if (capLocal >= _values[NBMAXIMUM].toInt())
+        return true;
+    else
+        return false;
 }
 
-void ModeleAtelier::setDuree(int duree) {
-    _duree = duree;
+bool ModeleAtelier::titreExisteDeja() {
+    _query.exec("SELECT count(*) FROM p_atelier WHERE titre LIKE '" + _values[TITRE].toString() + "'");
+    _query.first();
+
+    /* Pour une raison etrange, il ajoute 1 au count */
+    if (_query.value(0).toInt() - 1 > 0)
+        return true;
+    else
+        return false;
 }
 
-int ModeleAtelier::getCoutAdulte() {
-    return _coutAdulte;
+bool ModeleAtelier::conflitHoraire() {
+    double hrDebut, hrFin;
+    //On va chercher tous les autre ateliers dans ce local la meme journee
+    QString sQuery = "SELECT strftime('%H', dateatel) FROM p_atelier WHERE nolocal=" + _values[NOLOCAL].toString() +
+        " AND strftime('%w', dateatel)='" + QString::number(_jour) + "'";
+
+    _query.exec(sQuery);
+    _query.first();
+
+    hrDebut = (double)_heure;
+    hrFin = (double)_heure + _values[DUREE].toDouble() / 60.0;
+
+    qDebug() << hrDebut << hrFin << _query.value(0).toDouble();
+
+    while (_query.isValid()) {
+        if (_query.value(0).toDouble() >= hrDebut && _query.value(0).toDouble() < hrFin)
+            return true;
+        _query.next();
+    }
+
+    return false;
 }
 
-void ModeleAtelier::setCoutAdulte(int cout) {
-    _coutAdulte = cout;
+bool termineTropTard() {
+    return false;
 }
 
-int ModeleAtelier::getCoutEnfant() {
-    return _coutEnfant;
-}
-
-void ModeleAtelier::setCoutEnfant(int cout) {
-    _coutEnfant = cout;
-}
-
-int ModeleAtelier::getAcetate() {
-    return _acetate;
-}
-
-void ModeleAtelier::setAcetate(int acetate) {
-    _acetate = acetate;
-}
-
-int ModeleAtelier::getRetro() {
-    return _retro;
-}
-
-void ModeleAtelier::setRetro(int retro) {
-    _retro = retro;
-}
-
-int ModeleAtelier::getOrdi() {
-    return _ordi;
-}
-
-void ModeleAtelier::setOrdi(int ordi) {
-    _ordi = ordi;
+bool ModeleAtelier::dejaDesInscriptions() {
+    return false;
 }
 
 QStringList ModeleAtelier::getTypes() {

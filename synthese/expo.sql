@@ -181,7 +181,7 @@ CREATE TABLE p_atelier (
     retro INTEGER,
     duree INTEGER,
     nbmaximum INTEGER,
-    nolocal TEXT,
+    nolocal INTEGER,
     dateatel TEXT, --Au format 'YYYY-MM-DD HH:MM:SS'
     creepar TEXT,
     datecreation TEXT,

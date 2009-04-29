@@ -21,6 +21,7 @@ OBJECTS_DIR = ./obj
 HEADERS += defaultsqlmodel.h \
            defaulttableview.h \
            mainwindow.h \
+           modeleajoutupdate.h \
            modeleatelier.h \
            modelegestionatelier.h \
            tablegestionatelier.h \
@@ -30,6 +31,7 @@ SOURCES += defaultsqlmodel.cpp \
            defaulttableview.cpp \
            main.cpp \
            mainwindow.cpp \
+           modeleajoutupdate.cpp \
            modeleatelier.cpp \
            modelegestionatelier.cpp \
            tablegestionatelier.cpp \

@@ -13,19 +13,34 @@
 	<File name="defaulttableview.h" open="0" top="0" tabpos="3">
 		<Cursor position="354" topLine="0" />
 	</File>
-	<File name="expo.sql" open="0" top="0" tabpos="3">
-		<Cursor position="10099" topLine="236" />
+	<File name="expo.pro" open="0" top="0" tabpos="0">
+		<Cursor position="882" topLine="0" />
+	</File>
+	<File name="expo.sql" open="1" top="0" tabpos="4">
+		<Cursor position="4612" topLine="167" />
+	</File>
+	<File name="modeleajoutupdate.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="3072" topLine="87" />
+	</File>
+	<File name="modeleajoutupdate.h" open="0" top="0" tabpos="3">
+		<Cursor position="220" topLine="3" />
 	</File>
 	<File name="modeleatelier.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="4239" topLine="130" />
+		<Cursor position="5399" topLine="160" />
 	</File>
-	<File name="modeleatelier.h" open="0" top="0" tabpos="0">
-		<Cursor position="1761" topLine="33" />
+	<File name="modeleatelier.h" open="1" top="0" tabpos="1">
+		<Cursor position="499" topLine="0" />
 	</File>
-	<File name="vueatelier.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="8432" topLine="238" />
+	<File name="modelegestionatelier.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="244" topLine="0" />
+	</File>
+	<File name="vueatelier.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="11905" topLine="288" />
+	</File>
+	<File name="vueatelier.h" open="1" top="0" tabpos="6">
+		<Cursor position="1538" topLine="45" />
 	</File>
 	<File name="vuegestionatelier.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="3127" topLine="60" />
+		<Cursor position="3523" topLine="94" />
 	</File>
 </CodeBlocks_layout_file>

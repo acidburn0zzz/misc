@@ -14,7 +14,17 @@ VueAtelier::VueAtelier(bool isModif, int noAtel, QWidget *parent, Qt::WindowFlag
         _model = new ModeleAtelier(_noAtel);
     } else {
         _model = new ModeleAtelier();
+
+        /* Valeur par defaut pour un nouvel enregistrement */
+        _radFrancais->setChecked(true);
+
+        _txtCoutAdulte->setText(QString::number(10));
+        _txtCoutEnfant->setText(QString::number(10));
+        _txtNbMax->setText(QString::number(10));
+        _txtTitre->setText("java");
     }
+
+    _txtTitre->setFocus();
 
     fillInfosAtel();
 }
@@ -67,6 +77,7 @@ void VueAtelier::init() {
     _txtNoAtel = new QLineEdit();
     _txtNoAtel->setEnabled(false);
     _txtTitre = new QLineEdit();
+    _txtTitre->setValidator(new QRegExpValidator(QRegExp("[\\w\\d\\s-]+"), this));
     _txtNbMax = new QLineEdit();
     _txtNbMax->setValidator(new QIntValidator(0, 999, this));
     _txtCoutAdulte = new QLineEdit();
@@ -138,7 +149,7 @@ void VueAtelier::init() {
 }
 
 void VueAtelier::fillInfosAtel() {
-    _txtNoAtel->setText(QString::number(_model->getNoAtel()));
+    _txtNoAtel->setText(QString::number(_model->getId()));
 
     _cmbType->insertItems(0, _model->getTypes());
     _cmbNomExpo->insertItems(0, _model->getExposants());
@@ -149,19 +160,34 @@ void VueAtelier::fillInfosAtel() {
     _cmbDuree->insertItems(0, _model->getDurees());
 
     if (_isModif) {
-        _txtTitre->setText(_model->getTitre());
-        _txtNbMax->setText(QString::number(_model->getNbMax()));
-        _txtCoutAdulte->setText(QString::number(_model->getCoutAdulte()));
-        _txtCoutEnfant->setText(QString::number(_model->getCoutEnfant()));
+        _txtTitre->setText(_model->getValue(ModeleAtelier::TITRE).toString());
+        _txtNbMax->setText(_model->getValue(ModeleAtelier::NBMAXIMUM).toString());
+        _txtCoutAdulte->setText(_model->getValue(ModeleAtelier::COUT_A).toString());
+        _txtCoutEnfant->setText(_model->getValue(ModeleAtelier::COUT_E).toString());
 
-        _cmbType->setCurrentIndex(_model->getType() - 1);
-        _cmbNomExpo->setCurrentIndex(_model->getNoExpo() - 1);
-        _cmbNomCat->setCurrentIndex(_model->getNoCat() - 1);
-        _cmbNoLocal->setCurrentIndex(_model->getNoLocal() - 1);
-        _cmbJour->setCurrentIndex(_model->getJour());
+        _cmbType->setCurrentIndex(_model->getValue(ModeleAtelier::NOTYPE).toInt() - 1);
+        _cmbNomExpo->setCurrentIndex(_model->getValue(ModeleAtelier::NOEXPOSANT).toInt() - 1);
+        _cmbNomCat->setCurrentIndex(_model->getValue(ModeleAtelier::NOCATEGORIE).toInt() - 1);
+        _cmbNoLocal->setCurrentIndex(_model->getValue(ModeleAtelier::NOLOCAL).toInt() - 1);
+
+        _model->parseDate();
+        switch (_model->getJour()) {
+            case 0: //Dimanche
+                _cmbJour->setCurrentIndex(2);
+                break;
+            case 5: //Vendredi
+                _cmbJour->setCurrentIndex(0);
+                break;
+            case 6: //Samedi
+                _cmbJour->setCurrentIndex(1);
+                break;
+            default:
+                _cmbJour->setCurrentIndex(0);
+        }
+
         _cmbHeure->setCurrentIndex(_model->getHeure() - 10); /* 10h est a l'index 0 */
 
-        switch (_model->getDuree()) {
+        switch (_model->getValue(ModeleAtelier::DUREE).toInt()) {
             case 30:
                 _cmbDuree->setCurrentIndex(0);
                 break;
@@ -176,27 +202,22 @@ void VueAtelier::fillInfosAtel() {
                 break;
         }
 
-        if (_model->getLangue().toLower() == "f")
+        if (_model->getValue(ModeleAtelier::LANGUE).toString().toLower() == "f")
             _radFrancais->setChecked(true);
         else
             _radAnglais->setChecked(true);
 
-        if (_model->getAcetate() != 0)
+        if (_model->getValue(ModeleAtelier::ACETATE).toInt() != 0)
             _chkAcetate->setChecked(true);
         else
             _chkAcetate->setChecked(false);
 
-        if (_model->getRetro() != 0)
+        if (_model->getValue(ModeleAtelier::RETRO).toInt() != 0)
             _chkRetro->setChecked(true);
         else
             _chkRetro->setChecked(false);
 
-        if (_model->getRetro() != 0)
-            _chkRetro->setChecked(true);
-        else
-            _chkRetro->setChecked(false);
-
-        if (_model->getOrdi() != 0)
+        if (_model->getValue(ModeleAtelier::PORTABLE).toInt() != 0)
             _chkOrdi->setChecked(true);
         else
             _chkOrdi->setChecked(false);
@@ -204,64 +225,105 @@ void VueAtelier::fillInfosAtel() {
 }
 
 void VueAtelier::valider() {
-    /* Tout devrait etre valide grace aux QValidators */
+    if (!_txtTitre->hasAcceptableInput()) {
+        QMessageBox::information(this, tr("Titre invalide"), tr("Veuillez entrer un titre d'atelier valide"));
+        _txtTitre->setFocus();
+        return;
+    } else {
+        _model->setValue(QVariant::fromValue(_txtTitre->text()), ModeleAtelier::TITRE);
+    }
 
-    _model->setTitre(_txtTitre->text());
-    _model->setType(_cmbType->currentIndex() + 1);
-    _model->setNoExpo(_cmbNomExpo->currentIndex() + 1);
-    _model->setNoCat(_cmbNomCat->currentIndex() + 1);
+    _model->setValue(QVariant::fromValue(_cmbType->currentIndex() + 1), ModeleAtelier::NOTYPE);
+    _model->setValue(QVariant::fromValue(_cmbNomExpo->currentIndex() + 1), ModeleAtelier::NOEXPOSANT);
+    _model->setValue(QVariant::fromValue(_cmbNomCat->currentIndex() + 1), ModeleAtelier::NOCATEGORIE);
 
-    //TODO: Valider max en fct du local
-    _model->setNbMax(_txtNbMax->text().toInt());
-
-    _model->setNoLocal(_cmbNoLocal->currentIndex() + 1);
-    _model->setJour(_cmbJour->currentIndex());
+    if (!_txtNbMax->hasAcceptableInput()) {
+        QMessageBox::information(this, tr("Nombre Maximum invalide"), tr("Veuillez entrer un nombre d'auditeurs maximum valide (0-999)"));
+        _txtNbMax->setFocus();
+        return;
+    } else {
+        _model->setValue(QVariant::fromValue(_txtNbMax->text().toInt()), ModeleAtelier::NBMAXIMUM);
+        _model->setValue(QVariant::fromValue(_cmbNoLocal->currentIndex() + 1), ModeleAtelier::NOLOCAL);
+    }
 
     // TODO: Valider l'heure en fct du local
-    _model->setHeure(_cmbHeure->currentIndex() + 10); //Index 0 represente 10h
+    int heure = _cmbHeure->currentIndex() + 10; //Index 0 represente 10h
+    int jour = _cmbJour->currentIndex();
+    _model->setValue(QVariant::fromValue(_model->genererDate(heure, jour)), ModeleAtelier::DATE);
 
     switch (_cmbDuree->currentIndex()) {
         case 0:
-            _model->setDuree(30);
+            _model->setValue(QVariant::fromValue(30), ModeleAtelier::DUREE);
             break;
         case 1:
-            _model->setDuree(45);
+            _model->setValue(QVariant::fromValue(45), ModeleAtelier::DUREE);
             break;
         case 2:
-            _model->setDuree(60);
+            _model->setValue(QVariant::fromValue(60), ModeleAtelier::DUREE);
             break;
         case 3:
-            _model->setDuree(90);
+            _model->setValue(QVariant::fromValue(90), ModeleAtelier::DUREE);
             break;
     }
 
-    _model->setCoutAdulte(_txtCoutAdulte->text().toInt());
-    _model->setCoutEnfant(_txtCoutEnfant->text().toInt());
+    if (!_txtCoutAdulte->hasAcceptableInput()) {
+        QMessageBox::information(this, tr("Cout Adulte invalide"), tr("Veuillez entrer un cout adulte valide (0-999)"));
+        _txtCoutAdulte->setFocus();
+        return;
+    } else {
+        _model->setValue(QVariant::fromValue(_txtCoutAdulte->text().toInt()), ModeleAtelier::COUT_A);
+    }
+    if (!_txtCoutEnfant->hasAcceptableInput()) {
+        QMessageBox::information(this, tr("Cout Enfant invalide"), tr("Veuillez entrer un cout enfant valide (0-999)"));
+        _txtCoutEnfant->setFocus();
+        return;
+    } else {
+        _model->setValue(QVariant::fromValue(_txtCoutEnfant->text().toInt()), ModeleAtelier::COUT_E);
+    }
 
     if (_radAnglais->isChecked())
-        _model->setLangue("A");
+        _model->setValue(QVariant::fromValue(QString("A")), ModeleAtelier::LANGUE);
     else
-        _model->setLangue("F");
+        _model->setValue(QVariant::fromValue(QString("F")), ModeleAtelier::LANGUE);
 
     if (_chkAcetate->isChecked())
-        _model->setAcetate(1);
+        _model->setValue(QVariant::fromValue(1), ModeleAtelier::ACETATE);
     else
-        _model->setAcetate(0);
+        _model->setValue(QVariant::fromValue(0), ModeleAtelier::ACETATE);
 
     if (_chkRetro->isChecked())
-        _model->setRetro(1);
+        _model->setValue(QVariant::fromValue(1), ModeleAtelier::RETRO);
     else
-        _model->setRetro(0);
+        _model->setValue(QVariant::fromValue(0), ModeleAtelier::RETRO);
 
     if (_chkOrdi->isChecked())
-        _model->setOrdi(1);
+        _model->setValue(QVariant::fromValue(1), ModeleAtelier::PORTABLE);
     else
-        _model->setOrdi(0);
+        _model->setValue(QVariant::fromValue(0), ModeleAtelier::PORTABLE);
+
+    /* Validations des donnees par rapport a la BDD */
+    if (!_model->capaciteValide()) {
+        QMessageBox::information(this, tr("Local surcharge"), tr("Veuillez choisir un local plus grand ou diminuer le maximum d'auditeurs de l'atelier"));
+        _txtNbMax->setFocus();
+        return;
+    }
+
+    if (_model->titreExisteDeja()) {
+        QMessageBox::information(this, tr("Titre invalide"), tr("Ce titre existe deja, veuillez en choisir un autre"));
+        _txtTitre->setFocus();
+        return;
+    }
+
+    if (_model->conflitHoraire()) {
+        QMessageBox::information(this, tr("Conflit d'horaire"), tr("L'atelier en chevauche un autre, veuillez changer de local ou d'heure"));
+        _cmbNoLocal->setFocus();
+        return;
+    }
 
     if (_isModif)
-        _model->updateAtelier();
+        _model->updateEntry();
     else
-        _model->addAtelier();
+        _model->addEntry();
 
     this->accept();
 }
