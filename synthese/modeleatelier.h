@@ -18,6 +18,7 @@ class ModeleAtelier : public ModeleAjoutUpdate {
 
         /*Verification par rapport a l'ajout ou modif*/
         bool capaciteValide();
+        bool nbMaxValide();
         bool titreExisteDeja();
         bool conflitHoraire();
         bool termineTropTard();

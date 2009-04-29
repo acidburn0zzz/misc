@@ -28,9 +28,8 @@ class ModeleAjoutUpdate : public QObject {
     private:
         virtual void fillListes();
 
-        int _id;
-
     protected:
+        int _id;
         std::vector<QString> _columnTypes;
         std::vector<QString> _columnNames;
         std::vector<QVariant> _values;

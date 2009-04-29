@@ -147,10 +147,22 @@ bool ModeleAtelier::capaciteValide() {
         capLocal = _query.value(0).toInt();
     }
 
-    if (capLocal >= _values[NBMAXIMUM].toInt())
-        return true;
-    else
+    //Verification de la capacite du local
+    if (capLocal < _values[NBMAXIMUM].toInt())
         return false;
+    else
+        return true;
+}
+
+bool ModeleAtelier::nbMaxValide() {
+    //Verification du NbMax en fonction des inscriptions
+    _query.exec("SELECT count(*) FROM p_inscription WHERE noatel=" + QString::number(_id));
+    _query.first();
+
+    if (_values[NBMAXIMUM].toInt() < _query.value(0).toInt())
+        return false;
+    else
+        return true;
 }
 
 bool ModeleAtelier::titreExisteDeja() {
@@ -165,21 +177,23 @@ bool ModeleAtelier::titreExisteDeja() {
 }
 
 bool ModeleAtelier::conflitHoraire() {
-    double hrDebut, hrFin;
+    double hrDebutA, hrFinA, hrDebutB, hrFinB;
+
+    hrDebutA = (double)_heure;
+    hrFinA = hrDebutA + _values[DUREE].toDouble() / 60.0;
+
     //On va chercher tous les autre ateliers dans ce local la meme journee
-    QString sQuery = "SELECT strftime('%H', dateatel) FROM p_atelier WHERE nolocal=" + _values[NOLOCAL].toString() +
-        " AND strftime('%w', dateatel)='" + QString::number(_jour) + "'";
+    QString sQuery = "SELECT strftime('%H', dateatel), duree FROM p_atelier WHERE nolocal=" + _values[NOLOCAL].toString() +
+        " AND strftime('%w', dateatel)='" + QString::number(_jour) + "' AND noatel!=" + QString::number(_id);
 
     _query.exec(sQuery);
     _query.first();
 
-    hrDebut = (double)_heure;
-    hrFin = (double)_heure + _values[DUREE].toDouble() / 60.0;
-
-    qDebug() << hrDebut << hrFin << _query.value(0).toDouble();
-
     while (_query.isValid()) {
-        if (_query.value(0).toDouble() >= hrDebut && _query.value(0).toDouble() < hrFin)
+        hrDebutB = _query.value(0).toDouble();
+        hrFinB = hrDebutB + _query.value(1).toDouble() / 60.0;
+
+        if ((hrDebutA >= hrDebutB && hrDebutA < hrFinB) || (hrDebutB >= hrDebutA && hrDebutB < hrFinA))
             return true;
         _query.next();
     }
@@ -187,12 +201,21 @@ bool ModeleAtelier::conflitHoraire() {
     return false;
 }
 
-bool termineTropTard() {
-    return false;
+bool ModeleAtelier::termineTropTard() {
+    if ((_heure + _values[DUREE].toInt() / 60.0) > 16.0)
+        return true;
+    else
+        return false;
 }
 
 bool ModeleAtelier::dejaDesInscriptions() {
-    return false;
+    _query.exec("SELECT count(*) FROM p_inscription WHERE noatel=" + QString::number(_id));
+    _query.first();
+
+    if ( _query.value(0).toInt() > 0)
+        return true;
+    else
+        return false;
 }
 
 QStringList ModeleAtelier::getTypes() {

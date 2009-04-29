@@ -75,8 +75,8 @@ void VueGestionAtelier::init() {
 
     this->setLayout(_layCentral);
 
-    connect(_modele, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this, SLOT(updateNbAteliers(const QModelIndex &, int, int)));
-    connect(_modele, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this, SLOT(updateNbAteliers(const QModelIndex &, int, int)));
+    connect(_modele, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this, SLOT(updateNbAteliers()));
+    connect(_modele, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this, SLOT(updateNbAteliers()));
 
     connect(_btnNouveau, SIGNAL(clicked()), this, SLOT(ajouterAtelier()));
     connect(_btnModifier, SIGNAL(clicked()), this, SLOT(modifierAtelier()));
@@ -86,7 +86,7 @@ void VueGestionAtelier::init() {
     connect(_btnX, SIGNAL(clicked()), this, SLOT(cancelQuit()));
 }
 
-void VueGestionAtelier::updateNbAteliers(const QModelIndex & parent, int start, int end) {
+void VueGestionAtelier::updateNbAteliers() {
     _txtNbAteliers->setText(QString::number(_modele->rowCount()));
 }
 

@@ -12,16 +12,16 @@ VueAtelier::VueAtelier(bool isModif, int noAtel, QWidget *parent, Qt::WindowFlag
 
     if (_isModif) {
         _model = new ModeleAtelier(_noAtel);
+        if (_model->dejaDesInscriptions()) {
+            _cmbJour->setEnabled(false);
+            _cmbHeure->setEnabled(false);
+            _cmbDuree->setEnabled(false);
+        }
     } else {
         _model = new ModeleAtelier();
 
         /* Valeur par defaut pour un nouvel enregistrement */
         _radFrancais->setChecked(true);
-
-        _txtCoutAdulte->setText(QString::number(10));
-        _txtCoutEnfant->setText(QString::number(10));
-        _txtNbMax->setText(QString::number(10));
-        _txtTitre->setText("java");
     }
 
     _txtTitre->setFocus();
@@ -77,7 +77,7 @@ void VueAtelier::init() {
     _txtNoAtel = new QLineEdit();
     _txtNoAtel->setEnabled(false);
     _txtTitre = new QLineEdit();
-    _txtTitre->setValidator(new QRegExpValidator(QRegExp("[\\w\\d\\s-]+"), this));
+    _txtTitre->setValidator(new QRegExpValidator(QRegExp("[\\w\\d\\s-+]+"), this));
     _txtNbMax = new QLineEdit();
     _txtNbMax->setValidator(new QIntValidator(0, 999, this));
     _txtCoutAdulte = new QLineEdit();
@@ -246,7 +246,6 @@ void VueAtelier::valider() {
         _model->setValue(QVariant::fromValue(_cmbNoLocal->currentIndex() + 1), ModeleAtelier::NOLOCAL);
     }
 
-    // TODO: Valider l'heure en fct du local
     int heure = _cmbHeure->currentIndex() + 10; //Index 0 represente 10h
     int jour = _cmbJour->currentIndex();
     _model->setValue(QVariant::fromValue(_model->genererDate(heure, jour)), ModeleAtelier::DATE);
@@ -307,6 +306,11 @@ void VueAtelier::valider() {
         _txtNbMax->setFocus();
         return;
     }
+    if (!_model->nbMaxValide()) {
+        QMessageBox::information(this, tr("Attention"), tr("Vous ne pouvez pas changer le nombre maximum pour une valeur plus basse que le nombre d'inscrits"));
+        _txtNbMax->setFocus();
+        return;
+    }
 
     if (_model->titreExisteDeja()) {
         QMessageBox::information(this, tr("Titre invalide"), tr("Ce titre existe deja, veuillez en choisir un autre"));
@@ -316,6 +320,12 @@ void VueAtelier::valider() {
 
     if (_model->conflitHoraire()) {
         QMessageBox::information(this, tr("Conflit d'horaire"), tr("L'atelier en chevauche un autre, veuillez changer de local ou d'heure"));
+        _cmbNoLocal->setFocus();
+        return;
+    }
+
+    if (_model->termineTropTard()) {
+        QMessageBox::information(this, tr("Conflit d'horaire"), tr("L'atelier termine apres 16h00"));
         _cmbNoLocal->setFocus();
         return;
     }

@@ -25,7 +25,7 @@ void ModeleAjoutUpdate::init(int id) {
     /* On remplit les infos */
     QString sQuery;
     sQuery = "SELECT ";
-    for (int i=0; i<_columnNames.size(); i++) {
+    for (unsigned int i=0; i<_columnNames.size(); i++) {
         sQuery += _columnNames[i];
         if (i != _columnNames.size() - 1)
             sQuery += ", ";
@@ -41,7 +41,7 @@ void ModeleAjoutUpdate::init(int id) {
 
     _query.first();
 
-    for (int i=0; i<_columnNames.size(); i++)
+    for (unsigned int i=0; i<_columnNames.size(); i++)
         _values.push_back(_query.value(i));
 }
 
@@ -55,7 +55,7 @@ bool ModeleAjoutUpdate::addEntry() {
     bool ret;
 
     sQuery  = "INSERT INTO " + _tableName + " (";
-    for (int i=0; i<_columnNames.size(); i++) {
+    for (unsigned int i=0; i<_columnNames.size(); i++) {
         sQuery += _columnNames[i];
         if (i != _columnNames.size() - 1)
             sQuery += ", ";
@@ -63,7 +63,7 @@ bool ModeleAjoutUpdate::addEntry() {
             sQuery += " ";
     }
     sQuery += ") VALUES (";
-    for (int i=0; i<_values.size(); i++) {
+    for (unsigned int i=0; i<_values.size(); i++) {
         if (_columnTypes[i] == "int")
             sQuery += _values[i].toString();
         else if (_columnTypes[i] == "str")
@@ -86,7 +86,7 @@ bool ModeleAjoutUpdate::updateEntry() {
     bool ret;
 
     sQuery  = "UPDATE " + _tableName + " SET ";
-    for (int i=0; i<_values.size(); i++) {
+    for (unsigned int i=0; i<_values.size(); i++) {
         sQuery += _columnNames[i] + "=";
         if (_columnTypes[i] == "int")
             sQuery += _values[i].toString();
