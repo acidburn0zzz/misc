@@ -109,42 +109,55 @@ void ModeleAtelier::fillListes() {
 bool ModeleAtelier::addAtelier() {
     QSqlQuery q;
     QString sQuery;
+    bool ret;
 
     //TODO: ajouter la date
-    sQuery  = "UPDATE p_atelier SET ";
-    sQuery += "titre=:titre, ";
-//    sQuery += "dateatel=:dateatel, ";
-    sQuery += "duree=:duree, ";
-    sQuery += "nolocal=:nolocal, ";
-    sQuery += "langue=:langue, ";
-    sQuery += "notype=:notype, ";
-    sQuery += "nocategorie=:nocat, ";
-    sQuery += "nbmaximum=:nbmax, ";
-    sQuery += "coutRegulier=:couta, ";
-    sQuery += "coutEtudiant=:coute, ";
-    sQuery += "noExposant=:noexpo, ";
-    sQuery += "acetate_elec=:acetate, ";
-    sQuery += "portable=:portable, ";
-    sQuery += "retro=:retro ";
-    sQuery += "WHERE noatel=:noatel";
+    sQuery  = "INSERT INTO p_atelier (";
+    sQuery += "titre, ";
+//    sQuery += "dateatel, ";
+    sQuery += "duree, ";
+    sQuery += "nolocal, ";
+    sQuery += "langue, ";
+    sQuery += "notype, ";
+    sQuery += "nocategorie, ";
+    sQuery += "nbmaximum, ";
+    sQuery += "coutRegulier, ";
+    sQuery += "coutEtudiant, ";
+    sQuery += "noExposant, ";
+    sQuery += "acetate_elec, ";
+    sQuery += "portable, ";
+    sQuery += "retro) ";
+//    sQuery += "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    sQuery += "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    q.bindValue(":titre", _titre);
-//    q.bindValue(":dateatel", );
-    q.bindValue(":duree", _duree);
-    q.bindValue(":nolocal", _noLocal);
-    q.bindValue(":langue", _langue);
-    q.bindValue(":notype", _noType);
-    q.bindValue(":nocat", _noCat);
-    q.bindValue(":nbmax", _nbMax);
-    q.bindValue(":couta", _coutAdulte);
-    q.bindValue(":coute", _coutEnfant);
-    q.bindValue(":noexpo", _noExpo);
-    q.bindValue(":acetate", _acetate);
-    q.bindValue(":portable", _ordi);
-    q.bindValue(":retro", _retro);
-    q.bindValue(":noatel", _noAtel);
+    q.addBindValue(_titre);
+//    q.addBindValue();
+    q.addBindValue(_duree);
+    q.addBindValue(_noLocal);
+    q.addBindValue(_langue);
+    q.addBindValue(_noType);
+    q.addBindValue(_noCat);
+    q.addBindValue(_nbMax);
+    q.addBindValue(_coutAdulte);
+    q.addBindValue(_coutEnfant);
+    q.addBindValue(_noExpo);
+    q.addBindValue(_acetate);
+    q.addBindValue(_ordi);
+    q.addBindValue(_retro);
 
-    return q.exec();
+    QList<QVariant> list = q.boundValues().values();
+    for (int i = 0; i < list.size(); ++i)
+        qDebug() << i << ": " << list.at(i).toString().toAscii().data() << endl;
+
+    qDebug() << sQuery;
+
+    qDebug() << q.lastQuery();
+    ret = q.exec();
+    if (!ret)
+        qDebug() << __FILE__ << ":" << __LINE__ << ":" << q.lastError().text();
+    qDebug() << q.lastQuery();
+
+    return ret;
 }
 
 bool ModeleAtelier::updateAtelier() {
@@ -189,8 +202,7 @@ bool ModeleAtelier::updateAtelier() {
 
     ret = q.exec();
     if (!ret)
-        qDebug() << "Fail!";
-    qDebug() << _noAtel;
+        qDebug() << __FILE__ << ":" << __LINE__ << ":" << "Update Fail :(";
 
     return ret;
 }

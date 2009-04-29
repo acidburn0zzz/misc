@@ -2,27 +2,30 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="all" />
 	<File name="defaultsqlmodel.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2410" topLine="0" />
+		<Cursor position="1350" topLine="33" />
 	</File>
 	<File name="defaultsqlmodel.h" open="0" top="0" tabpos="0">
 		<Cursor position="869" topLine="0" />
 	</File>
-	<File name="defaulttableview.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="764" topLine="0" />
+	<File name="defaulttableview.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="597" topLine="0" />
 	</File>
-	<File name="defaulttableview.h" open="1" top="0" tabpos="3">
-		<Cursor position="343" topLine="0" />
+	<File name="defaulttableview.h" open="0" top="0" tabpos="3">
+		<Cursor position="354" topLine="0" />
 	</File>
-	<File name="modeleatelier.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2105" topLine="51" />
+	<File name="expo.sql" open="0" top="0" tabpos="3">
+		<Cursor position="10099" topLine="236" />
+	</File>
+	<File name="modeleatelier.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="4239" topLine="130" />
 	</File>
 	<File name="modeleatelier.h" open="0" top="0" tabpos="0">
 		<Cursor position="1761" topLine="33" />
 	</File>
-	<File name="vueatelier.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="7258" topLine="144" />
+	<File name="vueatelier.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="8432" topLine="238" />
 	</File>
-	<File name="vuegestionatelier.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="3282" topLine="90" />
+	<File name="vuegestionatelier.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="3127" topLine="60" />
 	</File>
 </CodeBlocks_layout_file>

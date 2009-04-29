@@ -14,7 +14,7 @@ class DefaultTableView : public QTableView {
 
     public slots:
         void setSelectedIndex(const QModelIndex & index);
-        void refresh();
+        void refresh(QModelIndex *index = 0);
 };
 
 #endif //__DEFAULTTABLEVIEW_H__

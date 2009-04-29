@@ -87,32 +87,35 @@ void VueGestionAtelier::init() {
 }
 
 void VueGestionAtelier::updateNbAteliers(const QModelIndex & parent, int start, int end) {
-    //TODO: Verifier si l'update se fait bien
     _txtNbAteliers->setText(QString::number(_modele->rowCount()));
 }
 
 void VueGestionAtelier::ajouterAtelier() {
+    QModelIndex index = _table->currentIndex();
+
     VueAtelier v;
     if (v.exec()) {
-        _table->refresh();
+        _table->refresh(&index);
     }
 }
 
 void VueGestionAtelier::modifierAtelier() {
-    int id = _modele->data(_modele->index(_modele->getSelectedRow(), 0), Qt::DisplayRole).toInt();
+    QModelIndex index = _table->currentIndex();
+    int row = (index.row() == -1)? 0 : index.row();
+    int id = _modele->data(_modele->index(row, 0), Qt::DisplayRole).toInt();
+
     VueAtelier v(true, id);
     if (v.exec()) {
-        _table->refresh();
+        _table->refresh(&index);
     }
 }
 
 void VueGestionAtelier::supprimerAtelier() {
     int row = _modele->getSelectedRow();
     _modele->removeRows(row, 1);
-    /* Il faut cacher manuellement la rangee */
-    //~ _table->setRowHidden(row, true);
 
-    _table->refresh();
+    QModelIndex index = _table->currentIndex();
+    _table->refresh(&index);
 }
 
 void VueGestionAtelier::commitQuit() {

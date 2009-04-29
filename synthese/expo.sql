@@ -63,7 +63,7 @@ CREATE TABLE p_inscription (
     date_expire TEXT,
     acquitter INTEGER,
     confirmationenvoyee INTEGER,
-    
+
     CONSTRAINT p_inscription_pk UNIQUE (noauditeur, noatel),
     CONSTRAINT p_inscription_auditeur_fk FOREIGN KEY (noauditeur) REFERENCES p_auditeur (noauditeur),
     CONSTRAINT p_inscription_atelier_fk FOREIGN KEY (noatel) REFERENCES p_atelier (noatel)
@@ -97,7 +97,7 @@ CREATE TABLE p_exposant (
     telephone INTEGER,
     courriel TEXT,
     creepar TEXT,
-    
+
     CONSTRAINT p_exposant_ecole_fk FOREIGN KEY (noecole) REFERENCES p_ecole (noecole)
 );
 
@@ -120,7 +120,7 @@ CREATE TABLE p_evaluation (
     cote INTEGER,
     critere INTEGER NOT NULL,
     noatel INTEGER NOT NULL,
-    
+
     CONSTRAINT p_evaluation_p_atelier_fk FOREIGN KEY (noatel) REFERENCES p_atelier (noatel),
     CONSTRAINT p_evaluation_p_auditeur_fk FOREIGN KEY (juge) REFERENCES p_auditeur (noauditeur),
     CONSTRAINT p_evaluation_p_critere_fk FOREIGN KEY (critere) REFERENCES p_critere (nocritere)
@@ -136,7 +136,7 @@ CREATE TABLE p_ecole (
     code_postal TEXT,
     telephone INTEGER,
     courriel TEXT,
-    
+
     CONSTRAINT p_ecole_region_fk FOREIGN KEY (noregion) REFERENCES P_REGION (noregion)
 );
 
@@ -165,10 +165,10 @@ CREATE TABLE p_auditeur (
     telephone INTEGER,
     courriel TEXT,
     statut TEXT,
-    
+
     --Pas certain
     CONSTRAINT p_atelier_p_region_fk FOREIGN KEY (noregion) REFERENCES p_region (noregion),
-    
+
     CONSTRAINT statut CHECK (statut = 'R' OR statut = 'r' OR statut = 'E' OR statut = 'e')
 );
 
@@ -190,12 +190,12 @@ CREATE TABLE p_atelier (
     nocategorie INTEGER NOT NULL,
     notype INTEGER NOT NULL,
     noexposant INTEGER NOT NULL,
-    
+
     CONSTRAINT p_atelier_local_fk FOREIGN KEY (nolocal) REFERENCES p_local (idlocal),
     CONSTRAINT p_atelier_p_categorie_fk FOREIGN KEY (nocategorie) REFERENCES p_categorie (nocategorie),
     CONSTRAINT p_atelier_p_exposant_fk FOREIGN KEY (noexposant) REFERENCES p_exposant (noexposant),
     CONSTRAINT p_atelier_p_type_fk FOREIGN KEY (notype) REFERENCES p_type (notype),
-    
+
     CONSTRAINT acetate_elec CHECK (acetate_elec = 1 OR acetate_elec = 0),
     CONSTRAINT duree CHECK (duree IN (30, 45, 60, 90)),
     CONSTRAINT langue CHECK (langue = 'A' OR langue = 'F' OR langue = 'a' OR langue = 'f'),
@@ -213,10 +213,10 @@ INSERT INTO p_region (nomregion) VALUES ('Sherbrooke');
 INSERT INTO p_region (nomregion) VALUES ('Abitibi');
 
 INSERT INTO p_local (nolocal, capacite) VALUES ('A5.30', 50);
-INSERT INTO p_local (nolocal, capacite)  VALUES ('A5.31', 45);
-INSERT INTO p_local (nolocal, capacite)  VALUES ('A5.32', 40);
-INSERT INTO p_local (nolocal, capacite)  VALUES ('A5.33', 35);
-INSERT INTO p_local (nolocal, capacite)  VALUES ('A5.34', 30);
+INSERT INTO p_local (nolocal, capacite) VALUES ('A5.31', 45);
+INSERT INTO p_local (nolocal, capacite) VALUES ('A5.32', 40);
+INSERT INTO p_local (nolocal, capacite) VALUES ('A5.33', 35);
+INSERT INTO p_local (nolocal, capacite) VALUES ('A5.34', 30);
 
 INSERT INTO p_exposant (nom, prenom) VALUES ('1', 'Exposant');
 INSERT INTO p_exposant (nom, prenom) VALUES ('2', 'Exposant');
@@ -234,7 +234,7 @@ INSERT INTO p_inscription (noauditeur, noatel, dateinscription, mode_paiement, n
     VALUES (2, 1, '25-12-0000', 'Cheque', '', 12, "25-12-0002", 1, 1);
 INSERT INTO p_inscription (noauditeur, noatel, dateinscription, mode_paiement, no_carte, no_cheque, date_expire, acquitter, confirmationenvoyee)
     VALUES (1, 5, '25-12-0000', 'Cheque', '', 12, "25-12-0002", 1, 1);
-    
+
 INSERT INTO p_auditeur (codeauditeur, motdepasse, nom, prenom, juge, rue, ville, code_postal, noregion, telephone, courriel, statut)
     VALUES ('1', 'patate', 'Wong', 'Elvis', 0, 'Taillon', 'Montréal', 'H1L 4K5', 1, 5143553179, 'patate@patate.com', 'E');
 INSERT INTO p_auditeur (codeauditeur, motdepasse, nom, prenom, juge, rue, ville, code_postal, noregion, telephone, courriel, statut)
@@ -258,8 +258,6 @@ INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, d
 INSERT INTO p_categorie (nom ,description) VALUES ("Chimie Organique", "Chimie Organique");
 INSERT INTO p_categorie (nom ,description) VALUES ("Sciences Humaines", "Sciences Humaines");
 INSERT INTO p_categorie (nom ,description) VALUES ("Sciences de la Nature", "Sciences de la Nature");
-
-
 
 INSERT INTO p_atelier (titre, langue, acetate_elec, duree, nbmaximum, nolocal, dateatel, nocategorie, notype, noexposant)
     VALUES ('Le Biocaburant', 'F', 1, 60, 25, 1, '2001-12-25 10:00:00', 1, 1, 1);

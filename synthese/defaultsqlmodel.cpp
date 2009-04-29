@@ -44,7 +44,6 @@ void DefaultSqlModel::init() {
 
     q.exec("BEGIN;");
 
-    qDebug() << _query;
     this->setQuery(_query);
     rec = this->record();
 

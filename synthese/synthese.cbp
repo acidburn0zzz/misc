@@ -16,15 +16,29 @@
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
+				<ExtraCommands>
+					<Add before="qmake" />
+				</ExtraCommands>
+				<MakeCommands>
+					<Build command="$make -f $makefile $target" />
+					<CompileFile command="$make -f $makefile $file" />
+					<Clean command="$make -f $makefile clean" />
+					<DistClean command="$make -f $makefile distclean$target" />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -s -f $makefile $target" />
+				</MakeCommands>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Makefile" />
 		<Unit filename="defaultsqlmodel.cpp" />
 		<Unit filename="defaultsqlmodel.h" />
 		<Unit filename="defaulttableview.cpp" />
 		<Unit filename="defaulttableview.h" />
+		<Unit filename="expo.pro" />
+		<Unit filename="expo.sql" />
 		<Unit filename="main.cpp" />
 		<Unit filename="mainwindow.cpp" />
 		<Unit filename="mainwindow.h" />

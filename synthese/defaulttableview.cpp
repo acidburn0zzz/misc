@@ -15,10 +15,11 @@ void DefaultTableView::setSelectedIndex(const QModelIndex & index) {
     model->setSelectedIndex(index);
 }
 
-void DefaultTableView::refresh() {
-    DefaultSqlModel *model;
-    model = (DefaultSqlModel*)this->model();
-    model->sort();
-    this->showRow(model->getSelectedRow());
-//    this->selectRow(model->getSelectedRow());
+void DefaultTableView::refresh(QModelIndex *index) {
+    ((DefaultSqlModel*)this->model())->sort();
+
+    if (index) {
+        this->setCurrentIndex(*index);
+        this->selectRow(index->row());
+    }
 }

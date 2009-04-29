@@ -260,6 +260,8 @@ void VueAtelier::valider() {
 
     if (_isModif)
         _model->updateAtelier();
+    else
+        _model->addAtelier();
 
     this->accept();
 }
