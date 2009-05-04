@@ -1,5 +1,7 @@
-#include "crc32.h"
 #include <stdio.h>
+#include <string.h>
+
+#include "crc32.h"
 
 /*
 void crc32_generate_table() {
@@ -34,6 +36,55 @@ void crc32_hash(const unsigned char *data, unsigned long len, unsigned int *sum)
 
 void crc32_end(unsigned int *sum) {
     *sum = *sum ^ 0xffffffff;
+}
+
+unsigned int crc32_hash_string(unsigned char *str) {
+    unsigned int crc32;
+    
+    crc32_begin(&crc32);
+    crc32_hash(str, strlen((char*)str), &crc32);
+    crc32_end(&crc32);
+    
+    return crc32;
+}
+
+int crc32_hash_file(char *fn, unsigned int *sum) {
+    FILE *f;
+	const int BUFFER_SIZE=16384;
+	unsigned int size;
+	unsigned char buffer[16384];
+	
+	if (!(f = fopen(fn, "r"))) {
+		fprintf(stderr, "Error opening file %s\n", fn);
+		return -1;
+	}
+	
+	fseek(f, 0, SEEK_END);
+	size = ftell(f);
+	fseek(f, 0, SEEK_SET);
+	
+	crc32_begin(sum);
+	
+	while (size > 0) {
+		if (size < BUFFER_SIZE) {
+			if (fread(buffer, size, 1, f) != 1) {
+                fprintf(stderr, "Error reading file %s\n", fn);
+                return -1;
+            }
+			size = 0;
+		} else {
+			if (fread(buffer, size, 1, f) != 1) {
+                fprintf(stderr, "Error reading file %s\n", fn);
+                return -1;
+            }
+			size-=BUFFER_SIZE;
+		}
+		crc32_hash(buffer, strlen((char*)buffer), sum);
+	}
+	
+	crc32_end(sum);
+    
+    return 0;
 }
 
 int crc32_test() {

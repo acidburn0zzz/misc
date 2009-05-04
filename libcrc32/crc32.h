@@ -44,7 +44,10 @@ void crc32_begin(unsigned int *sum);
 void crc32_hash(const unsigned char *data, unsigned long len, unsigned int *sum);
 void crc32_end(unsigned int *sum);
 
-void crc32_generate_table();
+unsigned int crc32_hash_string(unsigned char *str);
+int crc32_hash_file(char *fn, unsigned int *sum);
+
+/* void crc32_generate_table(); */
 int crc32_test();
 
 #ifdef __cplusplus
