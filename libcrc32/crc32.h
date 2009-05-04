@@ -1,6 +1,8 @@
 #ifndef __CRC32_H__
 #define __CRC32_H__
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -40,12 +42,12 @@ static const unsigned int crc_table[256] = {
     0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94, 0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d,
 };
 
-void crc32_begin(unsigned int *sum);
-void crc32_hash(const unsigned char *data, unsigned long len, unsigned int *sum);
-void crc32_end(unsigned int *sum);
+void crc32_begin(uint32_t *sum);
+void crc32_hash(const unsigned char *data, unsigned int len, uint32_t *sum);
+void crc32_end(uint32_t *sum);
 
 unsigned int crc32_hash_string(unsigned char *str);
-int crc32_hash_file(char *fn, unsigned int *sum);
+int crc32_hash_file(char *fn, uint32_t *sum);
 
 /* void crc32_generate_table(); */
 int crc32_test();

@@ -22,24 +22,24 @@ void crc32_generate_table() {
 }
 */
 
-void crc32_begin(unsigned int *sum) {
+void crc32_begin(uint32_t *sum) {
     *sum = 0xffffffff;
 }
 
-void crc32_hash(const unsigned char *data, unsigned long len, unsigned int *sum) {
-    unsigned long i;
+void crc32_hash(const unsigned char *data, unsigned int len, uint32_t *sum) {
+    unsigned int i;
     
     for (i=0; i<len; i++) {
         *sum = (*sum >> 8) ^ crc_table[(*sum ^ data[i]) & 0xff];
     }
 }
 
-void crc32_end(unsigned int *sum) {
+void crc32_end(uint32_t *sum) {
     *sum = *sum ^ 0xffffffff;
 }
 
 unsigned int crc32_hash_string(unsigned char *str) {
-    unsigned int crc32;
+    uint32_t crc32;
     
     crc32_begin(&crc32);
     crc32_hash(str, strlen((char*)str), &crc32);
@@ -48,7 +48,7 @@ unsigned int crc32_hash_string(unsigned char *str) {
     return crc32;
 }
 
-int crc32_hash_file(char *fn, unsigned int *sum) {
+int crc32_hash_file(char *fn, uint32_t *sum) {
     FILE *f;
 	const int BUFFER_SIZE=16384;
 	unsigned int size;
