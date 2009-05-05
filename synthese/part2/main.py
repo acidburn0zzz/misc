@@ -25,10 +25,40 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import sys
 
+import database
 import login
 
-if __name__ == '__main__':
+def run():
     app = QApplication(sys.argv)
-    l = login.Login()
-    l.exec_()
-    #~ app.exec_()
+    
+    db = database.Database()
+    if not db.openSqlConnection("QSQLITE", "db.sqlite"):
+        print "Erreur: Impossible d'ouvrir la base de donnees"
+        return
+    
+    l = login.VueLogin()
+    ret = l.exec_()
+    
+    #Le login a ete accepte
+    if (ret == QDialog.Accepted):
+        print 'Yeah!'
+        
+        #Afficher la fenetre main
+        return
+    #On veut s'inscrire
+    elif (ret == QDialog.Rejected):
+        print 'No!'
+        
+        #Afficher la fenetre main
+        return
+    #On quitte
+    else:
+        db.closeSqlConnection()
+        return
+    
+    db.closeSqlConnection()
+    return app.exec_()
+    
+
+if __name__ == '__main__':
+    run()

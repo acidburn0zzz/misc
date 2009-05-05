@@ -26,42 +26,36 @@ from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 import hashlib
 
-#~ pwd = hashlib.sha256()
-#~ pwd.update('passwd')
-#~ print pwd.digest()
-#~ print pwd.hexdigest()
-
-class Login(QDialog):
+class VueLogin(QDialog):
     def __init__(self, parent=None):
-        super(Login, self).__init__(parent)
+        super(VueLogin, self).__init__(parent)
+        self.model = ModeleLogin()
         
         self.setWindowTitle('Login')
-        #~ self.centralWidget = QWidget()
-        #~ self.setCentralWidget(self.centralWidget)
         
         self.centralLayout = QVBoxLayout()
         
         self.lblId = QLabel('Identificateur')
-        self.lblPwd = QLabel('Mot de passe')
+        self.lblPasswd = QLabel('Mot de passe')
         
         self.txtId= QLineEdit()
         self.txtId.setValidator(QIntValidator(0, 9999, self))
-        self.txtPwd = QLineEdit()
-        self.txtPwd.setValidator(QIntValidator(0, 60, self))
+        self.txtPasswd = QLineEdit()
+        self.txtPasswd.setEchoMode(QLineEdit.Password)
         
         self.layMain = QGridLayout()
         self.layMain.addWidget(self.lblId, 0, 0)
         self.layMain.addWidget(self.txtId, 0, 1)
-        self.layMain.addWidget(self.lblPwd, 1, 0)
-        self.layMain.addWidget(self.txtPwd, 1, 1)
+        self.layMain.addWidget(self.lblPasswd, 1, 0)
+        self.layMain.addWidget(self.txtPasswd, 1, 1)
         
         #Ajout des boutons
         self.btnLogin = QPushButton('&Login')
         self.btnInscription = QPushButton('&Inscription')
         self.btnQuit = QPushButton('&Quitter')
-        #~ self.connect(self.btnLogin, SIGNAL('clicked()'), self.calculate)
+        self.connect(self.btnLogin, SIGNAL('clicked()'), self.testLogin)
+        self.connect(self.btnInscription, SIGNAL('clicked()'), self, SLOT('reject()'))
         self.connect(self.btnQuit, SIGNAL('clicked()'), self.quit)
-        #~ self.connect(self.btnQuit, SIGNAL('clicked()'), qApp, SLOT('quit()'))
         
         self.layBoutons = QHBoxLayout()
         self.layBoutons.addWidget(self.btnLogin)
@@ -73,6 +67,40 @@ class Login(QDialog):
         
         self.setLayout(self.centralLayout)
     
+    def testLogin(self):
+        id = self.txtId.text()
+        passwd = self.txtPasswd.text()
+        if (self.model.testLogin(id, passwd)):
+            self.accept()
+        else:
+            QMessageBox.warning(self, "Erreur", "L'identificateur ou le mot de passe saisi est invalide")
+            self.txtPasswd.setText("")
+            self.txtPasswd.setFocus()
+    
     def quit(self):
-        qApp.quit()
-        #~ self.done(2)
+        self.done(-1)
+
+class ModeleLogin(object):
+    def testLogin(self, id, passwd):
+        q = QSqlQuery()
+        if not q.exec_("SELECT passwd FROM exposant WHERE id=" + id):
+            return False
+        
+        if not q.first():
+            return False
+        
+        passwd_hash = hashlib.sha256()
+        passwd_hash.update(str(passwd)) #Passer d'une QString a une str standard 
+        
+        if (passwd_hash.hexdigest() == q.value(0).toString()):
+            return True
+        else:
+            return False
+
+if __name__ == '__main__':
+    import database
+    app = QApplication([])
+    db = database.Database()
+    db.openSqlConnection("QSQLITE", "db.sqlite")
+    v = VueLogin()
+    print v.exec_()

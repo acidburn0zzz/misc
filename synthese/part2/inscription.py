@@ -21,4 +21,11 @@
  ' You can contact the original author at acidrain1@gmail.com              '
  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-print "Hello World!"
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+from PyQt4.QtSql import *
+import hashlib
+
+class VueInscription(QDialog):
+    def __init__(self, parent=None):
+        super(Login, self).__init__(parent)
