@@ -20,5 +20,15 @@
  '                                                                         '
  ' You can contact the original author at acidrain1@gmail.com              '
  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+import sys
 
-print "Hello World!"
+import login
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    l = login.Login()
+    l.exec_()
+    #~ app.exec_()
