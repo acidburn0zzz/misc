@@ -25,6 +25,22 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 
+#Fonctions 'Statiques'
+def getCurrentId(table):
+    q = QSqlQuery()
+    if q.exec_("SELECT seq FROM db_sequence WHERE name='" + table + "'"):
+        q.first()
+        return q.value(0).toInt()[0]
+    else:
+        return -1
+
+def setCurrentId(table, newid):
+    q = QSqlQuery()
+    if q.exec_("UPDATE db_sequence SET seq=" + str(newid) + " WHERE name='" + table + "'"):
+        return True
+    else:
+        return False
+            
 class Database(object):
     def openSqlConnection(self, type, db_name, host=None, user=None, passwd=None):
         self.db = QSqlDatabase.addDatabase(type)
@@ -37,18 +53,3 @@ class Database(object):
 
     def closeSqlConnection(self):
         self.db.close()
-    
-    def getCurrentId(self, table):
-        q = QSqlQuery()
-        if q.exec_("SELECT seq FROM db_sequence WHERE name='" + table + "'"):
-            q.first()
-            return q.value(0).toInt()[0]
-        else:
-            return -1
-    
-    def setCurrentId(self, table, newid):
-        q = QSqlQuery()
-        if q.exec_("UPDATE db_sequence SET seq=" + str(newid) + " WHERE name='" + table + "'"):
-            return True
-        else:
-            return False

@@ -26,14 +26,17 @@ from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 import hashlib
 
+import inscription
+
 class VueLogin(QDialog):
     def __init__(self, parent=None):
         super(VueLogin, self).__init__(parent)
         self.model = ModeleLogin()
         
         self.setWindowTitle('Login')
+        self.setWindowFlags(Qt.Tool)
         
-        self.centralLayout = QVBoxLayout()
+        self.layCentral = QVBoxLayout()
         
         self.lblId = QLabel('Identificateur')
         self.lblPasswd = QLabel('Mot de passe')
@@ -54,7 +57,8 @@ class VueLogin(QDialog):
         self.btnInscription = QPushButton('&Inscription')
         self.btnQuit = QPushButton('&Quitter')
         self.connect(self.btnLogin, SIGNAL('clicked()'), self.testLogin)
-        self.connect(self.btnInscription, SIGNAL('clicked()'), self, SLOT('reject()'))
+        #~ self.connect(self.btnInscription, SIGNAL('clicked()'), self, SLOT('reject()'))
+        self.connect(self.btnInscription, SIGNAL('clicked()'), self.inscription)
         self.connect(self.btnQuit, SIGNAL('clicked()'), self.quit)
         
         self.layBoutons = QHBoxLayout()
@@ -62,10 +66,10 @@ class VueLogin(QDialog):
         self.layBoutons.addWidget(self.btnInscription)
         self.layBoutons.addWidget(self.btnQuit)
         
-        self.centralLayout.addLayout(self.layMain)
-        self.centralLayout.addLayout(self.layBoutons)
+        self.layCentral.addLayout(self.layMain)
+        self.layCentral.addLayout(self.layBoutons)
         
-        self.setLayout(self.centralLayout)
+        self.setLayout(self.layCentral)
     
     def testLogin(self):
         id = self.txtId.text()
@@ -76,6 +80,10 @@ class VueLogin(QDialog):
             QMessageBox.warning(self, "Erreur", "L'identificateur ou le mot de passe saisi est invalide")
             self.txtPasswd.setText("")
             self.txtPasswd.setFocus()
+            
+    def inscription(self):
+        i = inscription.VueInscription()
+        i.exec_()
     
     def quit(self):
         self.done(-1)
@@ -83,14 +91,14 @@ class VueLogin(QDialog):
 class ModeleLogin(object):
     def testLogin(self, id, passwd):
         q = QSqlQuery()
-        if not q.exec_("SELECT passwd FROM exposant WHERE id=" + id):
+        if not q.exec_("SELECT passwd FROM exposants WHERE id=" + id):
             return False
         
         if not q.first():
             return False
         
-        passwd_hash = hashlib.sha256()
-        passwd_hash.update(str(passwd)) #Passer d'une QString a une str standard 
+        passwd_hash = hashlib.sha512()
+        passwd_hash.update(str(passwd)) #Passer d'une QString a une str standard
         
         if (passwd_hash.hexdigest() == q.value(0).toString()):
             return True

@@ -37,16 +37,16 @@ def run():
         return
     
     l = login.VueLogin()
-    ret = l.exec_()
+    l_ret = l.exec_()
     
     #Le login a ete accepte
-    if (ret == QDialog.Accepted):
+    if (l_ret == QDialog.Accepted):
         print 'Yeah!'
         
         #Afficher la fenetre main
         return
     #On veut s'inscrire
-    elif (ret == QDialog.Rejected):
+    elif (l_ret == QDialog.Rejected):
         print 'No!'
         
         #Afficher la fenetre main
