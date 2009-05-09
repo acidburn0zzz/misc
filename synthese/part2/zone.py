@@ -20,41 +20,44 @@
  '                                                                         '
  ' You can contact the original author at acidrain1@gmail.com              '
  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
+
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
-import sys
 
-import database
-import login
-
-def run():
-    app = QApplication(sys.argv)
-    
-    db = database.Database()
-    if not db.openSqlConnection("QSQLITE", "db.sqlite"):
-        print "Erreur: Impossible d'ouvrir la base de donnees"
-        return
-    
-    idExposant = [0] #Pour avoir un "pointeur"
-    
-    l = login.VueLogin(idExposant)
-    l_ret = l.exec_()
-    
-    #Le login a ete accepte
-    if (l_ret == QDialog.Accepted):
-        print "id:", idExposant[0]
+class Zone(QWidget):
+    def __init__(self, isZone, parent=None):
+        super(Zone, self).__init__(parent)
+        self.zone = isZone
         
-        #Afficher la fenetre main
-        return
-    #L'usager a quitte
-    else:
-        db.closeSqlConnection()
-        return
+        if isZone:
+            self.setPalette(QPalette(QColor(0, 0, 128)));
+        #~ else:
+            #~ self.setPalette(QPalette(QColor(0, 0, 0)));
+        self.setAutoFillBackground(True);
     
-    db.closeSqlConnection()
-    return app.exec_()
+    def isZone(self):
+        return self.zone
+
+    #Definitions de proprietes du widget
+    def minimumSizeHint(self):
+        return QSize(50, 50)
+
+    def sizeHint(self):
+        return QSize(50, 50)
     
+    def mousePressEvent(self, event):
+        event.ignore()
+        #~ #Il ne se passe rien si c'est un couloir
+        if not self.zone:
+            return
+        if event.button() == Qt.LeftButton:
+            self.setPalette(QPalette(QColor(255, 0, 0)))
 
 if __name__ == '__main__':
-    run()
+    import plancher
+    app = QApplication([])
+    #~ z = Zone(False)
+    #~ z.show()
+    z = plancher.VuePlancher(100)
+    z.show()
+    app.exec_()

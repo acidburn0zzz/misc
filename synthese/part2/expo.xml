@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<expo>
+    <largeur>11</largeur>
+    <hauteur>9</hauteur>
+    
+    <grille>
+        <rangee>10111101101</rangee>
+        <rangee>00000000000</rangee>
+        <rangee>10111101101</rangee>
+        <rangee>10111101101</rangee>
+        <rangee>00000000000</rangee>
+        <rangee>10111101101</rangee>
+        <rangee>10111101101</rangee>
+        <rangee>00000000000</rangee>
+        <rangee>10111101101</rangee>
+    </grille>
+</expo>

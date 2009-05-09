@@ -29,9 +29,10 @@ import hashlib
 import inscription
 
 class VueLogin(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, idExposant, parent=None):
         super(VueLogin, self).__init__(parent)
         self.model = ModeleLogin()
+        self.idExposant = idExposant
         
         self.setWindowTitle('Login')
         self.setWindowFlags(Qt.Tool)
@@ -75,6 +76,7 @@ class VueLogin(QDialog):
         id = self.txtId.text()
         passwd = self.txtPasswd.text()
         if (self.model.testLogin(id, passwd)):
+            self.idExposant[0] = int(id)
             self.accept()
         else:
             QMessageBox.warning(self, "Erreur", "L'identificateur ou le mot de passe saisi est invalide")
