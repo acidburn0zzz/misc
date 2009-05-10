@@ -112,5 +112,5 @@ if __name__ == '__main__':
     app = QApplication([])
     db = database.Database()
     db.openSqlConnection("QSQLITE", "db.sqlite")
-    v = VueLogin()
+    v = VueLogin([])
     print v.exec_()
