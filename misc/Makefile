@@ -3,7 +3,7 @@ CXX = g++
 CFLAGS = -Wall -O2 -s -pedantic -ansi
 CXXFLAGS = $(CFLAGS)
 
-PROGRAMS = bin2iso chuck_norris_facts fgets fibonacci vector wii_key_gen
+PROGRAMS = bin2iso chuck_norris_facts fgets fibonacci wii_key_gen
 
 all:	$(PROGRAMS)
 
@@ -18,9 +18,6 @@ fgets:	fgets.c
 
 fibonacci:	fibonacci.c
 	$(CC) $(CFLAGS) $< -o $@
-
-vector:	vector.cpp
-	$(CXX) $(CXXFLAGS) $< -o $@
 
 wii_key_gen:	wii_key_gen.c
 	$(CC) $(CFLAGS) $< -o $@

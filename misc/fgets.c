@@ -40,4 +40,5 @@ int main(int argc, char **argv) {
     f = fopen("test", "w+b");
     fwrite(a, sizeof a, 1, f);
     fclose(f);
+    return 0;
 }
