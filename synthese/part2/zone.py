@@ -24,40 +24,24 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
-class Zone(QWidget):
-    def __init__(self, isZone, parent=None):
-        super(Zone, self).__init__(parent)
+class Zone(object):
+    def __init__(self, isZone):
         self.zone = isZone
-        
-        if isZone:
-            self.setPalette(QPalette(QColor(0, 0, 128)));
-        #~ else:
-            #~ self.setPalette(QPalette(QColor(0, 0, 0)));
-        self.setAutoFillBackground(True);
+        self.occupe = False
     
     def isZone(self):
         return self.zone
-
-    #Definitions de proprietes du widget
-    def minimumSizeHint(self):
-        return QSize(50, 50)
-
-    def sizeHint(self):
-        return QSize(50, 50)
     
-    def mousePressEvent(self, event):
-        event.ignore()
-        #~ #Il ne se passe rien si c'est un couloir
-        if not self.zone:
-            return
-        if event.button() == Qt.LeftButton:
-            self.setPalette(QPalette(QColor(255, 0, 0)))
+    def setOccupee(self, occupe):
+        if (self.isZone()):
+            self.occupe = occupe
+    
+    def isOccupee(self):
+        return self.occupe
 
 if __name__ == '__main__':
     import plancher
     app = QApplication([])
-    #~ z = Zone(False)
-    #~ z.show()
     z = plancher.VuePlancher(100)
     z.show()
     app.exec_()

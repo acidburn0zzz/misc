@@ -27,32 +27,18 @@ from PyQt4.QtGui import *
 import zone
 import xmlparser
 
+TAILLE_CASE = 50
+
 class VuePlancher(QMainWindow):
     def __init__(self, id, parent=None):
         super(VuePlancher, self).__init__(parent)
-        self.model = ModelePlancher()
         self.idExposant = id
         
         self.setWindowTitle("Plancher")
         self.wdCentral = QWidget()
         self.setCentralWidget(self.wdCentral)
         
-        self.layPlancher = QGridLayout()
-        self.layPlancher.setSpacing(0)
-        self.zones = []
-
-        for i in range(self.model.getLargeur()):
-            tmp = []
-            for j in range(self.model.getHauteur()):
-                z = zone.Zone(self.model.isZone(j, i), self.wdCentral)
-                tmp.append(z)
-                self.layPlancher.addWidget(z, j, i)
-            self.zones.append(zone)
-        
-        #Widget qui contient toutes les zones
-        self.wdPlancher = WidgetPlancher(self)
-        self.wdPlancher.setGeometry(0, 0, 50*self.model.getLargeur(), 50*self.model.getHauteur())
-        self.wdPlancher.setLayout(self.layPlancher)
+        self.wdPlancher = WidgetPlancher()
         
         self.layCentral = QVBoxLayout()
         self.layCentral.addWidget(self.wdPlancher)
@@ -61,6 +47,14 @@ class VuePlancher(QMainWindow):
 class ModelePlancher(object):
     def __init__(self):
         self.xml = xmlparser.XmlParser('expo.xml')
+        
+        self.zones = []
+        for i in range(self.getLargeur()):
+            tmp = []
+            for j in range(self.getHauteur()):
+                z = zone.Zone(self.isZone(j, i))
+                tmp.append(z)
+            self.zones.append(tmp)
     
     def getLargeur(self):
         return self.xml.getLargeur()
@@ -72,18 +66,33 @@ class ModelePlancher(object):
         return self.xml.isZone(x, y)
 
 class WidgetPlancher(QWidget):
-    def __init__(self, parent=None, flags=0):
+    def __init__(self, parent=None):
         super(WidgetPlancher, self).__init__(parent)
-        self.setPalette(QPalette(QColor(0, 128, 0)));
+        self.model = ModelePlancher()
+    
+    def sizeHint(self):
+        return QSize(TAILLE_CASE * self.model.getLargeur()+1, TAILLE_CASE * self.model.getHauteur()+1)
         
     def mousePressEvent(self, event):
-        print "WidgetPlancher: ", event.x(), event.y()
+        x = event.x() / TAILLE_CASE
+        y = event.y() / TAILLE_CASE
+        self.model.zones[x][y].setOccupee(not self.model.zones[x][y].isOccupee())
+        self.update()
     
-    def minimumSizeHint(self):
-        return QSize(50*11, 50*9)
-
-    def sizeHint(self):
-        return QSize(50*11, 50*9)
+    def paintEvent(self, event):
+        print "paint", event.rect().topLeft(), event.rect().bottomRight()
+        painter = QPainter(self)
+        
+        for i in range(self.model.getLargeur()):
+            for j in range(self.model.getHauteur()):
+                if (self.model.zones[i][j].isOccupee()):
+                    painter.setBrush(QBrush(QColor(128, 0, 0)))
+                elif (self.model.zones[i][j].isZone()):
+                    painter.setBrush(QBrush(QColor(0, 128, 0)))
+                else:
+                    painter.setBrush(QBrush(Qt.transparent))
+                zoneRect = QRect(i*TAILLE_CASE, j*TAILLE_CASE, TAILLE_CASE, TAILLE_CASE)
+                painter.drawRect(zoneRect)
 
 if __name__ == '__main__':
     app = QApplication([])
