@@ -25,14 +25,15 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import sys
 
-import database
+import database as db
 import login
+import plancher
 
 def run():
     app = QApplication(sys.argv)
     
-    db = database.Database()
-    if not db.openSqlConnection("QSQLITE", "db.sqlite"):
+    qdb = db.Database()
+    if not qdb.openSqlConnection("QSQLITE", "db.sqlite"):
         print "Erreur: Impossible d'ouvrir la base de donnees"
         return
     
@@ -45,14 +46,14 @@ def run():
     if (l_ret == QDialog.Accepted):
         print "id:", idExposant[0]
         
-        #Afficher la fenetre main
-        return
+        vue = plancher.VuePlancher(idExposant[0])
+        vue.show()
     #L'usager a quitte
     else:
-        db.closeSqlConnection()
+        qdb.closeSqlConnection()
         return
     
-    db.closeSqlConnection()
+    qdb.closeSqlConnection()
     return app.exec_()
     
 

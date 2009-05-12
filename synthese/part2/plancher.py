@@ -24,8 +24,9 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
-import zone
+import database as db
 import xmlparser
+import zone
 
 TAILLE_CASE = 50
 
@@ -38,11 +39,34 @@ class VuePlancher(QMainWindow):
         self.wdCentral = QWidget()
         self.setCentralWidget(self.wdCentral)
         
-        self.wdPlancher = WidgetPlancher()
+        self.lblExposant = QLabel(self.getExposant())
+        
+        self.wdPlancher = WidgetPlancher(id, self)
         
         self.layCentral = QVBoxLayout()
+        self.layCentral.addWidget(self.lblExposant)
         self.layCentral.addWidget(self.wdPlancher)
         self.wdCentral.setLayout(self.layCentral)
+        
+        self.creerMenus()
+    
+    def getExposant(self):
+        cie = db.getValeur("exposants", "nom", self.idExposant).toString()
+        nom = db.getValeur("exposants", "resp_nom", self.idExposant).toString()
+        prenom = db.getValeur("exposants", "resp_prenom", self.idExposant).toString()
+        
+        return prenom + " " + nom + " (" + cie + ")"
+    
+    def creerMenus(self):
+        self.actQuitter = QAction("&Quitter", self)
+        self.actQuitter.setShortcut("Ctrl+Q");
+        self.actQuitter.setStatusTip("Quitter le logiciel");
+        self.connect(self.actQuitter, SIGNAL('triggered()'), qApp, SLOT('quit()'));
+        
+        self.mnuFile = QMenu("&Fichier", self)
+        self.mnuFile.addAction(self.actQuitter)
+        
+        self.menuBar().addMenu(self.mnuFile)
 
 class ModelePlancher(object):
     def __init__(self):
@@ -66,9 +90,11 @@ class ModelePlancher(object):
         return self.xml.isZone(x, y)
 
 class WidgetPlancher(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, id = 0, parent=None):
         super(WidgetPlancher, self).__init__(parent)
         self.model = ModelePlancher()
+        self.id = id
+        self.currentZone = [0, 0]
     
     def sizeHint(self):
         return QSize(TAILLE_CASE * self.model.getLargeur()+1, TAILLE_CASE * self.model.getHauteur()+1)
@@ -76,26 +102,49 @@ class WidgetPlancher(QWidget):
     def mousePressEvent(self, event):
         x = event.x() / TAILLE_CASE
         y = event.y() / TAILLE_CASE
-        self.model.zones[x][y].setOccupee(not self.model.zones[x][y].isOccupee())
-        self.update()
+        if (self.model.zones[x][y].isZone()):
+            self.currentZone = [x, y]
+            self.update(QRect(x*TAILLE_CASE, y*TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
     
     def paintEvent(self, event):
-        print "paint", event.rect().topLeft(), event.rect().bottomRight()
+        #On redessinne le widget au complet
+        if (event.rect().width() > TAILLE_CASE and event.rect().width() > TAILLE_CASE):
+            for i in range(self.model.getLargeur()):
+                for j in range(self.model.getHauteur()):
+                    self.paintZone(i, j)
+        #On redessinne seulement la case necessaire
+        else:
+            x, y = self.currentZone
+            self.paintZone(x, y)
+    
+    def paintZone(self, x, y,):
         painter = QPainter(self)
+        rectZone = QRect(x*TAILLE_CASE, y*TAILLE_CASE, TAILLE_CASE, TAILLE_CASE)
         
-        for i in range(self.model.getLargeur()):
-            for j in range(self.model.getHauteur()):
-                if (self.model.zones[i][j].isOccupee()):
-                    painter.setBrush(QBrush(QColor(128, 0, 0)))
-                elif (self.model.zones[i][j].isZone()):
-                    painter.setBrush(QBrush(QColor(0, 128, 0)))
-                else:
-                    painter.setBrush(QBrush(Qt.transparent))
-                zoneRect = QRect(i*TAILLE_CASE, j*TAILLE_CASE, TAILLE_CASE, TAILLE_CASE)
-                painter.drawRect(zoneRect)
+        if not self.model.zones[x][y].isZone():
+            painter.setBrush(QBrush(Qt.transparent))
+            painter.drawRect(rectZone)
+            return
+        
+        #Couleur de fond d'une case
+        if (self.model.zones[x][y].getProprio() != 0):
+            painter.setBrush(QBrush(QColor(128, 0, 0)))
+        elif (self.model.zones[x][y].isZone()):
+            painter.setBrush(QBrush(QColor(0, 128, 0)))
+        else:
+            painter.setBrush(QBrush(Qt.transparent))
+        painter.drawRect(rectZone)
+        
+        #~ painter.setBrush(QBrush(QColor(0, 0, 0)))
+        #~ painter.setPen(QPen(Qt.NoPen))
+        #~ rectMur = QRect(x*TAILLE_CASE + 40, y*TAILLE_CASE + 25, 10, 25)
+        #~ painter.drawRect(rectMur)
 
 if __name__ == '__main__':
     app = QApplication([])
+    qdb = db.Database()
+    qdb.openSqlConnection("QSQLITE", "db.sqlite")
     z = VuePlancher(100)
     z.show()
     app.exec_()
+    qdb.closeSqlConnection()

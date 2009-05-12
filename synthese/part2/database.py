@@ -40,6 +40,14 @@ def setCurrentId(table, newid):
         return True
     else:
         return False
+
+def getValeur(table, valeur, id):
+    q = QSqlQuery()
+    if q.exec_("SELECT " + valeur + " FROM " + table + " WHERE id=" + str(id)):
+        q.first()
+        return q.value(0)
+    else:
+        return ""
             
 class Database(object):
     def openSqlConnection(self, type, db_name, host=None, user=None, passwd=None):

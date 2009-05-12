@@ -124,6 +124,8 @@ class VueInscription(QDialog):
         for i in self.domaines:
             self.cmbDomaine.addItem(i)
         
+        self.txtCie.setFocus()
+        
         #Valeurs test#
         #~ self.txtCie.setText('Sun Microsystems')
         #~ self.txtRespNom.setText('Lemay')
@@ -178,7 +180,7 @@ class ModeleInscription(object):
         
         query = "INSERT INTO exposants (id, nom, domaine, resp_nom, resp_prenom, email, date_inscr, passwd) " + \
             "VALUES (" + values['id'] + ", '" + values['cie'] + "', '" + values['domaine'] + "', '" + \
-            values['resp_nom'] + "', '" + values['resp_prenom'] + "', '" + values['email'] + "', date('now'), '"  + values['passwd_hash'] + "');"
+            values['resp_nom'] + "', '" + values['resp_prenom'] + "', '" + values['email'] + "', datetime('now'), '"  + values['passwd_hash'] + "');"
         q = QSqlQuery()
         if not q.exec_(query):
             QMessageBox.warning(parent, 'Erreur', "Il y a deja un enregistrement avec le meme responsable et la meme compagnie")
