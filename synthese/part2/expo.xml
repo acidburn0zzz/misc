@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <expo>
-    <largeur>11</largeur>
-    <hauteur>9</hauteur>
+    <largeur>13</largeur>
+    <hauteur>11</hauteur>
     
     <grille>
-        <rangee>10111101101</rangee>
-        <rangee>00000000000</rangee>
-        <rangee>10111101101</rangee>
-        <rangee>10111101101</rangee>
-        <rangee>00000000000</rangee>
-        <rangee>10111101101</rangee>
-        <rangee>10111101101</rangee>
-        <rangee>00000000000</rangee>
-        <rangee>10111101101</rangee>
+        <rangee>0000000000000</rangee>
+        <rangee>0101111011010</rangee>
+        <rangee>0000000000000</rangee>
+        <rangee>0101111011010</rangee>
+        <rangee>0101111011010</rangee>
+        <rangee>0000000000000</rangee>
+        <rangee>0101111011010</rangee>
+        <rangee>0101111011010</rangee>
+        <rangee>0000000000000</rangee>
+        <rangee>0101111011010</rangee>
+        <rangee>0000000000000</rangee>
     </grille>
 </expo>

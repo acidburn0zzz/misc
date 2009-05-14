@@ -25,33 +25,9 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 import hashlib
-import platform
 
 import database
-
-def playWav(fn):
-    plat = platform.system().lower()
-    if plat.startswith('win'):
-       from winsound import PlaySound, SND_FILENAME, SND_ASYNC
-       PlaySound(fn, SND_FILENAME|SND_ASYNC)
-    elif plat.find('linux')>-1:
-       from wave import open as waveOpen
-       from ossaudiodev import open as ossOpen
-       s = waveOpen(fn, 'rb')
-       (nc,sw,fr,nf,comptype, compname) = s.getparams()
-       dsp = ossOpen('/dev/dsp','w')
-       try:
-         from ossaudiodev import AFMT_S16_NE
-       except ImportError:
-         if byteorder == "little":
-           AFMT_S16_NE = ossaudiodev.AFMT_S16_LE
-         else:
-           AFMT_S16_NE = ossaudiodev.AFMT_S16_BE
-       dsp.setparameters(AFMT_S16_NE, nc, fr)
-       data = s.readframes(nf)
-       s.close()
-       dsp.write(data)
-       dsp.close()
+import awesome
 
 class VueInscription(QDialog):
     def __init__(self, parent=None):
@@ -118,7 +94,7 @@ class VueInscription(QDialog):
         
         self.setLayout(self.layCentral)
         
-        self.txtId.setText(str(self.model.getNextId()))
+        self.txtId.setText(str(self.model.getId()))
         
         self.domaines = self.model.getDomaines()
         for i in self.domaines:
@@ -136,8 +112,9 @@ class VueInscription(QDialog):
         #Valeurs test#
         
     def confirmInscription(self):
-        if (self.txtCie.text() == 'Russia'):
-            playWav('motherland.wav')
+        if awesome.isFiable(str(self.txtCie.text())):
+            awesome.playWav('motherland.wav')
+            print "awesome"
         values = {}
         if not self.txtEmail.hasAcceptableInput():
             QMessageBox.warning(self, 'Erreur', 'Adresse courriel invalide')
@@ -161,9 +138,8 @@ class VueInscription(QDialog):
             self.accept()
 
 class ModeleInscription(object):
-    def getNextId(self):
-        curId = database.getCurrentId('exposants')
-        return curId + 10
+    def getId(self):
+        return database.getCurrentId('exposants')
         
     def getDomaines(self):
         doms = []
