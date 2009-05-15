@@ -113,8 +113,8 @@ class VueInscription(QDialog):
         
     def confirmInscription(self):
         if awesome.isFiable(str(self.txtCie.text())):
-            awesome.playWav('motherland.wav')
-            print "awesome"
+            t = awesome.play('motherland.wav')
+            t.start()
         values = {}
         if not self.txtEmail.hasAcceptableInput():
             QMessageBox.warning(self, 'Erreur', 'Adresse courriel invalide')

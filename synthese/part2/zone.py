@@ -38,6 +38,11 @@ MUR_BG = 0x20
 MUR_GB = 0x40
 MUR_GH = 0x80
 
+#TEST#
+def bin(x):
+    return ''.join(x & (1 << i) and '1' or '0' for i in range(7,-1,-1))
+#TEST#
+
 class Zone(object):
     def __init__(self, isZone):
         self.zone = isZone
@@ -50,7 +55,10 @@ class Zone(object):
         return self.zone
     
     def setProprio(self, proprio):
-        self.proprio = proprio
+        if (proprio >= 100 and proprio % 10 == 0):
+            self.proprio = proprio
+        else:
+            self.proprio = -1
     
     def getProprio(self):
         return self.proprio
@@ -64,25 +72,51 @@ class Zone(object):
     def getInterwebz(self):
         return self.interwebz
     
-    def setNbPrisesElectriques(self, nbprises):
-        if (nbprises == 1 or nbprises == 2):
-            self.nbprises = nbprises
+    def addPriseElectrique(self):
+        if (self.nbprises < 2):
+            self.nbprises = self.nbprises + 1
+            return True
         else:
-            self.nbprises = 0
+            return False
+    
+    def rmPriseElectrique(self):
+        if (self.nbprises > 0):
+            self.nbprises = self.nbprises - 1
+            return True
+        else:
+            return False
     
     def getNbPrisesElectriques(self):
         return self.nbprises
     
-    def setMurets(self, murets):
-        #255 represente 8 murets, ce qui est invalide
-        if (murets >= 0 and murets < 255):
-            self.murets = murets
-        else:
-            murets = 0
+    def addMuret(self, muret):
+        if (muret >= 0 and muret < 255):
+            tmp = self.murets | muret
+            
+            if (tmp == 255):    #Murs tout autour
+                return False
+            else:
+                self.murets = tmp
+                return True
+    
+    def rmMuret(self, muret):   #Non utilisee pour le moment
+        if (muret >= 0 and muret < 255):
+            muret = muret ^ 0xff                #Inverser pour avoir un byte contenant 7 '1', ex: 0b11101111
+            self.murets = self.murets & muret   #Garder le byte comme avant sauf pour le muret a enlever
+    
+    def viderMurets(self):
+        self.murets = 0
+    
+    def getMurets(self):
+        return self.murets
 
 if __name__ == '__main__':
     import plancher
+    import database as db
     app = QApplication([])
+    qdb = db.Database()
+    qdb.openSqlConnection("QSQLITE", "db.sqlite")
     z = plancher.VuePlancher(100)
     z.show()
     app.exec_()
+    qdb.closeSqlConnection()

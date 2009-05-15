@@ -31,10 +31,21 @@ import zone
 TAILLE_CASE = 50
 
 #Constantes d'options
-OPT_WEBZ, OPT_ELEC, OPT_MURET = range(3)
-WEBZ_RM, WEBZ_500K, WEBZ_2M, WEBZ_5M = range(4)
-ELEC_RM, ELEC_ADD = range(2)
-MUR_RM, MUR_HG, MUR_HD, MUR_DH, MUR_DB, MUR_BD, MUR_BG, MUR_GB, MUR_GH = range(9)
+NB_OPTS = 17
+OPT_LOC, OPT_WEBZ, OPT_ELEC, OPT_MURET = range(4)
+LOC_ADD, LOC_RM, WEBZ_500K, WEBZ_2M, WEBZ_5M, WEBZ_RM, ELEC_ADD, ELEC_RM, \
+MUR_HG, MUR_HD, MUR_DH, MUR_DB, MUR_BD, MUR_BG, MUR_GB, MUR_GH, MUR_RM = range(NB_OPTS)
+
+#Correspondance entre plancher.MUR_* et zone.MUR_*
+VAL_MURS = {}
+VAL_MURS[MUR_HG] = zone.MUR_HG
+VAL_MURS[MUR_HD] = zone.MUR_HD
+VAL_MURS[MUR_DH] = zone.MUR_DH
+VAL_MURS[MUR_DB] = zone.MUR_DB
+VAL_MURS[MUR_BD] = zone.MUR_BD
+VAL_MURS[MUR_BG] = zone.MUR_BG
+VAL_MURS[MUR_GB] = zone.MUR_GB
+VAL_MURS[MUR_GH] = zone.MUR_GH
 
 class VuePlancher(QMainWindow):
     def __init__(self, id, parent=None):
@@ -44,67 +55,58 @@ class VuePlancher(QMainWindow):
         self.setWindowTitle("Plancher")
         self.wdCentral = QWidget()
         self.setCentralWidget(self.wdCentral)
+        self.layCentral = QVBoxLayout(self.wdCentral)
         
         self.lblExposant = QLabel(self.getExposant(), self)
+        self.layCentral.addWidget(self.lblExposant)
         
-        #Options de choix
+        #Choix de categorie
+        self.radLoc = QRadioButton("Location")
+        self.radLoc.setChecked(True)
         self.radWebz = QRadioButton("Internet")
-        self.radWebz.setChecked(True)
         self.radElectricite = QRadioButton("Prises electriques")
         self.radMurets = QRadioButton("Murets")
         
-        self.grpOptions = QButtonGroup(self)
-        self.grpOptions.addButton(self.radWebz, OPT_WEBZ)
-        self.grpOptions.addButton(self.radElectricite, OPT_ELEC)
-        self.grpOptions.addButton(self.radMurets, OPT_MURET)
+        self.grpCat = QButtonGroup(self)
+        self.grpCat.addButton(self.radLoc, OPT_LOC)
+        self.grpCat.addButton(self.radWebz, OPT_WEBZ)
+        self.grpCat.addButton(self.radElectricite, OPT_ELEC)
+        self.grpCat.addButton(self.radMurets, OPT_MURET)
         
+        self.layCat = QHBoxLayout()
+        self.layCat.setAlignment(Qt.AlignLeft)
+        self.layCentral.addLayout(self.layCat)
+        self.layCat.addWidget(self.radLoc)
+        self.layCat.addWidget(self.radWebz)
+        self.layCat.addWidget(self.radElectricite)
+        self.layCat.addWidget(self.radMurets)
+        
+        self.connect(self.grpCat, SIGNAL('buttonClicked(int)'), self.changerCategorie)
+        
+        #Options
+        self.grpOptions = QButtonGroup()
         self.layOptions = QHBoxLayout()
         self.layOptions.setAlignment(Qt.AlignLeft)
-        self.layOptions.addWidget(self.radWebz)
-        self.layOptions.addWidget(self.radElectricite)
-        self.layOptions.addWidget(self.radMurets)
+        self.layCentral.addLayout(self.layOptions)
+        self.radOptions = []
         
-        self.connect(self.grpOptions, SIGNAL('buttonClicked(int)'), self.changerOptions)
+        self.connect(self.grpOptions, SIGNAL('buttonClicked(int)'), self.changerOption)
+        
+        #Options de location
+        self.radOptions.append(QRadioButton("Louer"))
+        self.radOptions.append(QRadioButton("Enlever"))
         
         #Options de webz
-        self.radWebzRemove = QRadioButton("Enlever")
-        self.radWebzRemove.setChecked(True)
-        self.radWebz500K = QRadioButton("500 kbps")
-        self.radWebz2M = QRadioButton("2 Mbps")
-        self.radWebz5M = QRadioButton("5 Mbps")
-        
-        self.grpOtpWebz = QButtonGroup(self)
-        self.grpOtpWebz.addButton(self.radWebzRemove, WEBZ_RM)
-        self.grpOtpWebz.addButton(self.radWebz500K, WEBZ_500K)
-        self.grpOtpWebz.addButton(self.radWebz2M, WEBZ_2M)
-        self.grpOtpWebz.addButton(self.radWebz5M, WEBZ_5M)
-        
-        self.wdWebz = QWidget()
-        self.layWebz = QHBoxLayout(self.wdWebz)
-        self.layWebz.setAlignment(Qt.AlignLeft)
-        self.layWebz.addWidget(self.radWebzRemove)
-        self.layWebz.addWidget(self.radWebz500K)
-        self.layWebz.addWidget(self.radWebz2M)
-        self.layWebz.addWidget(self.radWebz5M)
+        self.radOptions.append(QRadioButton("500 kbps"))
+        self.radOptions.append(QRadioButton("2 Mbps"))
+        self.radOptions.append(QRadioButton("5 Mbps"))
+        self.radOptions.append(QRadioButton("Enlever"))
         
         #Options d'electricite
-        self.radOptElecRm = QRadioButton("Enlever")
-        self.radOptElecRm.setChecked(True)
-        self.radOptElecAdd = QRadioButton("Ajouter")
-        
-        self.grpOtpElectricite = QButtonGroup(self)
-        self.grpOtpElectricite.addButton(self.radOptElecRm, ELEC_RM)
-        self.grpOtpElectricite.addButton(self.radOptElecAdd, ELEC_ADD)
-        
-        self.wdElec = QWidget()
-        self.layElec = QHBoxLayout(self.wdElec)
-        self.layElec.setAlignment(Qt.AlignLeft)
-        self.layElec.addWidget(self.radOptElecRm)
-        self.layElec.addWidget(self.radOptElecAdd)
+        self.radOptions.append(QRadioButton("Ajouter"))
+        self.radOptions.append(QRadioButton("Enlever"))
         
         #Options de murets
-        self.radOptMurRM = QRadioButton("Enlever")
-        self.radOptMurRM.setChecked(True)
         #~ self.radOptMurHG = QRadioButton("Haut-Gauche")
         #~ self.radOptMurHD = QRadioButton("Haut-Droite")
         #~ self.radOptMurDH = QRadioButton("Droite-Haut")
@@ -113,54 +115,25 @@ class VuePlancher(QMainWindow):
         #~ self.radOptMurBG = QRadioButton("Bas-Gauche")
         #~ self.radOptMurGB = QRadioButton("Gauche-Bas")
         #~ self.radOptMurGH = QRadioButton("Gauche-Haut")
-        self.radOptMurHG = QRadioButton("H-G")
-        self.radOptMurHD = QRadioButton("H-D")
-        self.radOptMurDH = QRadioButton("D-H")
-        self.radOptMurDB = QRadioButton("D-B")
-        self.radOptMurBD = QRadioButton("B-D")
-        self.radOptMurBG = QRadioButton("B-G")
-        self.radOptMurGB = QRadioButton("G-B")
-        self.radOptMurGH = QRadioButton("G-H")
+        self.radOptions.append(QRadioButton("H-G"))
+        self.radOptions.append(QRadioButton("H-D"))
+        self.radOptions.append(QRadioButton("D-H"))
+        self.radOptions.append(QRadioButton("D-B"))
+        self.radOptions.append(QRadioButton("B-D"))
+        self.radOptions.append(QRadioButton("B-G"))
+        self.radOptions.append(QRadioButton("G-B"))
+        self.radOptions.append(QRadioButton("G-H"))
+        self.radOptions.append(QRadioButton("Enlever"))
         
-        self.grpOtpMurets = QButtonGroup(self)
-        self.grpOtpMurets.addButton(self.radOptMurRM, MUR_RM)
-        self.grpOtpMurets.addButton(self.radOptMurHG, MUR_HG)
-        self.grpOtpMurets.addButton(self.radOptMurHD, MUR_HD)
-        self.grpOtpMurets.addButton(self.radOptMurDH, MUR_DH)
-        self.grpOtpMurets.addButton(self.radOptMurDB, MUR_DB)
-        self.grpOtpMurets.addButton(self.radOptMurBD, MUR_BD)
-        self.grpOtpMurets.addButton(self.radOptMurBG, MUR_BG)
-        self.grpOtpMurets.addButton(self.radOptMurGB, MUR_GB)
-        self.grpOtpMurets.addButton(self.radOptMurGH, MUR_GH)
+        for i in range(NB_OPTS):
+            self.grpOptions.addButton(self.radOptions[i], i)
+            self.layOptions.addWidget(self.radOptions[i])
         
-        self.wdMuret = QWidget()
-        self.layMuret = QHBoxLayout(self.wdMuret)
-        self.layMuret.setAlignment(Qt.AlignLeft)
-        self.layMuret.addWidget(self.radOptMurRM)
-        self.layMuret.addWidget(self.radOptMurHG)
-        self.layMuret.addWidget(self.radOptMurHD)
-        self.layMuret.addWidget(self.radOptMurDH)
-        self.layMuret.addWidget(self.radOptMurDB)
-        self.layMuret.addWidget(self.radOptMurBD)
-        self.layMuret.addWidget(self.radOptMurBG)
-        self.layMuret.addWidget(self.radOptMurGB)
-        self.layMuret.addWidget(self.radOptMurGH)
-        
-        #Layout central
-        self.layChoix = QStackedLayout()
-        self.layChoix.addWidget(self.wdWebz)
-        self.layChoix.addWidget(self.wdElec)
-        self.layChoix.addWidget(self.wdMuret)
         self.wdPlancher = WidgetPlancher(id, self)
-        
-        self.layCentral = QVBoxLayout()
-        self.layCentral.addWidget(self.lblExposant)
-        self.layCentral.addLayout(self.layOptions)
-        self.layCentral.addLayout(self.layChoix)
         self.layCentral.addWidget(self.wdPlancher)
-        self.wdCentral.setLayout(self.layCentral)
         
         self.creerMenus()
+        self.radLoc.click()
     
     def getExposant(self):
         cie = db.getValeur("exposants", "nom", self.idExposant).toString()
@@ -180,14 +153,31 @@ class VuePlancher(QMainWindow):
         
         self.menuBar().addMenu(self.mnuFile)
     
-    def changerOptions(self, id):
-        self.layChoix.setCurrentIndex(id)
-        #~ if (id == OPT_WEBZ):
-            #~ pass
-        #~ elif (id == OPT_ELEC):
-            #~ pass
-        #~ elif (id == OPT_MURET):
-            #~ pass
+    def changerCategorie(self, id):
+        for i in range(NB_OPTS):
+            self.radOptions[i].setVisible(False)
+        
+        if (id == OPT_LOC):
+            self.radOptions[LOC_ADD].setVisible(True)
+            self.radOptions[LOC_ADD].click()
+            self.radOptions[LOC_RM].setVisible(True)
+        elif (id == OPT_WEBZ):
+            self.radOptions[WEBZ_500K].setVisible(True)
+            self.radOptions[WEBZ_500K].click()
+            self.radOptions[WEBZ_2M].setVisible(True)
+            self.radOptions[WEBZ_5M].setVisible(True)
+            self.radOptions[WEBZ_RM].setVisible(True)
+        elif (id == OPT_ELEC):
+            self.radOptions[ELEC_ADD].setVisible(True)
+            self.radOptions[ELEC_ADD].click()
+            self.radOptions[ELEC_RM].setVisible(True)
+        elif (id == OPT_MURET):
+            for i in range(MUR_HG, MUR_RM + 1):
+                self.radOptions[i].setVisible(True)
+            self.radOptions[MUR_HG].click()
+    
+    def changerOption(self, id):
+        self.wdPlancher.setOption(id)
 
 class ModelePlancher(object):
     def __init__(self):
@@ -197,7 +187,7 @@ class ModelePlancher(object):
         for i in range(self.getLargeur()):
             tmp = []
             for j in range(self.getHauteur()):
-                z = zone.Zone(self.isZone(j, i))
+                z = zone.Zone(self.xml.isZone(j, i))
                 tmp.append(z)
             self.zones.append(tmp)
     
@@ -208,25 +198,66 @@ class ModelePlancher(object):
         return self.xml.getHauteur()
     
     def isZone(self, x, y):
-        return self.xml.isZone(x, y)
+        return self.zones[x][y].isZone()
 
 class WidgetPlancher(QWidget):
     def __init__(self, id = 0, parent=None):
         super(WidgetPlancher, self).__init__(parent)
         self.model = ModelePlancher()
         self.id = id
+        self.option = -1
         self.currentZone = [0, 0]
     
-    def sizeHint(self):
-        return QSize(TAILLE_CASE * self.model.getLargeur()+1, TAILLE_CASE * self.model.getHauteur()+1)
+    def updateZone(self, x, y):
+        if not self.model.zones[x][y].isZone():
+            return
+        
+        self.currentZone = [x, y]
+        
+        #TEMPORAIRE, FAIRE PASSER PAR LE MODELE#
+        #VERIF SI DEJA OCCUPEE#
+        if (self.option == LOC_ADD):
+            self.model.zones[x][y].setProprio(self.id)
+        elif (self.option == LOC_RM):
+            self.model.zones[x][y].setProprio(-1)
+        elif (self.option == WEBZ_500K):
+            self.model.zones[x][y].setInterwebz(zone.WEBZ_500K)
+        elif (self.option == WEBZ_2M):
+            self.model.zones[x][y].setInterwebz(zone.WEBZ_2M)
+        elif (self.option == WEBZ_5M):
+            self.model.zones[x][y].setInterwebz(zone.WEBZ_5M)
+        elif (self.option == WEBZ_RM):
+            self.model.zones[x][y].setInterwebz(zone.WEBZ_RM)
+        elif (self.option == ELEC_ADD):
+            if not self.model.zones[x][y].addPriseElectrique():
+                QMessageBox.warning(self, 'Erreur', "Impossible d'ajouter une prise electrique")
+        elif (self.option == ELEC_RM):
+            if not self.model.zones[x][y].rmPriseElectrique():
+                QMessageBox.warning(self, 'Erreur', "Il n'y a pas de prise a enlever")
+        elif (self.option >= MUR_HG and self.option <= MUR_GH):
+            if not self.model.zones[x][y].addMuret(VAL_MURS[self.option]):
+                QMessageBox.warning(self, 'Erreur', "Impossible d'ajouter un muret")
+        elif (self.option == MUR_RM):
+            self.model.zones[x][y].viderMurets()
+            
+        self.model.zones[x][y].getMurets()
+        
+        self.update(QRect(x*TAILLE_CASE, y*TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
+    
+    def setOption(self, id):
+        self.option = id
+    
+    def afficherInfo(self, x, y):
+        QMessageBox.information(self, 'Information', "Zone %d:%d" % (x, y))
         
     def mousePressEvent(self, event):
         x = event.x() / TAILLE_CASE
         y = event.y() / TAILLE_CASE
-        if (self.model.zones[x][y].isZone()):
-            self.currentZone = [x, y]
-            self.model.zones[x][y].setProprio(100)
-            self.update(QRect(x*TAILLE_CASE, y*TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
+        
+        if (event.button() == Qt.LeftButton):
+            self.updateZone(x, y)
+        elif (event.button() == Qt.RightButton):
+            self.afficherInfo(x, y)
     
     def paintEvent(self, event):
         #On redessinne le widget au complet
@@ -248,19 +279,47 @@ class WidgetPlancher(QWidget):
             painter.drawRect(rectZone)
             return
         
-        #Couleur de fond d'une case
-        if (self.model.zones[x][y].getProprio() != 0):
+        #~ #Couleur de fond d'une case
+        if (self.model.zones[x][y].getProprio() == self.id):
+            painter.setBrush(QBrush(QColor(0, 0, 128)))
+        elif (self.model.zones[x][y].getProprio() > 0):
             painter.setBrush(QBrush(QColor(128, 0, 0)))
-        elif (self.model.zones[x][y].isZone()):
-            painter.setBrush(QBrush(QColor(0, 128, 0)))
         else:
-            painter.setBrush(QBrush(Qt.transparent))
+            painter.setBrush(QBrush(QColor(0, 128, 0)))
         painter.drawRect(rectZone)
         
-        #~ painter.setBrush(QBrush(QColor(0, 0, 0)))
-        #~ painter.setPen(QPen(Qt.NoPen))
-        #~ rectMur = QRect(x*TAILLE_CASE + 40, y*TAILLE_CASE + 25, 10, 25)
-        #~ painter.drawRect(rectMur)
+        #Dessin des murets
+        murets = self.model.zones[x][y].getMurets()
+        painter.setBrush(QBrush(QColor(0, 0, 0)))
+        painter.setPen(QPen(Qt.NoPen))
+        
+        if (murets & zone.MUR_HG):
+            rectMur = QRect(x*TAILLE_CASE, y*TAILLE_CASE, 25, 5)
+            painter.drawRect(rectMur)
+        if (murets & zone.MUR_HD):
+            rectMur = QRect(x*TAILLE_CASE+25, y*TAILLE_CASE, 25, 5)
+            painter.drawRect(rectMur)
+        if (murets & zone.MUR_DH):
+            rectMur = QRect(x*TAILLE_CASE+45, y*TAILLE_CASE, 5, 25)
+            painter.drawRect(rectMur)
+        if (murets & zone.MUR_DB):
+            rectMur = QRect(x*TAILLE_CASE+45, y*TAILLE_CASE+25, 5, 25)
+            painter.drawRect(rectMur)
+        if (murets & zone.MUR_BD):
+            rectMur = QRect(x*TAILLE_CASE+25, y*TAILLE_CASE+45, 25, 5)
+            painter.drawRect(rectMur)
+        if (murets & zone.MUR_BG):
+            rectMur = QRect(x*TAILLE_CASE, y*TAILLE_CASE+45, 25, 5)
+            painter.drawRect(rectMur)
+        if (murets & zone.MUR_GB):
+            rectMur = QRect(x*TAILLE_CASE, y*TAILLE_CASE+25, 5, 25)
+            painter.drawRect(rectMur)
+        if (murets & zone.MUR_GH):
+            rectMur = QRect(x*TAILLE_CASE, y*TAILLE_CASE, 5, 25)
+            painter.drawRect(rectMur)
+    
+    def sizeHint(self):
+        return QSize(TAILLE_CASE * self.model.getLargeur()+1, TAILLE_CASE * self.model.getHauteur()+1)
 
 if __name__ == '__main__':
     app = QApplication([])

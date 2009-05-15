@@ -44,8 +44,6 @@ def run():
     
     #Le login a ete accepte
     if (l_ret == QDialog.Accepted):
-        print "id:", idExposant[0]
-        
         vue = plancher.VuePlancher(idExposant[0])
         vue.show()
     #L'usager a quitte
@@ -55,7 +53,6 @@ def run():
     
     qdb.closeSqlConnection()
     return app.exec_()
-    
 
 if __name__ == '__main__':
     run()

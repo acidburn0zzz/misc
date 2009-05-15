@@ -20,32 +20,39 @@
  '                                                                         '
  ' You can contact the original author at acidrain1@gmail.com              '
  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+from threading import Thread
 
 import platform
 
-def playWav(fn):
-    plat = platform.system().lower()
-    if plat.startswith('win'):
-       from winsound import PlaySound, SND_FILENAME, SND_ASYNC
-       PlaySound(fn, SND_FILENAME|SND_ASYNC)
-    elif plat.find('linux')>-1:
-       from wave import open as waveOpen
-       from ossaudiodev import open as ossOpen
-       s = waveOpen(fn, 'rb')
-       (nc,sw,fr,nf,comptype, compname) = s.getparams()
-       dsp = ossOpen('/dev/dsp','w')
-       try:
-         from ossaudiodev import AFMT_S16_NE
-       except ImportError:
-         if byteorder == "little":
-           AFMT_S16_NE = ossaudiodev.AFMT_S16_LE
-         else:
-           AFMT_S16_NE = ossaudiodev.AFMT_S16_BE
-       dsp.setparameters(AFMT_S16_NE, nc, fr)
-       data = s.readframes(nf)
-       s.close()
-       dsp.write(data)
-       dsp.close()
+#Dans un thread parce que sur linux, il fallait attente que le son ait fini...
+class play(Thread):
+    def __init__ (self, fn):
+        Thread.__init__(self)
+        self.fn = fn
+    
+    def run(self):
+        plat = platform.system().lower()
+        if plat.startswith('win'):
+            from winsound import PlaySound, SND_FILENAME, SND_ASYNC
+            PlaySound(self.fn, SND_FILENAME|SND_ASYNC)
+        elif plat.find('linux')>-1:
+            from wave import open as waveOpen
+            from ossaudiodev import open as ossOpen
+            s = waveOpen(self.fn, 'rb')
+            (nc,sw,fr,nf,comptype, compname) = s.getparams()
+            dsp = ossOpen('/dev/dsp','w')
+            try:
+             from ossaudiodev import AFMT_S16_NE
+            except ImportError:
+             if byteorder == "little":
+               AFMT_S16_NE = ossaudiodev.AFMT_S16_LE
+             else:
+               AFMT_S16_NE = ossaudiodev.AFMT_S16_BE
+            dsp.setparameters(AFMT_S16_NE, nc, fr)
+            data = s.readframes(nf)
+            s.close()
+            dsp.write(data)
+            dsp.close()
 
 def isFiable(str):
     if (str.lower().find('russia') >= 0 or str.lower().find('motherland') >= 0):
