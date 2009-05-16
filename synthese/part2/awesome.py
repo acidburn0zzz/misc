@@ -24,6 +24,11 @@ from threading import Thread
 
 import platform
 
+Win = True
+Fail = False
+#Just to be sure it's really false
+EpicFail = False and False and False
+
 #Dans un thread parce que sur linux, il fallait attente que le son ait fini...
 class play(Thread):
     def __init__ (self, fn):
@@ -56,9 +61,8 @@ class play(Thread):
 
 def isFiable(str):
     if (str.lower().find('russia') >= 0 or str.lower().find('motherland') >= 0):
-        return True
+        return Win
     elif (str.lower().find('microsoft') >= 0 or str.lower().find('oracle') >= 0):
-        #Just to be sure it's really false
-        return False and False and False
+        return EpicFail
     else:
-        return False
+        return Fail

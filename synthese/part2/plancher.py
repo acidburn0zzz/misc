@@ -133,6 +133,8 @@ class VuePlancher(QMainWindow):
         self.layCentral.addWidget(self.wdPlancher)
         
         self.creerMenus()
+        
+        #Selection par defaut -> Location
         self.radLoc.click()
     
     def getExposant(self):
@@ -143,12 +145,18 @@ class VuePlancher(QMainWindow):
         return prenom + " " + nom + " (" + cie + ")"
     
     def creerMenus(self):
+        self.actSave = QAction("&Sauvegarder", self)
+        self.actSave.setShortcut("Ctrl+S");
+        self.actSave.setStatusTip("Sauvegarder les modification");
+        self.connect(self.actSave, SIGNAL('triggered()'), self.wdPlancher.sauvegarder);
+        
         self.actQuitter = QAction("&Quitter", self)
         self.actQuitter.setShortcut("Ctrl+Q");
         self.actQuitter.setStatusTip("Quitter le logiciel");
         self.connect(self.actQuitter, SIGNAL('triggered()'), qApp, SLOT('quit()'));
         
         self.mnuFile = QMenu("&Fichier", self)
+        self.mnuFile.addAction(self.actSave)
         self.mnuFile.addAction(self.actQuitter)
         
         self.menuBar().addMenu(self.mnuFile)
@@ -249,6 +257,9 @@ class WidgetPlancher(QWidget):
     
     def afficherInfo(self, x, y):
         QMessageBox.information(self, 'Information', "Zone %d:%d" % (x, y))
+    
+    def sauvegarder(self):
+        QMessageBox.information(self, 'Information', "Sauvegarder")
         
     def mousePressEvent(self, event):
         x = event.x() / TAILLE_CASE
@@ -288,6 +299,9 @@ class WidgetPlancher(QWidget):
             painter.setBrush(QBrush(QColor(0, 128, 0)))
         painter.drawRect(rectZone)
         
+        #Dessin des prises internet
+        
+        
         #Dessin des murets
         murets = self.model.zones[x][y].getMurets()
         painter.setBrush(QBrush(QColor(0, 0, 0)))
@@ -319,6 +333,9 @@ class WidgetPlancher(QWidget):
             painter.drawRect(rectMur)
     
     def sizeHint(self):
+        return QSize(TAILLE_CASE * self.model.getLargeur()+1, TAILLE_CASE * self.model.getHauteur()+1)
+    
+    def minimumSizeHint(self):
         return QSize(TAILLE_CASE * self.model.getLargeur()+1, TAILLE_CASE * self.model.getHauteur()+1)
 
 if __name__ == '__main__':
