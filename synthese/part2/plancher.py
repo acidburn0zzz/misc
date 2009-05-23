@@ -23,6 +23,7 @@
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+from PyQt4.QtSql import *
 
 import database as db
 import xmlparser
@@ -195,7 +196,7 @@ class ModelePlancher(object):
         for i in range(self.getLargeur()):
             tmp = []
             for j in range(self.getHauteur()):
-                z = zone.Zone(self.xml.isZone(j, i))
+                z = zone.Zone(i, j, self.xml.isZone(j, i))
                 tmp.append(z)
             self.zones.append(tmp)
     
@@ -205,8 +206,52 @@ class ModelePlancher(object):
     def getHauteur(self):
         return self.xml.getHauteur()
     
+    def sauvegarder(self, id):
+        #Si on travaille avec un historique
+        for i in self.zones:
+            for j in i:
+                if (j.getProprio() == id or j.getAncienProprio() == id):
+                    j.sauvegarder()
+        #Fin de la partie historique
+        
+        #Si on travaille sans historique
+        #~ query = "DELETE FROM zones"
+        #~ q = QSqlQuery()
+        #~ q.exec_(query)
+        
+        #~ for i in self.zones:
+            #~ for j in i:
+                #~ j.sauvegarder()
+        #Fin de la partie sans historique
+    
     def isZone(self, x, y):
         return self.zones[x][y].isZone()
+    
+    def setProprio(self, x, y, id):
+        if (self.getProprio(x, y) == -1 or self.getProprio(x, y) == id):
+            #2eme condition pour empecher le message d'erreur
+            self.zones[x][y].setProprio(id)
+            return True
+        else:
+            return False
+    
+    def getProprio(self, x, y):
+        return self.zones[x][y].getProprio()
+    
+    def setInterwebz(self, x, y, webz):
+        self.zones[x][y].setInterwebz(webz)
+    
+    def getInterwebz(self, x, y):
+        return self.zones[x][y].getInterwebz()
+    
+    def addPriseElectrique(self, x, y):
+        return self.zones[x][y].addPriseElectrique()
+    
+    def rmPriseElectrique(self, x, y):
+        return self.zones[x][y].rmPriseElectrique()
+    
+    def getNbPrisesElectriques(self, x, y):
+        return self.zones[x][y].getNbPrisesElectriques()
 
 class WidgetPlancher(QWidget):
     def __init__(self, id = 0, parent=None):
@@ -217,30 +262,33 @@ class WidgetPlancher(QWidget):
         self.currentZone = [0, 0]
     
     def updateZone(self, x, y):
-        if not self.model.zones[x][y].isZone():
+        if not self.model.isZone(x, y):
             return
         
         self.currentZone = [x, y]
         
         #TEMPORAIRE, FAIRE PASSER PAR LE MODELE#
-        #VERIF SI DEJA OCCUPEE#
         if (self.option == LOC_ADD):
-            self.model.zones[x][y].setProprio(self.id)
+            if (not self.model.setProprio(x, y, self.id)):
+                QMessageBox.warning(self, 'Attention', "Impossible de louer cette zone")
+        elif (self.model.getProprio(x, y) != self.id):
+            self.afficherPasVotreZone()
+            return
         elif (self.option == LOC_RM):
             self.model.zones[x][y].setProprio(-1)
         elif (self.option == WEBZ_500K):
-            self.model.zones[x][y].setInterwebz(zone.WEBZ_500K)
+            self.model.setInterwebz(x, y, zone.WEBZ_500K)
         elif (self.option == WEBZ_2M):
-            self.model.zones[x][y].setInterwebz(zone.WEBZ_2M)
+            self.model.setInterwebz(x, y, zone.WEBZ_2M)
         elif (self.option == WEBZ_5M):
-            self.model.zones[x][y].setInterwebz(zone.WEBZ_5M)
+            self.model.setInterwebz(x, y, zone.WEBZ_5M)
         elif (self.option == WEBZ_RM):
-            self.model.zones[x][y].setInterwebz(zone.WEBZ_RM)
+            self.model.setInterwebz(x, y, zone.WEBZ_NONE)
         elif (self.option == ELEC_ADD):
-            if not self.model.zones[x][y].addPriseElectrique():
+            if not self.model.addPriseElectrique(x, y):
                 QMessageBox.warning(self, 'Erreur', "Impossible d'ajouter une prise electrique")
         elif (self.option == ELEC_RM):
-            if not self.model.zones[x][y].rmPriseElectrique():
+            if not self.model.rmPriseElectrique(x, y):
                 QMessageBox.warning(self, 'Erreur', "Il n'y a pas de prise a enlever")
         elif (self.option >= MUR_HG and self.option <= MUR_GH):
             if not self.model.zones[x][y].addMuret(VAL_MURS[self.option]):
@@ -256,10 +304,18 @@ class WidgetPlancher(QWidget):
         self.option = id
     
     def afficherInfo(self, x, y):
-        QMessageBox.information(self, 'Information', "Zone %d:%d" % (x, y))
+        zone = self.model.zones[x][y]
+        if (zone.getProprio() == self.id):
+            QMessageBox.information(self, 'Information', "Zone %d:%d" % (x, y))
+        else:
+            self.afficherPasVotreZone()
     
     def sauvegarder(self):
-        QMessageBox.information(self, 'Information', "Sauvegarder")
+        self.model.sauvegarder(self.id)
+        QMessageBox.information(self, 'Information', "Informations sauvegardees")
+    
+    def afficherPasVotreZone(self):
+        QMessageBox.warning(self, 'Attention', "Cette zone ne vous appartient pas")
         
     def mousePressEvent(self, event):
         x = event.x() / TAILLE_CASE
@@ -281,7 +337,7 @@ class WidgetPlancher(QWidget):
             x, y = self.currentZone
             self.paintZone(x, y)
     
-    def paintZone(self, x, y,):
+    def paintZone(self, x, y):
         painter = QPainter(self)
         rectZone = QRect(x*TAILLE_CASE, y*TAILLE_CASE, TAILLE_CASE, TAILLE_CASE)
         
@@ -292,20 +348,44 @@ class WidgetPlancher(QWidget):
         
         #~ #Couleur de fond d'une case
         if (self.model.zones[x][y].getProprio() == self.id):
-            painter.setBrush(QBrush(QColor(0, 0, 128)))
+            painter.setBrush(QBrush(QColor(0x00, 0x80, 0x00)))
         elif (self.model.zones[x][y].getProprio() > 0):
-            painter.setBrush(QBrush(QColor(128, 0, 0)))
+            painter.setBrush(QBrush(QColor(0x80, 0x00, 0x00)))
         else:
-            painter.setBrush(QBrush(QColor(0, 128, 0)))
+            painter.setBrush(QBrush(QColor(0xff, 0xff, 0xff)))
         painter.drawRect(rectZone)
         
-        #Dessin des prises internet
+        #Remise a la couleur noire du painter
+        painter.setBrush(QBrush(QColor(0, 0, 0)))
+        painter.setPen(QPen(Qt.NoPen))
         
+        #Dessin des prises internet
+        #EMPECHER DE VOIR LES WEBZ DES AUTRES??
+        #~ if (self.model.getProprio(x, y) == self.id):
+        webz = self.model.getInterwebz(x, y)
+        if (webz >= zone.WEBZ_500K):
+            rectWebz = QRect(x*TAILLE_CASE+10, y*TAILLE_CASE+10, 5, 5)
+            painter.drawRect(rectWebz)
+        if (webz >= zone.WEBZ_2M):
+            rectWebz = QRect(x*TAILLE_CASE+10, y*TAILLE_CASE+20, 5, 5)
+            painter.drawRect(rectWebz)
+        if (webz >= zone.WEBZ_5M):
+            rectWebz = QRect(x*TAILLE_CASE+10, y*TAILLE_CASE+30, 5, 5)
+            painter.drawRect(rectWebz)
+        
+        #Dessin des prises electriques
+        #EMPECHER DE VOIR L'ELECTRICITE DES AUTRES??
+        #~ if (self.model.getProprio(x, y) == self.id):
+        elec = self.model.getNbPrisesElectriques(x, y)
+        if (elec >= 1):
+            rectElec = QRect(x*TAILLE_CASE+35, y*TAILLE_CASE+10, 5, 5)
+            painter.drawRect(rectElec)
+        if (elec >= 2):
+            rectElec = QRect(x*TAILLE_CASE+35, y*TAILLE_CASE+20, 5, 5)
+            painter.drawRect(rectElec)
         
         #Dessin des murets
         murets = self.model.zones[x][y].getMurets()
-        painter.setBrush(QBrush(QColor(0, 0, 0)))
-        painter.setPen(QPen(Qt.NoPen))
         
         if (murets & zone.MUR_HG):
             rectMur = QRect(x*TAILLE_CASE, y*TAILLE_CASE, 25, 5)

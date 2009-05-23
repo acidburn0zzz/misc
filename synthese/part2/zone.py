@@ -23,6 +23,7 @@
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+from PyQt4.QtSql import *
 
 #Enumerations (sort-of)
 WEBZ_NONE, WEBZ_500K, WEBZ_2M, WEBZ_5M = range(4)
@@ -44,12 +45,46 @@ def bin(x):
 #TEST#
 
 class Zone(object):
-    def __init__(self, isZone):
+    def __init__(self, posX, posY, isZone):
+        self.posX = posX
+        self.posY = posY
         self.zone = isZone
-        self.proprio = 0 #Inoccupe
-        self.interwebz = WEBZ_NONE
-        self.nbprises = 0
-        self.murets = 0
+        
+        #Servira a identifier une zone qui a ete de-louee afin de
+        #la sauvegarder dans la bdd si on travaille avec historique
+        self.ancienProprio = -1
+        
+        self.getInfo()
+    
+    def getInfo(self):
+        query = "SELECT proprio, webz, electricite, murets FROM zones WHERE posX=" + str(self.posX) + " AND posY=" + str(self.posY)
+        #Si on travaille avec un historique de chaque zone, decommenter la ligne suivante
+        query += " ORDER BY id DESC LIMIT 1"
+        q = QSqlQuery()
+        q.exec_(query)
+        if (q.first()):
+            self.proprio    = q.value(0).toInt()[0]
+            self.interwebz  = q.value(1).toInt()[0]
+            self.nbprises   = q.value(2).toInt()[0]
+            self.murets     = q.value(3).toInt()[0]
+        else:
+            self.proprio    = -1 #Inoccupe
+            self.interwebz  = WEBZ_NONE
+            self.nbprises   = 0
+            self.murets     = 0
+    
+    def sauvegarder(self):
+        query = "INSERT INTO zones (posX, posY, proprio, webz, electricite, murets)" + \
+            " VALUES (" + str(self.posX) + ", " + str(self.posY) + ", " + str(self.proprio) + \
+            ", " + str(self.interwebz) + ", " + str(self.nbprises) + ", " + str(self.murets) + ")"
+        q = QSqlQuery()
+        q.exec_(query)
+    
+    def getPosX(self):
+        return self.posX
+    
+    def getPosY(self):
+        return self.posY
     
     def isZone(self):
         return self.zone
@@ -57,11 +92,18 @@ class Zone(object):
     def setProprio(self, proprio):
         if (proprio >= 100 and proprio % 10 == 0):
             self.proprio = proprio
-        else:
+        else:   # "De-louage" de la zone
+            self.ancienProprio = self.proprio
             self.proprio = -1
+            self.interwebz = WEBZ_NONE
+            self.nbprises = 0
+            self.murets = 0
     
     def getProprio(self):
         return self.proprio
+    
+    def getAncienProprio(self):
+        return self.ancienProprio
     
     def setInterwebz(self, interwebz):
         if (interwebz == WEBZ_500K or interwebz == WEBZ_2M or interwebz == WEBZ_5M):

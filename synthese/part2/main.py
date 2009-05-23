@@ -51,8 +51,9 @@ def run():
         qdb.closeSqlConnection()
         return
     
+    ret = app.exec_()
     qdb.closeSqlConnection()
-    return app.exec_()
+    return ret
 
 if __name__ == '__main__':
     run()

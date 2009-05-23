@@ -2,22 +2,34 @@ BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS db_sequence;
 DROP TABLE IF EXISTS exposants;
+DROP TABLE IF EXISTS zones;
 
 CREATE TABLE db_sequence (
     name TEXT PRIMARY KEY,
-    seq NUMBER DEFAULT 100
+    seq INTEGER DEFAULT 100
 );
 
 CREATE TABLE exposants (
-    id NUMBER PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     nom TEXT,
-    domaine NUMBER,
+    domaine INTEGER,
     resp_nom TEXT,
     resp_prenom TEXT,
     email TEXT,
     date_inscr TEXT,
     passwd TEXT,
     CONSTRAINT c_name UNIQUE (nom, resp_nom, resp_prenom)
+);
+
+CREATE TABLE zones (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    posx INTEGER,
+    posy INTEGER,
+    proprio INTEGER,
+    webz INTEGER,
+    electricite INTEGER,
+    murets INTEGER--,
+    --CONSTRAINT c_name UNIQUE (posx, posy)
 );
 
 CREATE TRIGGER update_id_exposant AFTER INSERT ON exposants BEGIN
@@ -36,6 +48,15 @@ INSERT INTO exposants (id, nom, domaine, resp_nom, resp_prenom, email, date_insc
 INSERT INTO exposants (id, nom, domaine, resp_nom, resp_prenom, email, date_inscr, passwd) VALUES
     (120, 'Russia', 'Dom3', 'Parisien', 'Maxime', 'mpalladini@gmail.com', datetime('now'),
     'acc28db2beb7b42baa1cb0243d401ccb4e3fce44d7b02879a52799aadff541522d8822598b2fa664f9d5156c00c924805d75c3868bd56c2acb81d37e98e35adc');
+
+INSERT INTO zones (posx, posy, proprio, webz, electricite, murets) VALUES
+    (1, 3, 100, 3, 1, 214);
+    
+INSERT INTO zones (posx, posy, proprio, webz, electricite, murets) VALUES
+    (1, 1, 110, 0, 1, 147);
+    
+INSERT INTO zones (posx, posy, proprio, webz, electricite, murets) VALUES
+    (5, 3, 120, 1, 2, 48);
 --Valeurs test
 
 COMMIT;
