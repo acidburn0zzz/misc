@@ -4,8 +4,8 @@ CXXFLAGS=$(CFLAGS)
 INCLUDES=
 LDFLAGS=
 
-PROGRAM=libcrc32.a
-SOURCES=crc32.c
+PROGRAM=libmd5.a
+SOURCES=md5.c
 OBJS=$(SOURCES:.c=.o)
 
 AR=ar rcs
