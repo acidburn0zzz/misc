@@ -6,8 +6,8 @@ PROGRAM=crc32
 SOURCES=main.c
 OBJS=$(SOURCES:.c=.o)
 
-INCLUDES=-I../libcrc32
-LDFLAGS=-L../libcrc32 -lcrc32
+INCLUDES=-I../libs/libcrc32
+LDFLAGS=-L../libs/libcrc32 -lcrc32
 
 RM=rm
 INSTALL=install
