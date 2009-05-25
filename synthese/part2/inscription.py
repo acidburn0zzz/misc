@@ -40,6 +40,7 @@ class VueInscription(QDialog):
         self.layCentral = QVBoxLayout()
         
         self.lblId = QLabel('Identificateur')
+        self.lblId.setVisible(False)
         self.lblCie = QLabel('Compagnie')
         self.lblDomaine = QLabel('Domaine')
         self.lblRespNom = QLabel('Nom')
@@ -102,14 +103,19 @@ class VueInscription(QDialog):
         
         self.txtCie.setFocus()
         
-        #Valeurs test#
-        #~ self.txtCie.setText('Sun Microsystems')
+        #~ #Valeurs test#
+        #~ self.txtCie.setText('Motherland')
+        #~ self.cmbDomaine.setCurrentIndex(2)
         #~ self.txtRespNom.setText('Lemay')
         #~ self.txtRespPrenom.setText('Mathieu')
         #~ self.txtEmail.setText('acidrain1@gmail.com')
         #~ self.txtPasswd.setText('a')
         #~ self.txtPasswd2.setText('a')
-        #Valeurs test#
+        #~ #Valeurs test#
+        
+        #Est-ce vraiment necessaire d'afficher id??
+        self.lblId.setVisible(False)
+        self.txtId.setVisible(False)
         
     def confirmInscription(self):
         if awesome.isFiable(str(self.txtCie.text())):
@@ -130,7 +136,7 @@ class VueInscription(QDialog):
         
         values['id'] = self.txtId.text()
         values['cie'] = self.txtCie.text()
-        values['domaine'] = self.cmbDomaine.currentText()
+        values['domaine'] = self.cmbDomaine.currentIndex() + 1 #Commence a 1 dans la table
         values['resp_nom'] = self.txtRespNom.text()
         values['resp_prenom'] = self.txtRespPrenom.text()
         
@@ -143,9 +149,13 @@ class ModeleInscription(object):
         
     def getDomaines(self):
         doms = []
-        doms.append('Dom1')
-        doms.append('Dom2')
-        doms.append('Dom3')
+        q = QSqlQuery()
+        q.exec_("SELECT nom FROM domaines")
+        q.first()
+        
+        while (q.isValid()):
+            doms.append(q.value(0).toString())
+            q.next()
         
         return doms
     
@@ -155,7 +165,7 @@ class ModeleInscription(object):
         values['passwd_hash'] = passwd_hash.hexdigest()
         
         query = "INSERT INTO exposants (id, nom, domaine, resp_nom, resp_prenom, email, date_inscr, passwd) " + \
-            "VALUES (" + values['id'] + ", '" + values['cie'] + "', '" + values['domaine'] + "', '" + \
+            "VALUES (" + values['id'] + ", '" + values['cie'] + "', " + str(values['domaine']) + ", '" + \
             values['resp_nom'] + "', '" + values['resp_prenom'] + "', '" + values['email'] + "', datetime('now'), '"  + values['passwd_hash'] + "');"
         q = QSqlQuery()
         if not q.exec_(query):
@@ -163,11 +173,11 @@ class ModeleInscription(object):
             print 'Erreur: ' + q.lastError().text()
             return False
         else:
-            database.setCurrentId('exposants', int(values['id']))
             QMessageBox.information(parent, 'Information', "Inscription reussie\nVotre identificateur est : " + values['id'])
             return True
 
 if __name__ == '__main__':
+    import database
     app = QApplication([])
     db = database.Database()
     db.openSqlConnection("QSQLITE", "db.sqlite")

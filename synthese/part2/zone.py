@@ -39,6 +39,12 @@ MUR_BG = 0x20
 MUR_GB = 0x40
 MUR_GH = 0x80
 
+#Murs complets
+MUR_HAUT = 0x01
+MUR_DROITE = 0x02
+MUR_GAUCHE = 0x04
+MUR_BAS = 0x08
+
 #TEST#
 def bin(x):
     return ''.join(x & (1 << i) and '1' or '0' for i in range(7,-1,-1))
@@ -49,15 +55,16 @@ class Zone(object):
         self.posX = posX
         self.posY = posY
         self.zone = isZone
+        self.modif = False
         
         #Servira a identifier une zone qui a ete de-louee afin de
         #la sauvegarder dans la bdd si on travaille avec historique
-        self.ancienProprio = -1
+        #~ self.ancienProprio = -1
         
         self.getInfo()
     
     def getInfo(self):
-        query = "SELECT proprio, webz, electricite, murets FROM zones WHERE posX=" + str(self.posX) + " AND posY=" + str(self.posY)
+        query = "SELECT proprio, webz, router, electricite, murets, murs FROM zones WHERE posX=" + str(self.posX) + " AND posY=" + str(self.posY)
         #Si on travaille avec un historique de chaque zone, decommenter la ligne suivante
         query += " ORDER BY id DESC LIMIT 1"
         q = QSqlQuery()
@@ -65,20 +72,31 @@ class Zone(object):
         if (q.first()):
             self.proprio    = q.value(0).toInt()[0]
             self.interwebz  = q.value(1).toInt()[0]
-            self.nbprises   = q.value(2).toInt()[0]
-            self.murets     = q.value(3).toInt()[0]
+            self.router     = q.value(2).toInt()[0]
+            self.nbprises   = q.value(3).toInt()[0]
+            self.murets     = q.value(4).toInt()[0]
+            self.murs       = q.value(5).toInt()[0]
         else:
             self.proprio    = -1 #Inoccupe
             self.interwebz  = WEBZ_NONE
+            self.router     = 0
             self.nbprises   = 0
             self.murets     = 0
+            self.murs       = 0
     
     def sauvegarder(self):
-        query = "INSERT INTO zones (posX, posY, proprio, webz, electricite, murets)" + \
-            " VALUES (" + str(self.posX) + ", " + str(self.posY) + ", " + str(self.proprio) + \
-            ", " + str(self.interwebz) + ", " + str(self.nbprises) + ", " + str(self.murets) + ")"
+        query = "INSERT INTO zones (posX, posY, proprio, webz, router, electricite, murets, murs)" + \
+            " VALUES (" + str(self.posX) + ", " + str(self.posY) + ", " + str(self.proprio) + ", " + str(self.interwebz) + \
+            ", " + str(self.router) + ", " + str(self.nbprises) + ", " + str(self.murets)  + ", " + str(self.murs) + ")"
         q = QSqlQuery()
-        q.exec_(query)
+        if q.exec_(query):
+            self.modif = False
+    
+    def setModified(self, modif=True):
+        self.modif = modif
+    
+    def wasModified(self):
+        return self.modif
     
     def getPosX(self):
         return self.posX
@@ -89,15 +107,53 @@ class Zone(object):
     def isZone(self):
         return self.zone
     
+    def getPrixOptions(self):
+        webz = {
+            WEBZ_NONE : 0,
+            WEBZ_500K : 20,
+            WEBZ_2M : 50,
+            WEBZ_5M : 75
+        }
+        
+        prix  = webz[self.interwebz]
+        prix += self.router * 60
+        prix += self.nbprises * 50
+        
+        #Je ne charge pas le prix d'un muret si un 
+        #gros mur a ete place par dessus
+        murets = self.getMurets()
+        murs = self.getMurs()
+        
+        if ((murets & MUR_HD) and not (murs & MUR_HAUT)):
+            prix += 100
+        if ((murets & MUR_HG) and not (murs & MUR_HAUT)):
+            prix += 100
+        if ((murets & MUR_BD) and not (murs & MUR_BAS)):
+            prix += 100
+        if ((murets & MUR_BG) and not (murs & MUR_BAS)):
+            prix += 100
+        if ((murets & MUR_DH) and not (murs & MUR_DROITE)):
+            prix += 100
+        if ((murets & MUR_DB) and not (murs & MUR_DROITE)):
+            prix += 100
+        if ((murets & MUR_GH) and not (murs & MUR_GAUCHE)):
+            prix += 100
+        if ((murets & MUR_GB) and not (murs & MUR_GAUCHE)):
+            prix += 100
+        
+        return prix
+    
     def setProprio(self, proprio):
         if (proprio >= 100 and proprio % 10 == 0):
             self.proprio = proprio
         else:   # "De-louage" de la zone
-            self.ancienProprio = self.proprio
+            #~ self.ancienProprio = self.proprio
             self.proprio = -1
             self.interwebz = WEBZ_NONE
+            self.router = 0
             self.nbprises = 0
             self.murets = 0
+            self.murs = 0
     
     def getProprio(self):
         return self.proprio
@@ -113,6 +169,23 @@ class Zone(object):
     
     def getInterwebz(self):
         return self.interwebz
+    
+    def addRouter(self):
+        if (self.router == 0):
+            self.router = 1
+            return True
+        else:
+            return False
+    
+    def rmRouter(self):
+        if (self.router == 1):
+            self.router = 0
+            return True
+        else:
+            return False
+    
+    def getRouter(self):
+        return self.router
     
     def addPriseElectrique(self):
         if (self.nbprises < 2):
@@ -149,8 +222,32 @@ class Zone(object):
     def viderMurets(self):
         self.murets = 0
     
+    def getNbMurets(self):
+        return str(bin(self.murets)).count('1')
+    
     def getMurets(self):
         return self.murets
+    
+    def addMur(self, mur):
+        if (mur >= 0 and mur < 16):
+            tmp = self.murs | mur
+            
+            if (tmp == 16):    #Murs tout autour
+                return False
+            else:
+                self.murs = tmp
+                return True
+    
+    def rmMur(self, mur):
+        if (mur >= 0 and mur < 16):
+            mur = mur ^ 0xff              #Inverser pour avoir un byte contenant 7 '1', ex: 0b11101111
+            self.murs = self.murs & mur   #Garder le byte comme avant sauf pour le mur a enlever
+    
+    def viderMurs(self):
+        self.murs = 0
+    
+    def getMurs(self):
+        return self.murs
 
 if __name__ == '__main__':
     import plancher

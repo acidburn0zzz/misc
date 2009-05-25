@@ -32,9 +32,9 @@ import zone
 TAILLE_CASE = 50
 
 #Constantes d'options
-NB_OPTS = 17
-OPT_LOC, OPT_WEBZ, OPT_ELEC, OPT_MURET = range(4)
-LOC_ADD, LOC_RM, WEBZ_500K, WEBZ_2M, WEBZ_5M, WEBZ_RM, ELEC_ADD, ELEC_RM, \
+NB_OPTS = 19
+OPT_LOC, OPT_WEBZ, OPT_ROUTER, OPT_ELEC, OPT_MURET = range(5)
+LOC_ADD, LOC_RM, WEBZ_500K, WEBZ_2M, WEBZ_5M, WEBZ_RM, ROUT_ADD, ROUT_RM, ELEC_ADD, ELEC_RM, \
 MUR_HG, MUR_HD, MUR_DH, MUR_DB, MUR_BD, MUR_BG, MUR_GB, MUR_GH, MUR_RM = range(NB_OPTS)
 
 #Correspondance entre plancher.MUR_* et zone.MUR_*
@@ -65,12 +65,14 @@ class VuePlancher(QMainWindow):
         self.radLoc = QRadioButton("Location")
         self.radLoc.setChecked(True)
         self.radWebz = QRadioButton("Internet")
+        self.radRouter = QRadioButton("Router")
         self.radElectricite = QRadioButton("Prises electriques")
         self.radMurets = QRadioButton("Murets")
         
         self.grpCat = QButtonGroup(self)
         self.grpCat.addButton(self.radLoc, OPT_LOC)
         self.grpCat.addButton(self.radWebz, OPT_WEBZ)
+        self.grpCat.addButton(self.radRouter, OPT_ROUTER)
         self.grpCat.addButton(self.radElectricite, OPT_ELEC)
         self.grpCat.addButton(self.radMurets, OPT_MURET)
         
@@ -79,6 +81,7 @@ class VuePlancher(QMainWindow):
         self.layCentral.addLayout(self.layCat)
         self.layCat.addWidget(self.radLoc)
         self.layCat.addWidget(self.radWebz)
+        self.layCat.addWidget(self.radRouter)
         self.layCat.addWidget(self.radElectricite)
         self.layCat.addWidget(self.radMurets)
         
@@ -103,19 +106,23 @@ class VuePlancher(QMainWindow):
         self.radOptions.append(QRadioButton("5 Mbps"))
         self.radOptions.append(QRadioButton("Enlever"))
         
+        #Options de router
+        self.radOptions.append(QRadioButton("Ajouter"))
+        self.radOptions.append(QRadioButton("Enlever"))
+        
         #Options d'electricite
         self.radOptions.append(QRadioButton("Ajouter"))
         self.radOptions.append(QRadioButton("Enlever"))
         
         #Options de murets
-        #~ self.radOptMurHG = QRadioButton("Haut-Gauche")
-        #~ self.radOptMurHD = QRadioButton("Haut-Droite")
-        #~ self.radOptMurDH = QRadioButton("Droite-Haut")
-        #~ self.radOptMurDB = QRadioButton("Droite-Bas")
-        #~ self.radOptMurBD = QRadioButton("Bas-Droit")
-        #~ self.radOptMurBG = QRadioButton("Bas-Gauche")
-        #~ self.radOptMurGB = QRadioButton("Gauche-Bas")
-        #~ self.radOptMurGH = QRadioButton("Gauche-Haut")
+        #~ self.radOptions.append(QRadioButton("Haut-Gauche"))
+        #~ self.radOptions.append(QRadioButton("Haut-Droite"))
+        #~ self.radOptions.append(QRadioButton("Droite-Haut"))
+        #~ self.radOptions.append(QRadioButton("Droite-Bas"))
+        #~ self.radOptions.append(QRadioButton("Bas-Droit"))
+        #~ self.radOptions.append(QRadioButton("Bas-Gauche"))
+        #~ self.radOptions.append(QRadioButton("Gauche-Bas"))
+        #~ self.radOptions.append(QRadioButton("Gauche-Haut"))
         self.radOptions.append(QRadioButton("H-G"))
         self.radOptions.append(QRadioButton("H-D"))
         self.radOptions.append(QRadioButton("D-H"))
@@ -142,8 +149,20 @@ class VuePlancher(QMainWindow):
         cie = db.getValeur("exposants", "nom", self.idExposant).toString()
         nom = db.getValeur("exposants", "resp_nom", self.idExposant).toString()
         prenom = db.getValeur("exposants", "resp_prenom", self.idExposant).toString()
+        str = prenom + " " + nom + " (" + cie
         
-        return prenom + " " + nom + " (" + cie + ")"
+        #Afficher le domaine
+        dom = db.getValeur("exposants", "domaine", self.idExposant).toInt()[0]
+        domaine = db.getValeur("domaines", "nom", dom).toString()
+        str += ", " + domaine
+        
+        #Date d'inscription
+        date = db.getValeur("exposants", "DATETIME(date_inscr, 'localtime')", self.idExposant).toString()
+        str += ", " + date
+        
+        str += ")"
+        
+        return str
     
     def creerMenus(self):
         self.actSave = QAction("&Sauvegarder", self)
@@ -176,6 +195,10 @@ class VuePlancher(QMainWindow):
             self.radOptions[WEBZ_2M].setVisible(True)
             self.radOptions[WEBZ_5M].setVisible(True)
             self.radOptions[WEBZ_RM].setVisible(True)
+        elif (id == OPT_ROUTER):
+            self.radOptions[ROUT_ADD].setVisible(True)
+            self.radOptions[ROUT_ADD].click()
+            self.radOptions[ROUT_RM].setVisible(True)
         elif (id == OPT_ELEC):
             self.radOptions[ELEC_ADD].setVisible(True)
             self.radOptions[ELEC_ADD].click()
@@ -210,7 +233,7 @@ class ModelePlancher(object):
         #Si on travaille avec un historique
         for i in self.zones:
             for j in i:
-                if (j.getProprio() == id or j.getAncienProprio() == id):
+                if (j.wasModified()):
                     j.sauvegarder()
         #Fin de la partie historique
         
@@ -227,10 +250,94 @@ class ModelePlancher(object):
     def isZone(self, x, y):
         return self.zones[x][y].isZone()
     
+    def getInfos(self, x, y, id):
+        webz = {
+            zone.WEBZ_NONE : "Aucune",
+            zone.WEBZ_500K : "500kbps",
+            zone.WEBZ_2M : "2Mbps",
+            zone.WEBZ_5M : "5Mbps"
+        }
+        infos = "Connexion internet : " + webz[self.getInterwebz(x, y)] + "\n" + \
+                "Nb de prises electriques : " + str(self.getNbPrisesElectriques(x, y)) + "\n" + \
+                "Router : " + ["Non", "Oui"][self.getRouter(x, y)] + "\n" + \
+                "Nb de murets : " + str(self.getNbMurets(x, y)) + "\n" + \
+                "Cout des options : " + str(self.getPrixOptions(x, y))
+        
+        if (id == 1):
+            proprio = self.getProprio(x, y)
+            if (proprio == -1):
+                infos = "Zone inocupee"
+            else:
+                infos = "Proprietaire : " + str(proprio) + "\n" + infos
+        return infos
+    
+    def ajouterMurs(self, x, y, id):
+        #Case en haut
+        if (y > 0 and self.getProprio(x, y-1) != -1 and self.getProprio(x, y-1) != id):
+            self.addMur(x, y, zone.MUR_HAUT)
+            self.addMur(x, y-1, zone.MUR_BAS)
+            self.setModified(x, y-1)
+        #Case en bas
+        if (y < self.getHauteur() - 1 and self.getProprio(x, y+1) != -1 and self.getProprio(x, y+1) != id):
+            self.addMur(x, y, zone.MUR_BAS)
+            self.addMur(x, y+1, zone.MUR_HAUT)
+            self.setModified(x, y+1)
+        #Case a gauche
+        if (x > 0 and self.getProprio(x-1, y) != -1 and self.getProprio(x-1, y) != id):
+            self.addMur(x, y, zone.MUR_GAUCHE)
+            self.addMur(x-1, y, zone.MUR_DROITE)
+            self.setModified(x-1, y)
+        #Case a droite
+        if (x < self.getLargeur() - 1 and self.getProprio(x+1, y) != -1 and self.getProprio(x+1, y) != id):
+            self.addMur(x, y, zone.MUR_DROITE)
+            self.addMur(x+1, y, zone.MUR_GAUCHE)
+            self.setModified(x+1, y)
+    
+    def enleverMurs(self, x, y, id):
+        #Case en haut
+        if (y > 0 and self.getProprio(x, y-1) != -1 and self.getProprio(x, y-1) != id):
+            self.rmMur(x, y, zone.MUR_HAUT)
+            self.rmMur(x, y-1, zone.MUR_BAS)
+            self.setModified(x, y-1)
+        #Case en bas
+        if (y < self.getHauteur() - 1 and self.getProprio(x, y+1) != -1 and self.getProprio(x, y+1) != id):
+            self.rmMur(x, y, zone.MUR_BAS)
+            self.rmMur(x, y+1, zone.MUR_HAUT)
+            self.setModified(x, y+1)
+        #Case a gauche
+        if (x > 0 and self.getProprio(x-1, y) != -1 and self.getProprio(x-1, y) != id):
+            self.rmMur(x, y, zone.MUR_GAUCHE)
+            self.rmMur(x-1, y, zone.MUR_DROITE)
+            self.setModified(x-1, y)
+        #Case a droite
+        if (x < self.getLargeur() - 1 and self.getProprio(x+1, y) != -1 and self.getProprio(x+1, y) != id):
+            self.rmMur(x, y, zone.MUR_DROITE)
+            self.rmMur(x+1, y, zone.MUR_GAUCHE)
+            self.setModified(x+1, y)
+    
+    def setModified(self, x, y, modif=True):
+        self.zones[x][y].setModified(modif)
+    
+    def wasModified(self, x, y):
+        return self.zones[x][y].wasModified()
+    
+    def getPrixOptions(self, x, y):
+        return self.zones[x][y].getPrixOptions()
+    
+    #Les 2 fonctions suivantes prennent le wdPlancher en param pour forcer
+    #le repaint de cases avec des gros murs
     def setProprio(self, x, y, id):
-        if (self.getProprio(x, y) == -1 or self.getProprio(x, y) == id):
-            #2eme condition pour empecher le message d'erreur
+        if (self.getProprio(x, y) == -1):
             self.zones[x][y].setProprio(id)
+            self.ajouterMurs(x, y, id)
+            return True
+        else:
+            return False
+    
+    def rmProprio(self, x, y, id):
+        if (self.getProprio(x, y) == id):
+            self.zones[x][y].setProprio(-1)
+            self.enleverMurs(x, y, id)
             return True
         else:
             return False
@@ -244,6 +351,15 @@ class ModelePlancher(object):
     def getInterwebz(self, x, y):
         return self.zones[x][y].getInterwebz()
     
+    def addRouter(self, x, y):
+        return self.zones[x][y].addRouter()
+    
+    def rmRouter(self, x, y):
+        return self.zones[x][y].rmRouter()
+    
+    def getRouter(self, x, y):
+        return self.zones[x][y].getRouter()
+    
     def addPriseElectrique(self, x, y):
         return self.zones[x][y].addPriseElectrique()
     
@@ -252,6 +368,27 @@ class ModelePlancher(object):
     
     def getNbPrisesElectriques(self, x, y):
         return self.zones[x][y].getNbPrisesElectriques()
+    
+    def addMuret(self, x, y, muret):
+        return self.zones[x][y].addMuret(muret)
+    
+    def viderMurets(self, x, y):
+        return self.zones[x][y].viderMurets()
+    
+    def getNbMurets(self, x, y):
+        return self.zones[x][y].getNbMurets()
+    
+    def getMurets(self, x, y):
+        return self.zones[x][y].getMurets()
+    
+    def addMur(self, x, y, mur):
+        return self.zones[x][y].addMur(mur)
+    
+    def rmMur(self, x, y, mur):
+        return self.zones[x][y].rmMur(mur)
+    
+    def getMurs(self, x, y):
+        return self.zones[x][y].getMurs()
 
 class WidgetPlancher(QWidget):
     def __init__(self, id = 0, parent=None):
@@ -270,12 +407,18 @@ class WidgetPlancher(QWidget):
         #TEMPORAIRE, FAIRE PASSER PAR LE MODELE#
         if (self.option == LOC_ADD):
             if (not self.model.setProprio(x, y, self.id)):
-                QMessageBox.warning(self, 'Attention', "Impossible de louer cette zone")
+                QMessageBox.warning(self, 'Attention', "Cette zone n'est pas a louer")
+            else:
+                #On redessine tout le plancher pour afficher les nouveaux murs
+                self.update()
         elif (self.model.getProprio(x, y) != self.id):
             self.afficherPasVotreZone()
             return
         elif (self.option == LOC_RM):
-            self.model.zones[x][y].setProprio(-1)
+            self.model.rmProprio(x, y, self.id)
+            #On redessine tout le plancher pour effacer les murs
+            #qui ne sont plus requis
+            self.update()
         elif (self.option == WEBZ_500K):
             self.model.setInterwebz(x, y, zone.WEBZ_500K)
         elif (self.option == WEBZ_2M):
@@ -284,6 +427,12 @@ class WidgetPlancher(QWidget):
             self.model.setInterwebz(x, y, zone.WEBZ_5M)
         elif (self.option == WEBZ_RM):
             self.model.setInterwebz(x, y, zone.WEBZ_NONE)
+        elif (self.option == ROUT_ADD):
+            if not self.model.addRouter(x, y):
+                QMessageBox.warning(self, 'Erreur', "Vous avez deja un router")
+        elif (self.option == ROUT_RM):
+            if not self.model.rmRouter(x, y):
+                QMessageBox.warning(self, 'Erreur', "Vous n'avez pas de router")
         elif (self.option == ELEC_ADD):
             if not self.model.addPriseElectrique(x, y):
                 QMessageBox.warning(self, 'Erreur', "Impossible d'ajouter une prise electrique")
@@ -291,22 +440,24 @@ class WidgetPlancher(QWidget):
             if not self.model.rmPriseElectrique(x, y):
                 QMessageBox.warning(self, 'Erreur', "Il n'y a pas de prise a enlever")
         elif (self.option >= MUR_HG and self.option <= MUR_GH):
-            if not self.model.zones[x][y].addMuret(VAL_MURS[self.option]):
+            if not self.model.addMuret(x, y, VAL_MURS[self.option]):
                 QMessageBox.warning(self, 'Erreur', "Impossible d'ajouter un muret")
         elif (self.option == MUR_RM):
-            self.model.zones[x][y].viderMurets()
-            
-        self.model.zones[x][y].getMurets()
+            self.model.viderMurets(x, y)
         
+        #Si on se rend ici, on considere que la case a ete modifiee
+        self.model.setModified(x, y)
+        
+        #Redessiner seulement la case en cours
         self.update(QRect(x*TAILLE_CASE, y*TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
     
     def setOption(self, id):
         self.option = id
     
     def afficherInfo(self, x, y):
-        zone = self.model.zones[x][y]
-        if (zone.getProprio() == self.id):
-            QMessageBox.information(self, 'Information', "Zone %d:%d" % (x, y))
+        if (self.model.getProprio(x, y) == self.id or self.id == 1):
+            infos = self.model.getInfos(x, y, self.id)
+            QMessageBox.information(self, "Zone %d:%d" % (x, y), infos)
         else:
             self.afficherPasVotreZone()
     
@@ -341,51 +492,63 @@ class WidgetPlancher(QWidget):
         painter = QPainter(self)
         rectZone = QRect(x*TAILLE_CASE, y*TAILLE_CASE, TAILLE_CASE, TAILLE_CASE)
         
-        if not self.model.zones[x][y].isZone():
+        if not self.model.isZone(x, y):
             painter.setBrush(QBrush(Qt.transparent))
             painter.drawRect(rectZone)
             return
         
         #~ #Couleur de fond d'une case
-        if (self.model.zones[x][y].getProprio() == self.id):
+        if (self.model.getProprio(x, y) == self.id):
             painter.setBrush(QBrush(QColor(0x00, 0x80, 0x00)))
-        elif (self.model.zones[x][y].getProprio() > 0):
+        elif (self.model.getProprio(x, y) > 0):
             painter.setBrush(QBrush(QColor(0x80, 0x00, 0x00)))
         else:
             painter.setBrush(QBrush(QColor(0xff, 0xff, 0xff)))
         painter.drawRect(rectZone)
         
         #Remise a la couleur noire du painter
-        painter.setBrush(QBrush(QColor(0, 0, 0)))
+        painter.setBrush(QBrush(QColor(0x00, 0x00, 0x00)))
         painter.setPen(QPen(Qt.NoPen))
         
         #Dessin des prises internet
         #EMPECHER DE VOIR LES WEBZ DES AUTRES??
-        #~ if (self.model.getProprio(x, y) == self.id):
-        webz = self.model.getInterwebz(x, y)
-        if (webz >= zone.WEBZ_500K):
-            rectWebz = QRect(x*TAILLE_CASE+10, y*TAILLE_CASE+10, 5, 5)
-            painter.drawRect(rectWebz)
-        if (webz >= zone.WEBZ_2M):
-            rectWebz = QRect(x*TAILLE_CASE+10, y*TAILLE_CASE+20, 5, 5)
-            painter.drawRect(rectWebz)
-        if (webz >= zone.WEBZ_5M):
-            rectWebz = QRect(x*TAILLE_CASE+10, y*TAILLE_CASE+30, 5, 5)
-            painter.drawRect(rectWebz)
+        if (self.model.getProprio(x, y) == self.id or self.id == 1):
+            webz = self.model.getInterwebz(x, y)
+            if (webz >= zone.WEBZ_500K):
+                rectWebz = QRect(x*TAILLE_CASE+10, y*TAILLE_CASE+10, 5, 5)
+                painter.drawRect(rectWebz)
+            if (webz >= zone.WEBZ_2M):
+                rectWebz = QRect(x*TAILLE_CASE+10, y*TAILLE_CASE+20, 5, 5)
+                painter.drawRect(rectWebz)
+            if (webz >= zone.WEBZ_5M):
+                rectWebz = QRect(x*TAILLE_CASE+10, y*TAILLE_CASE+30, 5, 5)
+                painter.drawRect(rectWebz)
+        
+        #Dessin du router
+        #EMPECHER DE VOIR LE ROUTER DES AUTRES??
+        if (self.model.getProprio(x, y) == self.id or self.id == 1):
+            elec = self.model.getRouter(x, y)
+            if (elec == 1):
+                rectRout = QRect(x*TAILLE_CASE+30, y*TAILLE_CASE+30, 10, 5)
+                painter.drawRect(rectRout)
         
         #Dessin des prises electriques
         #EMPECHER DE VOIR L'ELECTRICITE DES AUTRES??
-        #~ if (self.model.getProprio(x, y) == self.id):
-        elec = self.model.getNbPrisesElectriques(x, y)
-        if (elec >= 1):
-            rectElec = QRect(x*TAILLE_CASE+35, y*TAILLE_CASE+10, 5, 5)
-            painter.drawRect(rectElec)
-        if (elec >= 2):
-            rectElec = QRect(x*TAILLE_CASE+35, y*TAILLE_CASE+20, 5, 5)
-            painter.drawRect(rectElec)
+        if (self.model.getProprio(x, y) == self.id or self.id == 1):
+            elec = self.model.getNbPrisesElectriques(x, y)
+            if (elec >= 1):
+                rectElec = QRect(x*TAILLE_CASE+35, y*TAILLE_CASE+10, 5, 5)
+                painter.drawRect(rectElec)
+            if (elec >= 2):
+                rectElec = QRect(x*TAILLE_CASE+35, y*TAILLE_CASE+20, 5, 5)
+                painter.drawRect(rectElec)
+        
+        #Les murets seront bleu fonce
+        painter.setBrush(QBrush(QColor(0x00, 0x00, 0x60)))
+        painter.setPen(QPen(Qt.NoPen))
         
         #Dessin des murets
-        murets = self.model.zones[x][y].getMurets()
+        murets = self.model.getMurets(x, y)
         
         if (murets & zone.MUR_HG):
             rectMur = QRect(x*TAILLE_CASE, y*TAILLE_CASE, 25, 5)
@@ -411,6 +574,26 @@ class WidgetPlancher(QWidget):
         if (murets & zone.MUR_GH):
             rectMur = QRect(x*TAILLE_CASE, y*TAILLE_CASE, 5, 25)
             painter.drawRect(rectMur)
+        
+        #Les murs seront noir
+        painter.setBrush(QBrush(QColor(0x00, 0x00, 0x00)))
+        painter.setPen(QPen(Qt.NoPen))
+        
+        #Dessin des murs
+        murs = self.model.getMurs(x, y)
+        
+        if (murs & zone.MUR_HAUT):
+            rectMur = QRect(x*TAILLE_CASE, y*TAILLE_CASE, 50, 5)
+            painter.drawRect(rectMur)
+        if (murs & zone.MUR_BAS):
+            rectMur = QRect(x*TAILLE_CASE, y*TAILLE_CASE+45, 50, 5)
+            painter.drawRect(rectMur)
+        if (murs & zone.MUR_GAUCHE):
+            rectMur = QRect(x*TAILLE_CASE, y*TAILLE_CASE, 5, 50)
+            painter.drawRect(rectMur)
+        if (murs & zone.MUR_DROITE):
+            rectMur = QRect(x*TAILLE_CASE+45, y*TAILLE_CASE, 5, 50)
+            painter.drawRect(rectMur)
     
     def sizeHint(self):
         return QSize(TAILLE_CASE * self.model.getLargeur()+1, TAILLE_CASE * self.model.getHauteur()+1)
@@ -424,5 +607,6 @@ if __name__ == '__main__':
     qdb.openSqlConnection("QSQLITE", "db.sqlite")
     z = VuePlancher(100)
     z.show()
+    #~ z = VuePlancher(1)
     app.exec_()
     qdb.closeSqlConnection()
