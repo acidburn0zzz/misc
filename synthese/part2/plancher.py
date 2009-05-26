@@ -26,7 +26,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 
 import database as db
-import exposant
+import rapport
 import xmlparser
 import zone
 
@@ -60,7 +60,7 @@ class VuePlancher(QMainWindow):
         self.setCentralWidget(self.wdCentral)
         self.layCentral = QVBoxLayout(self.wdCentral)
         
-        self.lblExposant = QLabel(db.getNomExposant(id), self)
+        self.lblExposant = QLabel(db.getNomExposant(id, True, True), self)
         self.layCentral.addWidget(self.lblExposant)
         
         #Choix de categorie
@@ -246,13 +246,12 @@ class ModelePlancher(object):
         #Fin de la partie sans historique
     
     def rapportPerso(self):
-        e = exposant.VueExposant(self.id, self.zones)
+        e = rapport.VueRapportExposant(self.id, self.zones)
         e.exec_()
     
     def rapportGeneral(self):
-        #TODO: Changer pour rapport general
-        e = exposant.VueExposant(self.id, self.zones)
-        e.exec_()
+        r = rapport.VueRapportGeneral(self.zones)
+        r.exec_()
     
     def isZone(self, x, y):
         return self.zones[x][y].isZone()
@@ -268,7 +267,7 @@ class ModelePlancher(object):
                 "Nb de prises electriques : " + str(self.getNbPrisesElectriques(x, y)) + "\n" + \
                 "Router : " + ["Non", "Oui"][self.getRouter(x, y)] + "\n" + \
                 "Nb de murets : " + str(self.getNbMurets(x, y)) + "\n" + \
-                "Cout des options : " + str(self.getPrixOptions(x, y))
+                "Cout des options : " + rapport.formatterPrix(self.getPrixOptions(x, y))
         
         if (self.id == 1):
             proprio = self.getProprio(x, y)
@@ -406,7 +405,8 @@ class WidgetPlancher(QWidget):
         self.currentZone = [0, 0]
     
     def updateZone(self, x, y):
-        if not self.model.isZone(x, y):
+        #L'admin ne peut faire de modif pour le moment
+        if (not self.model.isZone(x, y) or self.id == 1):
             return
         
         self.currentZone = [x, y]
@@ -618,8 +618,8 @@ if __name__ == '__main__':
     app = QApplication([])
     qdb = db.Database()
     qdb.openSqlConnection("QSQLITE", "db.sqlite")
-    z = VuePlancher(100)
-    #~ z = VuePlancher(1)
+    #~ z = VuePlancher(100)
+    z = VuePlancher(1)
     z.show()
     app.exec_()
     qdb.closeSqlConnection()

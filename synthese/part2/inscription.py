@@ -35,12 +35,10 @@ class VueInscription(QDialog):
         self.model = ModeleInscription()
         
         self.setWindowTitle('Inscription')
-        self.setWindowFlags(Qt.Tool)
         
         self.layCentral = QVBoxLayout()
         
         self.lblId = QLabel('Identificateur')
-        self.lblId.setVisible(False)
         self.lblCie = QLabel('Compagnie')
         self.lblDomaine = QLabel('Domaine')
         self.lblRespNom = QLabel('Nom')

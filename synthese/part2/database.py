@@ -34,6 +34,7 @@ def getCurrentId(table):
     else:
         return -1
 
+#N'est plus utilisee
 def setCurrentId(table, newid):
     q = QSqlQuery()
     if q.exec_("UPDATE db_sequence SET seq=" + str(newid) + " WHERE name='" + table + "'"):
@@ -49,20 +50,23 @@ def getValeur(table, valeur, id):
     else:
         return ""
 
-def getNomExposant(id):
+def getNomExposant(id, dom = False, date = False):
     cie = getValeur("exposants", "nom", id).toString()
     nom = getValeur("exposants", "resp_nom", id).toString()
     prenom = getValeur("exposants", "resp_prenom", id).toString()
     str = prenom + " " + nom + " (" + cie
     
     #Afficher le domaine
-    dom = getValeur("exposants", "domaine", id).toInt()[0]
-    domaine = getValeur("domaines", "nom", dom).toString()
-    str += ", " + domaine
+    if (dom):
+        dom = getValeur("exposants", "domaine", id).toInt()[0]
+        domaine = getValeur("domaines", "nom", dom).toString()
+        str += ", " + domaine
     
     #Date d'inscription
-    date = getValeur("exposants", "DATETIME(date_inscr, 'localtime')", id).toString()
-    str += ", " + date
+    if (date):
+        date = getValeur("exposants", "DATE(date_inscr, 'localtime')", id).toString()
+        #~ date = getValeur("exposants", "DATETIME(date_inscr, 'localtime')", id).toString()
+        str += ", Inscrit le " + date
     
     str += ")"
     
