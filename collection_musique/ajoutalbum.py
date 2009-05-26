@@ -5,7 +5,9 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 
-import connexion
+import database as db
+
+import time
 import sys
 
 #Raccourcis
@@ -30,15 +32,18 @@ class AjoutAlbum(QDialog):
         self.txtAlbum = QLineEdit()
         self.lblYear = QLabel(tr(self, 'Year'))
         self.txtYear = QLineEdit()
-        self.txtYear.setValidator(QIntValidator(1000, 9999, self))
         self.lblGenre = QLabel(tr(self, 'Genre'))
         self.cmbGenre = QComboBox()
         self.cmbGenre.setEditable(True)
         self.lblTracks = QLabel(tr(self, 'Tracks'))
         self.txtTracks = QLineEdit()
-        self.txtTracks.setValidator(QIntValidator(0, 99, self))
         self.lblLength = QLabel(tr(self, 'Length'))
         self.txtLength = QLineEdit()
+        
+        #Validateurs
+        cYear = int(time.strftime('%Y'))
+        self.txtYear.setValidator(QIntValidator(1000, cYear, self))
+        self.txtTracks.setValidator(QIntValidator(0, 99, self))
         self.txtLength.setValidator(QRegExpValidator(QRegExp("^([0-9]{2}:)?[0-9]{2}:[0-9]{2}$"), self))
         
         self.btnAdd = QPushButton(tr(self, 'Ajouter'))
@@ -131,8 +136,10 @@ class UnacceptableInputException(Exception):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    connexion.openSqlConnection('QSQLITE', 'albums.db')
+    qdb = db.Database()
+    qdb.openSqlConnection('QSQLITE', 'albums.db')
     a = AjoutAlbum()
     a.show()
     app.exec_()
+    qdb.closeSqlConnection()
     

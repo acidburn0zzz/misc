@@ -35,7 +35,6 @@ class VueLogin(QDialog):
         self.idExposant = idExposant
         
         self.setWindowTitle('Login')
-        self.setWindowFlags(Qt.Tool)
         
         self.layCentral = QVBoxLayout()
         
