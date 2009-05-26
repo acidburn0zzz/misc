@@ -34,8 +34,7 @@ typedef struct{
 } md5_ctx;
 
 #if defined(__GNUC__) && defined(__i386__)
-static inline uint32_t rol( uint32_t x, int n)
-{
+static uint32_t rol(uint32_t x, int n) {
     __asm__("roll %%cl,%0"
         :"=r" (x)
         :"0" (x),"c" (n));
