@@ -107,7 +107,7 @@ class Zone(object):
     def isZone(self):
         return self.zone
     
-    def getPrixOptions(self):
+    def getPrixWebz(self):
         webz = {
             WEBZ_NONE : 0,
             WEBZ_500K : 20,
@@ -115,14 +115,21 @@ class Zone(object):
             WEBZ_5M : 75
         }
         
-        prix  = webz[self.interwebz]
-        prix += self.router * 60
-        prix += self.nbprises * 50
-        
+        return webz[self.interwebz]
+    
+    def getPrixRouter(self):
+        return self.router * 60
+    
+    def getPrixElectricite(self):
+        return self.nbprises * 50
+    
+    def getPrixMurets(self):
         #Je ne charge pas le prix d'un muret si un 
         #gros mur a ete place par dessus
         murets = self.getMurets()
         murs = self.getMurs()
+        
+        prix = 0
         
         if ((murets & MUR_HD) and not (murs & MUR_HAUT)):
             prix += 100
@@ -140,6 +147,14 @@ class Zone(object):
             prix += 100
         if ((murets & MUR_GB) and not (murs & MUR_GAUCHE)):
             prix += 100
+        
+        return prix
+    
+    def getPrixOptions(self):
+        prix  = self.getPrixWebz()
+        prix += self.getPrixRouter()
+        prix += self.getPrixElectricite()
+        prix += self.getPrixMurets()
         
         return prix
     

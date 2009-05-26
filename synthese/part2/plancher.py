@@ -26,6 +26,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtSql import *
 
 import database as db
+import exposant
 import xmlparser
 import zone
 
@@ -52,13 +53,14 @@ class VuePlancher(QMainWindow):
     def __init__(self, id, parent=None):
         super(VuePlancher, self).__init__(parent)
         self.idExposant = id
+        self.model = ModelePlancher(id)
         
         self.setWindowTitle("Plancher")
         self.wdCentral = QWidget()
         self.setCentralWidget(self.wdCentral)
         self.layCentral = QVBoxLayout(self.wdCentral)
         
-        self.lblExposant = QLabel(self.getExposant(), self)
+        self.lblExposant = QLabel(db.getNomExposant(id), self)
         self.layCentral.addWidget(self.lblExposant)
         
         #Choix de categorie
@@ -145,26 +147,17 @@ class VuePlancher(QMainWindow):
         #Selection par defaut -> Location
         self.radLoc.click()
     
-    def getExposant(self):
-        cie = db.getValeur("exposants", "nom", self.idExposant).toString()
-        nom = db.getValeur("exposants", "resp_nom", self.idExposant).toString()
-        prenom = db.getValeur("exposants", "resp_prenom", self.idExposant).toString()
-        str = prenom + " " + nom + " (" + cie
-        
-        #Afficher le domaine
-        dom = db.getValeur("exposants", "domaine", self.idExposant).toInt()[0]
-        domaine = db.getValeur("domaines", "nom", dom).toString()
-        str += ", " + domaine
-        
-        #Date d'inscription
-        date = db.getValeur("exposants", "DATETIME(date_inscr, 'localtime')", self.idExposant).toString()
-        str += ", " + date
-        
-        str += ")"
-        
-        return str
-    
     def creerMenus(self):
+        self.actRapportPersonnel = QAction("&Rapport Personnel", self)
+        self.actRapportPersonnel.setShortcut("Ctrl+R");
+        self.actRapportPersonnel.setStatusTip("Afficher un rapport personnel");
+        self.connect(self.actRapportPersonnel, SIGNAL('triggered()'), self.wdPlancher.rapportPerso);
+        
+        self.actRapportGeneral = QAction("&Rapport General", self)
+        self.actRapportGeneral.setShortcut("Ctrl+R");
+        self.actRapportGeneral.setStatusTip("Afficher un rapport general");
+        self.connect(self.actRapportGeneral, SIGNAL('triggered()'), self.wdPlancher.rapportGeneral);
+        
         self.actSave = QAction("&Sauvegarder", self)
         self.actSave.setShortcut("Ctrl+S");
         self.actSave.setStatusTip("Sauvegarder les modification");
@@ -176,14 +169,18 @@ class VuePlancher(QMainWindow):
         self.connect(self.actQuitter, SIGNAL('triggered()'), qApp, SLOT('quit()'));
         
         self.mnuFile = QMenu("&Fichier", self)
+        if (self.idExposant == 1):
+            self.mnuFile.addAction(self.actRapportGeneral)
+        else:
+            self.mnuFile.addAction(self.actRapportPersonnel)
         self.mnuFile.addAction(self.actSave)
         self.mnuFile.addAction(self.actQuitter)
         
         self.menuBar().addMenu(self.mnuFile)
     
     def changerCategorie(self, id):
-        for i in range(NB_OPTS):
-            self.radOptions[i].setVisible(False)
+        for i in self.radOptions:
+            i.setVisible(False)
         
         if (id == OPT_LOC):
             self.radOptions[LOC_ADD].setVisible(True)
@@ -208,12 +205,13 @@ class VuePlancher(QMainWindow):
                 self.radOptions[i].setVisible(True)
             self.radOptions[MUR_HG].click()
     
-    def changerOption(self, id):
-        self.wdPlancher.setOption(id)
+    def changerOption(self, idOption):
+        self.wdPlancher.setOption(idOption)
 
 class ModelePlancher(object):
-    def __init__(self):
+    def __init__(self, id):
         self.xml = xmlparser.XmlParser('expo.xml')
+        self.id = id
         
         self.zones = []
         for i in range(self.getLargeur()):
@@ -229,7 +227,7 @@ class ModelePlancher(object):
     def getHauteur(self):
         return self.xml.getHauteur()
     
-    def sauvegarder(self, id):
+    def sauvegarder(self):
         #Si on travaille avec un historique
         for i in self.zones:
             for j in i:
@@ -247,10 +245,19 @@ class ModelePlancher(object):
                 #~ j.sauvegarder()
         #Fin de la partie sans historique
     
+    def rapportPerso(self):
+        e = exposant.VueExposant(self.id, self.zones)
+        e.exec_()
+    
+    def rapportGeneral(self):
+        #TODO: Changer pour rapport general
+        e = exposant.VueExposant(self.id, self.zones)
+        e.exec_()
+    
     def isZone(self, x, y):
         return self.zones[x][y].isZone()
     
-    def getInfos(self, x, y, id):
+    def getInfos(self, x, y):
         webz = {
             zone.WEBZ_NONE : "Aucune",
             zone.WEBZ_500K : "500kbps",
@@ -263,7 +270,7 @@ class ModelePlancher(object):
                 "Nb de murets : " + str(self.getNbMurets(x, y)) + "\n" + \
                 "Cout des options : " + str(self.getPrixOptions(x, y))
         
-        if (id == 1):
+        if (self.id == 1):
             proprio = self.getProprio(x, y)
             if (proprio == -1):
                 infos = "Zone inocupee"
@@ -271,46 +278,46 @@ class ModelePlancher(object):
                 infos = "Proprietaire : " + str(proprio) + "\n" + infos
         return infos
     
-    def ajouterMurs(self, x, y, id):
+    def ajouterMurs(self, x, y):
         #Case en haut
-        if (y > 0 and self.getProprio(x, y-1) != -1 and self.getProprio(x, y-1) != id):
+        if (y > 0 and self.getProprio(x, y-1) != -1 and self.getProprio(x, y-1) != self.id):
             self.addMur(x, y, zone.MUR_HAUT)
             self.addMur(x, y-1, zone.MUR_BAS)
             self.setModified(x, y-1)
         #Case en bas
-        if (y < self.getHauteur() - 1 and self.getProprio(x, y+1) != -1 and self.getProprio(x, y+1) != id):
+        if (y < self.getHauteur() - 1 and self.getProprio(x, y+1) != -1 and self.getProprio(x, y+1) != self.id):
             self.addMur(x, y, zone.MUR_BAS)
             self.addMur(x, y+1, zone.MUR_HAUT)
             self.setModified(x, y+1)
         #Case a gauche
-        if (x > 0 and self.getProprio(x-1, y) != -1 and self.getProprio(x-1, y) != id):
+        if (x > 0 and self.getProprio(x-1, y) != -1 and self.getProprio(x-1, y) != self.id):
             self.addMur(x, y, zone.MUR_GAUCHE)
             self.addMur(x-1, y, zone.MUR_DROITE)
             self.setModified(x-1, y)
         #Case a droite
-        if (x < self.getLargeur() - 1 and self.getProprio(x+1, y) != -1 and self.getProprio(x+1, y) != id):
+        if (x < self.getLargeur() - 1 and self.getProprio(x+1, y) != -1 and self.getProprio(x+1, y) != self.id):
             self.addMur(x, y, zone.MUR_DROITE)
             self.addMur(x+1, y, zone.MUR_GAUCHE)
             self.setModified(x+1, y)
     
-    def enleverMurs(self, x, y, id):
+    def enleverMurs(self, x, y):
         #Case en haut
-        if (y > 0 and self.getProprio(x, y-1) != -1 and self.getProprio(x, y-1) != id):
+        if (y > 0 and self.getProprio(x, y-1) != -1 and self.getProprio(x, y-1) != self.id):
             self.rmMur(x, y, zone.MUR_HAUT)
             self.rmMur(x, y-1, zone.MUR_BAS)
             self.setModified(x, y-1)
         #Case en bas
-        if (y < self.getHauteur() - 1 and self.getProprio(x, y+1) != -1 and self.getProprio(x, y+1) != id):
+        if (y < self.getHauteur() - 1 and self.getProprio(x, y+1) != -1 and self.getProprio(x, y+1) != self.id):
             self.rmMur(x, y, zone.MUR_BAS)
             self.rmMur(x, y+1, zone.MUR_HAUT)
             self.setModified(x, y+1)
         #Case a gauche
-        if (x > 0 and self.getProprio(x-1, y) != -1 and self.getProprio(x-1, y) != id):
+        if (x > 0 and self.getProprio(x-1, y) != -1 and self.getProprio(x-1, y) != self.id):
             self.rmMur(x, y, zone.MUR_GAUCHE)
             self.rmMur(x-1, y, zone.MUR_DROITE)
             self.setModified(x-1, y)
         #Case a droite
-        if (x < self.getLargeur() - 1 and self.getProprio(x+1, y) != -1 and self.getProprio(x+1, y) != id):
+        if (x < self.getLargeur() - 1 and self.getProprio(x+1, y) != -1 and self.getProprio(x+1, y) != self.id):
             self.rmMur(x, y, zone.MUR_DROITE)
             self.rmMur(x+1, y, zone.MUR_GAUCHE)
             self.setModified(x+1, y)
@@ -326,18 +333,18 @@ class ModelePlancher(object):
     
     #Les 2 fonctions suivantes prennent le wdPlancher en param pour forcer
     #le repaint de cases avec des gros murs
-    def setProprio(self, x, y, id):
+    def setProprio(self, x, y):
         if (self.getProprio(x, y) == -1):
-            self.zones[x][y].setProprio(id)
-            self.ajouterMurs(x, y, id)
+            self.zones[x][y].setProprio(self.id)
+            self.ajouterMurs(x, y)
             return True
         else:
             return False
     
-    def rmProprio(self, x, y, id):
-        if (self.getProprio(x, y) == id):
+    def rmProprio(self, x, y):
+        if (self.getProprio(x, y) == self.id):
             self.zones[x][y].setProprio(-1)
-            self.enleverMurs(x, y, id)
+            self.enleverMurs(x, y)
             return True
         else:
             return False
@@ -393,7 +400,7 @@ class ModelePlancher(object):
 class WidgetPlancher(QWidget):
     def __init__(self, id = 0, parent=None):
         super(WidgetPlancher, self).__init__(parent)
-        self.model = ModelePlancher()
+        self.model = ModelePlancher(id)
         self.id = id
         self.option = -1
         self.currentZone = [0, 0]
@@ -406,7 +413,7 @@ class WidgetPlancher(QWidget):
         
         #TEMPORAIRE, FAIRE PASSER PAR LE MODELE#
         if (self.option == LOC_ADD):
-            if (not self.model.setProprio(x, y, self.id)):
+            if (not self.model.setProprio(x, y)):
                 QMessageBox.warning(self, 'Attention', "Cette zone n'est pas a louer")
             else:
                 #On redessine tout le plancher pour afficher les nouveaux murs
@@ -415,7 +422,7 @@ class WidgetPlancher(QWidget):
             self.afficherPasVotreZone()
             return
         elif (self.option == LOC_RM):
-            self.model.rmProprio(x, y, self.id)
+            self.model.rmProprio(x, y)
             #On redessine tout le plancher pour effacer les murs
             #qui ne sont plus requis
             self.update()
@@ -451,19 +458,25 @@ class WidgetPlancher(QWidget):
         #Redessiner seulement la case en cours
         self.update(QRect(x*TAILLE_CASE, y*TAILLE_CASE, TAILLE_CASE, TAILLE_CASE))
     
-    def setOption(self, id):
-        self.option = id
+    def setOption(self, idOption):
+        self.option = idOption
     
     def afficherInfo(self, x, y):
         if (self.model.getProprio(x, y) == self.id or self.id == 1):
-            infos = self.model.getInfos(x, y, self.id)
+            infos = self.model.getInfos(x, y)
             QMessageBox.information(self, "Zone %d:%d" % (x, y), infos)
         else:
             self.afficherPasVotreZone()
     
     def sauvegarder(self):
-        self.model.sauvegarder(self.id)
+        self.model.sauvegarder()
         QMessageBox.information(self, 'Information', "Informations sauvegardees")
+    
+    def rapportPerso(self):
+        self.model.rapportPerso()
+    
+    def rapportGeneral(self):
+        self.model.rapportGeneral()
     
     def afficherPasVotreZone(self):
         QMessageBox.warning(self, 'Attention', "Cette zone ne vous appartient pas")
@@ -606,7 +619,7 @@ if __name__ == '__main__':
     qdb = db.Database()
     qdb.openSqlConnection("QSQLITE", "db.sqlite")
     z = VuePlancher(100)
-    z.show()
     #~ z = VuePlancher(1)
+    z.show()
     app.exec_()
     qdb.closeSqlConnection()

@@ -31,19 +31,19 @@ EpicFail = False and False and False
 
 #Dans un thread parce que sur linux, il fallait attente que le son ait fini...
 class play(Thread):
-    def __init__ (self, fn):
-        Thread.__init__(self)
-        self.fn = fn
+    def __init__ (lol, fn):
+        Thread.__init__(lol)
+        lol.fn = fn
     
-    def run(self):
+    def run(lol):
         plat = platform.system().lower()
         if plat.startswith('win'):
             from winsound import PlaySound, SND_FILENAME, SND_ASYNC
-            PlaySound(self.fn, SND_FILENAME|SND_ASYNC)
+            PlaySound(lol.fn, SND_FILENAME|SND_ASYNC)
         elif plat.find('linux')>-1:
             from wave import open as waveOpen
             from ossaudiodev import open as ossOpen
-            s = waveOpen(self.fn, 'rb')
+            s = waveOpen(lol.fn, 'rb')
             (nc,sw,fr,nf,comptype, compname) = s.getparams()
             dsp = ossOpen('/dev/dsp','w')
             try:

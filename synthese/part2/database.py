@@ -48,7 +48,26 @@ def getValeur(table, valeur, id):
         return q.value(0)
     else:
         return ""
-            
+
+def getNomExposant(id):
+    cie = getValeur("exposants", "nom", id).toString()
+    nom = getValeur("exposants", "resp_nom", id).toString()
+    prenom = getValeur("exposants", "resp_prenom", id).toString()
+    str = prenom + " " + nom + " (" + cie
+    
+    #Afficher le domaine
+    dom = getValeur("exposants", "domaine", id).toInt()[0]
+    domaine = getValeur("domaines", "nom", dom).toString()
+    str += ", " + domaine
+    
+    #Date d'inscription
+    date = getValeur("exposants", "DATETIME(date_inscr, 'localtime')", id).toString()
+    str += ", " + date
+    
+    str += ")"
+    
+    return str
+
 class Database(object):
     def openSqlConnection(self, type, db_name, host=None, user=None, passwd=None):
         self.db = QSqlDatabase.addDatabase(type)
