@@ -70,7 +70,7 @@ int crc32_hash_file(char *fn, uint32_t *sum) {
     unsigned int size;
     unsigned char buffer[16384];
     
-    if (!(f = fopen(fn, "r"))) {
+    if (!(f = fopen(fn, "rb"))) {
         fprintf(stderr, "Error opening file %s\n", fn);
         return -1;
     }
