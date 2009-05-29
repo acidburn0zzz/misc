@@ -24,11 +24,12 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtSql import *
+import re
 import sys
 
 import ajoutalbum
 import database as db
-import customsqlmodel as csm
+#~ import customsqlmodel as csm
 
 #Raccourcis
 tr = QObject.tr
@@ -39,7 +40,7 @@ class VueAlbums(QMainWindow):
         self.centralWidget = QWidget()
         self.setCentralWidget(self.centralWidget)
         self.setWindowTitle('Collection de musique')
-        self.setMinimumSize(800, 600)
+        #~ self.setMinimumSize(800, 600)
         
         self.centralLayout = QVBoxLayout()
         
@@ -72,7 +73,7 @@ class VueAlbums(QMainWindow):
             self.model.setHeaderData(i, Qt.Horizontal, QVariant(column_names[i]))
         
         #Setup de la table (fixe)
-        self.tabView = QTableView()
+        self.tabView = TableAlbums()
         self.tabView.setModel(self.model)
         self.tabView.setColumnHidden(0, True) #Pas besoin d'afficher l'Id
         self.tabView.resizeColumnsToContents()
@@ -124,9 +125,6 @@ class ModeleAlbums(QSqlQueryModel):
         
         return value
     
-    def flags(self, index):
-        return QSqlQueryModel.flags(self, index) | Qt.ItemIsEditable
-    
     def setData(self, index, value, role):
         primaryKeyIndex = QSqlQueryModel.index(self, index.row(), 0)
         
@@ -166,19 +164,28 @@ class ModeleAlbums(QSqlQueryModel):
         else:
             q.addBindValue(QVariant(value))
         q.addBindValue(QVariant(id))
-        print q.lastError().text()
         return q.exec_()
     
     def getColumnNames(self):
         return self.column_names
     
     def parseTime(self, str):
-        #Ameliorer pour prendre en charge une regex type "^([0-9]{1,2}:)?[0-9]{1,2}:[0-9]{1,2}$"
+        #Ameliorer pour prendre en charge une regex type "^([0-9]{1,2}:)?[0-9]{1,2}:[0-9]{1,2}$ ou un nombre de secondes"
         
         if (len(str) == 5):
             return '00:' + str
         else:
             return str
+    
+    def flags(self, index):
+        return QSqlQueryModel.flags(self, index) | Qt.ItemIsEditable
+
+class TableAlbums(QTableView):
+    def __init__(self, parent=None):
+        super(TableAlbums, self).__init__(parent)
+    
+    def sizeHint(self):
+        return QSize(750, 600)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

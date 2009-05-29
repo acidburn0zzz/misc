@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 #include <crc32.h>
+#include "sfv.h"
 
 #define __PROG_VERSION__ "1.0b1 "
 
@@ -33,7 +34,7 @@ void print_header() {
 
 int main(int argc, char **argv) {
     uint32_t crc32;
-    char opt;
+    char opt, *sfv_file = NULL;
     int sfv = 0;
     
     if (argc < 2) {
@@ -46,8 +47,8 @@ int main(int argc, char **argv) {
     while ((opt = getopt(argc, argv, "c:h")) != -1) {
         switch (opt) {
         case 'c':
-            /* file = new char[strlen(optarg) + 1];
-            strncpy(file, optarg, strlen(optarg)); */
+            sfv_file = malloc(strlen(optarg) + 1);
+            strncpy(sfv_file, optarg, strlen(optarg) + 1);
             sfv = 1;
             break;
         case 'h':
@@ -62,7 +63,8 @@ int main(int argc, char **argv) {
     argv += optind;
     
     if (sfv) {
-        /* Fichier sfv */
+        check_sfv_file(sfv_file);
+        free(sfv_file);
         exit(EXIT_SUCCESS);
     }
     

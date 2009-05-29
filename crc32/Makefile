@@ -3,7 +3,7 @@ CFLAGS=-Wall -O2 -g -pedantic -ansi -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE
 CXXFLAGS=$(CFLAGS)
 
 PROGRAM=crc32
-SOURCES=main.c
+SOURCES=main.c sfv.c
 OBJS=$(SOURCES:.c=.o)
 
 INCLUDES=-I../libs/libcrc32
