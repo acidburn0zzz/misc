@@ -71,7 +71,7 @@ int crc32_hash_file(char *fn, uint32_t *sum) {
     unsigned char buffer[16384];
     
     if (!(f = fopen(fn, "rb"))) {
-        fprintf(stderr, "Error opening file %s\n", fn);
+        /* fprintf(stderr, "Error opening file %s\n", fn); */
         return -1;
     }
     
@@ -84,14 +84,14 @@ int crc32_hash_file(char *fn, uint32_t *sum) {
     while (size > 0) {
         if (size < BUFFER_SIZE) {
             if (fread(buffer, size, 1, f) != 1) {
-                fprintf(stderr, "Error reading file %s\n", fn);
+                /* fprintf(stderr, "Error reading file %s\n", fn); */
                 return -1;
             }
             crc32_hash(buffer, size, sum);
             size = 0;
         } else {
             if (fread(buffer, BUFFER_SIZE, 1, f) != 1) {
-                fprintf(stderr, "Error reading file %s\n", fn);
+                /* fprintf(stderr, "Error reading file %s\n", fn); */
                 return -1;
             }
             crc32_hash(buffer, BUFFER_SIZE, sum);
