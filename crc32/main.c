@@ -1,3 +1,4 @@
+#include <getopt.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -38,7 +39,6 @@ int main(int argc, char **argv) {
     int sfv = 0;
     
     if (argc < 2) {
-        /* fprintf(stderr, "%s: No input file\n", argv[0]); */
         usage(argv[0]);
         exit (EXIT_FAILURE);
     }

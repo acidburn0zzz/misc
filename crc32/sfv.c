@@ -17,20 +17,20 @@ int check_sfv_file(char *fn) {
     unsigned int crc32a, crc32b;
     unsigned int i, len, nberr=0;
     
-    print_head_foot(fn);
-    
     f = fopen(fn, "r");
     if (f == NULL) {
         perror(fn);
         return -1;
     }
     
+    print_head_foot(fn);
+    
     while (fgets(line, 10240, f) != NULL) {
         if (*line == ';' || *line == '\n' || *line == '\r') /*Comment char & whitespace*/
             continue;
         
         len = strlen(line);
-        if (line == 0)
+        if (len == 0)
             continue;
         
         if (line[len-1] == '\n' || line[len-1] == '\r') {
@@ -81,25 +81,27 @@ int check_sfv_file(char *fn) {
     
 void print_head_foot(char *fn) {
     char *buffer, *file = NULL;
+    unsigned short width;
     
     /*Buffer initialisation*/
-    buffer = malloc(getConsoleWidth() + 1);
-    memset(buffer, '*', 80);
-    buffer[80] = '\0';
+    width = getConsoleWidth();
+    buffer = malloc(width + 1);
+    memset(buffer, '*', width);
+    buffer[width] = '\0';
     
     if (fn != NULL) {
-        file = calloc(1, 77);
+        file = calloc(1, width - 3);
         strncpy(file, "Verification de ", strlen("Verification de "));
-        strncat(file, fn, 76 - strlen("Verification de "));
+        strncat(file, fn, width - 4 - strlen("Verification de "));
             
-        strncpy(buffer + ((getConsoleWidth() - strlen(file)) / 2), file, strlen(file));
+        strncpy(buffer + ((width - strlen(file)) / 2), file, strlen(file));
         
         /*Space before and after the string*/
-        *(buffer + ((getConsoleWidth() - strlen(file)) / 2) - 1) = ' ';
-        *(buffer + ((getConsoleWidth() + strlen(file)) / 2)) = ' ';
+        *(buffer + ((width - strlen(file)) / 2) - 1) = ' ';
+        *(buffer + ((width + strlen(file)) / 2)) = ' ';
         
         if (strlen(fn) > 76 - strlen("Verification de "))
-            strncpy(buffer + (getConsoleWidth() - 5), "...", 3);
+            strncpy(buffer + (width - 5), "...", 3);
     }
     
     printf("%s\n", buffer);
@@ -109,9 +111,24 @@ void print_head_foot(char *fn) {
 
 int getConsoleWidth() {
 #ifdef __linux__
-    struct ttysize ts;
+    /*struct ttysize ts;
     ioctl(0, TIOCGSIZE, &ts);
-    return ts.ts_cols; /*ts_lines*/
+    return ts.ts_cols;*/ /*ts_lines*/
+    struct winsize ws;
+    unsigned short height, width;  
+
+    if ((ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1 &&
+            ioctl(STDERR_FILENO, TIOCGWINSZ, &ws) == -1 &&
+            ioctl(STDIN_FILENO, TIOCGWINSZ, &ws) == -1) ||
+            ws.ws_col == 0) {
+        height = 25;
+        width = 80;
+    } else {
+        height = ws.ws_row;
+        width = ws.ws_col;
+    }
+    
+    return width;
 #elif defined WIN32
     return 80;
 #else
