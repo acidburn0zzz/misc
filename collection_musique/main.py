@@ -33,7 +33,7 @@ def run():
     app = QApplication(sys.argv)
     
     qdb = db.Database()
-    qdb.openSqlConnection('QSQLITE', 'albums.db')
+    qdb.openSqlConnection('QSQLITE', 'albums.sqlite')
     
     a = albums.VueAlbums()
     a.show()

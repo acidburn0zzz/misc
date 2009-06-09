@@ -33,7 +33,7 @@ int check_sfv_file(char *fn) {
         if (len == 0)
             continue;
         
-        if (line[len-1] == '\n' || line[len-1] == '\r') {
+        while (line[len-1] == '\n' || line[len-1] == '\r') {
             line[len-1] = '\0';
             len--;
         }
@@ -62,8 +62,6 @@ int check_sfv_file(char *fn) {
             fprintf(stderr, "BAD: %s\n", file);
             nberr++;
         }
-        
-        /* printf("%s %.8x %.8x\n", file, crc32a, crc32b); */
     }
     
     if (nberr == 0)
@@ -84,7 +82,7 @@ void print_head_foot(char *fn) {
     unsigned short width;
     
     /*Buffer initialisation*/
-    width = getConsoleWidth();
+    width = get_console_width();
     buffer = malloc(width + 1);
     memset(buffer, '*', width);
     buffer[width] = '\0';
@@ -109,7 +107,7 @@ void print_head_foot(char *fn) {
     free(file);
 }
 
-int getConsoleWidth() {
+int get_console_width() {
 #ifdef __linux__
     /*struct ttysize ts;
     ioctl(0, TIOCGSIZE, &ts);

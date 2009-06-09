@@ -9,7 +9,7 @@
 #include <crc32.h>
 #include "sfv.h"
 
-#define __PROG_VERSION__ "1.0b1 "
+#define __PROG_VERSION__ "1.0 "
 
 void usage(char *prog) {
     fprintf(stderr, "AcidCRC32 %s\n", __PROG_VERSION__);

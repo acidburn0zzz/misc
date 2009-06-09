@@ -40,34 +40,41 @@ class VueAlbums(QMainWindow):
         self.centralWidget = QWidget()
         self.setCentralWidget(self.centralWidget)
         self.setWindowTitle('Collection de musique')
-        #~ self.setMinimumSize(800, 600)
         
         self.centralLayout = QVBoxLayout()
+        
+        #Textbox de recherche
+        self.txtSearch = QLineEdit()
+        self.txtSearch.setMaximumWidth(200)
+        self.connect(self.txtSearch, SIGNAL('cursorPositionChanged(int, int)'), self.showAll)
         
         #Ajout des boutons
         self.btnAll = QPushButton(tr(self, "Tout"))
         self.btnNbAlbums = QPushButton(tr(self, "Nb. Albums"))
         self.btnAdd = QPushButton(tr(self, "Ajout"))
+        self.btnExport = QPushButton(tr(self, "Exporter"))
         self.btnQuit = QPushButton(tr(self, "Quitter"))
+        self.connect(self.btnAll, SIGNAL('clicked()'), self.txtSearch, SLOT('clear()'))
         self.connect(self.btnAll, SIGNAL('clicked()'), self.showAll)
         self.connect(self.btnNbAlbums, SIGNAL('clicked()'), self.showNbAlbums)
+        self.connect(self.btnExport, SIGNAL('clicked()'), self.export)
         self.connect(self.btnAdd, SIGNAL('clicked()'), self.ajout)
+        
         self.connect(self.btnQuit, SIGNAL('clicked()'), self, SLOT('close()'))
         
         self.layBoutons = QHBoxLayout()
+        self.layBoutons.addWidget(self.txtSearch)
         self.layBoutons.addWidget(self.btnAll)
-        #~ self.layBoutons.addWidget(self.btnNbAlbums)
+        self.layBoutons.addWidget(self.btnNbAlbums)
         self.layBoutons.addWidget(self.btnAdd)
+        self.layBoutons.addWidget(self.btnExport)
         self.layBoutons.addWidget(self.btnQuit)
         
         self.centralLayout.addLayout(self.layBoutons)
         
-        #Query initial
-        self.query = "SELECT id, artist, album, year, genre, tracks, length FROM albums ORDER BY artist"
-        
         #Setup du modele de la table (fixe)
         self.model = ModeleAlbums()
-        self.model.setQuery(self.query)
+        self.showAll()
         column_names = self.model.getColumnNames()
         for i in range(len(column_names)):
             self.model.setHeaderData(i, Qt.Horizontal, QVariant(column_names[i]))
@@ -82,25 +89,31 @@ class VueAlbums(QMainWindow):
         self.centralWidget.setLayout(self.centralLayout)
 
     def showAll(self):
-        self.query = "SELECT id, artist, album, year, genre, tracks, length FROM albums ORDER BY artist"
-        self.model.setQuery(self.query)
+        self.query = "SELECT id, artist, album, year, genre, tracks, length FROM albums"
+        if (self.txtSearch.text() != ''):
+            self.query += " WHERE artist LIKE '%" + self.txtSearch.text() + "%'"
+        self.query += " ORDER BY artist"
+        self.model.setCurrentQuery(self.query)
 
     def showNbAlbums(self):
-        pass
-        #~ self.query = "SELECT id, artiste, count(*), annee, genre, sum(pistes), time(sum(duree), 'unixepoch') FROM collection GROUP BY artiste ORDER BY artiste"
-        #~ self.model.setQuery(self.query)
+        self.query = "SELECT id, artist, count(*), year, genre, sum(tracks), time(sum(strftime('%s', length)), 'unixepoch') FROM albums GROUP BY artist ORDER BY artist"
+        self.model.setCurrentQuery(self.query)
     
     def ajout(self):
-        pass
         f = ajoutalbum.AjoutAlbum()
         f.exec_()
-        self.model.refresh()
-        #~ self.query = "SELECT id, artiste, album, annee, genre, pistes, time(duree, 'unixepoch') FROM collection ORDER BY artiste"
-        #~ self.model.setQuery(self.query)
+        self.txtSearch.clear()
+        self.query = "SELECT id, artist, album, year, genre, tracks, length FROM albums ORDER BY artist"
+        self.model.setCurrentQuery(self.query)
+        #~ self.model.refresh()
+    
+    def export(self):
+        self.model.export()
 
 class ModeleAlbums(QSqlQueryModel):
     def __init__(self, parent=None):
         super(ModeleAlbums, self).__init__(parent)
+        self.cQuery = ""
         self.columns = ['id', 'artist', 'album', 'year', 'genre', 'tracks', 'length']
         self.column_names = ['Id', 'Artist', 'Album', 'Year', 'Genre', 'Tracks', 'Length']
     
@@ -139,13 +152,17 @@ class ModeleAlbums(QSqlQueryModel):
         return ok
 
     def refresh(self):
-        self.setQuery("SELECT id, artist, album, year, genre, tracks, length FROM albums ORDER BY artist")
+        self.setQuery(self.cQuery)
         for i in range(len(self.column_names)):
             self.setHeaderData(i, Qt.Horizontal, QVariant(self.column_names[i]))
     
+    def setCurrentQuery(self, q):
+        self.cQuery = q
+        self.setQuery(q)
+    
     def setValue(self, col, id, value):
         if (col == 1 or col == 2 or col == 4):  #Artist, album, genre
-            pattern = "^[a-zA-Z0-9.,:!? ]+$"
+            pattern = "^[a-zA-Z0-9.,:!?() ]+$"
         elif (col == 3):    #year
             pattern = "^[0-9]{4}$"
         elif (col == 5):    #tracks
@@ -179,19 +196,48 @@ class ModeleAlbums(QSqlQueryModel):
     
     def flags(self, index):
         return QSqlQueryModel.flags(self, index) | Qt.ItemIsEditable
+    
+    def export(self):
+        q = QSqlQuery()
+        q.exec_("SELECT id, artist, album, year, genre, tracks, length FROM albums")
+        q.first()
+        
+        out_sql = open('albums.sql', 'w')
+        out_sql.write("BEGIN TRANSACTION;\n\n")
+        out_sql.write("DROP TABLE IF EXISTS albums;\n")
+        out_sql.write("CREATE TABLE albums (id INTEGER PRIMARY KEY, artist TEXT, album TEXT, year INTEGER, genre TEXT, tracks INTEGER, length TEXT);\n")
+        out_sql.write("CREATE UNIQUE INDEX album_id ON albums (artist, album);\n\n")
+        
+        while q.isValid():
+            id = q.value(0).toString()
+            artist = q.value(1).toString().replace("'", "''").toUtf8()
+            album = q.value(2).toString().replace("'", "''").toUtf8()
+            year = q.value(3).toString()
+            genre = q.value(4).toString()
+            tracks = q.value(5).toString()
+            length = q.value(6).toString()
+            query = "INSERT INTO albums (id, artist, album, year, genre, tracks, length)" + \
+                " VALUES (" + id + ",'" + artist + "', '" + album + "', " + year + ", '" + genre + \
+                "', " + tracks + ", '" + length + "');\n"
+            
+            out_sql.write(query)
+            q.next()
+        
+        out_sql.write("\nCOMMIT;\n")
+        out_sql.close()
 
 class TableAlbums(QTableView):
     def __init__(self, parent=None):
         super(TableAlbums, self).__init__(parent)
     
     def sizeHint(self):
-        return QSize(750, 600)
+        return QSize(900, 750)
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    qdb = db.Database()
-    qdb.openSqlConnection('QSQLITE', 'albums.db')
-    v = VueAlbums()
-    v.show()
-    app.exec_()
-    qdb.closeSqlConnection()
+    import main
+    main.run()
+    #~ qdb = db.Database()
+    #~ qdb.openSqlConnection('QSQLITE', 'albums.sqlite')
+    #~ m = ModeleAlbums()
+    #~ m.export()
+    #~ qdb.closeSqlConnection()

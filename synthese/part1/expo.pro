@@ -7,7 +7,7 @@ TARGET = expo
 DEPENDPATH += .
 INCLUDEPATH += ./libsha2
 unix:LIBS += -L./libsha2 -lsha2
-win32:LIBS += .\libsha2\libsha2.lib
+win32:LIBS += .\libsha2\libsha2.a
 
 CONFIG += qt debug
 QT += sql
@@ -16,6 +16,9 @@ DEFINES += DEBUG
 DESTDIR = ./bin
 MOC_DIR = ./moc
 OBJECTS_DIR = ./obj
+
+#Automatisation de la compilation de libsha2
+system(cd libsha2 && make)
 
 # Input
 HEADERS += defaultsqlmodel.h \
