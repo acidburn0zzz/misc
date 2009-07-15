@@ -44,7 +44,7 @@ class AjoutAlbum(QDialog):
         cYear = int(time.strftime('%Y'))
         self.txtYear.setValidator(QIntValidator(1000, cYear, self))
         self.txtTracks.setValidator(QIntValidator(0, 99, self))
-        self.txtLength.setValidator(QRegExpValidator(QRegExp("^([0-9]{2}:)?[0-9]{2}:[0-9]{2}$"), self))
+        self.txtLength.setValidator(QRegExpValidator(QRegExp("^([0-9]{1,2}[:-])?[0-9]{1,2}[:-][0-9]{1,2}$"), self))
         
         self.btnAdd = QPushButton(tr(self, 'Ajouter'))
         self.btnCancel = QPushButton(tr(self, 'Annuler'))
@@ -80,6 +80,10 @@ class AjoutAlbum(QDialog):
         cLayout.addLayout(layButtons)
         
         self.setLayout(cLayout)
+        
+        #Pour ne pas que le 1er element s'affiche
+        self.cmbArtist.clearEditText()
+        self.cmbGenre.clearEditText()
 
     def getArtists(self):
         q = QSqlQuery()
@@ -112,9 +116,7 @@ class AjoutAlbum(QDialog):
         except:
             print tr(self, "Erreur inconnue")
         else:
-            duree = self.txtLength.text()
-            if (len(duree) == 5):
-                duree = '00:' + duree
+            duree = db.formatterDuree(self.txtLength.text())
             
             q.prepare("INSERT INTO albums (artist, album, year, genre, tracks, length) " + \
                 "VALUES (?,?,?,?,?,?)")
@@ -135,11 +137,13 @@ class UnacceptableInputException(Exception):
     pass
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    qdb = db.Database()
-    qdb.openSqlConnection('QSQLITE', 'albums.db')
-    a = AjoutAlbum()
-    a.show()
-    app.exec_()
-    qdb.closeSqlConnection()
+    import main
+    main.run()
+    #~ app = QApplication(sys.argv)
+    #~ qdb = db.Database()
+    #~ qdb.openSqlConnection('QSQLITE', 'albums.db')
+    #~ a = AjoutAlbum()
+    #~ a.show()
+    #~ app.exec_()
+    #~ qdb.closeSqlConnection()
     

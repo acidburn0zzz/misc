@@ -43,6 +43,29 @@ class VueAlbums(QMainWindow):
         
         self.centralLayout = QVBoxLayout()
         
+        #Menus
+        self.mnuFile = QMenu("&Fichier", self)
+        
+        #~ self.actImport = QAction("&Importer", self)
+        #~ self.actImport.setShortcut("Ctrl+I");
+        #~ self.actImport.setStatusTip("Importer un fichier SQL");
+        #~ self.connect(self.actImport, SIGNAL('triggered()'), self.importSql)
+        #~ self.mnuFile.addAction(self.actImport)
+        
+        self.actExport = QAction("&Exporter", self)
+        self.actExport.setShortcut("Ctrl+S");
+        self.actExport.setStatusTip("Exporter un fichier SQL");
+        self.connect(self.actExport, SIGNAL('triggered()'), self.exportSql)
+        self.mnuFile.addAction(self.actExport)
+        
+        self.actQuitter = QAction("&Quitter", self)
+        self.actQuitter.setShortcut("Ctrl+Q");
+        self.actQuitter.setStatusTip("Quitter le logiciel");
+        self.connect(self.actQuitter, SIGNAL('triggered()'), qApp, SLOT('quit()'))
+        self.mnuFile.addAction(self.actQuitter)
+        
+        self.menuBar().addMenu(self.mnuFile)
+        
         #Textbox de recherche
         self.txtSearch = QLineEdit()
         self.txtSearch.setMaximumWidth(200)
@@ -52,23 +75,20 @@ class VueAlbums(QMainWindow):
         self.btnAll = QPushButton(tr(self, "Tout"))
         self.btnNbAlbums = QPushButton(tr(self, "Nb. Albums"))
         self.btnAdd = QPushButton(tr(self, "Ajout"))
-        self.btnExport = QPushButton(tr(self, "Exporter"))
-        self.btnQuit = QPushButton(tr(self, "Quitter"))
+        #~ self.btnQuit = QPushButton(tr(self, "Quitter"))
         self.connect(self.btnAll, SIGNAL('clicked()'), self.txtSearch, SLOT('clear()'))
         self.connect(self.btnAll, SIGNAL('clicked()'), self.showAll)
         self.connect(self.btnNbAlbums, SIGNAL('clicked()'), self.showNbAlbums)
-        self.connect(self.btnExport, SIGNAL('clicked()'), self.export)
         self.connect(self.btnAdd, SIGNAL('clicked()'), self.ajout)
         
-        self.connect(self.btnQuit, SIGNAL('clicked()'), self, SLOT('close()'))
+        #~ self.connect(self.btnQuit, SIGNAL('clicked()'), self, SLOT('close()'))
         
         self.layBoutons = QHBoxLayout()
         self.layBoutons.addWidget(self.txtSearch)
         self.layBoutons.addWidget(self.btnAll)
         self.layBoutons.addWidget(self.btnNbAlbums)
         self.layBoutons.addWidget(self.btnAdd)
-        self.layBoutons.addWidget(self.btnExport)
-        self.layBoutons.addWidget(self.btnQuit)
+        #~ self.layBoutons.addWidget(self.btnQuit)
         
         self.centralLayout.addLayout(self.layBoutons)
         
@@ -102,13 +122,37 @@ class VueAlbums(QMainWindow):
     def ajout(self):
         f = ajoutalbum.AjoutAlbum()
         f.exec_()
-        self.txtSearch.clear()
+        #~ self.txtSearch.clear()
         self.query = "SELECT id, artist, album, year, genre, tracks, length FROM albums ORDER BY artist"
         self.model.setCurrentQuery(self.query)
+        self.showAll()
         #~ self.model.refresh()
     
-    def export(self):
-        self.model.export()
+    def importSql(self):
+        filter = QStringList()
+        filter.append("SQL Files (*.sql)")
+        filter.append("Any Files (*)")
+        
+        chooser = QFileDialog(self)
+        chooser.setAcceptMode(QFileDialog.AcceptOpen)
+        chooser.setFileMode(QFileDialog.ExistingFile)
+        chooser.setNameFilters(filter)
+        if chooser.exec_():
+            file = chooser.selectedFiles()[0]
+            #~ self.model.importSql(file)
+    
+    def exportSql(self):
+        filter = QStringList()
+        filter.append("SQL Files (*.sql)")
+        filter.append("Any Files (*)")
+        
+        chooser = QFileDialog(self)
+        chooser.setAcceptMode(QFileDialog.AcceptSave)
+        chooser.setFileMode(QFileDialog.AnyFile)
+        chooser.setNameFilters(filter)
+        if chooser.exec_():
+            file = chooser.selectedFiles()[0]
+            self.model.exportSql(file)
 
 class ModeleAlbums(QSqlQueryModel):
     def __init__(self, parent=None):
@@ -162,22 +206,23 @@ class ModeleAlbums(QSqlQueryModel):
     
     def setValue(self, col, id, value):
         if (col == 1 or col == 2 or col == 4):  #Artist, album, genre
-            pattern = "^[a-zA-Z0-9.,:!?() ]+$"
+            pattern = "^[a-zA-Z0-9.,':!?()&\- ]+$"
         elif (col == 3):    #year
             pattern = "^[0-9]{4}$"
         elif (col == 5):    #tracks
             pattern = "^[0-9]{1,2}$"
         elif (col == 6):    #length
-            pattern = "^([0-9]{2}:)?[0-9]{2}:[0-9]{2}$"
+            pattern = "^([0-9]{1,2}[:-])?[0-9]{1,2}[:-][0-9]{1,2}$"
         
         m = re.search(pattern, value.__str__())
+        print value
         if not m:
             return False
     
         q = QSqlQuery()
         q.prepare("UPDATE albums SET " + self.columns[col] + " = ? WHERE id = ?")
         if (col == 6):
-            q.addBindValue(QVariant(self.parseTime(value)))
+            q.addBindValue(QVariant(db.formatterDuree(value)))
         else:
             q.addBindValue(QVariant(value))
         q.addBindValue(QVariant(id))
@@ -186,23 +231,15 @@ class ModeleAlbums(QSqlQueryModel):
     def getColumnNames(self):
         return self.column_names
     
-    def parseTime(self, str):
-        #Ameliorer pour prendre en charge une regex type "^([0-9]{1,2}:)?[0-9]{1,2}:[0-9]{1,2}$ ou un nombre de secondes"
-        
-        if (len(str) == 5):
-            return '00:' + str
-        else:
-            return str
-    
     def flags(self, index):
         return QSqlQueryModel.flags(self, index) | Qt.ItemIsEditable
     
-    def export(self):
+    def exportSql(self, file):
         q = QSqlQuery()
         q.exec_("SELECT id, artist, album, year, genre, tracks, length FROM albums")
         q.first()
         
-        out_sql = open('albums.sql', 'w')
+        out_sql = open(file, 'w')
         out_sql.write("BEGIN TRANSACTION;\n\n")
         out_sql.write("DROP TABLE IF EXISTS albums;\n")
         out_sql.write("CREATE TABLE albums (id INTEGER PRIMARY KEY, artist TEXT, album TEXT, year INTEGER, genre TEXT, tracks INTEGER, length TEXT);\n")

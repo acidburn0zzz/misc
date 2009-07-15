@@ -30,10 +30,11 @@ import database as db
 import albums
 
 def run():
+    db_file = '/home/mathieu/codes/collection_musique/albums.sqlite'
     app = QApplication(sys.argv)
     
     qdb = db.Database()
-    qdb.openSqlConnection('QSQLITE', 'albums.sqlite')
+    qdb.openSqlConnection('QSQLITE', db_file)
     
     a = albums.VueAlbums()
     a.show()

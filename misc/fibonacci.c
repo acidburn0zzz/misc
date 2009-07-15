@@ -5,7 +5,7 @@
 double count = 0;
 
 long int fibonacci(int n) {
-    count++;    
+    count++;
     return (n <= 1)? 1 : fibonacci(n-1) + fibonacci(n-2);
 }
 
