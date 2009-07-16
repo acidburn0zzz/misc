@@ -6,8 +6,10 @@
 class String {
     private:
         char *str;
-        int len;
+        //~ int len;
         void copy(char *dest, const char *orig, int n=0);
+        int length(const char *s);
+        bool compare(const char *s);
     
     public:
         String();
@@ -21,6 +23,8 @@ class String {
         String operator+(const String &s);
         String operator+=(const char *s);
         String operator+=(const String &s);
+        bool operator==(const char *s);
+        bool operator==(const String &s);
         char operator[](int n);
         
         char *getString();
@@ -30,9 +34,10 @@ class String {
         char at(int n);
         void clear();
         int length();
-        int length(const char *s);
         void append(const char *s);
         void append(const String &s);
+        bool equals(const char *s);
+        bool equals(const String &s);
 };
 
 #endif //__STRING_H__

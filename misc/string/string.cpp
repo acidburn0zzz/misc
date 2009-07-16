@@ -25,6 +25,19 @@ void String::copy(char *dest, const char *orig, int n) {
     dest[n] = '\0';
 }
 
+bool String::compare(const char *s) {
+    int n = length(str);
+    
+    if (length(s) != n)
+        return false;
+    
+    for (int i=0; i<n; i++)
+        if (str[i] != s[i])
+            return false;
+    
+    return true;
+}
+
 String String::operator=(const char *s) {
     setString(s);
  
@@ -59,6 +72,14 @@ String String::operator+=(const String &s) {
     append(s);
  
     return *this;
+}
+
+bool String::operator==(const char *s) {
+    return compare(s);
+}
+
+bool String::operator==(const String &s) {
+    return compare(s.str);
 }
 
 char String::operator[](int n) {
@@ -119,4 +140,12 @@ void String::append(const char *s) {
 
 void String::append(const String &s) {
     append(s.str);
+}
+
+bool String::equals(const char *s) {
+    return compare(s);
+}
+
+bool String::equals(const String &s) {
+    return compare(s.str);
 }

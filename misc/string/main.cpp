@@ -11,5 +11,6 @@ int main() {
     s += "World";
     cout << s.getString() << "\t" << s.length() << endl;
     
+    cout << (s.equals("") ? "True" : "False") << endl;
     return 0;
 }
