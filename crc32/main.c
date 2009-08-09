@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
 
     print_header();
 
-    while(argc--) {
+    while (argc--) {
         if (crc32_hash_file(*argv, &crc32) != 0)
             exit (EXIT_FAILURE);
         if (upper_case)

@@ -9,7 +9,7 @@ OBJS=$(SOURCES:.c=.o)
 INCLUDES=-I../libs/libcrc32
 LDFLAGS=-L../libs/libcrc32 -lcrc32
 
-RM=rm
+RM=rm -f
 INSTALL=install
 PREFIX=/usr/local
 
@@ -25,7 +25,7 @@ install:
 	$(INSTALL) -D $(PROGRAM) $(PREFIX)/bin/$(PROGRAM)
 
 clean:
-	$(RM) -f $(OBJS)
+	$(RM) $(OBJS)
 
 distclean:  clean
-	$(RM) -f $(PROGRAM)
+	$(RM) $(PROGRAM)
