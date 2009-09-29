@@ -116,5 +116,7 @@ void get_players_name(int nb, char **names) {
         PA_WaitForVBL();
     }
 
+    clear_screen(1);
+
     PA_KeyboardOut();
 }
