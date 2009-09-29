@@ -9,7 +9,7 @@ void clear_screen(int no);
 int get_nb_players();
 void get_players_name(int nb, char **names);
 
-int main()    {
+int main() {
     time_t INIT_TIME;
     time_t nb_sec_passed;
     struct tm *time_passed;
@@ -88,16 +88,13 @@ int get_nb_players() {
 void get_players_name(int nb, char **names) {
     s32 pos = 0;
     char letter = 0;
-
-    int ok = FALSE;
     int player = 0;
 
     PA_InitKeyboard(1);
     PA_KeyboardIn(25, 100);
 
-    while (!ok) {
+    while (player < nb) {
         clear_screen(1);
-
 
         letter = PA_CheckKeyboard();
 
@@ -107,7 +104,7 @@ void get_players_name(int nb, char **names) {
         } else if ((letter == PA_BACKSPACE) && pos) {
             pos--;
             names[player][pos] = ' ';
-        } else if (letter == '\n'){
+        } else if (letter == '\n') {
             names[player][8] = '\0';
             player++;
             pos = 0;
@@ -115,10 +112,6 @@ void get_players_name(int nb, char **names) {
 
         PA_OutputSimpleText(1, 8, 11, names[player]);
         PA_OutputText(1, 0, 0, "Player %d/%d", player+1, nb);
-
-        if (player == nb) {
-            ok = TRUE;
-        }
 
         PA_WaitForVBL();
     }
