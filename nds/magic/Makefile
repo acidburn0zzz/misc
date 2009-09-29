@@ -45,7 +45,7 @@ TARGET		:= $(shell basename $(CURDIR))
 BUILD		:= build
 #~ SOURCES		:= source data gfx/bin
 #~ INCLUDES	:= include build data gfx
-SOURCES		:= source data
+SOURCES		:= src data
 INCLUDES	:= include build data
 MUSIC		:= music
 
