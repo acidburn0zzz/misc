@@ -43,10 +43,8 @@ ICON 	:= -b $(CURDIR)/../logo.bmp
 
 TARGET		:= $(shell basename $(CURDIR))
 BUILD		:= build
-#~ SOURCES		:= source data gfx/bin
-#~ INCLUDES	:= include build data gfx
-SOURCES		:= src data
-INCLUDES	:= include build data
+SOURCES		:= src data gfx/bin
+INCLUDES	:= include build data gfx
 MUSIC		:= music
 
 #---------------------------------------------------------------------------------
