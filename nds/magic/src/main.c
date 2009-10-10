@@ -83,6 +83,9 @@ RESET:
                 pts[i] -= 5;
             if (PA_SpriteTouched(4*i+3) && Stylus.Newpress)
                 pts[i] += 5;
+
+            if (pts[i] < 0)
+                pts[i] = 0;
         }
 
         /* Affichage du temps */
