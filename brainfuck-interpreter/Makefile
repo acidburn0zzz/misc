@@ -1,6 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -O2 -pedantic -ansi -g
 CXXFLAGS=$(CFLAGS)
+INCLUDES=
 
 PROGRAM=bfint
 SOURCES=main.c
@@ -13,10 +14,10 @@ PREFIX=/usr/local
 all:	$(PROGRAM)
 
 bfint: $(OBJS)
-	$(CC) $(CFLAGS) -g -o $(PROGRAM) $(OBJS)
+	$(CC) -o $(PROGRAM) $(OBJS) $(LDFLAGS)
 
-release: $(OBJS)
-	$(CC) $(CFLAGS) -s -o $(PROGRAM) $(OBJS)
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
 
 install:
 	$(INSTALL) -D $(PROGRAM) $(PREFIX)/bin/$(PROGRAM)
