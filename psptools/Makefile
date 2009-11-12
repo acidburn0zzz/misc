@@ -4,13 +4,16 @@ CXXFLAGS=$(CFLAGS)
 INCLUDES=
 LDFLAGS=-lz
 
-PROGRAMS=pbp-pack pbp-unpack popstrip
+PROGRAMS=ciso pbp-pack pbp-unpack popstrip
 SOURCES=pbp-pack.c pbp-unpack.c popstrip.c
 OBJS=$(SOURCES:.c=.o)
 
 RM=rm -f
 
 all:	$(PROGRAMS)
+
+ciso:	ciso.o
+	$(CC) -o $@ $< $(LDFLAGS)
 
 pbp-pack:	pbp-pack.o
 	$(CC) -o $@ $<
@@ -25,7 +28,7 @@ popstrip:	popstrip.o
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS) *~
+	$(RM) -f $(OBJS) *~
 
 distclean:	clean
 	$(RM) $(PROGRAMS)
