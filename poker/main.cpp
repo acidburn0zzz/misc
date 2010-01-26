@@ -19,6 +19,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <cstdio>
 #include <cstdlib>
 
 #include "simulation.h"
@@ -29,11 +30,11 @@ int main(int argc, char **argv) {
     int seed = time(NULL);
     int nb_passes = 0;
     Simulation *s;
-    
+
 #ifdef __gnu_linux__
     FILE *f;
     unsigned char c[1];
-    
+
     f = fopen("/dev/urandom", "rb");
     if (f != NULL) {
         if (fread(c, 1, 1, f) != 1)
@@ -48,11 +49,11 @@ int main(int argc, char **argv) {
         stringstream ss(s);
         ss >> nb_passes;
     }
-    
+
     srand(seed);
 
     s = new Simulation(CALCUL);
     s->afficherStats();
-    
+
     return EXIT_SUCCESS;
 }

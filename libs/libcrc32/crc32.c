@@ -26,7 +26,7 @@
 void crc32_generate_table() {
     unsigned int crc;
     int i, j;
-    
+
     for (i = 0; i < 256; i++) {
         crc = i;
         for (j = 8; j > 0; j--) {
@@ -56,11 +56,11 @@ void crc32_end(uint32_t *sum) {
 
 unsigned int crc32_hash_string(unsigned char *str) {
     uint32_t crc32;
-    
+
     crc32_begin(&crc32);
     crc32_hash(str, strlen((char*)str), &crc32);
     crc32_end(&crc32);
-    
+
     return crc32;
 }
 
@@ -69,18 +69,18 @@ int crc32_hash_file(char *fn, uint32_t *sum) {
     const int BUFFER_SIZE=16384;
     unsigned int size;
     unsigned char buffer[16384];
-    
+
     if (!(f = fopen(fn, "rb"))) {
         /* fprintf(stderr, "Error opening file %s\n", fn); */
         return -1;
     }
-    
+
     fseek(f, 0, SEEK_END);
     size = ftell(f);
     fseek(f, 0, SEEK_SET);
-    
+
     crc32_begin(sum);
-    
+
     while (size > 0) {
         if (size < BUFFER_SIZE) {
             if (fread(buffer, size, 1, f) != 1) {
@@ -95,12 +95,12 @@ int crc32_hash_file(char *fn, uint32_t *sum) {
                 return -1;
             }
             crc32_hash(buffer, BUFFER_SIZE, sum);
-            size-=BUFFER_SIZE;
+            size -= BUFFER_SIZE;
         }
     }
-    
+
     crc32_end(sum);
-    
+
     return 0;
 }
 
@@ -109,7 +109,7 @@ int crc32_test() {
     crc32_begin(&foo);
     crc32_hash((unsigned char*)"Sample string", 13, &foo);
     crc32_end(&foo);
-    
+
     if (foo == 0xa7579504)
         return 0;
     else

@@ -4,8 +4,7 @@ CXXFLAGS=$(CFLAGS)
 INCLUDES=
 LDFLAGS=
 
-#CFLAGS+=-g -DDEBUG
-CFLAGS+=-s
+CFLAGS+=-g -DDEBUG
 
 PROGRAM=poker
 SOURCES=main.cpp carte.cpp jeu.cpp paquet.cpp simulation.cpp

@@ -17,6 +17,7 @@
  **************************************************************************/
 
 #include <iostream>
+#include <cstdio>
 
 #include "jeu.h"
 #include "paquet.h"
@@ -36,7 +37,7 @@ Simulation::Simulation(int type, int nbJoueurs) {
     nb_straight_f = 0;
     nb_royale = 0;
     nb_passes = 0;
-    
+
     if (type == CALCUL) {
         simulerCalcul(nbJoueurs);
     }
@@ -49,11 +50,11 @@ void Simulation::simulerCalcul(int nbJoueurs) {
     Jeu *jeu;
     int v;
     char c;
-    
+
     /*for (int i=0; i<nbJoueurs; i++) {
         cout << "Veuillez entrer la carte #1 du joueur #" << i+1 << ": ";
         cin >> v >> c;
-        
+
         switch(tolower(c)) {
             case 'h':
                 c = COEUR;
@@ -68,12 +69,12 @@ void Simulation::simulerCalcul(int nbJoueurs) {
                 c = PIQUE;
                 break;
         }
-        
+
         j[i].c1 = p.tirerCarte(c, v);
-        
+
         cout << "Veuillez entrer la carte #2 du joueur #" << i+1 << ": ";
         cin >> v >> c;
-        
+
         switch(tolower(c)) {
             case 'h':
                 c = COEUR;
@@ -88,39 +89,39 @@ void Simulation::simulerCalcul(int nbJoueurs) {
                 c = PIQUE;
                 break;
         }
-        
+
         j[i].c2 = p.tirerCarte(c, v);
     }*/
-    
+
     j[0].c1 = p.tirerCarte(COEUR, 1);
     j[0].c2 = p.tirerCarte(COEUR, 13);
-    
+
     //Boucle des calculs
     for (int a=0; a<52-4; a++) {
         if ((comm[0] = p.getCarte(a)).estSortie()) {
             continue;
         }
-        
+
         for (int b=a+1; b<52-3; b++) {
             if ((comm[1] = p.getCarte(b)).estSortie()) {
                 continue;
             }
-        
+
             for (int c=b+1; c<52-2; c++) {
                 if ((comm[2] = p.getCarte(c)).estSortie()) {
                     continue;
                 }
-                
+
                 for (int d=c+1; d<52-1; d++) {
                     if ((comm[3] = p.getCarte(d)).estSortie()) {
                         continue;
                     }
-                    
+
                     for (int e=d+1; e<52; e++) {
                         if ((comm[4] = p.getCarte(e)).estSortie()) {
                             continue;
                         }
-                        
+
                         nb_passes++;
                         jeu = new Jeu(j, comm, nbJoueurs);
                         parseMain(0, jeu->getMainJoueur(0));
@@ -130,7 +131,7 @@ void Simulation::simulerCalcul(int nbJoueurs) {
             }
         }
     }
-    
+
     delete [] j;
 }
 
