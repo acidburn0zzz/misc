@@ -18,7 +18,6 @@ void panic(char *fmt, ...) {
 
 void myboot() {
     int i;
-    panic("Unable to initialize hard drive");
 
     /* RAM init */
     for (i=0; i<1000; i++) {
