@@ -7,7 +7,7 @@
 void myboot() {
     int i;
 
-    printf("Welcome to AwesomeLinux\n");
+    puts("AwesomeLinux Booting...");
 
     /* RAM init */
     for (i=0; i<1000; i++) {
@@ -36,6 +36,7 @@ void myboot() {
         if (fgetc(HDD) != 0)
             panic("AwesomeLinux is unable to format hard drive");
     }
+    puts("Done\n");
 }
 
 void unboot() {
@@ -44,6 +45,7 @@ void unboot() {
     for (i=0; i<1000; i++) {
         if (RAM[i] != NULL)
             free(RAM[i]);
+
     }
 
     if (fclose(HDD) != 0)
