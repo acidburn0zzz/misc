@@ -27,12 +27,12 @@ void myboot() {
     /* RAM check */
     for (i=0; i<1000; i++) {
         if (RAM[i] != NULL)
-            panic("Ram corrupted at offset 0x%.4x", i);
+            panic("Ram damaged at address 0x%.4x", i);
     }
 
     HDD = fopen("hdd", "w+b");
     if (HDD == NULL)
-        panic("Unable to initialize hard drive");
+        panic("AwesomeLinux is unable to format hard drive");
 
     /* HDD init */
     for (i=0; i<10000; i++) {
@@ -44,14 +44,22 @@ void myboot() {
     fseek(HDD, 0, SEEK_SET);
     for (i=0; i<10000; i++) {
         if (fgetc(HDD) != 0)
-            panic("Unable to initialize hard drive");
+            panic("AwesomeLinux is unable to format hard drive");
     }
+
+    printf("Welcome to AwesomeLinux\n");
+}
+
+void unboot() {
+    if (fclose(HDD) != 0)
+        panic("AwesomeLinux is unable to close hard drive");
+
+    printf("See ya!\n");
 }
 
 int main(int argc, char **argv) {
     myboot(RAM, HDD);
-
-    fclose(HDD);
+    unboot();
 
     return 0;
 }
