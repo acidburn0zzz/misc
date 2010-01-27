@@ -1,9 +1,9 @@
 CC=gcc
-CFLAGS=-Wall -O2 -g -pedantic -ansi -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE
+CFLAGS=-Wall -O2 -g -pedantic -ansi
 CXXFLAGS=$(CFLAGS)
 
 PROGRAM=myos
-SOURCES=main.c boot.c panic.c
+SOURCES=main.c boot.c panic.c shell.c
 OBJS=$(SOURCES:.c=.o)
 
 INCLUDES=
