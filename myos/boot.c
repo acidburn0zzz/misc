@@ -1,21 +1,8 @@
 #include <stdio.h>
-#include <stdarg.h>
 #include <malloc.h>
 
-char *RAM[1000];
-FILE *HDD;
-
-void panic(char *fmt, ...) {
-    va_list args;
-
-    va_start(args, fmt);
-    printf("Kernel panic: ");
-    vprintf(fmt, args);
-    printf("\n"); /* Won't show anything if not there */
-    va_end(args);
-
-    for (;;);
-}
+#include "kernel.h"
+#include "panic.h"
 
 void myboot() {
     int i;
@@ -63,11 +50,4 @@ void unboot() {
         panic("AwesomeLinux is unable to close hard drive");
 
     printf("See ya!\n");
-}
-
-int main(int argc, char **argv) {
-    myboot(RAM, HDD);
-    unboot();
-
-    return 0;
 }

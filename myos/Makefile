@@ -3,7 +3,7 @@ CFLAGS=-Wall -O2 -g -pedantic -ansi -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE
 CXXFLAGS=$(CFLAGS)
 
 PROGRAM=myos
-SOURCES=boot.c
+SOURCES=main.c boot.c panic.c
 OBJS=$(SOURCES:.c=.o)
 
 INCLUDES=
