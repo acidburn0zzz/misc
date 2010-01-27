@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include <malloc.h>
 
 char *RAM[1000];
 FILE *HDD;
@@ -51,6 +52,13 @@ void myboot() {
 }
 
 void unboot() {
+    int i;
+
+    for (i=0; i<1000; i++) {
+        if (RAM[i] != NULL)
+            free(RAM[i]);
+    }
+
     if (fclose(HDD) != 0)
         panic("AwesomeLinux is unable to close hard drive");
 
