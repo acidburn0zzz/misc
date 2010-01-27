@@ -14,6 +14,12 @@ void read_command(char *cmd, int size) {
             break;
         }
     }
+
+    /* flush the rest */
+}
+
+void version() {
+    puts("MyOS v0.001 by The Chancelor");
 }
 
 void myshell(char verbose) {
@@ -24,8 +30,13 @@ void myshell(char verbose) {
         printf("prompt> ");
         read_command(cmd, 256);
 
-        if (strcmp(cmd, "EXIT") == 0) {
+        if (strlen(cmd) == 0)
+            continue;
+
+        if (strcmp(cmd, "exit") == 0) {
             return;
+        } else if (strcmp(cmd, "ver") == 0) {
+            version();
         } else {
             printf("%s: Unknown command\n", cmd);
         }

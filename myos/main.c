@@ -18,6 +18,10 @@ int main(int argc, char **argv) {
             return 0;
         } else if (strcmp(argv[i], "-V") == 0) {
             verbose = 1;
+        } else {
+            printf("Incorrect parameter: %s\n", argv[i]);
+            help();
+            return 1;
         }
     }
 
