@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <malloc.h>
 #include <stdio.h>
 #include <string.h>
@@ -12,9 +13,9 @@
 
 int check_sfv_file(char *fn) {
     FILE *f;
-    char line[10241]; /* Should be more than enough */
-    char file[10241];
-    unsigned int crc32a, crc32b;
+    char line[10240]; /* Should be more than enough */
+    char file[10240];
+    uint32_t crc32a, crc32b;
     unsigned int i, len, nberr=0;
 
     f = fopen(fn, "r");
@@ -39,7 +40,7 @@ int check_sfv_file(char *fn) {
         }
 
         i = len - 1;
-        while (is_hex(line[i]) && i >= 0)
+        while (isxdigit(line[i]) && i >= 0)
             i--;
 
         /*Filename*/
@@ -132,15 +133,4 @@ int get_console_width() {
 #else
     return 80;
 #endif
-}
-
-int is_hex(char c) {
-    if (c >= '0' && c <= '9')
-        return 1;
-    else if (c >= 'A' && c <= 'F')
-        return 1;
-    else if (c >= 'a' && c <= 'f')
-        return 1;
-    else
-        return 0;
 }
