@@ -3,7 +3,7 @@ CFLAGS=-Wall -O2 -g -pedantic -ansi
 CXXFLAGS=$(CFLAGS)
 
 PROGRAM=myos
-SOURCES=main.c boot.c panic.c shell.c
+SOURCES=main.c boot.c envvar.c panic.c shell.c
 OBJS=$(SOURCES:.c=.o)
 
 INCLUDES=

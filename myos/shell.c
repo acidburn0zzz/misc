@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "envvar.h"
 #include "kernel.h"
 #include "panic.h"
 #include "shell.h"
@@ -30,51 +31,19 @@ void version() {
     puts("MyOS v0.001 by The Chancelor");
 }
 
-void setVar(char *str) {
-    char *var;
-    int pos = 0;
-
-    if (strchr(str, ' ') == NULL) {
-        puts("Invalid VAR");
-        return;
-    }
-
-    while (pos < 1000 && RAM[pos] != NULL)
-        pos++;
-
-    if (pos == 1000)
-        puts("RAM full");
-
-    var = malloc(strlen(str) + 1);
-    strcpy(var, str);
-
-    RAM[pos] = var;
-}
-
-void echoVar(char *varName) {
-    int i, pos;
-
-    for (i=0; i<1000; i++) {
-        if (RAM[i] == NULL)
-            continue;
-
-        pos = strcspn(RAM[i], " ");
-        if (strncmp(varName, RAM[i], pos) == 0)
-            break;
-    }
-
-    if (i == 1000)
-        printf("%s: VAR not found\n", varName);
-    else
-        printf("%s=%s\n", varName, RAM[i]+pos+1);
-}
-
-void foo() {
+void foo(struct envvar_s *list) {
     /* Dummy test function */
+
+    while (list != NULL) {
+        printf("%s=%s\n", list->key, list->val);
+        list = list->next;
+    }
 }
 
 void myshell(char verbose) {
     char cmd[256];
+    struct envvar_s *vars = NULL;
+
     puts("Welcome to AwesomeShell");
 
     while (1) {
@@ -91,11 +60,12 @@ void myshell(char verbose) {
         } else if (strcmp(cmd, "CLR") == 0) {
             system("clear");
         } else if (strncmp(cmd, "SET ", (strlen(cmd) >= 4 ? 4 : 3)) == 0) {
-            setVar(cmd+4);
+            vars = addEnv(cmd+4, vars);
         } else if (strncmp(cmd, "ECHO ", (strlen(cmd) >= 5 ? 5 : 4)) == 0) {
-            echoVar(cmd+5);
+            char *tmp = getEnv(cmd+5, vars);
+            puts(tmp != NULL ? tmp : "");
         } else if (strcmp(cmd, "foo") == 0) {
-            foo();
+            foo(vars);
         } else {
             /* printf("%s: Unknown command\n", cmd); */
             system(cmd);
