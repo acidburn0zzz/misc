@@ -167,6 +167,12 @@ void runForQuanta(){
 	int i, ramLoc;
 	
 	for(i = 0; i < cpu.quanta; i++){
+		// Check that RAM being accessed actually belong to running. If not, call for terminationg
+		if(cpu.pc >= running->length){
+			cpu.returnCode = -1;
+			break;
+		}
+		
 		ramLoc = running->start + cpu.pc;
 		cpu.returnCode = interpret(RAM[ramLoc], cpu.memory);
 		
@@ -287,10 +293,6 @@ int login(){
 	char username[15], password[20], info[35], curr[35];
 	FILE *userfile;
 	
-	//START TEMPORARY CODE
-	//~ return 1;
-	//STOP TEMPORARY CODE
-	
 	printf("Username: ");
 	if(fgets(username, 15, stdin) == NULL) return 0;
 	printf("Password: ");
@@ -303,7 +305,7 @@ int login(){
 	userfile = fopen("pass.cvs", "r");
 	if(userfile == NULL){
 		puts("User file is missing, fatal error");
-		//normally would go into panic but in this case i'll just say the person is allowed in
+		//normally would go into panic for this assignment i'll just say the person is allowed in
 		return 1;
 	}
 	
@@ -339,6 +341,17 @@ int kernel (int argc, char *argv[]) {
 	ramFormat.freeSpaceSize = fSwitch;
 
 	// Step 3: initialize run-time environment
+	readyHead = NULL;
+	readyTail = NULL;
+	running = NULL;
+	terminatingHead = NULL;
+	terminatingTail = NULL;
+	
+	cpu.quanta = 0;
+	cpu.pc = 0;
+	cpu.returnCode = 0;
+	for(i = 0; i<20; i++) cpu.memory[i] = NULL;
+	
 	//show help if requested and initialize shell with correct settings
 	if(fhelp) shhelp();
 	mysh(fverbose);
@@ -346,19 +359,6 @@ int kernel (int argc, char *argv[]) {
 	// Step 4: start run-time environment with login screen and later shell
 	while(!login());
 	
-	
-	// START TEST CODE BLOCK
-	//~ FILE *script;
-	
-	//~ script = fopen("script.txt", "r");
-	//~ for(i = 0; i<5; i++)
-		//~ loadScript(script, "script.txt");
-	
-	//~ printRAM();
-	//~ printReady();
-	//~ fclose(script);
-	// END TEST CODE BLOCK
-
 	//loop shell prompt
 	while(showprompt() >= 0){
 		

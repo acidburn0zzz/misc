@@ -13,50 +13,55 @@ char verbose;
 typedef struct var list;
 
 struct var {
-    char *value;
-    char *name;
-    list *next;
+	char *value;
+	char *name;
+	list *next;
 } *head, *prompt;
 
 void shhelp(){
-    puts("Shell Parameters:");
-    puts("-H: Show this information");
-    puts("-V: Run shell in verbose mode");
+	puts("Boot Parameters:");
+	puts("-H: Show this information");
+	puts("-V: Run shell in verbose mode");
+	puts("-F NUM: Only allow for NUM RAM to be used for processes");
 }
 
 void shversion(){
-    puts("Shell for Mios, linux for feline companions, version 0.002");
-    puts("By Jasmin \"Fizzi\" Laferriere");
+	puts("Shell for Mios, linux for feline companions, version 0.002");
+	puts("By Jasmin \"Fizzi\" Laferriere");
 }
 
 void help(){
-    puts("EXIT\t\tExit shell and shut down Mios");
-    puts("VERBOSE\t\tVERBOSE ON/OFF to enable or disable verbose mode");
-    puts("VER\t\tDisplay shell version");
-    puts("SET\t\tSET VAR VALUE Creates a variable in shell memory with name VAR and value VALUE");
-    puts("GET\t\tGET VAR Outputs the value of variable VAR");
-    puts("PROMPT\t\tPROMPT VALUE will change prompt to string in VALUE");
-    puts("HELP\t\tDisplays this information");
-    puts("CLR\t\tClears the screen");
-    puts("SCRIPT\t\tSCRIPT FILENAME Runs script with name FILENAME");
+	puts("EXIT\t\tExit shell and shut down Mios");
+	puts("LOGOUT\t\tSame as EXIT");
+	puts("VERBOSE\t\tVERBOSE ON/OFF to enable or disable verbose mode");
+	puts("VER\t\tDisplay shell version");
+	puts("SET\t\tSET VAR VALUE Creates a variable in shell memory with name VAR and value VALUE");
+	puts("GET\t\tGET VAR Outputs the value of variable VAR");
+	puts("DISPLAY\t\tDISPLAY TYPE will output TYPE on screen. Types: VAR");
+	puts("PROMPT\t\tPROMPT VALUE will change prompt to string in VALUE");
+	puts("HELP\t\tDisplays this information");
+	puts("CLR\t\tClears the screen");
+	puts("SCRIPT\t\tSCRIPT FILENAME Runs script with name FILENAME");
+	puts("ECHO\t\tECHO SENTENCE outputs SENTENCE to screen");
+	puts("RUN\t\tRUN SCRIPT1 SCRIPT2 SCRIPTN adds any number of scripts to runtime environment");
 }
 
 void clear(){
-    int i;
+	int i;
 
-    //1000 lines
-    for(i = 0; i<10; i++){
-        printf("\n\n\n\n\n\n\n\n\n\n\
-                \n\n\n\n\n\n\n\n\n\n\
-                \n\n\n\n\n\n\n\n\n\n\
-                \n\n\n\n\n\n\n\n\n\n\
-                \n\n\n\n\n\n\n\n\n\n\
-                \n\n\n\n\n\n\n\n\n\n\
-                \n\n\n\n\n\n\n\n\n\n\
-                \n\n\n\n\n\n\n\n\n\n\
-                \n\n\n\n\n\n\n\n\n\n\
-                \n\n\n\n\n\n\n\n\n\n");
-    }
+	//1000 lines
+	for(i = 0; i<10; i++){
+		printf("\n\n\n\n\n\n\n\n\n\n\
+			\n\n\n\n\n\n\n\n\n\n\
+			\n\n\n\n\n\n\n\n\n\n\
+			\n\n\n\n\n\n\n\n\n\n\
+			\n\n\n\n\n\n\n\n\n\n\
+			\n\n\n\n\n\n\n\n\n\n\
+			\n\n\n\n\n\n\n\n\n\n\
+			\n\n\n\n\n\n\n\n\n\n\
+			\n\n\n\n\n\n\n\n\n\n\
+			\n\n\n\n\n\n\n\n\n\n");
+	}
 }
 
 void script(char *command[25], int numtoks){
@@ -122,16 +127,41 @@ list *getvar(char *name, char print, char *memory[]){
 		return NULL;
 	}
 
-	curr = head;
-	while(curr != NULL){
-		if(strcmp(name, curr->name) == 0){
-			if(print) printf("%s: %s\n", name, curr->value);
-			return curr;
+	// Get from shell memory
+	if(memory == NULL){
+		curr = head;
+		while(curr != NULL){
+			if(strcmp(name, curr->name) == 0){
+				if(print) printf("%s: %s\n", name, curr->value);
+				return curr;
+			}
+			curr = curr->next;
 		}
-		curr = curr->next;
-	}
 
-	if(print) printf("Variable %s does not exist in memory\n", name);
+		if(print) printf("Variable %s does not exist in memory\n", name);
+	}
+	
+	// Get from registers
+	else{
+		int i;
+		char *temp;
+		
+		// Search for variable
+		for(i=0; i<20; i++){
+			if(memory[i] != NULL){
+				temp = strstr(memory[i], name);
+				if(temp == memory[i]) break;
+			}
+		}
+		
+		if(i >= 20){
+			printf("Variable not found: %s\n", name);
+			return NULL;
+		}
+		
+		if(print) printf("%s: %s\n", name, memory[i]+strlen(name)+1);
+	}
+		
 	return NULL;
 }
 
@@ -162,7 +192,7 @@ void setvar(char *command[25], int numtoks, char *memory[]){
 	}
 
 	// Add variable to shell memory
-	//~ if(memory == NULL){
+	if(memory == NULL){
 		newvar = getvar(command[1], 0, memory);
 		if(newvar != NULL){
 			free(newvar->value);
@@ -186,13 +216,39 @@ void setvar(char *command[25], int numtoks, char *memory[]){
 	    
 		newvar->next = head;
 		head = newvar;
-	//~ }
+	}
 	
 	// Add variable to registers
-	//~ else{
-		//~ for(i=0; i<20; i++){
-			
-	//~ }
+	else{
+		int loc = -1;
+		
+		// Check if variable already exists and remember where the first NULL was seen
+		for(i=0; i<20; i++){
+			if(memory[i] == NULL) {
+				if(loc < 0) loc = i; //First NULL
+			}
+			else{
+				temp = strstr(memory[i], command[1]);
+				if(temp == memory[i]) { // If variable is first thing in memory[i]
+					loc = i;
+					break;
+				}
+			}
+		}
+		
+		// If there is no valid place for a variable
+		if(loc < 0){
+			printf("No more free registers to place variable: %s\n", command[1]);
+			return;
+		}
+		
+		// Set register with proper formating to be interpreted by getVar
+		free(memory[loc]);
+		memory[loc] = malloc(strlen(command[1])+strlen(command[2])+2);
+		strcpy(memory[loc], command[1]);
+		strcat(memory[loc], ",");
+		strcat(memory[loc], command[2]);
+	}
 }
 
 // Change prompt directly
@@ -246,7 +302,7 @@ void display(char *type){
 	else puts("Improper type following DISPLAY");
 }
 
-// Runs multiple scripts at the same time.
+// Places multiple scripts into runtime environment
 void run(char *command[25], int numtoks){
 	FILE *script;
 	int i;
@@ -254,7 +310,7 @@ void run(char *command[25], int numtoks){
 	for(i = 1; i<numtoks; i++){
 		if((script = fopen(command[i], "r")) == NULL){ 
 			printf("Could not open file: %s\n", command[i]);
-			return;
+			continue;
 		}
 		else loadScript(script, command[i]);
 		
