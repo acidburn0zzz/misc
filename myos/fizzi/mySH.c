@@ -162,7 +162,7 @@ void setvar(char *command[25], int numtoks, char *memory[]){
 	}
 
 	// Add variable to shell memory
-	if(memory == NULL){
+	//~ if(memory == NULL){
 		newvar = getvar(command[1], 0, memory);
 		if(newvar != NULL){
 			free(newvar->value);
@@ -186,13 +186,13 @@ void setvar(char *command[25], int numtoks, char *memory[]){
 	    
 		newvar->next = head;
 		head = newvar;
-	}
+	//~ }
 	
 	// Add variable to registers
-	else{
-		for(i=0; i<20; i++){
+	//~ else{
+		//~ for(i=0; i<20; i++){
 			
-	}
+	//~ }
 }
 
 // Change prompt directly
