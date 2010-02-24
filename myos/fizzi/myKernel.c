@@ -282,12 +282,13 @@ int strToInt(char *str){
 	return num;
 }
 
+//Prompt user for name and pw
 int login(){
 	char username[15], password[20], info[35], curr[35];
 	FILE *userfile;
 	
 	//START TEMPORARY CODE
-	return 1;
+	//~ return 1;
 	//STOP TEMPORARY CODE
 	
 	printf("Username: ");
@@ -315,6 +316,7 @@ int login(){
 	return 0;
 }
 
+// Main kernel
 int kernel (int argc, char *argv[]) {
 	int fSwitch = 0, i;
 	char fverbose = 0, fhelp = 0;
