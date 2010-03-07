@@ -62,12 +62,15 @@ void main_game(int nb_players, char **names) {
 RESET:
     INIT_TIME = time(NULL);
 
-    for (i=0; i<nb_players; i++)
+    for (i=0; i<nb_players; i++) {
         pts[i] = 20;
+    }
 
     while (true) {
         nb_sec_passed = time(NULL) - INIT_TIME;
         time_passed = localtime(&nb_sec_passed);
+
+        clear_screens();
 
         /* Reset */
         if (Pad.Newpress.Start)
@@ -86,22 +89,19 @@ RESET:
 
             if (pts[i] < 0)
                 pts[i] = 0;
+
+            /* Noms */
+            PA_OutputText(0, 8*i, 0, "%s", names[i]);
+
+            /* Points */
+            PA_OutputText(0, 8*i+3, 2, "%02d", pts[i]);
         }
 
         /* Affichage du temps */
-        clear_screens();
         PA_OutputText(1, 0, 0, "Now");
         PA_OutputText(1, 2, 1, "%02d:%02d:%02d %04d/%02d/%02d", PA_RTC.Hour, PA_RTC.Minutes, PA_RTC.Seconds, PA_RTC.Year, PA_RTC.Month, PA_RTC.Day);
         PA_OutputText(1, 0, 3, "Time played");
         PA_OutputText(1, 2, 4, "%02d:%02d:%02d", time_passed->tm_hour, time_passed->tm_min, time_passed->tm_sec);
-
-        /* Noms */
-        for (i=0; i<nb_players; i++)
-            PA_OutputText(0, 8*i, 0, "%s", names[i]);
-
-        /* Points */
-        for (i=0; i<nb_players; i++)
-            PA_OutputText(0, 8*i+3, 2, "%02d", pts[i]);
 
         PA_WaitForVBL();
     }

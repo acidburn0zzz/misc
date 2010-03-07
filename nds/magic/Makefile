@@ -28,9 +28,9 @@ ADD_LIBS +=
 # icon for your project too!
 #---------------------------------------------------------------------------------
 
-TEXT1 	:= PAlib Project
-TEXT2 	:= Change this text
-TEXT3 	:= for your project!
+TEXT1 	:= Magic the Gathering
+TEXT2 	:= Points counter
+TEXT3 	:= By Mathieu Lemay
 ICON 	:= -b $(CURDIR)/../logo.bmp
 
 #---------------------------------------------------------------------------------
