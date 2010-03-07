@@ -3,14 +3,13 @@
 #include "string.h"
 using namespace std;
 
-//~ int main(int argc, char **argv) {
 int main() {
-    String s("Hello");
-    cout << s[3] << "\t" << s.length() << endl;
-    
-    s += "World";
-    cout << s.getString() << "\t" << s.length() << endl;
-    
-    cout << (s.equals("") ? "True" : "False") << endl;
+    String mine = "abcdef";
+
+    cout << endl;
+
+    cout << mine.substr(2, 2).getString() << endl;
+    cout << mine.substr(4, 2).getString() << endl;
+    cout << mine.substr(4, 3).getString() << endl;
     return 0;
 }

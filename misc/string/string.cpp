@@ -27,50 +27,50 @@ void String::copy(char *dest, const char *orig, int n) {
 
 bool String::compare(const char *s) {
     int n = length(str);
-    
+
     if (length(s) != n)
         return false;
-    
+
     for (int i=0; i<n; i++)
         if (str[i] != s[i])
             return false;
-    
+
     return true;
 }
 
 String String::operator=(const char *s) {
     setString(s);
- 
+
     return *this;
 }
 
 String String::operator=(const String &s) {
     setString(s);
- 
+
     return *this;
 }
 
 String String::operator+(const char *s) {
     append(s);
- 
+
     return *this;
 }
 
 String String::operator+(const String &s) {
     append(s);
- 
+
     return *this;
 }
 
 String String::operator+=(const char *s) {
     append(s);
- 
+
     return *this;
 }
 
 String String::operator+=(const String &s) {
     append(s);
- 
+
     return *this;
 }
 
@@ -83,7 +83,7 @@ bool String::operator==(const String &s) {
 }
 
 char String::operator[](int n) {
-    return at(n);
+    return charAt(n);
 }
 
 char *String::getString() {
@@ -93,7 +93,7 @@ char *String::getString() {
 void String::setString(const char *s) {
     if (str)
         delete [] str;
-    
+
     int len = length(s);
     str = new char[len + 1];
     copy(str, s, len);
@@ -103,7 +103,10 @@ void String::setString(const String &s) {
     setString(s.str);
 }
 
-char String::at(int n) {
+char String::charAt(int n) {
+    if (n >= length())
+        return 0; //throw out_of_bounds
+
     return *(str + n);
 }
 
@@ -117,9 +120,9 @@ int String::length() {
 
 int String::length(const char *s) {
     int i=0;
-    
+
     for (const char *p = s; *p++ != '\0'; i++) ;
-    
+
     return i;
 }
 
@@ -127,14 +130,14 @@ void String::append(const char *s) {
     char *oldStr = str;
     int lenA = length(str);
     int lenB = length(s);
-    
+
     str = new char[lenA + lenB + 1];
-    
+
     if (oldStr) {
         copy(str, oldStr, lenA);
         delete oldStr;
     }
-    
+
     copy(str + lenA, s, lenB);
 }
 
@@ -148,4 +151,27 @@ bool String::equals(const char *s) {
 
 bool String::equals(const String &s) {
     return compare(s.str);
+}
+
+String String::substr(int begin) {
+    int len = length();
+
+    if (begin >= len)
+        return String("out_of_bounds"); //throw out_of_bounds
+
+    return substr(begin, length() - begin);
+}
+
+String String::substr(int begin, int len) {
+    char *new_str;
+
+    if ((begin + len) > length())
+        return String("out_of_bounds"); //throw out_of_bounds
+
+    new_str = new char[len + 1];
+
+    copy(new_str, str+sizeof(char)*begin, len);
+    new_str[len] = '\0';
+
+    return String(new_str);
 }
