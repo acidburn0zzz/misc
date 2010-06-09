@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -O2 -g -Wall -W
+CC=gcc
+CFLAGS=-O2 -g -Wall -ansi -pedantic
 
 all : id3v1
 
