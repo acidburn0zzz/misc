@@ -3,7 +3,6 @@
 #include <malloc.h>
 #include <time.h>
 #include <string.h>
-#include <windows.h>
 
 #include "patterns.h"
 
@@ -36,6 +35,18 @@ void gotoxy(int x, int y) {
     /* Execute the escape sequence
        This will move the cursor to x, y */
     printf("%s", essq);
+}
+
+void msleep(int ms) {
+    struct timespec req;
+    time_t sec = (ms/1000);
+    ms = ms - (sec*1000);
+
+    req.tv_sec=sec;
+    req.tv_nsec=ms*1000000L;
+
+    while (nanosleep(&req, &req) == -1)
+         continue;
 }
 
 void clrscr() {
@@ -116,7 +127,7 @@ int main(int argc, char **argv) {
         memcpy(tmp, grid_old, sizeof(char) * h * w);
         memcpy(grid_old, grid_new, sizeof(char) * h * w);
         memcpy(grid_new, tmp, sizeof(char) * h * w);
-        Sleep(delay);
+        msleep(delay);
     }
 
     return EXIT_SUCCESS;
