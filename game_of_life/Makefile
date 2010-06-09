@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -O2 -g -pedantic -ansi
+CFLAGS=-Wall -O2 -g -pedantic
 CXXFLAGS=$(CFLAGS)
 
 PROGRAM=life
