@@ -5,7 +5,7 @@ INCLUDES=
 LDFLAGS=-lz
 
 PROGRAMS=ciso pbp-pack pbp-unpack popstrip
-SOURCES=pbp-pack.c pbp-unpack.c popstrip.c
+SOURCES=ciso.c pbp-pack.c pbp-unpack.c popstrip.c
 OBJS=$(SOURCES:.c=.o)
 
 RM=rm -f
@@ -28,7 +28,7 @@ popstrip:	popstrip.o
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) -f $(OBJS) *~
+	$(RM) $(OBJS) *~
 
 distclean:	clean
 	$(RM) $(PROGRAMS)
