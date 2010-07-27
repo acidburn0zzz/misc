@@ -7,6 +7,8 @@ PROGRAM=scanner
 SOURCES=main.c
 OBJS=$(SOURCES:.c=.o)
 
+PREFIX=/usr/local
+
 all:	$(PROGRAM)
 
 $(PROGRAM): $(OBJS)
