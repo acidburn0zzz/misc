@@ -1,10 +1,10 @@
 CC=gcc
-CFLAGS=-Wall -O2 -pedantic -ansi -g -I../libs/libcrc32
+CFLAGS=-Wall -O2 -pedantic -ansi -g
 CXXFLAGS=$(CFLAGS)
-LDFLAGS=-L../libs/libcrc32 -lsqlite3
+LDFLAGS=-lsqlite3 -lpcre -lFLAC -lid3
 
-PROGRAM=mp3_scanner
-SOURCES=main.c id3.c
+PROGRAM=scanner
+SOURCES=main.c
 OBJS=$(SOURCES:.c=.o)
 
 all:	$(PROGRAM)
@@ -19,7 +19,7 @@ install:
 	$(INSTALL) -D $(PROGRAM) $(PREFIX)/bin/$(PROGRAM)
 
 clean:
-	$(RM) $(OBJS) *~ *core
+	$(RM) $(OBJS) *~
 
 distclean:	clean
 	$(RM) $(PROGRAM)

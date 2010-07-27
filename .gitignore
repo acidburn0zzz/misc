@@ -5,6 +5,7 @@
 *.dll
 *.exe
 *.o
+*.a
 *.so
 
 # Packages #
@@ -25,6 +26,7 @@
 *.log
 *.sql
 *.sqlite
+*.db
 
 # OS generated files #
 ######################
