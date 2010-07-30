@@ -17,7 +17,7 @@ int erroffset;
 
 int init();
 int list(const char *name, const struct stat *status, int type);
-void insert_song(const char *fn, char *artist, char *album, char *title, char *year, char *genre, int track);
+void insert_song(const char *fn, char *artist, char *album, char *title, char *year, char *genre, char *track);
 
 void read_mp3(const char *fn);
 void read_flac(const char *fn);
@@ -108,7 +108,7 @@ void read_mp3(const char *fn) {
 
     switch(ret) {
         case ID3_OK:
-            insert_song(fn, id3->artist, id3->album, id3->title, id3->year, id3->genre, atoi(id3->track));
+            insert_song(fn, id3->artist, id3->album, id3->title, id3->year, id3->genre, id3->track);
             break;
         case ID3_ERR_EMPTY_FILE:
             fprintf(stderr, "%s: File is empty\n", fn);
@@ -133,8 +133,7 @@ void read_flac(const char *fn) {
     char delim[] = "=";
     char *tag, *value;
 
-    char *artist = NULL, *album = NULL, *title = NULL, *year = NULL, *genre = NULL;
-    int track = 0;
+    char *artist = NULL, *album = NULL, *title = NULL, *year = NULL, *genre = NULL, *track = NULL;
 
     if (FLAC__metadata_get_tags(fn, &tags) == false || tags->type != FLAC__METADATA_TYPE_VORBIS_COMMENT) {
         fprintf(stderr, "%s: No VORBIS_COMMENT found\n", fn);
@@ -160,7 +159,7 @@ void read_flac(const char *fn) {
         } else if (strcmp(tag, "GENRE") == 0) {
             genre = value;
         } else if (strcmp(tag, "TRACKNUMBER") == 0) {
-            track = atoi(value);
+            track = value;
         }
     }
 
@@ -169,10 +168,10 @@ void read_flac(const char *fn) {
     FLAC__metadata_object_delete(tags);
 }
 
-void insert_song(const char *fn, char *artist, char *album, char *title, char *year, char *genre, int track) {
+void insert_song(const char *fn, char *artist, char *album, char *title, char *year, char *genre, char *track) {
     char *sql;
 
-    sql = sqlite3_mprintf("INSERT OR IGNORE INTO songs (file, artist, album, title, year, genre, track) VALUES (%Q, %Q, %Q, %Q, %.4Q, %Q, %d);",
+    sql = sqlite3_mprintf("INSERT OR IGNORE INTO songs (file, artist, album, title, year, genre, track) VALUES (%Q, %Q, %Q, %Q, %.4Q, %Q, %Q);",
         fn, trim(artist), trim(album), trim(title), trim(year), trim(genre), track);
 
     if (sqlite3_exec(db, sql, NULL, 0, NULL) != SQLITE_OK) {
