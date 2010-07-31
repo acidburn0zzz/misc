@@ -1,3 +1,4 @@
+#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,6 +27,7 @@ char *trim(char *s);
 
 int main(int argc, char *argv[]) {
     if (argc != 3) {
+        fprintf(stderr, "%s\nBy: %s\n", PACKAGE_STRING, PACKAGE_BUGREPORT);
         fprintf(stderr, "Usage: %s <dir> <db_file>\n", argv[0]);
         exit(EXIT_FAILURE);
     }
