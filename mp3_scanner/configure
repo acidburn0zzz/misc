@@ -4154,6 +4154,8 @@ _ACEOF
 
   LIBS="-lid3 $LIBS"
 
+else
+  as_fn_error "\"libid3 not found!\"" "$LINENO" 5
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for pcre_compile in -lpcre" >&5
@@ -4199,6 +4201,8 @@ _ACEOF
 
   LIBS="-lpcre $LIBS"
 
+else
+  as_fn_error "\"libpcre not found!\"" "$LINENO" 5
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for sqlite3_libversion in -lsqlite3" >&5
@@ -4244,6 +4248,8 @@ _ACEOF
 
   LIBS="-lsqlite3 $LIBS"
 
+else
+  as_fn_error "\"libsqlite3 not found!\"" "$LINENO" 5
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for FLAC__format_sample_rate_is_valid in -lFLAC" >&5
@@ -4289,6 +4295,8 @@ _ACEOF
 
   LIBS="-lFLAC $LIBS"
 
+else
+  as_fn_error "\"libflac not found!\"" "$LINENO" 5
 fi
 
 
