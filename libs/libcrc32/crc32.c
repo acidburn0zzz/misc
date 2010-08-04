@@ -99,6 +99,8 @@ int crc32_hash_file(char *fn, uint32_t *sum) {
         }
     }
 
+    fclose(f);
+
     crc32_end(sum);
 
     return 0;
