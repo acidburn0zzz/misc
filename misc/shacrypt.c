@@ -5,15 +5,15 @@
 
 int main(int argc, char **argv) {
     int sha256 = 1, i;
-    
+
     sha256_ctx ctx256;
     sha512_ctx ctx512;
-    
+
     unsigned char *hval;
     char s[1024], passwd_hash[65];
-    
+
     /* Ajouter condition pour sha512 */
-    
+
     if (argc == 2) {
         strncpy(s, argv[1], 1023);
         s[1023] = '\0';
@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
             }
         }
     }
-    
+
     if (sha256) {
         hval = malloc(SHA256_DIGEST_SIZE);
         sha256_begin(&ctx256);
@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
         for (i=0; i<SHA512_DIGEST_SIZE; i++)
             printf("%.2x", hval[i]);
     }
-    
+
     free(hval);
     printf("\n");
     return 0;

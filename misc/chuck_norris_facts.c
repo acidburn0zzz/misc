@@ -222,7 +222,7 @@ void print_fact(const char* fact, int nb) {
     printf("**********************\n");
     printf("* Chuck Norris Facts *\n");
     printf("**********************\n\n");
-    
+
     printf("Fact #%i\n", nb+1);
     printf("%s\n", fact);
 }
@@ -230,15 +230,15 @@ void print_fact(const char* fact, int nb) {
 int main(int argc, char **argv) {
     int lines, nb;
     const char *fact;
-    
+
     srand(time(NULL));
-    
+
     lines = sizeof facts / sizeof(char*);
 
     /*Get a random fact*/
     nb = rand()%lines;
     fact = facts[nb];
     print_fact(fact, nb);
-    
+
 	return 0;
 }

@@ -15,6 +15,6 @@ int main() {
     for (i=0; i<=10; i++) {
         printf("%d: %d\n", i, lapin(i));
     }
-    
+
     return 0;
 }

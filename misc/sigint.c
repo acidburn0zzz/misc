@@ -13,8 +13,8 @@ void catcher(int sig) {
 
 int main(int argc, char **argv) {
     signal(SIGINT, catcher);
-    
+
     while(1){}
-    
-	return 0;
+
+    return 0;
 }
