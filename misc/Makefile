@@ -22,6 +22,9 @@ fibonacci:	fibonacci.c
 millis:	millis.c
 	$(CC) $(CFLAGS) $< -o $@
 
+pid:	pid.c
+	$(CC) $(CFLAGS) $< -o $@
+
 quicksort:	quicksort.c
 	$(CC) $(CFLAGS) $< -o $@
 
