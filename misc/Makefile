@@ -3,7 +3,7 @@ CXX = g++
 CFLAGS = -Wall -O2 -g -pedantic -ansi
 CXXFLAGS = $(CFLAGS)
 
-PROGRAMS = bin2iso chuck_norris_facts fgets fibonacci millis quicksort shacrypt wii_key_gen
+PROGRAMS = bin2iso chuck_norris_facts fgets fibonacci millis pid quicksort shacrypt wii_key_gen
 
 all:	$(PROGRAMS)
 
@@ -35,4 +35,4 @@ wii_key_gen:	wii_key_gen.c
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm $(PROGRAMS)
+	rm -rf $(PROGRAMS)
