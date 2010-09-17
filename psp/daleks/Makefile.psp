@@ -1,0 +1,24 @@
+TARGET = daleks
+OBJS = main.o callbacks.o touches.o graphics.o partie.o dalek.o doc.o
+
+BUILD_PRX = 1
+PSP_FW_VERSION = 390
+ 
+CFLAGS = -O2 -G4 -Wall
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+ASFLAGS = $(CFLAGS)
+
+LIBDIR =
+LDFLAGS =
+STDLIBS= -lSDLmain -lSDL_image -lSDL_ttf -lfreetype -lSDL -lpng -ljpeg -lm -lz -lGL \
+    -lpspsdk -lpspctrl  -lpsprtc -lpsppower -lpspgu -lpspaudiolib -lpspaudio -lpsphprm -lpspvfpu
+LIBS=$(STDLIBS)$(YOURLIBS)
+
+ 
+EXTRA_TARGETS = EBOOT.PBP
+PSP_EBOOT_TITLE = Daleks on a PSP
+PSP_EBOOT_ICON = ICON0.png
+ 
+PSPSDK=$(shell psp-config --pspsdk-path)
+ 
+include $(PSPSDK)/lib/build.mak
