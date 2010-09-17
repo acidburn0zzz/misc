@@ -22,14 +22,11 @@ fibonacci:	fibonacci.c
 millis:	millis.c
 	$(CC) $(CFLAGS) $< -o $@
 
-pid:	pid.c
-	$(CC) $(CFLAGS) $< -o $@
-
 quicksort:	quicksort.c
 	$(CC) $(CFLAGS) $< -o $@
 
 shacrypt:	shacrypt.c
-	$(CC) $(CFLAGS) -I../libsha2 $< -o $@ -L../libsha2 -lsha2
+	$(CC) $(CFLAGS) -I../libs/libsha2 $< -o $@ -L../libs/libsha2 -lsha2
 
 wii_key_gen:	wii_key_gen.c
 	$(CC) $(CFLAGS) $< -o $@
