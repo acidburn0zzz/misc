@@ -17,7 +17,6 @@ void usage(char *prog) {
     fprintf(stderr, "\t%s [-u] file(s)\n", prog);
     fprintf(stderr, "OR\n");
     fprintf(stderr, "\t%s [-u] -c sfv_file\n", prog);
-    exit(EXIT_FAILURE);
 }
 
 void print_header() {
@@ -41,7 +40,7 @@ int main(int argc, char **argv) {
 
     if (argc < 2) {
         usage(argv[0]);
-        exit (EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
 
     /* Traitement des arguments */
