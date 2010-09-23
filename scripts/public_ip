@@ -1,0 +1,3 @@
+#! /bin/bash
+
+wget -qO - http://ariel.bdeb.qc.ca/~yves/cgi-bin/info.pl | egrep -m1 -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
