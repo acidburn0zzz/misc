@@ -1,0 +1,17 @@
+#! /bin/bash
+
+if [ $EUID -ne 0 ]
+then
+    echo "$0 must be run as root"
+    exit 1
+fi
+
+for i in $(grep Failed /var/log/auth.log | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | sort | uniq -d); do
+    grep $i /home/mathieu/documents/network/iptables_rules > /dev/null
+    if [ $? -ne 0 ]
+    then
+        /sbin/iptables -A INPUT -s $i -j DROP
+    fi
+done
+
+/sbin/iptables-save > /home/mathieu/documents/network/iptables_rules
