@@ -3,15 +3,20 @@
 COUNT=0
 SIZE=150
 NBPL=7
-let LAST=NBPL-1
 
 type -P convert &>/dev/null || { echo "I require convert but it's not installed.  Aborting." >&2; exit 1; }
 type -P mogrify &>/dev/null || { echo "I require mogrify but it's not installed.  Aborting." >&2; exit 1; }
 
-if [ $# -gt 0 ];
+if [ $# -ge 1 ];
 then
     SIZE=$1
 fi
+
+if [ $# -ge 2 ];
+then
+    NBPL=$2
+fi
+let LAST=NBPL-1
 
 if [ ! -e thumbs ];
 then
@@ -44,6 +49,7 @@ cat << EOF > index.html
 EOF
 
 for i in $(ls *.jpg *.png 2>/dev/null); do
+    echo "Generating thumbnail for $i"
     convert -thumbnail $SIZE $i thumbs/$i;
     mogrify -quality '75%' thumbs/$i;
 
