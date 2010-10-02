@@ -1,0 +1,1660 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>SNES9x savestate format</title>
+        <style type="text/css">
+            a:link {
+                text-decoration: none;
+                color: #0000FF;
+            }
+            a:visited {
+                text-decoration: none;
+                color: #0000FF;
+            }
+            a:active {
+                text-decoration: none;
+                color: #0000FF;
+            }
+            a:hover {
+                text-decoration: underline;
+                color: #0000FF;
+            }
+            pre {
+                color: #000000;
+                font: 10pt "Courier New";
+                width: 768px;
+                padding: 16px;
+            }
+            ul, ol {
+                color: #000000;
+                font:10pt "Verdana";
+            }
+            body {
+                color: #000000;
+                font: 10pt "Verdana";
+                padding: 0px;
+            }
+        </style>
+    </head>
+
+<body topmargin="0" leftmargin="0" text="#000000" vlink="#0000ff" alink="#0000ff" bgcolor="#ffffff" link="#0000ff">
+
+<pre>
+
+
+                            "The SNES9x savestate file format" v0.1
+                            ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+                                        by creaothceann
+
+
+
+1. <a name="Content">Content</a>
+¯¯¯¯¯¯¯¯¯¯
+<a href="#Content">1. Content</a>
+<a href="#Disclaimer">2. Disclaimer</a>
+<a href="#Revisions">3. Revisions</a>
+<a href="#Conventions">4. Conventions</a>
+<a href="#Savestates">5. Savestates</a>
+<a href="#File_blocks">6. File blocks</a>
+<a href="#Unstructured_file_blocks">7. Unstructured file blocks</a>
+<a href="#Structured_file_blocks">8.   Structured file blocks</a>
+<a href="#Variables">9. Variables</a>
+
+
+
+2. <a name="Disclaimer">Disclaimer</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+The information herein is provided as-is for anything you want. I tried to make it as accurate
+as possible, but that might not mean much. And specifications can change at any time, too.
+
+Nevertheless this document should be helpful, unless the savestate file format was _completely_
+revamped since the last revision.
+
+
+
+3. <a name="Revisions">Revisions</a>
+¯¯¯¯¯¯¯¯¯¯¯¯
+2007-10-09:  initial version 0.1	no sub-structure details yet
+
+
+
+4. <a name="Conventions">Conventions</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+I'll be using the following data types:
+
+	Byte			=	unsigned  8-bit integer: $00..$00000000000000FF
+	Word			=	unsigned 16-bit integer: $00..$000000000000FFFF
+	DWord			=	unsigned 32-bit integer: $00..$00000000FFFFFFFF
+	QWord			=	unsigned 64-bit integer: $00..$FFFFFFFFFFFFFFFF
+	Int64			=	  signed 64-bit integer: -(2^63)..(2^63 - 1)
+	Boolean			=	8-bit type: 'False' (no bit set), 'True' (any bit set)
+	Char			=	8-bit type: ANSI/ASCII character
+
+"Array[x] of y" simply means: "x variables of type y without any padding bytes between them".
+The structures listed here also have no empty space between their variables.
+
+
+
+5. <a name="Savestates">Savestates</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+SNES9x savestates (also called "freeze files" or "snapshots") have the filename extension
+'.00x', with 'x' being a decimal digit ('0'..'9'). The files are usually compressed with GZIP;
+they can be decompressed with tools like WinRAR. The GZIP library (and hence SNES9x) can also
+handle uncompressed files.
+
+At the beginning of the file there's a file header:
+
+	Signature		:	Array[8] of Char
+	Colon			:	Char
+	Version			:	Array[4] of Char
+	LineFeed		:	Char
+
+"Signature" must be the string '#!snes9x', "Colon" must be ':', and "LineFeed" should be the
+ASCII character #10. "Version" should be the decimal number string '0001'; otherwise the file
+format itself would be a newer one.
+
+The rest of the savestate is structured into file blocks of variable size.
+
+
+
+6. <a name="File_blocks">File blocks</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+In an uncompressed file they look like this:
+
+	Name			:	Array[3] of Char
+	Separator1		:	Char
+	Size			:	Array[6] of Char
+	Separator2		:	Char
+	Data			:	Array[Size] of Byte
+
+"Name" identifies the file block type. "Separator1" and "Separator2" contain the ASCII character
+#58 (colon ':'). "Size" is a decimal number string describing the number of bytes in the "Data"
+part.
+
+The standard file block order is like this:
+
+	block 01:  <a href="#NAM">NAM</a>
+	block 02:  <a href="#CPU">CPU</a>
+	block 03:  <a href="#REG">REG</a>
+	block 04:  <a href="#PPU">PPU</a>
+	block 05:  <a href="#DMA">DMA</a>
+	block 06:  <a href="#VRA">VRA</a>
+	block 07:  <a href="#RAM">RAM</a>
+	block 08:  <a href="#SRA">SRA</a>
+	block 09:  <a href="#FIL">FIL</a>
+	block 10:  <a href="#APU">APU</a>  (if emulating the APU)
+	block 11:  <a href="#ARE">ARE</a>  (if emulating the APU)
+	block 12:  <a href="#ARA">ARA</a>  (if emulating the APU)
+	block 13:  <a href="#SOU">SOU</a>  (if emulating the APU)
+	block 14:  <a href="#SA1">SA1</a>  (if emulating the SA-1)
+	block 15:  <a href="#SAR">SAR</a>  (if emulating the SA-1)
+	block 16:  <a href="#SP7">SP7</a>  (if emulating the SPC7110)
+	block 17:  <a href="#RTC">RTC</a>  (if emulating the SPC7110 RTC)
+
+File readers should accept the blocks in any order though, even several blocks of the same type.
+
+
+
+================================================================================================
+
+
+
+7. <a name="Unstructured_file_blocks">Unstructured file blocks</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+The following block types are simple byte or char arrays:
+
+	7.1  <a href="#ARA">ARA</a>	(APU RAM)
+	7.2  <a href="#FIL">FIL</a>	(FillRAM)
+	7.3  <a href="#NAM">NAM</a>	(cartridge name)
+	7.4  <a href="#RAM">RAM</a>	(WRAM data)
+	7.5  <a href="#SRA">SRA</a>	(SRAM data)
+	7.6  <a href="#VRA">VRA</a>	(VRAM data)
+
+Unstructured file blocks are just streamed to disk.
+
+
+
+7.1 <a name="ARA">ARA</a>		=	Array[65536] of Byte
+¯¯¯¯¯¯¯
+The "audio processing unit" (APU) RAM, which stores BRR-encoded samples and the program to play
+them.
+
+Note that read accesses to $FFC0..$FFFF can return either RAM as normal, or they can access the
+content of the 64-byte "IPL ROM" that is responsible for data communications after a reset.
+SNES9x handles that by defining a variable called "ExtraRAM" (see the <a href="#APU">APU</a> file block), which is
+used when RAM is selected.
+
+
+
+7.2 <a name="FIL">FIL</a>		=	Array[$0000..$7FFF] of Byte
+¯¯¯¯¯¯¯
+In the SNES9x code, "FillRAM" is a pointer to 32 KB of scratch memory. Whenever the 65c816 does
+a write access to addresses $xx:0000..$xx:7FFF, the value is also written into this array. With
+"FillRAM" the developers can access registers by address rather than by name.
+
+
+
+7.3 <a name="NAM">NAM</a>		=	Array[?] of Char
+¯¯¯¯¯¯¯
+A null-terminated string storing the filename of the cartridge ROM, as returned by the OS. The
+block size is the length of the string plus the terminating byte (ASCII #0).
+
+The string should not be treated as readable since there's no encoding. It's just used to detect
+if the previously loaded ROM matches the currently loaded one.
+
+
+
+7.4 <a name="RAM">RAM</a>		=	Array[65536 * 2] of Byte
+¯¯¯¯¯¯¯
+The "work RAM" (WRAM) data, usually accessed via banks $7E and $7F.
+
+
+
+7.5 <a name="SRA">SRA</a>		=	Array[65536] of Byte
+¯¯¯¯¯¯¯
+The "Save RAM" (SRAM) data, used by cartridges.
+
+SNES9x loads/saves only that much from/to savestates, but otherwise uses 128 KB in the rest of
+the program. Maybe just an oversight, or the data for cartridges with larger SRAM chips is
+stored elsewhere?
+
+
+
+7.6 <a name="VRA">VRA</a>		=	Array[65536] of Byte
+¯¯¯¯¯¯¯
+The "video RAM" (VRAM) data, which the SNES stores in two RAM chips.
+
+In this savestate block the even-numbered bytes (0, 2, 4, ...) are from the first memory chip;
+the odd-numbered bytes are from the second one. This is also how most other emulators, e.g.
+ZSNES, do it. (The exception is Super Sleuth, which stores the content of the two chips in two
+separate arrays.)
+
+
+
+================================================================================================
+
+
+
+8. <a name="Structured_file_blocks">Structured file blocks</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+The following block types contain variables, like a Pascal "record" or a C/C++ "struct":
+
+	8.01  <a href="#APU">APU</a>	(APU status)
+	8.02  <a href="#ARE">ARE</a>	(APU registers)
+	8.03  <a href="#CPU">CPU</a>	(CPU status)
+	8.04  <a href="#DMA">DMA</a>	(DMA/HDMA channels)
+	8.05  <a href="#PPU">PPU</a>	(PPU status)
+	8.06  <a href="#REG">REG</a>	(CPU registers)
+	8.07  <a href="#RTC">RTC</a>	(SPC7110 RTC status)
+	8.08  <a href="#SA1">SA1</a>	(SA-1 status)
+	8.09  <a href="#SAR">SAR</a>	(SA-1 registers)
+	8.10  <a href="#SP7">SP7</a>	(SPC7110 status)
+	8.11  <a href="#SOU">SOU</a>	(sound data)
+
+Variables consisting of multiple bytes must be stored in big-endian format. (Just for the
+record, the x86/Windows platform is little-endian.)
+
+
+
+8.1 <a name="APU">APU</a>
+¯¯¯¯¯¯¯
+The status of the audio processing unit.
+
+	<a href="#APU.Cycles">Cycles</a>			:	DWord
+	<a href="#APU.ShowROM">ShowROM</a>			:	Boolean
+	<a href="#APU.Flags">Flags</a>			:	Byte
+	<a href="#APU.KeyedChannels">KeyedChannels</a>		:	Byte
+	<a href="#APU.OutPorts">OutPorts</a>		:	Array[  4] of Byte
+	<a href="#APU.DSP">DSP</a>			:	Array[128] of Byte
+	<a href="#APU.ExtraRAM">ExtraRAM</a>		:	Array[ 64] of Byte
+	<a href="#APU.Timer">Timer</a>			:	Array[  3] of Word
+	<a href="#APU.TimerTarget">TimerTarget</a>		:	Array[  3] of Word
+	<a href="#APU.TimerEnabled">TimerEnabled</a>		:	Array[  3] of Boolean
+	<a href="#APU.TimerValueWritten">TimerValueWritten</a>	:	Array[  3] of Boolean
+
+Multi-byte variables must be stored in big-endian format.
+
+
+
+8.2 <a name="ARE">ARE</a>
+¯¯¯¯¯¯¯
+The "APU registers", i.e. the registers of the Sony "SPC700" audio processor.
+
+	<a href="#ARE.P">P</a>			:	Byte
+	<a href="#ARE.YA">YA</a>			:	Word
+	<a href="#ARE.X">X</a>			:	Byte
+	<a href="#ARE.S">S</a>			:	Byte
+	<a href="#ARE.PC">PC</a>			:	Word
+
+Multi-byte variables must be stored in big-endian format.
+
+
+
+8.3 <a name="CPU">CPU</a>
+¯¯¯¯¯¯¯
+The status of the main processor "Ricoh 5A22", which is based on WDC/GTE's "65c816" core.
+
+	<a href="#CPU.Flags">Flags</a>			:	DWord
+	<a href="#CPU.BranchSkip">BranchSkip</a>		:	Boolean
+	<a href="#CPU.NMIActive">NMIActive</a>		:	Boolean
+	<a href="#CPU.IRQActive">IRQActive</a>		:	Boolean
+	<a href="#CPU.WaitingForInterrupt">WaitingForInterrupt</a>	:	Boolean
+	<a href="#CPU.WhichEvent">WhichEvent</a>		:	Byte
+	<a href="#CPU.Cycles">Cycles</a>			:	DWord
+	<a href="#CPU.NextEvent">NextEvent</a>		:	DWord
+	<a href="#CPU.V_Counter">V_Counter</a>		:	DWord
+	<a href="#CPU.MemSpeed">MemSpeed</a>		:	DWord
+	<a href="#CPU.MemSpeedx2">MemSpeedx2</a>		:	DWord
+	<a href="#CPU.FastROMSpeed">FastROMSpeed</a>		:	DWord
+
+Multi-byte variables must be stored in big-endian format.
+
+
+
+8.4 <a name="DMA">DMA</a>
+¯¯¯¯¯¯¯
+The "DMA" file block consists of 8 sub-structures, one for each DMA/HDMA channel. They look like
+this:
+
+	<a href="#DMA.TransferDirection">TransferDirection</a>	:	Boolean
+	<a href="#DMA.AAddressFixed">AAddressFixed</a>		:	Boolean
+	<a href="#DMA.AAddressDecrement">AAddressDecrement</a>	:	Boolean
+	<a href="#DMA.TransferMode">TransferMode</a>		:	Byte
+	<a href="#DMA.ABank">ABank</a>			:	Byte
+	<a href="#DMA.AAddress">AAddress</a>		:	Word
+	<a href="#DMA.Address">Address</a>			:	Word
+	<a href="#DMA.BAddress">BAddress</a>		:	Byte
+	<a href="#DMA.TransferBytes">TransferBytes</a>		:	Word
+	<a href="#DMA.HDMAIndirectAddressing">HDMAIndirectAddressing</a>	:	Boolean
+	<a href="#DMA.IndirectAddress">IndirectAddress</a>		:	Word
+	<a href="#DMA.IndirectBank">IndirectBank</a>		:	Byte
+	<a href="#DMA.Repeat">Repeat</a>			:	Byte
+	<a href="#DMA.LineCount">LineCount</a>		:	Byte
+	<a href="#DMA.FirstLine">FirstLine</a>		:	Byte
+
+Multi-byte variables must be stored in big-endian format.
+
+
+
+8.5 <a name="PPU">PPU</a>
+¯¯¯¯¯¯¯
+The status of the two PPU (picture-processing unit) chips, and some joypad and mouse data.
+
+	<a href="#PPU.BGMode">BGMode</a>			:	Byte
+	<a href="#PPU.BG3Priority">BG3Priority</a>		:	Boolean
+	<a href="#PPU.Brightness">Brightness</a>		:	Byte
+	<a href="#PPU.VMA">VMA</a>			:	1 "VMA" structure
+	<a href="#PPU.BG">BG</a>			:	4 "BG"  structures
+	<a href="#PPU.CGFLIP">CGFLIP</a>			:	Boolean
+	<a href="#PPU.CGDATA">CGDATA</a>			:	Array[256] of Word
+	<a href="#PPU.FirstSprite">FirstSprite</a>		:	Byte
+	<a href="#PPU.OBJ">OBJ</a>			:	128 "OBJ" structures
+	<a href="#PPU.OAMPriorityRotation">OAMPriorityRotation</a>	:	Boolean
+	<a href="#PPU.OAMAddr">OAMAddr</a>			:	Word
+	<a href="#PPU.OAMFlip">OAMFlip</a>			:	Boolean
+	<a href="#PPU.OAMTileAddress">OAMTileAddress</a>		:	Word
+	<a href="#PPU.IRQVBeamPos">IRQVBeamPos</a>		:	Word
+	<a href="#PPU.IRQHBeamPos">IRQHBeamPos</a>		:	Word
+	<a href="#PPU.VBeamPosLatched">VBeamPosLatched</a>		:	Word
+	<a href="#PPU.HBeamPosLatched">HBeamPosLatched</a>		:	Word
+	<a href="#PPU.HBeamFlip">HBeamFlip</a>		:	Byte
+	<a href="#PPU.VBeamFlip">VBeamFlip</a>		:	Byte
+	<a href="#PPU.HVBeamCounterLatched">HVBeamCounterLatched</a>	:	Boolean
+	<a href="#PPU.MatrixA">MatrixA</a>			:	Word
+	<a href="#PPU.MatrixB">MatrixB</a>			:	Word
+	<a href="#PPU.MatrixC">MatrixC</a>			:	Word
+	<a href="#PPU.MatrixD">MatrixD</a>			:	Word
+	<a href="#PPU.CentreX">CentreX</a>			:	Word
+	<a href="#PPU.CentreY">CentreY</a>			:	Word
+	<a href="#PPU.Joypad1ButtonReadPos">Joypad1ButtonReadPos</a>	:	Byte
+	<a href="#PPU.Joypad2ButtonReadPos">Joypad2ButtonReadPos</a>	:	Byte
+	<a href="#PPU.Joypad3ButtonReadPos">Joypad3ButtonReadPos</a>	:	Byte
+	<a href="#PPU.CGADD">CGADD</a>			:	Byte
+	<a href="#PPU.FixedColourRed">FixedColourRed</a>		:	Byte
+	<a href="#PPU.FixedColourGreen">FixedColourGreen</a>	:	Byte
+	<a href="#PPU.FixedColourBlue">FixedColourBlue</a>		:	Byte
+	<a href="#PPU.SavedOAMAddr">SavedOAMAddr</a>		:	Word
+	<a href="#PPU.ScreenHeight">ScreenHeight</a>		:	Word
+	<a href="#PPU.WRAM">WRAM</a>			:	DWord
+	<a href="#PPU.ForcedBlanking">ForcedBlanking</a>		:	Boolean
+	<a href="#PPU.OBJNameSelect">OBJNameSelect</a>		:	Word
+	<a href="#PPU.OBJSizeSelect">OBJSizeSelect</a>		:	Byte
+	<a href="#PPU.OBJNameBase">OBJNameBase</a>		:	Word
+	<a href="#PPU.OAMReadFlip">OAMReadFlip</a>		:	Boolean
+	<a href="#PPU.VTimerEnabled">VTimerEnabled</a>		:	Boolean
+	<a href="#PPU.HTimerEnabled">HTimerEnabled</a>		:	Boolean
+	<a href="#PPU.HTimerPosition">HTimerPosition</a>		:	Word
+	<a href="#PPU.Mosaic">Mosaic</a>			:	Byte
+	<a href="#PPU.Mode7HFlip">Mode7HFlip</a>		:	Boolean
+	<a href="#PPU.Mode7VFlip">Mode7VFlip</a>		:	Boolean
+	<a href="#PPU.Mode7Repeat">Mode7Repeat</a>		:	Boolean
+	<a href="#PPU.Window1Left">Window1Left</a>		:	Byte
+	<a href="#PPU.Window1Right">Window1Right</a>		:	Byte
+	<a href="#PPU.Window2Left">Window2Left</a>		:	Byte
+	<a href="#PPU.Window2Right">Window2Right</a>		:	Byte
+	<a href="#PPU.ClipWindowOverlapLogic">ClipWindowOverlapLogic</a>	:	Array[6] of Byte
+	<a href="#PPU.ClipWindow1Enable">ClipWindow1Enable</a>	:	Array[6] of Boolean
+	<a href="#PPU.ClipWindow2Enable">ClipWindow2Enable</a>	:	Array[6] of Boolean
+	<a href="#PPU.ClipWindow1Inside">ClipWindow1Inside</a>	:	Array[6] of Boolean
+	<a href="#PPU.ClipWindow2Inside">ClipWindow2Inside</a>	:	Array[6] of Boolean
+	<a href="#PPU.CGFLIPRead">CGFLIPRead</a>		:	Boolean
+	<a href="#PPU.Need16x8Mulitply">Need16x8Mulitply</a>	:	Boolean
+	<a href="#PPU.BGMosaic">BGMosaic</a>		:	Array[4] of Boolean
+	<a href="#PPU.OAMData">OAMData</a>			:	Array[544] of Byte
+	<a href="#PPU.Need16x8Mulitply_2">Need16x8Mulitply_2</a>	:	Boolean
+	<a href="#PPU.MouseSpeed">MouseSpeed</a>		:	Array[2] of Byte
+
+Multi-byte variables must be stored in big-endian format.
+
+
+
+8.6 <a name="REG">REG</a>
+¯¯¯¯¯¯¯
+The registers of the <a href="#CPU">65c816</a>.
+
+	<a href="#REG.PB">PB</a>			:	Byte
+	<a href="#REG.DB">DB</a>			:	Byte
+	<a href="#REG.P">P</a>			:	Word
+	<a href="#REG.A">A</a>			:	Word
+	<a href="#REG.D">D</a>			:	Word
+	<a href="#REG.S">S</a>			:	Word
+	<a href="#REG.X">X</a>			:	Word
+	<a href="#REG.Y">Y</a>			:	Word
+	<a href="#REG.PC">PC</a>			:	Word
+
+Multi-byte variables must be stored in big-endian format.
+
+
+
+8.7 <a name="RTC">RTC</a>
+¯¯¯¯¯¯¯
+The status of the <a href="#SP7">SPC7110</a>'s real-time clock.
+
+	<a href="#RTC.reg">reg</a>			:	Array[16] of Byte
+	<a href="#RTC.index">index</a>			:	Word
+	<a href="#RTC.control">control</a>			:	Byte
+	<a href="#RTC.init">init</a>			:	Boolean
+	<a href="#RTC.last_used">last_used</a>		:	DWord
+
+Multi-byte variables must be stored in big-endian format.
+
+
+
+8.8 <a name="SA1">SA1</a>
+¯¯¯¯¯¯¯
+The status of the SA-1, which is another "65c816" clocked at 10 MHz.
+
+	<a href="#SA1.Flags">Flags</a>			:	DWord
+	<a href="#SA1.NMIActive">NMIActive</a>		:	Boolean
+	<a href="#SA1.IRQActive">IRQActive</a>		:	Boolean
+	<a href="#SA1.WaitingForInterrupt">WaitingForInterrupt</a>	:	Boolean
+	<a href="#SA1.op1">op1</a>			:	Word
+	<a href="#SA1.op2">op2</a>			:	Word
+	<a href="#SA1.arithmetic_op">arithmetic_op</a>		:	DWord
+	<a href="#SA1.sum">sum</a>			:	Int64
+	<a href="#SA1.overflow">overflow</a>		:	Boolean
+
+Multi-byte variables must be stored in big-endian format.
+
+
+
+8.9 <a name="SAR">SAR</a>
+¯¯¯¯¯¯¯
+The <a href="#SA1">SA-1</a> processor registers.
+
+	<a href="#SAR.PB">PB</a>			:	Byte
+	<a href="#SAR.DB">DB</a>			:	Byte
+	<a href="#SAR.P">P</a>			:	Word
+	<a href="#SAR.A">A</a>			:	Word
+	<a href="#SAR.D">D</a>			:	Word
+	<a href="#SAR.S">S</a>			:	Word
+	<a href="#SAR.X">X</a>			:	Word
+	<a href="#SAR.Y">Y</a>			:	Word
+	<a href="#SAR.PC">PC</a>			:	Word
+
+Multi-byte variables must be stored in big-endian format.
+
+
+
+8.10 <a name="SP7">SP7</a>
+¯¯¯¯¯¯¯¯
+The status of the "SPC7110", which is a data decompression chip.
+
+	<a href="#SP7.reg4800">reg4800</a>			:	Byte
+	<a href="#SP7.reg4801">reg4801</a>			:	Byte
+	<a href="#SP7.reg4802">reg4802</a>			:	Byte
+	<a href="#SP7.reg4803">reg4803</a>			:	Byte
+	<a href="#SP7.reg4804">reg4804</a>			:	Byte
+	<a href="#SP7.reg4805">reg4805</a>			:	Byte
+	<a href="#SP7.reg4806">reg4806</a>			:	Byte
+	<a href="#SP7.reg4807">reg4807</a>			:	Byte
+	<a href="#SP7.reg4808">reg4808</a>			:	Byte
+	<a href="#SP7.reg4809">reg4809</a>			:	Byte
+	<a href="#SP7.reg480A">reg480A</a>			:	Byte
+	<a href="#SP7.reg480B">reg480B</a>			:	Byte
+	<a href="#SP7.reg480C">reg480C</a>			:	Byte
+	<a href="#SP7.reg4811">reg4811</a>			:	Byte
+	<a href="#SP7.reg4812">reg4812</a>			:	Byte
+	<a href="#SP7.reg4813">reg4813</a>			:	Byte
+	<a href="#SP7.reg4814">reg4814</a>			:	Byte
+	<a href="#SP7.reg4815">reg4815</a>			:	Byte
+	<a href="#SP7.reg4816">reg4816</a>			:	Byte
+	<a href="#SP7.reg4817">reg4817</a>			:	Byte
+	<a href="#SP7.reg4818">reg4818</a>			:	Byte
+	<a href="#SP7.reg4820">reg4820</a>			:	Byte
+	<a href="#SP7.reg4821">reg4821</a>			:	Byte
+	<a href="#SP7.reg4822">reg4822</a>			:	Byte
+	<a href="#SP7.reg4823">reg4823</a>			:	Byte
+	<a href="#SP7.reg4824">reg4824</a>			:	Byte
+	<a href="#SP7.reg4825">reg4825</a>			:	Byte
+	<a href="#SP7.reg4826">reg4826</a>			:	Byte
+	<a href="#SP7.reg4827">reg4827</a>			:	Byte
+	<a href="#SP7.reg4828">reg4828</a>			:	Byte
+	<a href="#SP7.reg4829">reg4829</a>			:	Byte
+	<a href="#SP7.reg482A">reg482A</a>			:	Byte
+	<a href="#SP7.reg482B">reg482B</a>			:	Byte
+	<a href="#SP7.reg482C">reg482C</a>			:	Byte
+	<a href="#SP7.reg482D">reg482D</a>			:	Byte
+	<a href="#SP7.reg482E">reg482E</a>			:	Byte
+	<a href="#SP7.reg482F">reg482F</a>			:	Byte
+	<a href="#SP7.reg4830">reg4830</a>			:	Byte
+	<a href="#SP7.reg4831">reg4831</a>			:	Byte
+	<a href="#SP7.reg4832">reg4832</a>			:	Byte
+	<a href="#SP7.reg4833">reg4833</a>			:	Byte
+	<a href="#SP7.reg4834">reg4834</a>			:	Byte
+	<a href="#SP7.reg4840">reg4840</a>			:	Byte
+	<a href="#SP7.reg4841">reg4841</a>			:	Byte
+	<a href="#SP7.reg4842">reg4842</a>			:	Byte
+	<a href="#SP7.AlignBy">AlignBy</a>			:	Byte
+	<a href="#SP7.written">written</a>			:	Byte
+	<a href="#SP7.offset_add">offset_add</a>		:	Byte
+	<a href="#SP7.DataRomOffset">DataRomOffset</a>		:	DWord
+	<a href="#SP7.DataRomSize">DataRomSize</a>		:	DWord
+	<a href="#SP7.bank50Internal">bank50Internal</a>		:	DWord
+	<a href="#SP7.bank50">bank50</a>			:	Array[65536] of Byte
+
+Multi-byte variables must be stored in big-endian format.
+
+
+
+8.11 <a name="SOU">SOU</a>
+¯¯¯¯¯¯¯¯
+The status of the APU's DSP. On the SNES, these settings are accessed by the SPC700 by writing
+to address $00F2 (selects a DSP address) and reading/writing $00F3 (reads/writes a DSP register
+value).
+
+	<a href="#SOU.master_volume_left">master_volume_left</a>	:	Word
+	<a href="#SOU.master_volume_right">master_volume_right</a>	:	Word
+	<a href="#SOU.echo_volume_left">echo_volume_left</a>	:	Word
+	<a href="#SOU.echo_volume_right">echo_volume_right</a>	:	Word
+	<a href="#SOU.echo_enable">echo_enable</a>		:	DWord
+	<a href="#SOU.echo_feedback">echo_feedback</a>		:	DWord
+	<a href="#SOU.echo_ptr">echo_ptr</a>		:	DWord
+	<a href="#SOU.echo_buffer_size">echo_buffer_size</a>	:	DWord
+	<a href="#SOU.echo_write_enabled">echo_write_enabled</a>	:	DWord
+	<a href="#SOU.echo_channel_enable">echo_channel_enable</a>	:	DWord
+	<a href="#SOU.pitch_mod">pitch_mod</a>		:	DWord
+	<a href="#SOU.dummy">dummy</a>			:	Array[3] of DWord
+	<a href="#SOU.channel">channel</a>			:	8 "SoundChn" structures
+
+Multi-byte variables must be stored in big-endian format.
+
+
+
+================================================================================================
+
+
+
+9. <a name="Variables">Variables</a>
+¯¯¯¯¯¯¯¯¯¯¯¯
+
+9.1 [APU] <a name="APU.Cycles">Cycles</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.1 [APU] <a name="APU.ShowROM">ShowROM</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.1 [APU] <a name="APU.Flags">Flags</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.1 [APU] <a name="APU.KeyedChannels">KeyedChannels</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.1 [APU] <a name="APU.OutPorts">OutPorts</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.1 [APU] <a name="APU.DSP">DSP</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.1 [APU] <a name="APU.ExtraRAM">ExtraRAM</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.1 [APU] <a name="APU.Timer">Timer</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.1 [APU] <a name="APU.TimerTarget">TimerTarget</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.1 [APU] <a name="APU.TimerEnabled">TimerEnabled</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.1 [APU] <a name="APU.TimerValueWritten">TimerValueWritten</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.2 [ARE] <a name="ARE.P">P</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.2 [ARE] <a name="ARE.YA">YA</a>
+¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.2 [ARE] <a name="ARE.X">X</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.2 [ARE] <a name="ARE.S">S</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.2 [ARE] <a name="ARE.PC">PC</a>
+¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.3 <a name="CPU.Flags">[CPU] Flags</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.3 <a name="CPU.BranchSkip">[CPU] BranchSkip</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.3 <a name="CPU.NMIActive">[CPU] NMIActive</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.3 <a name="CPU.IRQActive">[CPU] IRQActive</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.3 <a name="CPU.WaitingForInterrupt">[CPU] WaitingForInterrupt</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.3 <a name="CPU.WhichEvent">[CPU] WhichEvent</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.3 <a name="CPU.Cycles">[CPU] Cycles</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.3 <a name="CPU.NextEvent">[CPU] NextEvent</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.3 <a name="CPU.V_Counter">[CPU] V_Counter</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.3 <a name="CPU.MemSpeed">[CPU] MemSpeed</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.3 <a name="CPU.MemSpeedx2">[CPU] MemSpeedx2</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.3 <a name="CPU.FastROMSpeed">[CPU] FastROMSpeed</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.4 [DMA] <a name="DMA.TransferDirection">TransferDirection</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.AAddressFixed">AAddressFixed</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.AAddressDecrement">AAddressDecrement</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.TransferMode">TransferMode</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.ABank">ABank</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.AAddress">AAddress</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.Address">Address</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.BAddress">BAddress</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.TransferBytes">TransferBytes</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.HDMAIndirectAddressing">HDMAIndirectAddressing</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.IndirectAddress">IndirectAddress</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.IndirectBank">IndirectBank</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.Repeat">Repeat</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.LineCount">LineCount</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.4 [DMA] <a name="DMA.FirstLine">FirstLine</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.5 [PPU] <a name="PPU.BGMode">BGMode</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.BG3Priority">BG3Priority</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Brightness">Brightness</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.VMA">VMA</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.BG">BG</a>
+¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.CGFLIP">CGFLIP</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.CGDATA">CGDATA</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.FirstSprite">FirstSprite</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.OBJ">OBJ</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.OAMPriorityRotation">OAMPriorityRotation</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.OAMAddr">OAMAddr</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.OAMFlip">OAMFlip</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.OAMTileAddress">OAMTileAddress</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.IRQVBeamPos">IRQVBeamPos</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.IRQHBeamPos">IRQHBeamPos</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.VBeamPosLatched">VBeamPosLatched</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.HBeamPosLatched">HBeamPosLatched</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.HBeamFlip">HBeamFlip</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.VBeamFlip">VBeamFlip</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.HVBeamCounterLatched">HVBeamCounterLatched</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.MatrixA">MatrixA</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.MatrixB">MatrixB</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.MatrixC">MatrixC</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.MatrixD">MatrixD</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.CentreX">CentreX</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.CentreY">CentreY</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Joypad1ButtonReadPos">Joypad1ButtonReadPos</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Joypad2ButtonReadPos">Joypad2ButtonReadPos</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Joypad3ButtonReadPos">Joypad3ButtonReadPos</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.CGADD">CGADD</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.FixedColourRed">FixedColourRed</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.FixedColourGreen">FixedColourGreen</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.FixedColourBlue">FixedColourBlue</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.SavedOAMAddr">SavedOAMAddr</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.ScreenHeight">ScreenHeight</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.WRAM">WRAM</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.ForcedBlanking">ForcedBlanking</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.OBJNameSelect">OBJNameSelect</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.OBJSizeSelect">OBJSizeSelect</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.OBJNameBase">OBJNameBase</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.OAMReadFlip">OAMReadFlip</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.VTimerEnabled">VTimerEnabled</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.HTimerEnabled">HTimerEnabled</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.HTimerPosition">HTimerPosition</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Mosaic">Mosaic</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Mode7HFlip">Mode7HFlip</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Mode7VFlip">Mode7VFlip</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Mode7Repeat">Mode7Repeat</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Window1Left">Window1Left</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Window1Right">Window1Right</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Window2Left">Window2Left</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Window2Right">Window2Right</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.ClipWindowOverlapLogic">ClipWindowOverlapLogic</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.ClipWindow1Enable">ClipWindow1Enable</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.ClipWindow2Enable">ClipWindow2Enable</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.ClipWindow1Inside">ClipWindow1Inside</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.ClipWindow2Inside">ClipWindow2Inside</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.CGFLIPRead">CGFLIPRead</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Need16x8Mulitply">Need16x8Mulitply</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.BGMosaic">BGMosaic</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.OAMData">OAMData</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.Need16x8Mulitply_2">Need16x8Mulitply_2</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.5 [PPU] <a name="PPU.MouseSpeed">MouseSpeed</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+9.6 [REG] <a name="REG.PB">PB</a>
+¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.6 [REG] <a name="REG.DB">DB</a>
+¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.6 [REG] <a name="REG.P">P</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.6 [REG] <a name="REG.A">A</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.6 [REG] <a name="REG.D">D</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.6 [REG] <a name="REG.S">S</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.6 [REG] <a name="REG.X">X</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.6 [REG] <a name="REG.Y">Y</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.6 [REG] <a name="REG.PC">PC</a>
+¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.7 [RTC] <a name="RTC.reg">reg</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.7 [RTC] <a name="RTC.index">index</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.7 [RTC] <a name="RTC.control">control</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.7 [RTC] <a name="RTC.init">init</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.7 [RTC] <a name="RTC.last_used">last_used</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.8 [SA1] <a name="SA1.Flags">Flags</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.8 [SA1] <a name="SA1.NMIActive">NMIActive</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.8 [SA1] <a name="SA1.IRQActive">IRQActive</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.8 [SA1] <a name="SA1.WaitingForInterrupt">WaitingForInterrupt</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.8 [SA1] <a name="SA1.op1">op1</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.8 [SA1] <a name="SA1.op2">op2</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.8 [SA1] <a name="SA1.arithmetic_op">arithmetic_op</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.8 [SA1] <a name="SA1.sum">sum</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.8 [SA1] <a name="SA1.overflow">overflow</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.9 [SAR] <a name="SAR.PB">PB</a>
+¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.9 [SAR] <a name="SAR.DB">DB</a>
+¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.9 [SAR] <a name="SAR.P">P</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.9 [SAR] <a name="SAR.A">A</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.9 [SAR] <a name="SAR.D">D</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.9 [SAR] <a name="SAR.S">S</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.9 [SAR] <a name="SAR.X">X</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.9 [SAR] <a name="SAR.Y">Y</a>
+¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.9 [SAR] <a name="SAR.PC">PC</a>
+¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4800">reg4800</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4801">reg4801</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4802">reg4802</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4803">reg4803</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4804">reg4804</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4805">reg4805</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4806">reg4806</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4807">reg4807</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4808">reg4808</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4809">reg4809</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg480A">reg480A</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg480B">reg480B</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg480C">reg480C</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4811">reg4811</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4812">reg4812</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4813">reg4813</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4814">reg4814</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4815">reg4815</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4816">reg4816</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4817">reg4817</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4818">reg4818</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4820">reg4820</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4821">reg4821</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4822">reg4822</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4823">reg4823</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4824">reg4824</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4825">reg4825</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4826">reg4826</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4827">reg4827</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4828">reg4828</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4829">reg4829</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg482A">reg482A</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg482B">reg482B</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg482C">reg482C</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg482D">reg482D</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg482E">reg482E</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg482F">reg482F</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4830">reg4830</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4831">reg4831</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4832">reg4832</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4833">reg4833</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4834">reg4834</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4840">reg4840</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4841">reg4841</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.reg4842">reg4842</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.AlignBy">AlignBy</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.written">written</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.offset_add">offset_add</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.DataRomOffset">DataRomOffset</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.DataRomSize">DataRomSize</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.bank50Internal">bank50Internal</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.10 [SP7] <a name="SP7.bank50">bank50</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.master_volume_left">master_volume_left</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.master_volume_right">master_volume_right</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.echo_volume_left">echo_volume_left</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.echo_volume_right">echo_volume_right</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.echo_enable">echo_enable</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.echo_feedback">echo_feedback</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.echo_ptr">echo_ptr</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.echo_buffer_size">echo_buffer_size</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.echo_write_enabled">echo_write_enabled</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.echo_channel_enable">echo_channel_enable</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.pitch_mod">pitch_mod</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.dummy">dummy</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+9.11 [SOU] <a name="SOU.channel">channel</a>
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF
+
+
+</pre>
+<a href="http://vsnes.aep-emu.de/">http://vsnes.aep-emu.de/</a>
+</body></html>
