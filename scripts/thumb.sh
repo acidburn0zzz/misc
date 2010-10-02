@@ -59,7 +59,7 @@ for i in $(ls *.jpg *.png 2>/dev/null); do
         echo "            <tr>" >> index.html
     fi
 
-    echo "                <td><a href=\"$i\"><img src=\"thumbs/$i\" alt=\"$i\" /></a></td>" >> index.html
+    echo "                <td><a href=\"$i\"><img src=\"thumbs/$i\" title=\"$i\" alt=\"$i\" /></a></td>" >> index.html
 
     if [ $MOD = $LAST ];
     then
