@@ -22,6 +22,9 @@ format:	format.c
 fibonacci:	fibonacci.c
 	$(CC) $(CFLAGS) $< -o $@
 
+keygen:	keygen.c
+	$(CC) $(CFLAGS) $< -o $@
+
 millis:	millis.c
 	$(CC) $(CFLAGS) $< -o $@
 
@@ -30,9 +33,6 @@ quicksort:	quicksort.c
 
 shacrypt:	shacrypt.c
 	$(CC) $(CFLAGS) -I../libs/libsha2 $< -o $@ -L../libs/libsha2 -lsha2
-
-wii_key_gen:	wii_key_gen.c
-	$(CC) $(CFLAGS) $< -o $@
 
 clean:
 	rm -rf $(PROGRAMS)
