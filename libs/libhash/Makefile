@@ -4,12 +4,11 @@ CXXFLAGS=$(CFLAGS)
 INCLUDES=
 LDFLAGS=
 
-PROGRAM=libcrc32.a
-SOURCES=crc32.c
+PROGRAM=libhash.a
+SOURCES=crc32.c md5.c sha1.c sha2.c
 OBJS=$(SOURCES:.c=.o)
 
 AR=ar rcs
-RM=/bin/rm
 
 all:	$(PROGRAM)
 
@@ -20,7 +19,7 @@ $(PROGRAM): $(OBJS)
 	$(CC) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	$(RM) -f $(OBJS) *~ *core
+	$(RM) $(OBJS)
 
 distclean:	clean
-	$(RM) -f $(PROGRAM)
+	$(RM) $(PROGRAM)
