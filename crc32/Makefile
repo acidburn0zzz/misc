@@ -6,8 +6,8 @@ PROGRAM=crc32
 SOURCES=main.c sfv.c
 OBJS=$(SOURCES:.c=.o)
 
-INCLUDES=-I../libs/libcrc32
-LDFLAGS=-L../libs/libcrc32 -lcrc32
+INCLUDES=-I../libs/libhash
+LDFLAGS=-L../libs/libhash -lhash
 
 RM=rm -f
 INSTALL=install
