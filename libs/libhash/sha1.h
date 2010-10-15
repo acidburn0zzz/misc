@@ -24,7 +24,12 @@
 #ifndef _SHA1_H_
 #define _SHA1_H_
 
-/* 
+#if defined(__cplusplus)
+extern "C"
+{
+#endif
+
+/*
  *  This structure will hold context information for the hashing
  *  operation
  */
@@ -48,5 +53,9 @@ typedef struct sha1_ctx
 void sha1_begin(sha1_ctx *ctx);
 void sha1_hash(const unsigned char *data, unsigned int length, sha1_ctx *ctx);
 int sha1_end(sha1_ctx *ctx);
+
+#if defined(__cplusplus)
+}
+#endif
 
 #endif
