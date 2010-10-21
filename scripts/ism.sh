@@ -1,5 +1,6 @@
 #! /bin/bash
 
+tolower
 rename 's/_s\.zip/\.zip/' *.zip
 
 for i in $(ls *.zip); do
@@ -11,6 +12,9 @@ for i in $(ls *.zip); do
         mv $name/$name.mpg .;
         rm -rf $name;
     fi
-    mv $name/*.html .;
+    if [ -e $name/*.html ];
+    then
+        mv $name/*.html .;
+    fi
     rm $i;
 done
