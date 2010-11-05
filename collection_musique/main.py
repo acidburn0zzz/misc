@@ -21,9 +21,9 @@
  ' You can contact the original author at acidrain1@gmail.com              '
  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from PyQt4.QtSql import *
+from PySide.QtCore import *
+from PySide.QtGui import *
+from PySide.QtSql import *
 import sys
 
 import database as db
@@ -32,13 +32,13 @@ import albums
 def run():
     db_file = '/home/mathieu/codes/collection_musique/albums.sqlite'
     app = QApplication(sys.argv)
-    
+
     qdb = db.Database()
     qdb.openSqlConnection('QSQLITE', db_file)
-    
+
     a = albums.VueAlbums()
     a.show()
-    
+
     ret = app.exec_()
     qdb.closeSqlConnection()
     return ret

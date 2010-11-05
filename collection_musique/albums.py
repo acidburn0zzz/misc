@@ -21,9 +21,9 @@
  ' You can contact the original author at acidrain1@gmail.com              '
  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from PyQt4.QtSql import *
+from PySide.QtCore import *
+from PySide.QtGui import *
+from PySide.QtSql import *
 import re
 import sys
 
@@ -61,7 +61,7 @@ class VueAlbums(QMainWindow):
         self.actQuitter = QAction("&Quitter", self)
         self.actQuitter.setShortcut("Ctrl+Q");
         self.actQuitter.setStatusTip("Quitter le logiciel");
-        self.connect(self.actQuitter, SIGNAL('triggered()'), qApp, SLOT('quit()'))
+        self.connect(self.actQuitter, SIGNAL('triggered()'), quit)
         self.mnuFile.addAction(self.actQuitter)
 
         self.menuBar().addMenu(self.mnuFile)
@@ -99,7 +99,7 @@ class VueAlbums(QMainWindow):
 
         column_names = self.model.getColumnNames()
         for i in range(len(column_names)):
-            self.model.setHeaderData(i, Qt.Horizontal, QVariant(column_names[i]))
+            self.model.setHeaderData(i, Qt.Horizontal, column_names[i])
 
         #Setup de la table (fixe)
         self.tabView = TableAlbums()
@@ -174,9 +174,9 @@ class ModeleAlbums(QSqlQueryModel):
                 #~ return QVariant(value.toString().toUpper())
 
         if (role == Qt.BackgroundRole and index.row()%2 == 0):
-            return QVariant(QBrush(QColor(224, 224, 224)))
+            return QBrush(QColor(224, 224, 224))
         if (role == Qt.ForegroundRole):
-            return QVariant(QBrush(QColor(Qt.black)))
+            return QBrush(QColor(Qt.black))
 
         #Cases modifiees
         #~ if (role == Qt.FontRole):
@@ -190,11 +190,11 @@ class ModeleAlbums(QSqlQueryModel):
         primaryKeyIndex = QSqlQueryModel.index(self, index.row(), 0)
 
         #data retourne la valeur et un bool
-        id = QSqlQueryModel.data(self, primaryKeyIndex).toInt()[0]
+        id = QSqlQueryModel.data(self, primaryKeyIndex)
 
         QSqlQueryModel.clear(self)
 
-        ok = self.setValue(index.column(), id, value.toString())
+        ok = self.setValue(index.column(), id, value)
 
         self.refresh()
         return ok
@@ -205,7 +205,7 @@ class ModeleAlbums(QSqlQueryModel):
         else:
             self.sort(self.currentSortCol, Qt.DescendingOrder)
         for i in range(len(self.column_names)):
-            self.setHeaderData(i, Qt.Horizontal, QVariant(self.column_names[i]))
+            self.setHeaderData(i, Qt.Horizontal, self.column_names[i])
 
     def setCurrentQuery(self, q):
         self.currentQuery = q
@@ -229,10 +229,10 @@ class ModeleAlbums(QSqlQueryModel):
         q = QSqlQuery()
         q.prepare("UPDATE albums SET " + self.columns[col] + " = ? WHERE id = ?")
         if (col == 6):
-            q.addBindValue(QVariant(db.formatterDuree(value)))
+            q.addBindValue(db.formatterDuree(value))
         else:
-            q.addBindValue(QVariant(value))
-        q.addBindValue(QVariant(id))
+            q.addBindValue(value)
+        q.addBindValue(id)
         return q.exec_()
 
     def sort(self, column, order):

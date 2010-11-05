@@ -21,11 +21,11 @@
  ' You can contact the original author at acidrain1@gmail.com              '
  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-from PyQt4.QtSql import *
-    
+from PySide.QtSql import *
+
 def formatterDuree(duree): #Pourrait prendre un nbre de secondes
     duree_tmp = duree.replace('-', ':').split(':')
-    
+
     if (len(duree_tmp) == 2):
         h = '00'
         m = duree_tmp[0]
@@ -34,14 +34,14 @@ def formatterDuree(duree): #Pourrait prendre un nbre de secondes
         h = duree_tmp[0]
         m = duree_tmp[1]
         s = duree_tmp[2]
-    
+
     if (len(h) == 1):
         h = '0' + h
     if (len(m) == 1):
         m = '0' + m
     if (len(s) == 1):
         s = '0' + s
-    
+
     return h + ':' + m + ':' + s
 
 class Database(object):

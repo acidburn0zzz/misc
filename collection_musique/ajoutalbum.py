@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-#-*- coding: UTF-8 -*-
+#-*- coding: utf-8 -*-
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
  ' Copyright (C) 2009 Lemay, Mathieu                                       '
@@ -21,9 +21,9 @@
  ' You can contact the original author at acidrain1@gmail.com              '
  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from PyQt4.QtSql import *
+from PySide.QtCore import *
+from PySide.QtGui import *
+from PySide.QtSql import *
 
 import database as db
 
@@ -110,14 +110,14 @@ class AjoutAlbum(QDialog):
         q.exec_('SELECT DISTINCT artist FROM albums ORDER BY artist;')
 
         while (q.next()):
-            self.artists.append(q.value(0).toString())
+            self.artists.append(q.value(0))
 
     def getGenres(self):
         q = QSqlQuery()
         q.exec_('SELECT DISTINCT genre FROM albums ORDER BY genre;')
 
         while (q.next()):
-            self.genres.append(q.value(0).toString())
+            self.genres.append(q.value(0))
 
     def save(self):
         q = QSqlQuery()
