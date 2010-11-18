@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <getopt.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -6,11 +7,11 @@
 
 void usage(char *prog) {
     fprintf(stderr, "Usage :\n");
-    fprintf(stderr, "\t%s [-l lines] file(s)\n", prog);
+    fprintf(stderr, "\t%s [-l line_size] file(s)\n", prog);
 }
 
 /**
- * FIX: Will go in an infinite loop if a word is longer than len
+ * FIXME: Will go in an infinite loop if a word is longer than len
  */
 void format_file(char *fn, int len) {
     FILE *f;
@@ -42,7 +43,7 @@ void format_file(char *fn, int len) {
 
 int main(int argc, char **argv) {
     char opt;
-    int len = 79, i;
+    int len = 79;
 
     if (argc < 2) {
         usage(argv[0]);
