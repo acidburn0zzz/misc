@@ -22,6 +22,8 @@
 
 #include "crc32.h"
 
+#define BUFFER_SIZE 16384
+
 /*
 void crc32_generate_table() {
     unsigned int crc;
@@ -66,9 +68,8 @@ unsigned int crc32_hash_string(unsigned char *str) {
 
 int crc32_hash_file(char *fn, uint32_t *sum) {
     FILE *f;
-    const int BUFFER_SIZE=16384;
     unsigned int size;
-    unsigned char buffer[16384];
+    unsigned char buffer[BUFFER_SIZE];
 
     if (!(f = fopen(fn, "rb"))) {
         /* fprintf(stderr, "Error opening file %s\n", fn); */
