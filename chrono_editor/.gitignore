@@ -1,0 +1,10 @@
+smse-1.0a
+
+#Qt generated files
+/bin
+/moc
+
+*.scite_session
+*.txt
+*.zst
+*.srm

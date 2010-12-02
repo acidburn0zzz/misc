@@ -8,6 +8,8 @@
 *.a
 *.so
 *.pyc
+*.qm
+*.E
 
 # Packages #
 ############
@@ -28,6 +30,7 @@
 *.sql
 *.sqlite
 *.db
+*.swp
 
 # OS generated files #
 ######################
