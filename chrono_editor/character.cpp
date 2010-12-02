@@ -1,187 +1,206 @@
 #include "character.h"
 
 Character::Character() {
-    //DUDE!
 }
 
-Character::Character(s_ioCharacter c) {
-    _ioChar = c;
+unsigned char Character::getId() {
+    return id;
 }
 
-unsigned char Character::getWho() {
-    return _ioChar.who;
+unsigned char Character::getCharId() {
+    return charId;
+}
+
+unsigned char *Character::getName() {
+    return name;
 }
 
 unsigned short Character::getCurrentHP() {
-    return _ioChar.currentHP;
+    return currentHP;
 }
 
 unsigned short Character::getMaxHP() {
-    return _ioChar.maxHP;
+    return maxHP;
 }
 
 unsigned short Character::getCurrentMP() {
-    return _ioChar.currentMP;
+    return currentMP;
 }
 
 unsigned short Character::getMaxMP() {
-    return _ioChar.maxMP;
+    return maxMP;
 }
 
-unsigned char Character::getPower() {
-    return _ioChar.power;
+unsigned char Character::getBasePower() {
+    return basePower;
 }
 
-unsigned char Character::getStamina() {
-    return _ioChar.stamina;
+unsigned char Character::getBaseStamina() {
+    return baseStamina;
 }
 
-unsigned char Character::getSpeed() {
-    return _ioChar.speed;
+unsigned char Character::getBaseSpeed() {
+    return baseSpeed;
 }
 
-unsigned char Character::getMagic() {
-    return _ioChar.magic;
+unsigned char Character::getBaseMagic() {
+    return baseMagic;
 }
 
-unsigned char Character::getHit() {
-    return _ioChar.hit;
+unsigned char Character::getBaseHit() {
+    return baseHit;
 }
 
-unsigned char Character::getEvade() {
-    return _ioChar.evade;
+unsigned char Character::getBaseEvade() {
+    return baseEvade;
 }
 
-unsigned char Character::getMagicDef() {
-    return _ioChar.magicDef;
+unsigned char Character::getBaseMagicDef() {
+    return baseMagicDef;
 }
 
 unsigned char Character::getLevel() {
-    return _ioChar.level;
+    return level;
 }
 
 unsigned int Character::getExp() {
-    return _ioChar.exp;
+    return exp;
 }
 
 unsigned char Character::getHelmet() {
-    return _ioChar.helmet;
+    return helmet;
 }
 
 unsigned char Character::getArmor() {
-    return _ioChar.armor;
+    return armor;
 }
 
 unsigned char Character::getWeapon() {
-    return _ioChar.weapon;
+    return weapon;
 }
 
 unsigned char Character::getRelic() {
-    return _ioChar.relic;
+    return relic;
 }
 
 unsigned short Character::getXpForLevelUp() {
-    return _ioChar.xpForLevelUp;
+    return xpForLevelUp;
 }
 
 unsigned short Character::getSpForNextTech() {
-    return _ioChar.spForNextTech;
+    return spForNextTech;
 }
 
-s_ioCharacter Character::getIOCharacter() {
-    return _ioChar;
+void Character::setId(unsigned char id) {
+    this->id = id;
+}
+
+void Character::setCharId(unsigned char charId) {
+    this->charId = charId;
+}
+
+void Character::setNameFromSRAM(unsigned char *name) {
+    for (int i=0; i<5; i++) {
+        if (name[i] >= 0xa0 && name[i] <= 0xb9)
+            this->name[i] = name[i] - 95;
+        else if (name[i] >= 0xba && name[i] <= 0xd3)
+            this->name[i] = name[i] - 89;
+        else
+            this->name[i] = name[i];
+    }
+    this->name[5] = '\0';
 }
 
 void Character::setCurrentHP(unsigned short currentHP) {
     if (currentHP > 999)
         currentHP = 999;
-    
-    _ioChar.currentHP = currentHP;
+
+    this->currentHP = currentHP;
 }
 
 void Character::setMaxHP(unsigned short maxHP) {
     if (maxHP > 999)
         maxHP = 999;
-    
-    _ioChar.maxHP = maxHP;
+
+    this->maxHP = maxHP;
 }
 
 void Character::setCurrentMP(unsigned short currentMP) {
     if (currentMP > 99)
         currentMP = 99;
-    
-    _ioChar.currentMP = currentMP;
+
+    this->currentMP = currentMP;
 }
 
 void Character::setMaxMP(unsigned short maxMP) {
     if (maxMP > 99)
         maxMP = 99;
-    
-    _ioChar.maxMP = maxMP;
+
+    this->maxMP = maxMP;
 }
 
-void Character::setPower(unsigned char power) {
-    if (power > 99)
-        power = 99;
-    
-    _ioChar.power = power;
+void Character::setBasePower(unsigned char basePower) {
+    if (basePower > 99)
+        basePower = 99;
+
+    this->basePower = basePower;
 }
 
 
-void Character::setStamina(unsigned char stamina) {
-    if (stamina > 99)
-        stamina = 99;
-    
-    _ioChar.stamina = stamina;
+void Character::setBaseStamina(unsigned char baseStamina) {
+    if (baseStamina > 99)
+        baseStamina = 99;
+
+    this->baseStamina = baseStamina;
 }
 
-void Character::setSpeed(unsigned char speed) {
-    if (speed > 16)
-        speed = 16;
-    
-    _ioChar.speed = speed;
+void Character::setBaseSpeed(unsigned char baseSpeed) {
+    if (baseSpeed > 16)
+        baseSpeed = 16;
+
+    this->baseSpeed = baseSpeed;
 }
 
-void Character::setMagic(unsigned char magic) {
-    if (magic > 99)
-        magic = 99;
-    
-    _ioChar.magic = magic;
+void Character::setBaseMagic(unsigned char baseMagic) {
+    if (baseMagic > 99)
+        baseMagic = 99;
+
+    this->baseMagic = baseMagic;
 }
 
-void Character::setHit(unsigned char hit) {
-    if (hit > 99)
-        hit = 99;
-    
-    _ioChar.hit = hit;
+void Character::setBaseHit(unsigned char baseHit) {
+    if (baseHit > 99)
+        baseHit = 99;
+
+    this->baseHit = baseHit;
 }
 
-void Character::setEvade(unsigned char evade) {
-    if (evade > 99)
-        evade = 99;
-    
-    _ioChar.evade = evade;
+void Character::setBaseEvade(unsigned char baseEvade) {
+    if (baseEvade > 99)
+        baseEvade = 99;
+
+    this->baseEvade = baseEvade;
 }
 
-void Character::setMagicDef(unsigned char magicDef) {
-    if (magicDef > 99)
-        magicDef = 99;
-    
-    _ioChar.magicDef = magicDef;
+void Character::setBaseMagicDef(unsigned char baseMagicDef) {
+    if (baseMagicDef > 99)
+        baseMagicDef = 99;
+
+    this->baseMagicDef = baseMagicDef;
 }
 
 void Character::setLevel(unsigned char level) {
     if (level > 99)
         level = 99;
-    
-    _ioChar.level = level;
+
+    this->level = level;
 }
 
 void Character::setExp(unsigned int exp) {
     if (exp > 9999999)
         exp = 9999999;
-    
-    _ioChar.exp = exp;
+
+    this->exp = exp;
 }
 
 void Character::setHelmet(unsigned char helmet) {
@@ -189,8 +208,8 @@ void Character::setHelmet(unsigned char helmet) {
         helmet = 0x7c;
     else if (helmet > 0x93)
         helmet = 0x93;
-    
-    _ioChar.helmet = helmet;
+
+    this->helmet = helmet;
 }
 
 void Character::setArmor(unsigned char armor) {
@@ -198,13 +217,13 @@ void Character::setArmor(unsigned char armor) {
         armor = 0x5b;
     else if (armor > 0x7a)
         armor = 0x7a;
-    
-    _ioChar.armor = armor;
+
+    this->armor = armor;
 }
 
 void Character::setWeapon(unsigned char weapon) {
     if (checkIfWeaponOK(weapon))
-        _ioChar.weapon = weapon;
+        this->weapon = weapon;
 }
 
 void Character::setRelic(unsigned char relic) {
@@ -212,12 +231,12 @@ void Character::setRelic(unsigned char relic) {
         relic = 0x95;
     else if (relic > 0xbb)
         relic = 0xbb;
-    
-    _ioChar.relic = relic;
+
+    this->relic = relic;
 }
 
 bool Character::checkIfWeaponOK(unsigned char wpn) {
-    switch (_ioChar.who) {
+    switch (id) {
         case CRONO:
             if ((wpn >= 0x01 && wpn <= 0x10) || wpn == 0x4f || (wpn >= 0x53 && wpn <= 0x55))
                 return true;

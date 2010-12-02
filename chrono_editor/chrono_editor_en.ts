@@ -1,96 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="en">
+<!DOCTYPE TS>
+<TS version="2.0" language="en">
 <context>
     <name>Vue</name>
     <message>
-        <location filename="vue.cpp" line="232"/>
+        <location filename="vue.cpp" line="229"/>
         <source>Ouvrir un fichier</source>
         <translation>Open a file</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="236"/>
+        <location filename="vue.cpp" line="229"/>
+        <source>Fichier SRAM (*.srm);;Tous (*.*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="vue.cpp" line="233"/>
         <source>&amp;Ouvrir</source>
         <translation>&amp;Open</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="237"/>
+        <location filename="vue.cpp" line="234"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="238"/>
+        <location filename="vue.cpp" line="235"/>
         <source>Ouvrir une Save State</source>
         <translation>Open a Save State</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="241"/>
+        <location filename="vue.cpp" line="238"/>
         <source>&amp;Enregistrer</source>
         <translation>&amp;Save</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="242"/>
+        <location filename="vue.cpp" line="239"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="243"/>
+        <location filename="vue.cpp" line="240"/>
         <source>Enregistrer la Save State</source>
         <translation>Save the Save State</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="246"/>
+        <location filename="vue.cpp" line="243"/>
         <source>&amp;Quitter</source>
         <translation>&amp;Quit</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="247"/>
+        <location filename="vue.cpp" line="244"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="248"/>
+        <location filename="vue.cpp" line="245"/>
         <source>Quitter</source>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="251"/>
+        <location filename="vue.cpp" line="248"/>
         <source>&amp;Fichier</source>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="262"/>
-        <source>&#xc0; &amp;Propos de Chrono Editor</source>
-        <translation type="obsolete">&amp;About Chrono Editor</translation>
+        <location filename="vue.cpp" line="254"/>
+        <source>Ã &amp;Propos de Chrono Editor</source>
+        <oldsource>À Propos de Chrono Editor</oldsource>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="258"/>
+        <location filename="vue.cpp" line="255"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="265"/>
-        <source>&#xc0; Propos de &amp;Qt</source>
-        <translation type="obsolete">About &amp;Qt</translation>
+        <location filename="vue.cpp" line="257"/>
+        <source>Ã Propos de &amp;Qt</source>
+        <oldsource>À Propos de &amp;Qt</oldsource>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="261"/>
+        <location filename="vue.cpp" line="258"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="vue.cpp" line="264"/>
+        <location filename="vue.cpp" line="261"/>
         <source>&amp;Aide</source>
         <translation>&amp;Help</translation>
-    </message>
-    <message>
-        <location filename="vue.cpp" line="257"/>
-        <source>&#xc3;&#x80; &amp;Propos de Chrono Editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="vue.cpp" line="260"/>
-        <source>&#xc3;&#x80; Propos de &amp;Qt</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

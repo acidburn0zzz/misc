@@ -16,21 +16,22 @@ class QTabWidget;
 class QVBoxLayout;
 class QWidget;
 
-class State;
+class SRAMFile;
+class Game;
 
 class Vue : public QMainWindow {
     Q_OBJECT
 
 public:
     Vue(QWidget *parent = 0);
-    Vue(const char *file, QWidget *parent = 0);
+    Vue(const char *fn, QWidget *parent = 0);
     ~Vue();
 
-    QString selectionFichier();
-
 private slots:
-    void ouvrirFichier();
-    void enregistrerFichier();
+    void open(QString fn = "");
+    void save();
+    QString selectFile();
+    void selectGame(int n);
 
 private:
     QString _name, _imageFile;
@@ -46,7 +47,7 @@ private:
     QMenu   *mnuAide;
     QAction *actAbout;
     QAction *actAboutQt;
-    
+
     QVBoxLayout *centralLayout;
     QHBoxLayout *hlayPerso;
     QGridLayout *gridStatsBase;
@@ -89,9 +90,10 @@ private:
     QComboBox *cmbArmor;
     QComboBox *cmbWeapon;
     QComboBox *cmbRelic;
-    
-    State *_state;
-    
+
+    SRAMFile *_sramFile;
+    Game *_game;
+
     void init();
     void creerMenus();
     void fillSpecificPerso(char perso);
