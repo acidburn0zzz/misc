@@ -1,11 +1,7 @@
 #! /bin/bash
 
 # Find all directories & subdirectories
-for i in $(find -type d); do
-    chmod 755 $i;
-done
+find -type d -exec chmod 755 '{}' \;
 
 # Find all Files
-for i in $(find -type f); do
-    chmod 644 $i;
-done
+find -type f -exec chmod 644 '{}' \;
