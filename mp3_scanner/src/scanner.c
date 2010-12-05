@@ -18,7 +18,7 @@ int erroffset;
 
 int init();
 int list(const char *name, const struct stat *status, int type);
-void insert_song(const char *fn, char *artist, char *album, char *title, char *year, char *genre, char *track);
+void insert_song(const char *fn, char *artist, char *album, char *title, char *year, char *genre, char *track, char *format);
 
 void read_mp3(const char *fn);
 void read_flac(const char *fn);
@@ -53,14 +53,16 @@ int main(int argc, char *argv[]) {
 int init() {
     int ret;
 
+    /*
     ret = sqlite3_exec(db, "DROP TABLE IF EXISTS songs", NULL, 0, NULL);
     if (ret != SQLITE_OK) {
         fprintf(stderr, "%s\n", sqlite3_errmsg(db));
         exit(-1);
     }
+    */
 
     ret = sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS songs (\
-            id INTEGER PRIMARY KEY, file TEXT, artist TEXT, album TEXT, title TEXT, year INTEGER, genre TEXT, track INTEGER, \
+            id INTEGER PRIMARY KEY, file TEXT, artist TEXT, album TEXT, title TEXT, year INTEGER, genre TEXT, track INTEGER, format TEXT, \
             UNIQUE (artist, album, title));", NULL, 0, NULL);
     if (ret != SQLITE_OK) {
         fprintf(stderr, "%s\n", sqlite3_errmsg(db));
@@ -110,7 +112,7 @@ void read_mp3(const char *fn) {
 
     switch(ret) {
         case ID3_OK:
-            insert_song(fn, id3->artist, id3->album, id3->title, id3->year, id3->genre, id3->track);
+            insert_song(fn, id3->artist, id3->album, id3->title, id3->year, id3->genre, id3->track, "mp3");
             break;
         case ID3_ERR_EMPTY_FILE:
             fprintf(stderr, "%s: File is empty\n", fn);
@@ -165,16 +167,16 @@ void read_flac(const char *fn) {
         }
     }
 
-    insert_song(fn, artist, album, title, year, genre, track);
+    insert_song(fn, artist, album, title, year, genre, track, "flac");
 
     FLAC__metadata_object_delete(tags);
 }
 
-void insert_song(const char *fn, char *artist, char *album, char *title, char *year, char *genre, char *track) {
+void insert_song(const char *fn, char *artist, char *album, char *title, char *year, char *genre, char *track, char *format) {
     char *sql;
 
-    sql = sqlite3_mprintf("INSERT OR IGNORE INTO songs (file, artist, album, title, year, genre, track) VALUES (%Q, %Q, %Q, %Q, %.4Q, %Q, %Q);",
-        fn, trim(artist), trim(album), trim(title), trim(year), trim(genre), track);
+    sql = sqlite3_mprintf("INSERT OR IGNORE INTO songs (file, artist, album, title, year, genre, track, format) VALUES (%Q, %Q, %Q, %Q, %.4Q, %Q, %Q, %Q);",
+        fn, trim(artist), trim(album), trim(title), trim(year), trim(genre), track, format);
 
     if (sqlite3_exec(db, sql, NULL, 0, NULL) != SQLITE_OK) {
         fprintf(stderr, "%s\n%s\n", sql, sqlite3_errmsg(db));
