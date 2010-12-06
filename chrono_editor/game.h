@@ -28,10 +28,8 @@
 
 class Game {
 public:
-    Game(int no);
+    Game();
     ~Game();
-
-    int getNo();
 
     Character getCharacter(int charNo);
     void setCharacter(Character c, int charNo);
@@ -39,8 +37,6 @@ public:
     void setGold(unsigned int gold);
 
 private:
-    int no;
-
     Character _chars[7];
     s_items _items;
     unsigned int _gold;

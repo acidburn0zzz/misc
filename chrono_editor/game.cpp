@@ -22,15 +22,10 @@
 
 using namespace std;
 
-Game::Game(int no) {
-    this->no = no;
+Game::Game() {
 }
 
 Game::~Game() {
-}
-
-int Game::getNo() {
-    return no;
 }
 
 Character Game::getCharacter(int charNo) {

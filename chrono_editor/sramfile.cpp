@@ -161,7 +161,7 @@ void SRAMFile::setGame(Game *game, int gameNo) {
 }
 
 void SRAMFile::foo() {
-    Game g(0);
+    Game g;
 
     getGame(&g, 0);
 
