@@ -7,7 +7,7 @@ SOURCES=main.c sfv.c
 OBJS=$(SOURCES:.c=.o)
 
 INCLUDES=-I../libs/libhash
-LDFLAGS=-L../libs/libhash -lhash
+LDFLAGS=-L../libs/libhash -lhash -lpthread
 
 RM=rm -f
 INSTALL=install

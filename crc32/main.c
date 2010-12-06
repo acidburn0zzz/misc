@@ -5,11 +5,28 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <pthread.h>
 
 #include <crc32.h>
 #include "sfv.h"
 
-#define __PROG_VERSION__ "1.0 "
+#define __PROG_VERSION__ "1.0"
+
+#define BUFFER_SIZE 512
+
+unsigned long size, remain;
+char *cur_file;
+
+void pct() {
+    while (remain > 0) {
+        fprintf(stderr, "\r%s: %.2f%%", cur_file, 100.0 * (size - remain) / size);
+        usleep(1000);
+    }
+
+    fprintf(stderr, "\r");
+
+    return;
+}
 
 void usage(char *prog) {
     fprintf(stderr, "AcidCRC32 %s\n", __PROG_VERSION__);
@@ -26,10 +43,50 @@ void print_header() {
 
     time(&rawtime);
     timeinfo = localtime(&rawtime);
-    if (strftime(buffer, 128, "le %d/%m/%Y a %X", timeinfo) == 0)
+    if (strftime(buffer, 128, "le %Y-%m-%d a %X", timeinfo) == 0)
         buffer[0] = 0;
 
     printf("; Genere par AcidCRC32 %s %s\n;\n", __PROG_VERSION__, buffer);
+}
+
+int hash_file(char *fn, uint32_t *sum) {
+    FILE *f;
+    unsigned int rsize;
+    unsigned char buffer[BUFFER_SIZE];
+
+    pthread_t pct_thread;
+
+    if (!(f = fopen(fn, "rb"))) {
+        perror(fn);
+        return -1;
+    }
+
+    fseek(f, 0, SEEK_END);
+    size = ftell(f);
+    fseek(f, 0, SEEK_SET);
+
+    crc32_begin(sum);
+    remain = size;
+    pthread_create(&pct_thread, NULL, (void*)pct, NULL);
+
+    while (remain > 0) {
+        rsize = (BUFFER_SIZE < remain ? BUFFER_SIZE : remain);
+
+        if (fread(buffer, rsize, 1, f) != 1) {
+            perror(fn);
+            return -1;
+        }
+
+        crc32_hash(buffer, rsize, sum);
+        remain -= rsize;
+    }
+
+    fclose(f);
+
+    crc32_end(sum);
+    pthread_join(pct_thread, NULL);
+
+    return 0;
 }
 
 int main(int argc, char **argv) {
@@ -71,8 +128,10 @@ int main(int argc, char **argv) {
     print_header();
 
     while (argc--) {
-        if (crc32_hash_file(*argv, &crc32) != 0)
-            exit (EXIT_FAILURE);
+        cur_file = *argv;
+        if (hash_file(*argv, &crc32) != 0)
+            exit(EXIT_FAILURE);
+
         if (upper_case)
             printf("%s %.8X\n", *argv, crc32);
         else
