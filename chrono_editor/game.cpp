@@ -28,6 +28,14 @@ Game::Game() {
 Game::~Game() {
 }
 
+char Game::getNo() {
+    return _no;
+}
+
+void Game::setNo(char no) {
+    _no = no;
+}
+
 Character Game::getCharacter(int charNo) {
     return _chars[charNo];
 }

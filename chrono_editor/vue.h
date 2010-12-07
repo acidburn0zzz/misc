@@ -96,9 +96,10 @@ private:
 
     void init();
     void creerMenus();
-    void fillSpecificPerso(char perso);
-    void selectItems(char perso);
+    void fillSpecificPerso(int perso);
+    void selectItems(int perso);
     void afficherInformations();
+    void updateGame();
 };
 
 #endif //__VUE_H__

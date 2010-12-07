@@ -37,7 +37,7 @@ Vue::~Vue() {
 void Vue::init() {
     centralWidget = new QWidget();
     setCentralWidget(centralWidget);
-    setWindowTitle("Chrono Trigger SaveState Editor");
+    setWindowTitle("Chrono Trigger Save Game Editor");
 
     centralLayout = new QVBoxLayout();
     tabPersos = new QTabWidget(centralWidget);
@@ -210,9 +210,6 @@ void Vue::init() {
 
         //Ajouter le widget du perso au Tab
         tabPersos->addTab(&wPersos[i], _name);
-
-        //Selectionner les bons items dans les listes
-        //selectItems(i);
     }
 
     //Layout principal
@@ -220,9 +217,6 @@ void Vue::init() {
 
     centralWidget->setLayout(centralLayout);
     this->setMinimumSize(400, 300);
-
-    //Affichage des informations sur chaque persos
-    afficherInformations();
 }
 
 QString Vue::selectFile() {
@@ -264,83 +258,83 @@ void Vue::creerMenus() {
     menuBar()->addMenu(mnuAide);
 }
 
-void Vue::fillSpecificPerso(char perso) {
-    //~ switch (perso) {
-        //~ case CRONO:
-            //~ _name = "Crono";
-            //~ _imageFile = "images/crono.png";
-            //~ for (int i=0x01; i<=0x10; i++)
-                //~ cmbWeapon[perso].addItem(itemList[i], i);
-            //~ cmbWeapon[perso].addItem(itemList[0x4f], 0x4f);
-            //~ for (int i=0x53; i<=0x55; i++)
-                //~ cmbWeapon[perso].addItem(itemList[i], i);
-            //~ break;
-        //~ case MARLE:
-            //~ _name = "Marle";
-            //~ _imageFile = "images/marle.png";
-            //~ for (int i=0x11; i<=0x1a; i++)
-                //~ cmbWeapon[perso].addItem(itemList[i], i);
-            //~ break;
-        //~ case LUCCA:
-            //~ _name = "Lucca";
-            //~ _imageFile = "images/lucca.png";
-            //~ for (int i=0x1f; i<=0x29; i++)
-                //~ cmbWeapon[perso].addItem(itemList[i], i);
-            //~ break;
-        //~ case ROBO:
-            //~ _name = "Robo";
-            //~ _imageFile = "images/robo.png";
-            //~ for (int i=0x2e; i<=0x39; i++)
-                //~ cmbWeapon[perso].addItem(itemList[i], i);
-            //~ break;
-        //~ case FROG:
-            //~ _name = "Frog";
-            //~ _imageFile = "images/frog.png";
-            //~ for (int i=0x3b; i<=0x43; i++)
-                //~ cmbWeapon[perso].addItem(itemList[i], i);
-            //~ for (int i=0x50; i<=0x52; i++)
-                //~ cmbWeapon[perso].addItem(itemList[i], i);
-            //~ break;
-        //~ case AYLA:
-            //~ _name = "Ayla";
-            //~ _imageFile = "images/ayla.png";
-            //~ for (int i=0x44; i<=0x48; i++)
-                //~ cmbWeapon[perso].addItem(itemList[i], i);
-            //~ break;
-        //~ case MAGUS:
-            //~ _name = "Magus";
-            //~ _imageFile = "images/magus.png";
-            //~ for (int i=0x4b; i<=0x4e; i++)
-                //~ cmbWeapon[perso].addItem(itemList[i], i);
-            //~ break;
-    //~ }
+void Vue::fillSpecificPerso(int perso) {
+    switch (perso) {
+        case CRONO:
+            _name = "Crono";
+            _imageFile = "images/crono.png";
+            for (int i=0x01; i<=0x10; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            cmbWeapon[perso].addItem(itemList[0x4f], 0x4f);
+            for (int i=0x53; i<=0x55; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case MARLE:
+            _name = "Marle";
+            _imageFile = "images/marle.png";
+            for (int i=0x11; i<=0x1a; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case LUCCA:
+            _name = "Lucca";
+            _imageFile = "images/lucca.png";
+            for (int i=0x1f; i<=0x29; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case ROBO:
+            _name = "Robo";
+            _imageFile = "images/robo.png";
+            for (int i=0x2e; i<=0x39; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case FROG:
+            _name = "Frog";
+            _imageFile = "images/frog.png";
+            for (int i=0x3b; i<=0x43; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            for (int i=0x50; i<=0x52; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case AYLA:
+            _name = "Ayla";
+            _imageFile = "images/ayla.png";
+            for (int i=0x44; i<=0x48; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+        case MAGUS:
+            _name = "Magus";
+            _imageFile = "images/magus.png";
+            for (int i=0x4b; i<=0x4e; i++)
+                cmbWeapon[perso].addItem(itemList[i], i);
+            break;
+    }
 }
 
-void Vue::selectItems(char perso) {
-    //~ //Helmet
-    //~ for (int i=0; i<cmbHelmet[perso].count(); i++) {
-        //~ if (cmbHelmet[perso].itemData(i) == _state->getChars()[perso].getHelmet()) {
-            //~ cmbHelmet[perso].setCurrentIndex(i);
-        //~ }
-    //~ }
-    //~ //Armor
-    //~ for (int i=0; i<cmbArmor[perso].count(); i++) {
-        //~ if (cmbArmor[perso].itemData(i) == _state->getChars()[perso].getArmor()) {
-            //~ cmbArmor[perso].setCurrentIndex(i);
-        //~ }
-    //~ }
-    //~ //Weapon
-    //~ for (int i=0; i<cmbWeapon[perso].count(); i++) {
-        //~ if (cmbWeapon[perso].itemData(i) == _state->getChars()[perso].getWeapon()) {
-            //~ cmbWeapon[perso].setCurrentIndex(i);
-        //~ }
-    //~ }
-    //~ //Relic
-    //~ for (int i=0; i<cmbRelic[perso].count(); i++) {
-        //~ if (cmbRelic[perso].itemData(i) == _state->getChars()[perso].getRelic()) {
-            //~ cmbRelic[perso].setCurrentIndex(i);
-        //~ }
-    //~ }
+void Vue::selectItems(int perso) {
+    //Helmet
+    for (int i=0; i<cmbHelmet[perso].count(); i++) {
+        if (cmbHelmet[perso].itemData(i) == _game->getCharacter(perso).getHelmet()) {
+            cmbHelmet[perso].setCurrentIndex(i);
+        }
+    }
+    //Armor
+    for (int i=0; i<cmbArmor[perso].count(); i++) {
+        if (cmbArmor[perso].itemData(i) == _game->getCharacter(perso).getArmor()) {
+            cmbArmor[perso].setCurrentIndex(i);
+        }
+    }
+    //Weapon
+    for (int i=0; i<cmbWeapon[perso].count(); i++) {
+        if (cmbWeapon[perso].itemData(i) == _game->getCharacter(perso).getWeapon()) {
+            cmbWeapon[perso].setCurrentIndex(i);
+        }
+    }
+    //Relic
+    for (int i=0; i<cmbRelic[perso].count(); i++) {
+        if (cmbRelic[perso].itemData(i) == _game->getCharacter(perso).getRelic()) {
+            cmbRelic[perso].setCurrentIndex(i);
+        }
+    }
 }
 
 void Vue::open(QString fn) {
@@ -353,52 +347,71 @@ void Vue::open(QString fn) {
     if (_sramFile) delete _sramFile;
     _sramFile = new SRAMFile(fn.toStdString());
 
+    selectGame(0);
+
     afficherInformations();
 }
 
 void Vue::save() {
-    //~ for (int i=0; i<7; i++) {
-        //~ _state->getChars()[i].setLevel(sbLevel[i].value());
-        //~ _state->getChars()[i].setExp(sbExp[i].value());
-        //~ _state->getChars()[i].setCurrentHP(sbCurrentHP[i].value());
-        //~ _state->getChars()[i].setMaxHP(sbMaxHP[i].value());
-        //~ _state->getChars()[i].setCurrentMP(sbCurrentMP[i].value());
-        //~ _state->getChars()[i].setMaxMP(sbMaxMP[i].value());
-        //~ _state->getChars()[i].setPower(sbPower[i].value());
-        //~ _state->getChars()[i].setStamina(sbStamina[i].value());
-        //~ _state->getChars()[i].setSpeed(sbSpeed[i].value());
-        //~ _state->getChars()[i].setMagic(sbMagic[i].value());
-        //~ _state->getChars()[i].setHit(sbHit[i].value());
-        //~ _state->getChars()[i].setEvade(sbEvade[i].value());
-        //~ _state->getChars()[i].setMagicDef(sbMagicDef[i].value());
-    //~ }
+    if (!_sramFile)
+        return;
 
-    //~ _state->write();
+    updateGame();
+    _sramFile->write();
 }
 
 void Vue::selectGame(int n) {
-    if (_game)
-        _sramFile->setGame(_game, _game->getNo());
+    if (_game) {
+        updateGame();
+    } else {
+        _game = new Game();
+    }
 
     _sramFile->getGame(_game, n);
 }
 
 void Vue::afficherInformations() {
-    //~ for (int i=0; i<7; i++) {
-        //~ sbLevel[i].setValue(_state->getChars()[i].getLevel());
-        //~ sbExp[i].setValue(_state->getChars()[i].getExp());
-        //~ sbCurrentHP[i].setValue(_state->getChars()[i].getCurrentHP());
-        //~ sbMaxHP[i].setValue(_state->getChars()[i].getMaxHP());
-        //~ sbCurrentMP[i].setValue(_state->getChars()[i].getCurrentMP());
-        //~ sbMaxMP[i].setValue(_state->getChars()[i].getMaxMP());
-        //~ sbPower[i].setValue(_state->getChars()[i].getPower());
-        //~ sbStamina[i].setValue(_state->getChars()[i].getStamina());
-        //~ sbSpeed[i].setValue(_state->getChars()[i].getSpeed());
-        //~ sbMagic[i].setValue(_state->getChars()[i].getMagic());
-        //~ sbHit[i].setValue(_state->getChars()[i].getHit());
-        //~ sbEvade[i].setValue(_state->getChars()[i].getEvade());
-        //~ sbMagicDef[i].setValue(_state->getChars()[i].getMagicDef());
+    if (!_game)
+        return;
 
-        //~ selectItems(i);
-    //~ }
+    for (int i=0; i<7; i++) {
+        sbLevel[i].setValue(_game->getCharacter(i).getLevel());
+        sbExp[i].setValue(_game->getCharacter(i).getExp());
+        sbCurrentHP[i].setValue(_game->getCharacter(i).getCurrentHP());
+        sbMaxHP[i].setValue(_game->getCharacter(i).getMaxHP());
+        sbCurrentMP[i].setValue(_game->getCharacter(i).getCurrentMP());
+        sbMaxMP[i].setValue(_game->getCharacter(i).getMaxMP());
+        sbPower[i].setValue(_game->getCharacter(i).getBasePower());
+        sbStamina[i].setValue(_game->getCharacter(i).getBaseStamina());
+        sbSpeed[i].setValue(_game->getCharacter(i).getBaseSpeed());
+        sbMagic[i].setValue(_game->getCharacter(i).getBaseMagic());
+        sbHit[i].setValue(_game->getCharacter(i).getBaseHit());
+        sbEvade[i].setValue(_game->getCharacter(i).getBaseEvade());
+        sbMagicDef[i].setValue(_game->getCharacter(i).getBaseMagicDef());
+
+        selectItems(i);
+    }
+}
+
+void Vue::updateGame() {
+    if (!_game)
+        return;
+
+    for (int i=0; i<7; i++) {
+        _game->getCharacter(i).setLevel(sbLevel[i].value());
+        _game->getCharacter(i).setExp(sbExp[i].value());
+        _game->getCharacter(i).setCurrentHP(sbCurrentHP[i].value());
+        _game->getCharacter(i).setMaxHP(sbMaxHP[i].value());
+        _game->getCharacter(i).setCurrentMP(sbCurrentMP[i].value());
+        _game->getCharacter(i).setMaxMP(sbMaxMP[i].value());
+        _game->getCharacter(i).setBasePower(sbPower[i].value());
+        _game->getCharacter(i).setBaseStamina(sbStamina[i].value());
+        _game->getCharacter(i).setBaseSpeed(sbSpeed[i].value());
+        _game->getCharacter(i).setBaseMagic(sbMagic[i].value());
+        _game->getCharacter(i).setBaseHit(sbHit[i].value());
+        _game->getCharacter(i).setBaseEvade(sbEvade[i].value());
+        _game->getCharacter(i).setBaseMagicDef(sbMagicDef[i].value());
+    }
+
+    _sramFile->setGame(_game, _game->getNo());
 }

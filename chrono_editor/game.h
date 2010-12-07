@@ -31,12 +31,17 @@ public:
     Game();
     ~Game();
 
+    char getNo();
+    void setNo(char no);
+
     Character getCharacter(int charNo);
     void setCharacter(Character c, int charNo);
     unsigned int getGold();
     void setGold(unsigned int gold);
 
 private:
+    char _no;
+
     Character _chars[7];
     s_items _items;
     unsigned int _gold;

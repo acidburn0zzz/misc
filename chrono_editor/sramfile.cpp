@@ -154,6 +154,8 @@ void SRAMFile::getGame(Game *game, int gameNo) {
     gold = *((unsigned int *)(sram + gameOffset + VALUE_OFFSETS[GOLD]));
     gold &= 0x00ffffff;
     game->setGold(gold);
+
+    game->setNo(gameNo);
 }
 
 void SRAMFile::setGame(Game *game, int gameNo) {
