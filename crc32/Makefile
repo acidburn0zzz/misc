@@ -9,7 +9,6 @@ OBJS=$(SOURCES:.c=.o)
 INCLUDES=-I../libs/libhash
 LDFLAGS=-L../libs/libhash -lhash -lpthread
 
-RM=rm -f
 INSTALL=install
 PREFIX=/usr/local
 
@@ -22,7 +21,7 @@ crc32: $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 install:
-	$(INSTALL) -D $(PROGRAM) $(PREFIX)/bin/$(PROGRAM)
+	$(INSTALL) -D $(PROGRAM) $(PREFIX)/bin/
 
 clean:
 	$(RM) $(OBJS)

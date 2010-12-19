@@ -44,14 +44,10 @@ int get_console_width() {
             ioctl(STDERR_FILENO, TIOCGWINSZ, &ws) == -1 &&
             ioctl(STDIN_FILENO, TIOCGWINSZ, &ws) == -1) ||
             ws.ws_col == 0) {
-        height = 25;
-        width = 80;
+        return 80;
     } else {
-        height = ws.ws_row;
-        width = ws.ws_col;
+        return ws.ws_col;
     }
-
-    return width;
 #elif defined WIN32
     return 80;
 #else
@@ -104,11 +100,11 @@ void print_head_foot(char *fn) {
 
 void pct() {
     while (remain > 0) {
-        fprintf(stderr, "\r%s: %.2f%%", cur_file, 100.0 * (size - remain) / size);
-        usleep(5000);
+        fprintf(stderr, "\r%s: %5.2f%%", cur_file, 100.0 * (size - remain) / size);
+        usleep(50000);
     }
 
-    fprintf(stderr, "\r");
+    fprintf(stderr, "\r\033[2K");
 
     return;
 }
@@ -129,9 +125,11 @@ int hash_file(char *fn, uint32_t *sum) {
     size = ftell(f);
     fseek(f, 0, SEEK_SET);
 
-    crc32_begin(sum);
     remain = size;
+    cur_file = fn;
     pthread_create(&pct_thread, NULL, (void*)pct, NULL);
+
+    crc32_begin(sum);
 
     while (remain > 0) {
         rsize = (BUFFER_SIZE < remain ? BUFFER_SIZE : remain);
@@ -159,8 +157,6 @@ int check_sfv_file(char *fn) {
     char file[10240];
     uint32_t crc32a, crc32b;
     unsigned int i, len, nberr=0;
-
-    cur_file = fn;
 
     f = fopen(fn, "r");
     if (f == NULL) {
@@ -261,7 +257,6 @@ int main(int argc, char **argv) {
     print_header();
 
     while (argc--) {
-        cur_file = *argv;
         if (hash_file(*argv, &crc32) != 0)
             exit(EXIT_FAILURE);
 
