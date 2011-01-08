@@ -96,7 +96,10 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
 
-    fread(buf, sizeof(char), 16, fsource);
+    if (fread(buf, sizeof(char), 16, fsource) != 16) {
+        fprintf(stderr, "Unable to read from file: %s\n", argv[1]);
+        exit(1);
+    }
 
     if (memcmp(SYNC_HEADER, buf, 12)) {
     #ifdef MAC
@@ -148,7 +151,11 @@ int main(int argc, char **argv) {
             fwrite(buf, sizeof(char), 2048, fdest);  /* same as above */
         #else
             /* Linux and others */
-            fread(buf, sizeof(char), 2048, fsource);
+            if (fread(buf, sizeof(char), 2048, fsource) != 2048) {
+                fprintf(stderr, "Unable to read from file: %s\n", argv[1]);
+                exit(1);
+            }
+
             fwrite(buf, sizeof(char), 2048, fdest);
         #endif
 

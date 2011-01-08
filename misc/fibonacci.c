@@ -17,7 +17,10 @@ int main(int argc, char *argv[]) {
         sscanf(argv[1], "%li", &n);
     } else {
         printf("x = ");
-        scanf("%li", &n);
+        if (scanf("%li", &n) != 1) {
+            fprintf(stderr, "Error reading from stdin\n");
+            exit(1);
+        }
     }
 
     t = time(NULL);

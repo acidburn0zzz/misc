@@ -15,7 +15,10 @@ int main(void) {
     unsigned char wii_u_key[16];
 
     printf("Please enter key (42) : ");
-    scanf("%u", &key_input);
+    if (scanf("%u", &key_input) != 1) {
+        fprintf(stderr, "Error reading from stdin\n");
+        exit(1);
+    }
 
     key = (unsigned char)(key_input & 0x000000ff); /*Pour avoir une cle de la taille d'un unsigned int*/
 
