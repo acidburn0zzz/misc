@@ -3,7 +3,7 @@ CXX = g++
 CFLAGS = -Wall -O2 -g -pedantic
 CXXFLAGS = $(CFLAGS)
 
-PROGRAMS = bin2iso chuck_norris_facts format fibonacci keygen millis quicksort
+PROGRAMS = bin2iso chuck_norris_facts format fibonacci ips keygen millis quicksort
 
 all: $(PROGRAMS)
 
