@@ -24,17 +24,17 @@ void format_file(char *fn, int len) {
     }
 
     while ((ls = getline(&line, &ls, f)) != -1) {
-            buff = line;
-            while (strlen(buff) > len+3) {
-                buff += len;
-                while (*buff != ' ' && buff > line)
-                    buff--;
+        buff = line;
+        while (strlen(buff) > len + 3) {
+            buff += len;
+            while (*buff != ' ' && buff > line)
+                buff--;
 
-                *buff = '\n';
-                buff++;
-            }
+            *buff = '\n';
+            buff++;
+        }
 
-            printf("%s", line);
+        printf("%s", line);
     }
 
     free(line);
@@ -52,13 +52,13 @@ int main(int argc, char **argv) {
 
     while ((opt = getopt(argc, argv, "l:")) != -1) {
         switch (opt) {
-        case 'l':
-            len = atoi(optarg);
-            if (len < 1) {
-                printf("Invalid length: %s\n", optarg);
-                exit(EXIT_FAILURE);
-            }
-            break;
+          case 'l':
+              len = atoi(optarg);
+              if (len < 1) {
+                  printf("Invalid length: %s\n", optarg);
+                  exit(EXIT_FAILURE);
+              }
+              break;
         }
     }
 

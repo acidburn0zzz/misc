@@ -24,7 +24,7 @@ static int in_laptop_mode(void) {
 }
 
 int fsync(int fd) {
-    static int (*_fsync)(int);
+    static int (*_fsync) (int);
     if (!_fsync)
         _fsync = dlsym(RTLD_NEXT, "fsync");
     if (!in_laptop_mode())
@@ -34,7 +34,7 @@ int fsync(int fd) {
 }
 
 int fdatasync(int fd) {
-    static int (*_fdatasync)(int);
+    static int (*_fdatasync) (int);
 
     if (!_fdatasync)
         _fdatasync = dlsym(RTLD_NEXT, "fdatasync");

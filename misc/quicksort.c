@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
     ac = malloc(sizeof(int) * ARRAY_SIZE);
     ad = malloc(sizeof(int) * ARRAY_SIZE);
 
-    for (i=0; i<ARRAY_SIZE; i++) {
+    for (i = 0; i < ARRAY_SIZE; i++) {
         aa[i] = rand() % 100;
     }
 
@@ -34,7 +34,8 @@ int main(int argc, char **argv) {
     memcpy(ac, aa, sizeof(int) * ARRAY_SIZE);
     memcpy(ad, aa, sizeof(int) * ARRAY_SIZE);
 
-    /*cnt = 0;
+    /*
+    cnt = 0;
     gettimeofday(&t1, 0);
     bubble(aa, ARRAY_SIZE);
     gettimeofday(&t2, 0);
@@ -44,17 +45,18 @@ int main(int argc, char **argv) {
     gettimeofday(&t1, 0);
     flat(ab, ARRAY_SIZE);
     gettimeofday(&t2, 0);
-    printf("Flat took %ld swaps (%ldms.)\n", cnt, get_elapsed_ms(t1, t2));*/
+    printf("Flat took %ld swaps (%ldms.)\n", cnt, get_elapsed_ms(t1, t2));
+    */
 
     cnt = 0;
     gettimeofday(&t1, 0);
-    quicksort(ac, 0, ARRAY_SIZE-1);
+    quicksort(ac, 0, ARRAY_SIZE - 1);
     gettimeofday(&t2, 0);
     printf("QuickSort took %ld swaps (%ldms.)\n", cnt, get_elapsed_ms(t1, t2));
 
     cnt = 0;
     gettimeofday(&t1, 0);
-    quicksort2(ac, 0, ARRAY_SIZE-1);
+    quicksort2(ac, 0, ARRAY_SIZE - 1);
     gettimeofday(&t2, 0);
     printf("QuickSort2 took %ld swaps (%ldms.)\n", cnt, get_elapsed_ms(t1, t2));
 
@@ -70,7 +72,7 @@ void init(int *arr, int size) {
     int i;
     cnt = 0;
 
-    for (i=0; i<size; i++) {
+    for (i = 0; i < size; i++) {
         arr[i] = rand() % 100;
     }
 }
@@ -93,7 +95,7 @@ void quicksort(int *arr, int left, int right) {
     int i = left, j = right;
     int pivot = arr[(left + right) / 2];
 
-    /* partition */
+   /* partition */
     while (i <= j) {
         while (arr[i] < pivot)
             i++;
@@ -106,7 +108,7 @@ void quicksort(int *arr, int left, int right) {
         }
     }
 
-    /* recursion */
+   /* recursion */
     if (left < j)
         quicksort(arr, left, j);
     if (i < right)
@@ -123,15 +125,14 @@ void quicksort2(int *arr, int l, int u) {
 
     m = l;
 
-    for (i = l+1; i <= u; i++)
+    for (i = l + 1; i <= u; i++)
         if (arr[i] < arr[l])
             swap(&arr[++m], &arr[i]);
 
     swap(&arr[l], &arr[m]);
-    quicksort2(arr, l, m-1);
-    quicksort2(arr, m+1, u);
+    quicksort2(arr, l, m - 1);
+    quicksort2(arr, m + 1, u);
 }
-
 
 void bubble(int *arr, int size) {
     int i, s = -1;
@@ -139,9 +140,9 @@ void bubble(int *arr, int size) {
     while (s != 0) {
         s = 0;
 
-        for (i=0; i<size-1; i++) {
-            if (arr[i] > arr[i+1]) {
-                swap(&arr[i], &arr[i+1]);
+        for (i = 0; i < size - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                swap(&arr[i], &arr[i + 1]);
                 s++;
             }
         }
@@ -151,8 +152,8 @@ void bubble(int *arr, int size) {
 void flat(int *arr, int size) {
     int i, j;
 
-    for (i=0; i<size-1; i++) {
-        for (j=i+1; j<size; j++) {
+    for (i = 0; i < size - 1; i++) {
+        for (j = i + 1; j < size; j++) {
             if (arr[i] > arr[j]) {
                 swap(&arr[i], &arr[j]);
             }

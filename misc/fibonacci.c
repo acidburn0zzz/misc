@@ -6,11 +6,11 @@ long int count = 0;
 
 long int fibonacci(int n) {
     count++;
-    return (n <= 1)? n : fibonacci(n-1) + fibonacci(n-2);
+    return (n <= 1) ? n : fibonacci(n - 1) + fibonacci(n - 2);
 }
 
 int get_interval_in_ms(struct timeval a, struct timeval b) {
-        return (b.tv_sec - a.tv_sec) * 1000 + (b.tv_usec - a.tv_usec) / 1000;
+    return (b.tv_sec - a.tv_sec) * 1000 + (b.tv_usec - a.tv_usec) / 1000;
 }
 
 int main(int argc, char *argv[]) {

@@ -20,9 +20,9 @@ int main(void) {
         exit(1);
     }
 
-    key = (unsigned char)(key_input & 0x000000ff); /*Pour avoir une cle de la taille d'un unsigned int*/
+    key = (unsigned char) (key_input & 0x000000ff); /* Pour avoir une cle de la taille d'un unsigned int */
 
-    for (i=0; i<16; i++) {
+    for (i = 0; i < 16; i++) {
         wii_u_key[i] = wii_c_key[i] ^ key;
     }
 

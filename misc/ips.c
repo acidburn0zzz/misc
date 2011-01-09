@@ -19,10 +19,10 @@
  ***************************************************************************/
 
  /*
-    AcidIPS 1.0 by Mathieu Lemay
-    This is a simple app to apply ips patches.
-    IPS files specs : http://zerosoft.zophar.net/ips.php
-*/
+  * AcidIPS 1.0 by Mathieu Lemay
+  * This is a simple app to apply ips patches.
+  * IPS files specs : http://zerosoft.zophar.net/ips.php
+  */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,10 +47,9 @@ void log_header(FILE *log_file) {
 }
 
 void log_ips(FILE *log_file, uint32_t offset, uint32_t size, uint32_t rle, uint32_t patch_range_b,
-        uint32_t patch_range_e) {
-    fprintf(log_file, "%.6X    %4X    %-3s    %.8X-%.8X    %5X\n", offset,
-            rle ? rle : size, rle ? "Yes" : "No", patch_range_b, patch_range_e - 1,
-            patch_range_e - patch_range_b);
+             uint32_t patch_range_e) {
+    fprintf(log_file, "%.6X    %4X    %-3s    %.8X-%.8X    %5X\n", offset, rle ? rle : size, rle ? "Yes" : "No",
+            patch_range_b, patch_range_e - 1, patch_range_e - patch_range_b);
 }
 
 void log_footer(FILE *log_file, uint32_t nb_patches) {
@@ -58,14 +57,14 @@ void log_footer(FILE *log_file, uint32_t nb_patches) {
 }
 
 void fail(const char *fmt, ...) {
-	char msg[1024];
-	va_list va;
+    char msg[1024];
+    va_list va;
 
-	va_start(va, fmt);
-	vsnprintf(msg, sizeof msg, fmt, va);
-	fprintf(stderr, "%s\n", msg);
+    va_start(va, fmt);
+    vsnprintf(msg, sizeof msg, fmt, va);
+    fprintf(stderr, "%s\n", msg);
 
-	exit(1);
+    exit(1);
 }
 
 FILE *open_file(char *path, char *mode) {
@@ -82,7 +81,7 @@ FILE *open_file(char *path, char *mode) {
 void usage(char *cmd) {
     fprintf(stderr, "Usage:\n");
     fprintf(stderr, "\tApply patch: %s a <original file> <patch file> <output file>\n", cmd);
-    /*fprintf(stderr, "\tCreate patch: %s c <original file> <modified file> <output file>\n", cmd);*/
+    /* fprintf(stderr, "\tCreate patch: %s c <original file> <modified file> <output file>\n", cmd); */
 }
 
 int apply_patch(char *s_original_file, char *s_ips_file, char *s_output_file) {
@@ -106,7 +105,7 @@ int apply_patch(char *s_original_file, char *s_ips_file, char *s_output_file) {
     if (fread(buffer, 5, 1, f_ips_file) != 1)
         fail("Unable to read from: %s", s_ips_file);
 
-    if (strncmp((const char *)buffer, "PATCH", 5) != 0)
+    if (strncmp((const char *) buffer, "PATCH", 5) != 0)
         fail("%s: Not an IPS patch", s_ips_file);
 
     log_header(stdout);
@@ -117,7 +116,7 @@ int apply_patch(char *s_original_file, char *s_ips_file, char *s_output_file) {
             fail("Unable to read from: %s", s_ips_file);
         }
 
-        if (strncmp((const char *)offset_c, "EOF", 3) == 0) {
+        if (strncmp((const char *) offset_c, "EOF", 3) == 0) {
             eof = 1;
             continue;
         }
@@ -186,7 +185,6 @@ int apply_patch(char *s_original_file, char *s_ips_file, char *s_output_file) {
         if (fwrite(buffer, orig_file_size - pos, 1, f_output_file) != 1)
             fail("Unable to write to: %s", s_output_file);
     }
-
 
     log_footer(stdout, count);
 

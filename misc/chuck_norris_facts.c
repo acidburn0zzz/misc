@@ -218,12 +218,12 @@ const char *facts[] = {
     "They once tried to carve Chuck Norris' face into Mount Rushmore, but the granite wasn't hard enough for his beard"
 };
 
-void print_fact(const char* fact, int nb) {
+void print_fact(const char *fact, int nb) {
     printf("**********************\n");
     printf("* Chuck Norris Facts *\n");
     printf("**********************\n\n");
 
-    printf("Fact #%i\n", nb+1);
+    printf("Fact #%i\n", nb + 1);
     printf("%s\n", fact);
 }
 
@@ -233,12 +233,12 @@ int main(int argc, char **argv) {
 
     srand(time(NULL));
 
-    lines = sizeof facts / sizeof(char*);
+    lines = sizeof facts / sizeof(char *);
 
-    /*Get a random fact*/
-    nb = rand()%lines;
+   /* Get a random fact */
+    nb = rand() % lines;
     fact = facts[nb];
     print_fact(fact, nb);
 
-	return 0;
+    return 0;
 }
