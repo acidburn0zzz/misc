@@ -25,34 +25,32 @@
 #define _SHA1_H_
 
 #if defined(__cplusplus)
-extern "C"
-{
+extern "C" {
 #endif
 
-/*
- *  This structure will hold context information for the hashing
- *  operation
- */
-typedef struct sha1_ctx
-{
-    unsigned Message_Digest[5]; /* Message Digest (output)          */
+    /*
+     *  This structure will hold context information for the hashing
+     *  operation
+     */
+    typedef struct sha1_ctx {
+        unsigned Message_Digest[5]; /* Message Digest (output)          */
 
-    unsigned Length_Low;        /* Message length in bits           */
-    unsigned Length_High;       /* Message length in bits           */
+        unsigned Length_Low;        /* Message length in bits           */
+        unsigned Length_High;       /* Message length in bits           */
 
-    unsigned char Message_Block[64]; /* 512-bit message blocks      */
-    int Message_Block_Index;    /* Index into message block array   */
+        unsigned char Message_Block[64]; /* 512-bit message blocks      */
+        int Message_Block_Index;    /* Index into message block array   */
 
-    int Computed;               /* Is the digest computed?          */
-    int Corrupted;              /* Is the message digest corruped?  */
-} sha1_ctx;
+        int Computed;               /* Is the digest computed?          */
+        int Corrupted;              /* Is the message digest corruped?  */
+    } sha1_ctx;
 
-/*
- *  Function Prototypes
- */
-void sha1_begin(sha1_ctx *ctx);
-void sha1_hash(const unsigned char *data, unsigned int length, sha1_ctx *ctx);
-int sha1_end(sha1_ctx *ctx);
+    /*
+     *  Function Prototypes
+     */
+    void sha1_begin(sha1_ctx *ctx);
+    void sha1_hash(const unsigned char *data, unsigned int length, sha1_ctx *ctx);
+    int sha1_end(sha1_ctx *ctx);
 
 #if defined(__cplusplus)
 }

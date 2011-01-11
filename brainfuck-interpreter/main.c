@@ -39,89 +39,89 @@ int main(int argc, char *argv[]) {
     c = *buf;
     while (c != 0x00) {
         switch (c) {
-            case '>':
-                ++ptr;
-                if (ptr >= _ptr + PTR_SIZE) {
-                    puts("\nError: Pointer can't go over 0x8000");
-                    exit(EXIT_FAILURE);
-                }
-                if (dbg)
-                    fprintf(stderr, "(%.3ld): %c | Pos. is %ld\n", buf - _buf, c, ptr - _ptr);
+        case '>':
+            ++ptr;
+            if (ptr >= _ptr + PTR_SIZE) {
+                puts("\nError: Pointer can't go over 0x8000");
+                exit(EXIT_FAILURE);
+            }
+            if (dbg)
+                fprintf(stderr, "(%.3ld): %c | Pos. is %ld\n", buf - _buf, c, ptr - _ptr);
+            c = *(++buf);
+            break;
+        case '<':
+            --ptr;
+            if (ptr < _ptr) {
+                puts("\nError: Pointer can't go under 0");
+                exit(EXIT_FAILURE);
+            }
+            if (dbg)
+                fprintf(stderr, "(%.3ld): %c | Pos. is %ld\n", buf - _buf, c, ptr - _ptr);
+            c = *(++buf);
+            break;
+        case '+':
+            ++(*ptr);
+            if (dbg)
+                fprintf(stderr, "(%.3ld): %c | v[%ld]=%d\n", buf - _buf, c, ptr - _ptr, *ptr);
+            c = *(++buf);
+            break;
+        case '-':
+            --(*ptr);
+            if (dbg)
+                fprintf(stderr, "(%.3ld): %c | v[%ld]=%d\n", buf - _buf, c, ptr - _ptr, *ptr);
+            c = *(++buf);
+            break;
+        case '.':
+            putchar(*ptr);
+            if (dbg)
+                fprintf(stderr, "(%.3ld): %c | output '%d' %c\n", buf - _buf, c, *ptr, *ptr);
+            c = *(++buf);
+            break;
+        case ',':
+            *ptr = getchar();
+            if (dbg)
+                fprintf(stderr, "(%.3ld): %c | read '%d' %c\n", buf - _buf, c, *ptr, *ptr);
+            c = *(++buf);
+            break;
+        case '[':
+            if (*ptr == 0) {
+                i=0;
                 c = *(++buf);
-                break;
-            case '<':
-                --ptr;
-                if (ptr < _ptr) {
-                    puts("\nError: Pointer can't go under 0");
-                    exit(EXIT_FAILURE);
-                }
-                if (dbg)
-                    fprintf(stderr, "(%.3ld): %c | Pos. is %ld\n", buf - _buf, c, ptr - _ptr);
-                c = *(++buf);
-                break;
-            case '+':
-                ++(*ptr);
-                if (dbg)
-                    fprintf(stderr, "(%.3ld): %c | v[%ld]=%d\n", buf - _buf, c, ptr - _ptr, *ptr);
-                c = *(++buf);
-                break;
-            case '-':
-                --(*ptr);
-                if (dbg)
-                    fprintf(stderr, "(%.3ld): %c | v[%ld]=%d\n", buf - _buf, c, ptr - _ptr, *ptr);
-                c = *(++buf);
-                break;
-            case '.':
-                putchar(*ptr);
-                if (dbg)
-                    fprintf(stderr, "(%.3ld): %c | output '%d' %c\n", buf - _buf, c, *ptr, *ptr);
-                c = *(++buf);
-                break;
-            case ',':
-                *ptr = getchar();
-                if (dbg)
-                    fprintf(stderr, "(%.3ld): %c | read '%d' %c\n", buf - _buf, c, *ptr, *ptr);
-                c = *(++buf);
-                break;
-            case '[':
-                if (*ptr == 0) {
-                    i=0;
-                    c = *(++buf);
-                    while (c != ']' || i != 0) {
-                        if (c == '[')
-                            i++;
-                        if (c == ']')
-                            i--;
-                        c = *(++buf);
-                    }
-                } else {
+                while (c != ']' || i != 0) {
+                    if (c == '[')
+                        i++;
+                    if (c == ']')
+                        i--;
                     c = *(++buf);
                 }
-                break;
-            case ']':
-                if (*ptr != 0) {
-                    i=0;
+            } else {
+                c = *(++buf);
+            }
+            break;
+        case ']':
+            if (*ptr != 0) {
+                i=0;
+                c = *(--buf);
+                while (c != '[' || i != 0) {
+                    if (c == '[')
+                        i--;
+                    if (c == ']')
+                        i++;
                     c = *(--buf);
-                    while (c != '[' || i != 0) {
-                        if (c == '[')
-                            i--;
-                        if (c == ']')
-                            i++;
-                        c = *(--buf);
-                    }
-                } else {
-                    c = *(++buf);
                 }
-                break;
-            #ifdef LINE_COMMENT
-            case '#': /*Ajout de moi : # = commentaire de ligne*/
-            case ';': /*Ajout de moi : ; = commentaire de ligne*/
-                while (c != 0x0a && c != 0x0d && c != 0x00)
-                    c = *(++buf);
-                break;
-            #endif
-            default:
+            } else {
                 c = *(++buf);
+            }
+            break;
+#ifdef LINE_COMMENT
+        case '#': /*Ajout de moi : # = commentaire de ligne*/
+        case ';': /*Ajout de moi : ; = commentaire de ligne*/
+            while (c != 0x0a && c != 0x0d && c != 0x00)
+                c = *(++buf);
+            break;
+#endif
+        default:
+            c = *(++buf);
         }
     }
 

@@ -87,7 +87,8 @@ int init() {
 int list(const char *fn, const struct stat *status, int type) {
     if (type == FTW_D) {
         printf("Processing %s\n", fn);
-    } if (type != FTW_F) {
+    }
+    if (type != FTW_F) {
         return 0;
     }
 
@@ -110,19 +111,19 @@ void read_mp3(const char *fn) {
 
     ret = parse_file_ID3(id3, (char*)fn);
 
-    switch(ret) {
-        case ID3_OK:
-            insert_song(fn, id3->artist, id3->album, id3->title, id3->year, id3->genre, id3->track, "mp3");
-            break;
-        case ID3_ERR_EMPTY_FILE:
-            fprintf(stderr, "%s: File is empty\n", fn);
-            break;
-        case ID3_ERR_NO_TAG:
-            fprintf(stderr, "%s: No tags found\n", fn);
-            break;
-        case ID3_ERR_UNSUPPORTED_FORMAT:
-            fprintf(stderr, "%s: Unsupported format\n", fn);
-            break;
+    switch (ret) {
+    case ID3_OK:
+        insert_song(fn, id3->artist, id3->album, id3->title, id3->year, id3->genre, id3->track, "mp3");
+        break;
+    case ID3_ERR_EMPTY_FILE:
+        fprintf(stderr, "%s: File is empty\n", fn);
+        break;
+    case ID3_ERR_NO_TAG:
+        fprintf(stderr, "%s: No tags found\n", fn);
+        break;
+    case ID3_ERR_UNSUPPORTED_FORMAT:
+        fprintf(stderr, "%s: Unsupported format\n", fn);
+        break;
     }
 
     destroy_ID3(id3);
@@ -176,7 +177,7 @@ void insert_song(const char *fn, char *artist, char *album, char *title, char *y
     char *sql;
 
     sql = sqlite3_mprintf("INSERT OR IGNORE INTO songs (file, artist, album, title, year, genre, track, format) VALUES (%Q, %Q, %Q, %Q, %.4Q, %Q, %Q, %Q);",
-        fn, trim(artist), trim(album), trim(title), trim(year), trim(genre), track, format);
+                          fn, trim(artist), trim(album), trim(title), trim(year), trim(genre), track, format);
 
     if (sqlite3_exec(db, sql, NULL, 0, NULL) != SQLITE_OK) {
         fprintf(stderr, "%s\n%s\n", sql, sqlite3_errmsg(db));
@@ -186,32 +187,32 @@ void insert_song(const char *fn, char *artist, char *album, char *title, char *y
 }
 
 char *trim(char *s) {
-	int i = 0,j;
+    int i = 0,j;
 
     if (s == NULL)
         return NULL;
 
-	/* Trim spaces and tabs from beginning: */
-	while ((s[i]==' ') || (s[i]=='\t')) {
-		i++;
-	}
+    /* Trim spaces and tabs from beginning: */
+    while ((s[i]==' ') || (s[i]=='\t')) {
+        i++;
+    }
 
-	if (i>0) {
-		for (j=0; j<strlen(s); j++) {
-			s[j] = s[j+i];
-		}
+    if (i>0) {
+        for (j=0; j<strlen(s); j++) {
+            s[j] = s[j+i];
+        }
         s[j] = '\0';
-	}
+    }
 
-	/* Trim spaces and tabs from end: */
-	i = strlen(s)-1;
-	while ((s[i]==' ') || (s[i]=='\t')) {
-		i--;
-	}
+    /* Trim spaces and tabs from end: */
+    i = strlen(s)-1;
+    while ((s[i]==' ') || (s[i]=='\t')) {
+        i--;
+    }
 
-	if (i < (strlen(s)-1)) {
-		s[i+1] = '\0';
-	}
+    if (i < (strlen(s)-1)) {
+        s[i+1] = '\0';
+    }
 
     return s;
 }

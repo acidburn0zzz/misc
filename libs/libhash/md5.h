@@ -26,22 +26,22 @@
 extern "C" {
 #endif
 
-typedef struct{
-    uint32_t A, B, C, D;
-    uint32_t nblocks;
-    unsigned char buf[64];
-    int count;
-} md5_ctx;
+    typedef struct {
+        uint32_t A, B, C, D;
+        uint32_t nblocks;
+        unsigned char buf[64];
+        int count;
+    } md5_ctx;
 
 #if defined(__GNUC__) && defined(__i386__)
-static uint32_t rol(uint32_t x, int n) {
-    __asm__("roll %%cl,%0"
+    static uint32_t rol(uint32_t x, int n) {
+        __asm__("roll %%cl,%0"
         :"=r" (x)
-        :"0" (x),"c" (n));
-    return x;
-}
+                        :"0" (x),"c" (n));
+        return x;
+    }
 #else
-  #define rol(x,n) ( ((x) << (n)) | ((x) >> (32-(n))) )
+#define rol(x,n) ( ((x) << (n)) | ((x) >> (32-(n))) )
 #endif
 
 #define FF(b, c, d) (d ^ (b & (c ^ d)))
@@ -49,13 +49,13 @@ static uint32_t rol(uint32_t x, int n) {
 #define FH(b, c, d) (b ^ c ^ d)
 #define FI(b, c, d) (c ^ (b | ~d))
 
-void md5_begin(md5_ctx *ctx);
-void md5_transform(unsigned char *data, md5_ctx *ctx);
-void md5_hash(unsigned char *inbuf, unsigned int inlen, md5_ctx *ctx);
-void md5_end(md5_ctx *ctx);
+    void md5_begin(md5_ctx *ctx);
+    void md5_transform(unsigned char *data, md5_ctx *ctx);
+    void md5_hash(unsigned char *inbuf, unsigned int inlen, md5_ctx *ctx);
+    void md5_end(md5_ctx *ctx);
 
 #ifdef __cplusplus
 }
 #endif
-    
+
 #endif /*__MD5_H__*/

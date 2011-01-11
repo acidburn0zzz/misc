@@ -63,24 +63,24 @@ int main(int argc, char **argv) {
     int   seek_header, seek_ecc, sector_size;
     const unsigned char SYNC_HEADER[12] = { 0, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0 };
 
-    if(argc < 2) {
+    if (argc < 2) {
         fprintf(stderr, "Error: Bad syntax\n\nUsage is: bin2iso image.bin [image.iso]\n");
         exit(EXIT_FAILURE);
     }
 
-    for(i=1; argv[i]!='\0'; i++) {
-        if(strlen(argv[i]) > MAX_FILENAME_LENGTH) {
+    for (i=1; argv[i]!='\0'; i++) {
+        if (strlen(argv[i]) > MAX_FILENAME_LENGTH) {
             fprintf(stderr, "Error: Filename too long.\n\nUsage is: bin2iso image.bin [image.iso]\n");
             exit(EXIT_FAILURE);
         }
     }
 
-    if(argc >= 3) {
+    if (argc >= 3) {
         strcpy(destfilename, argv[2]);
     } else {
         strcpy(destfilename, argv[1]);
 
-        if(strlen(argv[1]) < 5 || strcmp(destfilename+strlen(argv[1])-4, ".bin"))
+        if (strlen(argv[1]) < 5 || strcmp(destfilename+strlen(argv[1])-4, ".bin"))
             strcpy(destfilename+strlen(argv[1]), ".iso");
         else
             strcpy(destfilename+strlen(argv[1])-4, ".iso");
@@ -102,31 +102,31 @@ int main(int argc, char **argv) {
     }
 
     if (memcmp(SYNC_HEADER, buf, 12)) {
-    #ifdef MAC
+#ifdef MAC
         /* MAC */
         seek_header = 0;
         seek_ecc    = 280;
         sector_size = 2336; /* Mode 2 / 2336 */
-    #else
+#else
         /* Linux and others */
         seek_header = 8;
         seek_ecc    = 280;
         sector_size = 2336; /* Mode 2 / 2336 */
-    #endif
+#endif
     } else {
-        switch(buf[15]) {
+        switch (buf[15]) {
         case 2:
-            #ifdef MAC
+#ifdef MAC
             /* MAC */
             seek_header = 16;
             seek_ecc    = 280;
             sector_size = 2352; /* Mode 2 / 2352 */
-            #else
+#else
             /* Linux and others */
             seek_header = 24;
             seek_ecc    = 280;
             sector_size = 2352; /* Mode 2 / 2352 */
-            #endif
+#endif
             break;
         case 1:
             seek_header = 16;
@@ -143,21 +143,21 @@ int main(int argc, char **argv) {
     source_length = ftell(fsource)/sector_size;
     fseek(fsource, 0L, SEEK_SET);
 
-    for(i=0; i<source_length; i++) {
+    for (i=0; i<source_length; i++) {
         fseek(fsource, seek_header, SEEK_CUR);
-        #ifdef MAC
-            /* MAC */
-            fread(buf, sizeof(char), 2048, fsource); /* Mac: change to 2056 for Mode 2 */
-            fwrite(buf, sizeof(char), 2048, fdest);  /* same as above */
-        #else
-            /* Linux and others */
-            if (fread(buf, sizeof(char), 2048, fsource) != 2048) {
-                fprintf(stderr, "Unable to read from file: %s\n", argv[1]);
-                exit(1);
-            }
+#ifdef MAC
+        /* MAC */
+        fread(buf, sizeof(char), 2048, fsource); /* Mac: change to 2056 for Mode 2 */
+        fwrite(buf, sizeof(char), 2048, fdest);  /* same as above */
+#else
+        /* Linux and others */
+        if (fread(buf, sizeof(char), 2048, fsource) != 2048) {
+            fprintf(stderr, "Unable to read from file: %s\n", argv[1]);
+            exit(1);
+        }
 
-            fwrite(buf, sizeof(char), 2048, fdest);
-        #endif
+        fwrite(buf, sizeof(char), 2048, fdest);
+#endif
 
         fseek(fsource, seek_ecc, SEEK_CUR);
     }

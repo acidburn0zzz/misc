@@ -18,11 +18,11 @@
  * You can contact the original author at acidrain1@gmail.com              *
  ***************************************************************************/
 
- /*
-  * AcidIPS 1.0 by Mathieu Lemay
-  * This is a simple app to apply ips patches.
-  * IPS files specs : http://zerosoft.zophar.net/ips.php
-  */
+/*
+ * AcidIPS 1.0 by Mathieu Lemay
+ * This is a simple app to apply ips patches.
+ * IPS files specs : http://zerosoft.zophar.net/ips.php
+ */
 
 #include <stdio.h>
 #include <stdlib.h>

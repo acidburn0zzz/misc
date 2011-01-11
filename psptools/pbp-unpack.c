@@ -10,14 +10,14 @@ typedef struct {
 
 /* Fichiers dans le PBP */
 char *filename[8] = {
-   "PARAM.SFO",
-   "ICON0.PNG",
-   "ICON1.PMF",
-   "PIC0.PNG",
-   "PIC1.PNG",
-   "SND0.AT3",
-   "DATA.PSP",
-   "DATA.PSAR"
+    "PARAM.SFO",
+    "ICON0.PNG",
+    "ICON1.PMF",
+    "PIC0.PNG",
+    "PIC1.PNG",
+    "SND0.AT3",
+    "DATA.PSP",
+    "DATA.PSAR"
 };
 
 char good_magic[4] = {'\0', 'P', 'B', 'P'};

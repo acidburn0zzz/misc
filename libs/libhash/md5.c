@@ -22,7 +22,7 @@
 
 #include "md5.h"
 
-void md5_begin(md5_ctx *ctx){
+void md5_begin(md5_ctx *ctx) {
     ctx->A = 0x67452301;
     ctx->B = 0xefcdab89;
     ctx->C = 0x98badcfe;
@@ -41,10 +41,10 @@ void md5_transform(unsigned char *data, md5_ctx *ctx) {
     uint32_t *cwp = correct_words;
 
 #ifdef BIG_ENDIAN_HOST
-    { 
+    {
         int i;
         unsigned char *p2, *p1;
-        
+
         for (i = 0, p1 = data, p2 = (unsigned char*)correct_words; i < 16; i++, p2 += 4)  {
             p2[3] = *p1++;
             p2[2] = *p1++;
@@ -155,14 +155,14 @@ void md5_hash(unsigned char *inbuf, unsigned int inlen, md5_ctx *ctx) {
     if (!inbuf) {
         return;
     }
-    
+
     if (ctx->count) {
-        for(; inlen && ctx->count < 64; inlen--) {
+        for (; inlen && ctx->count < 64; inlen--) {
             ctx->buf[ctx->count++] = *inbuf++;
         }
-    
+
         md5_hash(NULL, 0, ctx);
-        if(!inlen) {
+        if (!inlen) {
             return;
         }
     }
@@ -192,16 +192,16 @@ void md5_end(md5_ctx *ctx) {
     if ((lsb = t << 6) < t) { /* multiply by 64 to make a unsigned char count */
         msb++;
     }
-    
+
     msb += t >> 26;
     t = lsb;
-    
+
     if ((lsb = t + ctx->count) < t) { /* add the count */
         msb++;
     }
-    
+
     t = lsb;
-    
+
     if ((lsb = t << 3) < t) { /* multiply by 8 to make a bit count */
         msb++;
     }
@@ -214,19 +214,18 @@ void md5_end(md5_ctx *ctx) {
         while (ctx->count < 56) {
             ctx->buf[ctx->count++] = 0; /* pad */
         }
-    }
-    else {/* need one extra block */
+    } else {/* need one extra block */
         ctx->buf[ctx->count++] = 0x80; /* pad character */
 
         while (ctx->count < 64) {
             ctx->buf[ctx->count++] = 0;
         }
-        
+
         md5_hash(NULL, 0, ctx);  /* flush */;
-        
+
         memset(ctx->buf, 0, 56); /* fill next block with zeroes */
     }
-    
+
     /* append the 64 bit count */
     ctx->buf[56] = lsb;
     ctx->buf[57] = lsb >>  8;
@@ -236,22 +235,22 @@ void md5_end(md5_ctx *ctx) {
     ctx->buf[61] = msb >>  8;
     ctx->buf[62] = msb >> 16;
     ctx->buf[63] = msb >> 24;
-    
+
     md5_transform(ctx->buf, ctx);
 
     p = ctx->buf;
-    
+
 #ifdef BIG_ENDIAN_HOST
-    #define X(a) do { *p++ = ctx->##a; *p++ = ctx->##a >> 8;      \
+#define X(a) do { *p++ = ctx->##a; *p++ = ctx->##a >> 8;      \
               *p++ = ctx->##a >> 16; *p++ = ctx->##a >> 24; } while(0)
 #else
-    #define X(a) do { *(uint32_t*)p = (*ctx).a ; p += 4; } while(0)
+#define X(a) do { *(uint32_t*)p = (*ctx).a ; p += 4; } while(0)
 #endif
 
     X(A);
     X(B);
     X(C);
     X(D);
-    
+
 #undef X
 }

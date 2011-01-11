@@ -235,7 +235,7 @@ int main(int argc, char **argv) {
 
     lines = sizeof facts / sizeof(char *);
 
-   /* Get a random fact */
+    /* Get a random fact */
     nb = rand() % lines;
     fact = facts[nb];
     print_fact(fact, nb);

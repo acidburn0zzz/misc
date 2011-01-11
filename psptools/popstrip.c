@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
             iso_name = argv[count + 1];
             /* Skip the next argument (used for iso filename) */
             count++;
-        /* Check for target pbp */
+            /* Check for target pbp */
         } else {
             /* Store the pbp filename */
             pbp_name = argv[count];
@@ -175,7 +175,7 @@ int main(int argc, char **argv) {
             /* Output size is a full block */
             out_length = 16 * ISO_BLOCK_SIZE;
 
-        /* If the block is compressed */
+            /* If the block is compressed */
         } else {
 
             /* Allocate memory for our input buffer    */

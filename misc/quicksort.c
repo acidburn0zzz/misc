@@ -95,7 +95,7 @@ void quicksort(int *arr, int left, int right) {
     int i = left, j = right;
     int pivot = arr[(left + right) / 2];
 
-   /* partition */
+    /* partition */
     while (i <= j) {
         while (arr[i] < pivot)
             i++;
@@ -108,7 +108,7 @@ void quicksort(int *arr, int left, int right) {
         }
     }
 
-   /* recursion */
+    /* recursion */
     if (left < j)
         quicksort(arr, left, j);
     if (i < right)

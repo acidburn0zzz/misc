@@ -25,36 +25,36 @@ int main(int argc, char *argv[]) {
     /*Options*/
     while ((opt = getopt(argc, argv, "a:c:g:hl:r:st:vy:")) != -1) {
         switch (opt) {
-            case 'a':
-                artist = optarg;
-                break;
-            case 'c':
-                comment = optarg;
-                break;
-            case 'g':
-                genre = optarg;
-                break;
-            case 'h':
-                showHelp();
-                exit(EXIT_SUCCESS);
-            case 'l':
-                album = optarg;
-                break;
-            case 'r':
-                track = optarg[0] - '0';
-                break;
-            case 's':
-                f_show = 1;
-                break;
-            case 't':
-                title = optarg;
-                break;
-            case 'v':
-                f_verbose = 1;
-                break;
-            case 'y':
-                year = optarg;
-                break;
+        case 'a':
+            artist = optarg;
+            break;
+        case 'c':
+            comment = optarg;
+            break;
+        case 'g':
+            genre = optarg;
+            break;
+        case 'h':
+            showHelp();
+            exit(EXIT_SUCCESS);
+        case 'l':
+            album = optarg;
+            break;
+        case 'r':
+            track = optarg[0] - '0';
+            break;
+        case 's':
+            f_show = 1;
+            break;
+        case 't':
+            title = optarg;
+            break;
+        case 'v':
+            f_verbose = 1;
+            break;
+        case 'y':
+            year = optarg;
+            break;
         }
     }
 

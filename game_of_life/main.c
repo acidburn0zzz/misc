@@ -46,7 +46,7 @@ void msleep(int ms) {
     req.tv_nsec=ms*1000000L;
 
     while (nanosleep(&req, &req) == -1)
-         continue;
+        continue;
 }
 
 void clrscr() {

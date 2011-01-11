@@ -15,14 +15,14 @@ struct {
 
 /* Fichiers dans le PBP */
 char *filename[8] = {
-   "PARAM.SFO",
-   "ICON0.PNG",
-   "ICON1.PMF",
-   "PIC0.PNG",
-   "PIC1.PNG",
-   "SND0.AT3",
-   "DATA.PSP",
-   "DATA.PSAR"
+    "PARAM.SFO",
+    "ICON0.PNG",
+    "ICON1.PMF",
+    "PIC0.PNG",
+    "PIC1.PNG",
+    "SND0.AT3",
+    "DATA.PSP",
+    "DATA.PSAR"
 };
 
 int main(int argc, char **argv) {
@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
 
     if (argc != 9) {
         fprintf(stderr, "Usage: %s <%s> <%s> <%s> <%s> <%s> <%s> <%s> <%s>\n", argv[0], filename[0],
-            filename[1], filename[2], filename[3], filename[4], filename[5], filename[6], filename[7]);
+                filename[1], filename[2], filename[3], filename[4], filename[5], filename[6], filename[7]);
         return EXIT_FAILURE;
     }
 
@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
     for (i=1; i<=8; i++) {
         if (strcmp(argv[i], "NULL") == 0 || strcmp(argv[i], "-") == 0) {
             size = 0;
-			infile = NULL;
+            infile = NULL;
         } else {
             /* Ouverture du fichier a placer dans le EBOOT */
             infile = fopen(argv[i], "rb");
@@ -114,22 +114,22 @@ int main(int argc, char **argv) {
             }
         }
 
-		fclose(infile);
+        fclose(infile);
     }
 
-	/* On retourne au debut du EBOOT */
-	if (fseek(outfile, 0, SEEK_SET) != 0) {
-		printf("Impossible de se deplacer dans le fichier: EBOOT.PBP\n");
-		return EXIT_FAILURE;
-	}
+    /* On retourne au debut du EBOOT */
+    if (fseek(outfile, 0, SEEK_SET) != 0) {
+        printf("Impossible de se deplacer dans le fichier: EBOOT.PBP\n");
+        return EXIT_FAILURE;
+    }
 
-	/* Ecriture du header */
-	if (fwrite((char*)&header, sizeof(header), 1, outfile) != 1) {
-		fprintf(stderr, "Erreur d'ecriture dans le fichier: EBOOT.PBP\n");
-		return EXIT_FAILURE;
-	}
+    /* Ecriture du header */
+    if (fwrite((char*)&header, sizeof(header), 1, outfile) != 1) {
+        fprintf(stderr, "Erreur d'ecriture dans le fichier: EBOOT.PBP\n");
+        return EXIT_FAILURE;
+    }
 
-	fclose(outfile);
+    fclose(outfile);
 
     return EXIT_SUCCESS;
 }
