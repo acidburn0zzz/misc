@@ -97,7 +97,7 @@ void print_head_foot(char *fn) {
 void pct() {
     while (remain > 0) {
         fprintf(stderr, "\r%s: %5.2f%%", cur_file, 100.0 * (size - remain) / size);
-        msleep(50000);
+        msleep(50);
     }
 
     fprintf(stderr, "\r\033[2K");
@@ -123,7 +123,7 @@ int hash_file(char *fn, uint32_t *sum) {
 
     remain = size;
     cur_file = fn;
-    pthread_create(&pct_thread, NULL, (void * (*)(void *))pct, NULL);
+    pthread_create(&pct_thread, NULL, (void * (*)(void *)) pct, NULL);
 
     crc32_begin(sum);
 
