@@ -4,25 +4,31 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <unistd.h>
 #include <pthread.h>
-#include <crc32.h>
-
-#ifdef __linux__
+#include <ctype.h>
+#include <unistd.h>
 #include <sys/ioctl.h>
-#endif
+
+#include <crc32.h>
 
 #define __PROG_VERSION__ "1.0"
 
 #define BUFFER_SIZE 512
-/*
-int check_sfv_file(char *fn);
-void print_head_foot(char *fn);
-int get_console_width();
-int hash_file(char *fn, uint32_t *sum);
-*/
+
 unsigned long size, remain;
 char *cur_file;
+
+void msleep(int ms) {
+    struct timespec req;
+    time_t sec = (ms/1000);
+    ms = ms - (sec*1000);
+
+    req.tv_sec=sec;
+    req.tv_nsec=ms*1000000L;
+
+    while (nanosleep(&req, &req) == -1)
+        continue;
+}
 
 void usage(char *prog) {
     fprintf(stderr, "AcidCRC32 %s\n", __PROG_VERSION__);
@@ -33,12 +39,7 @@ void usage(char *prog) {
 }
 
 int get_console_width() {
-#ifdef __linux__
-    /*struct ttysize ts;
-    ioctl(0, TIOCGSIZE, &ts);
-    return ts.ts_cols;*/ /*ts_lines*/
     struct winsize ws;
-    unsigned short height, width;
 
     if ((ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1 &&
             ioctl(STDERR_FILENO, TIOCGWINSZ, &ws) == -1 &&
@@ -48,11 +49,6 @@ int get_console_width() {
     } else {
         return ws.ws_col;
     }
-#elif defined WIN32
-    return 80;
-#else
-    return 80;
-#endif
 }
 
 void print_header() {
@@ -101,7 +97,7 @@ void print_head_foot(char *fn) {
 void pct() {
     while (remain > 0) {
         fprintf(stderr, "\r%s: %5.2f%%", cur_file, 100.0 * (size - remain) / size);
-        usleep(50000);
+        msleep(50000);
     }
 
     fprintf(stderr, "\r\033[2K");
@@ -127,7 +123,7 @@ int hash_file(char *fn, uint32_t *sum) {
 
     remain = size;
     cur_file = fn;
-    pthread_create(&pct_thread, NULL, (void*)pct, NULL);
+    pthread_create(&pct_thread, NULL, (void * (*)(void *))pct, NULL);
 
     crc32_begin(sum);
 
