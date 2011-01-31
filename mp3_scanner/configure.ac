@@ -10,6 +10,8 @@ AC_CONFIG_HEADERS([config.h])
 
 AM_INIT_AUTOMAKE([-Wall -Werror])
 
+CFLAGS="-Wall -Wextra -g -pedantic -std=c99 -D_GNU_SOURCE"
+
 # Checks for programs.
 AC_PROG_CC
 

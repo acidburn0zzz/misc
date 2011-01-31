@@ -2599,6 +2599,8 @@ am__tar='${AMTAR} chof - "$$tardir"'; am__untar='${AMTAR} xf -'
 
 
 
+CFLAGS="-Wall -Wextra -g -pedantic -std=c99 -D_GNU_SOURCE"
+
 # Checks for programs.
 ac_ext=c
 ac_cpp='$CPP $CPPFLAGS'
