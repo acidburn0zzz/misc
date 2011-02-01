@@ -80,13 +80,10 @@ uint64_t check_file_size(FILE *fp) {
 	decompress CSO to ISO
 ****************************************************************************/
 int decomp_ciso(void) {
-    uint64_t file_size;
     uint32_t index , index2;
     uint64_t read_pos , read_size;
-    int total_sectors;
     int index_size;
     int block;
-    unsigned char buf4[4];
     int cmp_size;
     int status;
     int percent_period;
@@ -221,7 +218,6 @@ int decomp_ciso(void) {
 int comp_ciso(int level) {
     uint64_t file_size;
     uint64_t write_pos;
-    int total_sectors;
     int index_size;
     int block;
     unsigned char buf4[64];
@@ -283,8 +279,8 @@ int comp_ciso(int level) {
         if (--percent_cnt<=0) {
             percent_cnt = percent_period;
             printf("compress %3d%% avarage rate %3d%%\r"
-                   ,block / percent_period
-                   ,block==0 ? 0 : 100*write_pos/(block*0x800));
+                   ,(int) (block / percent_period)
+                   ,(int) (block==0 ? 0 : 100*write_pos/(block*0x800)));
         }
 
         if (deflateInit2(&z, level , Z_DEFLATED, -15,8,Z_DEFAULT_STRATEGY) != Z_OK) {

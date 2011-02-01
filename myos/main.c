@@ -13,10 +13,10 @@ int main(int argc, char **argv) {
     int i;
 
     for (i=1; i<argc; i++) {
-        if (strcmp(argv[i], "-H") == 0) {
+        if (strcmp(argv[i], "-h") == 0) {
             help();
             return 0;
-        } else if (strcmp(argv[i], "-V") == 0) {
+        } else if (strcmp(argv[i], "-v") == 0) {
             verbose = 1;
         } else {
             printf("Incorrect parameter: %s\n", argv[i]);
