@@ -1,0 +1,4 @@
+Version='0.1'
+Authors=['Mathieu Lemay <acidrain1@gmail.com>']
+Name=_('G15Status')
+Description=_('Plugin to show Current player track on G15 LCD')
