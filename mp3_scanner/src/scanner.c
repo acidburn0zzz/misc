@@ -72,11 +72,13 @@ int main(int argc, char *argv[]) {
 int init() {
     int ret;
 
+/*
     ret = sqlite3_exec(db, "DROP TABLE IF EXISTS songs", NULL, 0, NULL);
     if (ret != SQLITE_OK) {
         fprintf(stderr, "%s\n", sqlite3_errmsg(db));
         exit(-1);
     }
+*/
 
     ret = sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS songs (\
             id INTEGER PRIMARY KEY, file TEXT, artist TEXT, album TEXT, title TEXT, year INTEGER, genre TEXT, track TEXT, type TEXT, lastupdate NUMBER, \
@@ -143,7 +145,7 @@ void read_mp3(const char *fn) {
     tag.type = "mp3";
     tag.lastupdate = 42;
 
-    if (pcre_exec(reg_num, NULL, tag.genre, strlen(tag.genre), 0, 0, NULL, 0) == 0) {
+    if (tag.genre && pcre_exec(reg_num, NULL, tag.genre, strlen(tag.genre), 0, 0, NULL, 0) == 0) {
         genre = atoi(tag.genre);
         tag.genre = id3_genres[genre];
     }
@@ -229,31 +231,34 @@ char *get_id3_tag(struct id3_tag *tag, const char *id) {
     return id3_ucs4_utf8duplicate(value);
 }
 
+//TODO: Check if this is safe... I doubt so..
 char *trim(char *s) {
-    int i = 0,j;
+    int i = 0, j, len;
 
     if (s == NULL)
         return NULL;
 
+    len = strlen(s);
+
     /* Trim spaces and tabs from beginning: */
-    while ((s[i]==' ') || (s[i]=='\t')) {
+    while (i<len && (s[i]==' ') || (s[i]=='\t')) {
         i++;
     }
 
     if (i>0) {
-        for (j=0; j<strlen(s); j++) {
+        for (j=0; j<len; j++) {
             s[j] = s[j+i];
         }
         s[j] = '\0';
     }
 
     /* Trim spaces and tabs from end: */
-    i = strlen(s)-1;
+    i = len-1;
     while ((s[i]==' ') || (s[i]=='\t')) {
         i--;
     }
 
-    if (i < (strlen(s)-1)) {
+    if (i < (len-1)) {
         s[i+1] = '\0';
     }
 
