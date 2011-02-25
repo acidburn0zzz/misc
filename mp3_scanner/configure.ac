@@ -24,7 +24,7 @@ AC_CHECK_HEADERS([stdlib.h string.h])
 AC_HEADER_STDBOOL
 
 # Checks for library functions.
-AC_CHECK_LIB([id3], [create_ID3], [], [AC_MSG_ERROR(["libid3 not found!"])])
+AC_CHECK_LIB([id3tag], [id3_file_open], [], [AC_MSG_ERROR(["libid3tag not found!"])])
 AC_CHECK_LIB([pcre], [pcre_compile], [], [AC_MSG_ERROR(["libpcre not found!"])])
 AC_CHECK_LIB([sqlite3], [sqlite3_libversion], [], [AC_MSG_ERROR(["libsqlite3 not found!"])])
 AC_CHECK_LIB([FLAC], [FLAC__format_sample_rate_is_valid], [], [AC_MSG_ERROR(["libflac not found!"])])

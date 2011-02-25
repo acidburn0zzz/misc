@@ -8,20 +8,39 @@
 #include <sqlite3.h>
 
 #include <FLAC/metadata.h>
-#include <id3.h>
+#include <id3tag.h>
+
+#include "genres.h"
+
+struct tag_s {
+    char *fn;
+    char *artist;
+    char *album;
+    char *title;
+    char *year;
+    char *genre;
+    char *track;
+    char *type;
+    long lastupdate;
+};
+
+typedef struct tag_s tag_t;
 
 sqlite3 *db;
 pcre *reg_mp3;
 pcre *reg_flac;
+pcre *reg_num;
 const char *error;
 int erroffset;
 
 int init();
 int list(const char *name, const struct stat *status, int type);
-void insert_song(const char *fn, char *artist, char *album, char *title, char *year, char *genre, char *track, char *format);
+void insert_song(tag_t tag);
 
 void read_mp3(const char *fn);
 void read_flac(const char *fn);
+
+char *get_id3_tag(struct id3_tag *tag, const char *id);
 
 char *trim(char *s);
 
@@ -53,16 +72,14 @@ int main(int argc, char *argv[]) {
 int init() {
     int ret;
 
-    /*
     ret = sqlite3_exec(db, "DROP TABLE IF EXISTS songs", NULL, 0, NULL);
     if (ret != SQLITE_OK) {
         fprintf(stderr, "%s\n", sqlite3_errmsg(db));
         exit(-1);
     }
-    */
 
     ret = sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS songs (\
-            id INTEGER PRIMARY KEY, file TEXT, artist TEXT, album TEXT, title TEXT, year INTEGER, genre TEXT, track INTEGER, format TEXT, \
+            id INTEGER PRIMARY KEY, file TEXT, artist TEXT, album TEXT, title TEXT, year INTEGER, genre TEXT, track TEXT, type TEXT, lastupdate NUMBER, \
             UNIQUE (artist, album, title));", NULL, 0, NULL);
     if (ret != SQLITE_OK) {
         fprintf(stderr, "%s\n", sqlite3_errmsg(db));
@@ -77,6 +94,12 @@ int init() {
 
     reg_flac = pcre_compile("\\.flac$", 0, &error, &erroffset, NULL);
     if (reg_flac == NULL) {
+        fprintf(stderr, "%s at %d\n", error, erroffset);
+        return -1;
+    }
+
+    reg_num = pcre_compile("^[0-9]+$", 0, &error, &erroffset, NULL);
+    if (reg_num == NULL) {
         fprintf(stderr, "%s at %d\n", error, erroffset);
         return -1;
     }
@@ -96,49 +119,49 @@ int list(const char *fn, const struct stat *status, int type) {
         read_mp3(fn);
     } else if (pcre_exec(reg_flac, NULL, fn, strlen(fn), 0, 0, NULL, 0) == 0) {
         read_flac(fn);
-    } else {
-        return 0;
     }
 
     return 0;
 }
 
 void read_mp3(const char *fn) {
-    ID3 *id3 = NULL;
-    int ret;
+    struct id3_file *file;
+    struct id3_tag *id3;
+    tag_t tag;
+    int genre;
 
-    id3 = create_ID3(NULL);
+    file = id3_file_open(fn, ID3_FILE_MODE_READONLY);
+    id3 = id3_file_tag(file);
 
-    ret = parse_file_ID3(id3, (char*)fn);
+    tag.fn = fn;
+    tag.artist = get_id3_tag(id3, ID3_FRAME_ARTIST);
+    tag.album = get_id3_tag(id3, ID3_FRAME_ALBUM);
+    tag.title = get_id3_tag(id3, ID3_FRAME_TITLE);
+    tag.year = get_id3_tag(id3, ID3_FRAME_YEAR);
+    tag.genre = get_id3_tag(id3, ID3_FRAME_GENRE);
+    tag.track = get_id3_tag(id3, ID3_FRAME_TRACK);
+    tag.type = "mp3";
+    tag.lastupdate = 42;
 
-    switch (ret) {
-    case ID3_OK:
-        insert_song(fn, id3->artist, id3->album, id3->title, id3->year, id3->genre, id3->track, "mp3");
-        break;
-    case ID3_ERR_EMPTY_FILE:
-        fprintf(stderr, "%s: File is empty\n", fn);
-        break;
-    case ID3_ERR_NO_TAG:
-        fprintf(stderr, "%s: No tags found\n", fn);
-        break;
-    case ID3_ERR_UNSUPPORTED_FORMAT:
-        fprintf(stderr, "%s: Unsupported format\n", fn);
-        break;
+    if (pcre_exec(reg_num, NULL, tag.genre, strlen(tag.genre), 0, 0, NULL, 0) == 0) {
+        genre = atoi(tag.genre);
+        tag.genre = id3_genres[genre];
     }
 
-    destroy_ID3(id3);
+    insert_song(tag);
+
+    id3_file_close(file);
 }
 
 void read_flac(const char *fn) {
     FLAC__StreamMetadata *tags;
     FLAC__StreamMetadata_VorbisComment vorbis_comment;
     FLAC__StreamMetadata_VorbisComment_Entry entry;
+    tag_t tag;
     int i;
 
     char delim[] = "=";
-    char *tag, *value;
-
-    char *artist = NULL, *album = NULL, *title = NULL, *year = NULL, *genre = NULL, *track = NULL;
+    char *tagname, *value;
 
     if (FLAC__metadata_get_tags(fn, &tags) == false || tags->type != FLAC__METADATA_TYPE_VORBIS_COMMENT) {
         fprintf(stderr, "%s: No VORBIS_COMMENT found\n", fn);
@@ -150,40 +173,60 @@ void read_flac(const char *fn) {
 
     for (i=0; i<vorbis_comment.num_comments; i++) {
         entry = vorbis_comment.comments[i];
-        tag = strtok((char*)entry.entry, delim);
+        tagname = strtok((char*)entry.entry, delim);
         value = strtok(NULL, delim);
 
-        if (strcmp(tag, "ALBUM") == 0) {
-            album = value;
-        } else if (strcmp(tag, "ARTIST") == 0) {
-            artist = value;
-        } else if (strcmp(tag, "TITLE") == 0) {
-            title = value;
-        } else if (strcmp(tag, "DATE") == 0) {
-            year = value;
-        } else if (strcmp(tag, "GENRE") == 0) {
-            genre = value;
-        } else if (strcmp(tag, "TRACKNUMBER") == 0) {
-            track = value;
+        if (strcmp(tagname, "ALBUM") == 0) {
+            tag.album = value;
+        } else if (strcmp(tagname, "ARTIST") == 0) {
+            tag.artist = value;
+        } else if (strcmp(tagname, "TITLE") == 0) {
+            tag.title = value;
+        } else if (strcmp(tagname, "DATE") == 0) {
+            tag.year = value;
+        } else if (strcmp(tagname, "GENRE") == 0) {
+            tag.genre = value;
+        } else if (strcmp(tagname, "TRACKNUMBER") == 0) {
+            tag.track = value;
         }
     }
 
-    insert_song(fn, artist, album, title, year, genre, track, "flac");
+    tag.fn = fn;
+    tag.type = "flac";
+
+    insert_song(tag);
 
     FLAC__metadata_object_delete(tags);
 }
 
-void insert_song(const char *fn, char *artist, char *album, char *title, char *year, char *genre, char *track, char *format) {
+void insert_song(tag_t tag) {
     char *sql;
 
-    sql = sqlite3_mprintf("INSERT OR IGNORE INTO songs (file, artist, album, title, year, genre, track, format) VALUES (%Q, %Q, %Q, %Q, %.4Q, %Q, %Q, %Q);",
-                          fn, trim(artist), trim(album), trim(title), trim(year), trim(genre), track, format);
+    sql = sqlite3_mprintf("INSERT OR IGNORE INTO songs (file, artist, album, title, year, genre, track, type, lastupdate) VALUES (%Q, %Q, %Q, %Q, %.4Q, %Q, %Q, %Q, %d);",
+                          tag.fn, trim(tag.artist), trim(tag.album), trim(tag.title), trim(tag.year), trim(tag.genre), trim(tag.track), tag.type, 0 /*tag.lastupdate*/);
 
     if (sqlite3_exec(db, sql, NULL, 0, NULL) != SQLITE_OK) {
         fprintf(stderr, "%s\n%s\n", sql, sqlite3_errmsg(db));
     }
 
     sqlite3_free(sql);
+}
+
+char *get_id3_tag(struct id3_tag *tag, const char *id) {
+    struct id3_frame *frame;
+    union id3_field *field;
+    id3_ucs4_t *value;
+
+    if ((frame = id3_tag_findframe(tag, id, 0)) == NULL)
+        return NULL;
+
+    if ((field = id3_frame_field(frame, 1)) == NULL)
+        return NULL;
+
+    //TODO: Cat if multiple values
+    value = id3_field_getstrings(field, 0);
+
+    return id3_ucs4_utf8duplicate(value);
 }
 
 char *trim(char *s) {

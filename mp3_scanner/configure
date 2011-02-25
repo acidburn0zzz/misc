@@ -4113,13 +4113,13 @@ fi
 
 
 # Checks for library functions.
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for create_ID3 in -lid3" >&5
-$as_echo_n "checking for create_ID3 in -lid3... " >&6; }
-if test "${ac_cv_lib_id3_create_ID3+set}" = set; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for id3_file_open in -lid3tag" >&5
+$as_echo_n "checking for id3_file_open in -lid3tag... " >&6; }
+if test "${ac_cv_lib_id3tag_id3_file_open+set}" = set; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lid3  $LIBS"
+LIBS="-lid3tag  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -4129,35 +4129,35 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char create_ID3 ();
+char id3_file_open ();
 int
 main ()
 {
-return create_ID3 ();
+return id3_file_open ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_id3_create_ID3=yes
+  ac_cv_lib_id3tag_id3_file_open=yes
 else
-  ac_cv_lib_id3_create_ID3=no
+  ac_cv_lib_id3tag_id3_file_open=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_id3_create_ID3" >&5
-$as_echo "$ac_cv_lib_id3_create_ID3" >&6; }
-if test "x$ac_cv_lib_id3_create_ID3" = x""yes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_id3tag_id3_file_open" >&5
+$as_echo "$ac_cv_lib_id3tag_id3_file_open" >&6; }
+if test "x$ac_cv_lib_id3tag_id3_file_open" = x""yes; then :
   cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBID3 1
+#define HAVE_LIBID3TAG 1
 _ACEOF
 
-  LIBS="-lid3 $LIBS"
+  LIBS="-lid3tag $LIBS"
 
 else
-  as_fn_error "\"libid3 not found!\"" "$LINENO" 5
+  as_fn_error "\"libid3tag not found!\"" "$LINENO" 5
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for pcre_compile in -lpcre" >&5
