@@ -4113,13 +4113,13 @@ fi
 
 
 # Checks for library functions.
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for id3_file_open in -lid3tag" >&5
-$as_echo_n "checking for id3_file_open in -lid3tag... " >&6; }
-if test "${ac_cv_lib_id3tag_id3_file_open+set}" = set; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for taglib_file_new in -ltag_c" >&5
+$as_echo_n "checking for taglib_file_new in -ltag_c... " >&6; }
+if test "${ac_cv_lib_tag_c_taglib_file_new+set}" = set; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lid3tag  $LIBS"
+LIBS="-ltag_c  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -4129,35 +4129,35 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char id3_file_open ();
+char taglib_file_new ();
 int
 main ()
 {
-return id3_file_open ();
+return taglib_file_new ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_id3tag_id3_file_open=yes
+  ac_cv_lib_tag_c_taglib_file_new=yes
 else
-  ac_cv_lib_id3tag_id3_file_open=no
+  ac_cv_lib_tag_c_taglib_file_new=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_id3tag_id3_file_open" >&5
-$as_echo "$ac_cv_lib_id3tag_id3_file_open" >&6; }
-if test "x$ac_cv_lib_id3tag_id3_file_open" = x""yes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_tag_c_taglib_file_new" >&5
+$as_echo "$ac_cv_lib_tag_c_taglib_file_new" >&6; }
+if test "x$ac_cv_lib_tag_c_taglib_file_new" = x""yes; then :
   cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBID3TAG 1
+#define HAVE_LIBTAG_C 1
 _ACEOF
 
-  LIBS="-lid3tag $LIBS"
+  LIBS="-ltag_c $LIBS"
 
 else
-  as_fn_error "\"libid3tag not found!\"" "$LINENO" 5
+  as_fn_error "\"taglibc not found!\"" "$LINENO" 5
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for pcre_compile in -lpcre" >&5
@@ -4252,53 +4252,6 @@ _ACEOF
 
 else
   as_fn_error "\"libsqlite3 not found!\"" "$LINENO" 5
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for FLAC__format_sample_rate_is_valid in -lFLAC" >&5
-$as_echo_n "checking for FLAC__format_sample_rate_is_valid in -lFLAC... " >&6; }
-if test "${ac_cv_lib_FLAC_FLAC__format_sample_rate_is_valid+set}" = set; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lFLAC  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char FLAC__format_sample_rate_is_valid ();
-int
-main ()
-{
-return FLAC__format_sample_rate_is_valid ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_FLAC_FLAC__format_sample_rate_is_valid=yes
-else
-  ac_cv_lib_FLAC_FLAC__format_sample_rate_is_valid=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_FLAC_FLAC__format_sample_rate_is_valid" >&5
-$as_echo "$ac_cv_lib_FLAC_FLAC__format_sample_rate_is_valid" >&6; }
-if test "x$ac_cv_lib_FLAC_FLAC__format_sample_rate_is_valid" = x""yes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBFLAC 1
-_ACEOF
-
-  LIBS="-lFLAC $LIBS"
-
-else
-  as_fn_error "\"libflac not found!\"" "$LINENO" 5
 fi
 
 

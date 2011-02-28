@@ -1,7 +1,7 @@
-#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <ftw.h>
 #include <pcre.h>
 #include <sys/stat.h>
@@ -9,6 +9,9 @@
 
 #include <FLAC/metadata.h>
 #include <id3tag.h>
+#include <taglib/tag_c.h>
+
+#include <config.h>
 
 #include "genres.h"
 
@@ -17,18 +20,16 @@ struct tag_s {
     char *artist;
     char *album;
     char *title;
-    char *year;
+    unsigned int year;
     char *genre;
-    char *track;
+    unsigned int track;
     char *type;
-    long lastupdate;
+    time_t lastupdate;
 };
 
 typedef struct tag_s tag_t;
 
 sqlite3 *db;
-pcre *reg_mp3;
-pcre *reg_flac;
 pcre *reg_num;
 const char *error;
 int erroffset;
@@ -37,8 +38,8 @@ int init();
 int list(const char *name, const struct stat *status, int type);
 void insert_song(tag_t tag);
 
-void read_mp3(const char *fn);
-void read_flac(const char *fn);
+void read_file(const char *fn, const struct stat *status);
+int was_modified(const char *fn, const struct stat *status);
 
 char *get_id3_tag(struct id3_tag *tag, const char *id);
 
@@ -88,16 +89,11 @@ int init() {
         exit(-1);
     }
 
-    reg_mp3 = pcre_compile("\\.mp3$", 0, &error, &erroffset, NULL);
-    if (reg_mp3 == NULL) {
-        fprintf(stderr, "%s at %d\n", error, erroffset);
-        return -1;
-    }
-
-    reg_flac = pcre_compile("\\.flac$", 0, &error, &erroffset, NULL);
-    if (reg_flac == NULL) {
-        fprintf(stderr, "%s at %d\n", error, erroffset);
-        return -1;
+    ret = sqlite3_exec(db, "CREATE VIEW IF NOT EXISTS albums AS\
+            SELECT artist, album, count(*) songs, year, genre FROM songs GROUP BY album", NULL, 0, NULL);
+    if (ret != SQLITE_OK) {
+        fprintf(stderr, "%s\n", sqlite3_errmsg(db));
+        exit(-1);
     }
 
     reg_num = pcre_compile("^[0-9]+$", 0, &error, &erroffset, NULL);
@@ -117,95 +113,70 @@ int list(const char *fn, const struct stat *status, int type) {
         return 0;
     }
 
-    if (pcre_exec(reg_mp3, NULL, fn, strlen(fn), 0, 0, NULL, 0) == 0) {
-        read_mp3(fn);
-    } else if (pcre_exec(reg_flac, NULL, fn, strlen(fn), 0, 0, NULL, 0) == 0) {
-        read_flac(fn);
-    }
+    if (!was_modified(fn, status))
+        return 0;
+
+    read_file(fn, status);
 
     return 0;
 }
 
-void read_mp3(const char *fn) {
-    struct id3_file *file;
-    struct id3_tag *id3;
+void read_file(const char *fn, const struct stat *status) {
+    TagLib_File *file;
+    TagLib_Tag *tlib_tag;
     tag_t tag;
-    int genre;
 
-    file = id3_file_open(fn, ID3_FILE_MODE_READONLY);
-    id3 = id3_file_tag(file);
-
-    tag.fn = fn;
-    tag.artist = get_id3_tag(id3, ID3_FRAME_ARTIST);
-    tag.album = get_id3_tag(id3, ID3_FRAME_ALBUM);
-    tag.title = get_id3_tag(id3, ID3_FRAME_TITLE);
-    tag.year = get_id3_tag(id3, ID3_FRAME_YEAR);
-    tag.genre = get_id3_tag(id3, ID3_FRAME_GENRE);
-    tag.track = get_id3_tag(id3, ID3_FRAME_TRACK);
-    tag.type = "mp3";
-    tag.lastupdate = 42;
-
-    if (tag.genre && pcre_exec(reg_num, NULL, tag.genre, strlen(tag.genre), 0, 0, NULL, 0) == 0) {
-        genre = atoi(tag.genre);
-        tag.genre = id3_genres[genre];
-    }
-
-    insert_song(tag);
-
-    id3_file_close(file);
-}
-
-void read_flac(const char *fn) {
-    FLAC__StreamMetadata *tags;
-    FLAC__StreamMetadata_VorbisComment vorbis_comment;
-    FLAC__StreamMetadata_VorbisComment_Entry entry;
-    tag_t tag;
-    int i;
-
-    char delim[] = "=";
-    char *tagname, *value;
-
-    if (FLAC__metadata_get_tags(fn, &tags) == false || tags->type != FLAC__METADATA_TYPE_VORBIS_COMMENT) {
-        fprintf(stderr, "%s: No VORBIS_COMMENT found\n", fn);
-        FLAC__metadata_object_delete(tags);
+    file = taglib_file_new(fn);
+    if (file == NULL) {
+        perror(fn);
         return;
     }
 
-    vorbis_comment = tags->data.vorbis_comment;
+    tlib_tag = taglib_file_tag(file);
 
-    for (i=0; i<vorbis_comment.num_comments; i++) {
-        entry = vorbis_comment.comments[i];
-        tagname = strtok((char*)entry.entry, delim);
-        value = strtok(NULL, delim);
+    if (tlib_tag != NULL) {
+        tag.fn = (char *) fn;
+        tag.artist = taglib_tag_artist(tlib_tag);
+        tag.album = taglib_tag_album(tlib_tag);
+        tag.title = taglib_tag_title(tlib_tag);
+        tag.year = taglib_tag_year(tlib_tag);
+        tag.genre = taglib_tag_genre(tlib_tag);
+        tag.track = taglib_tag_track(tlib_tag);
+        tag.lastupdate = status->st_mtime;
 
-        if (strcmp(tagname, "ALBUM") == 0) {
-            tag.album = value;
-        } else if (strcmp(tagname, "ARTIST") == 0) {
-            tag.artist = value;
-        } else if (strcmp(tagname, "TITLE") == 0) {
-            tag.title = value;
-        } else if (strcmp(tagname, "DATE") == 0) {
-            tag.year = value;
-        } else if (strcmp(tagname, "GENRE") == 0) {
-            tag.genre = value;
-        } else if (strcmp(tagname, "TRACKNUMBER") == 0) {
-            tag.track = value;
-        }
+        if (strcmp(fn + strlen(fn) - 4, ".mp3") == 0)
+            tag.type = "mp3";
+        else if (strcmp(fn + strlen(fn) - 4, ".ogg") == 0)
+            tag.type = "ogg";
+        else if (strcmp(fn + strlen(fn) - 5, ".flac") == 0)
+            tag.type = "flac";
+
+        insert_song(tag);
+    } else {
+        printf("No tag in file: %s\n", fn);
     }
 
-    tag.fn = fn;
-    tag.type = "flac";
+    taglib_tag_free_strings();
+    taglib_file_free(file);
+}
 
-    insert_song(tag);
+int was_modified(const char *fn, const struct stat *status) {
+    /*
+    struct stat st;
+    stat(fn, &st);
 
-    FLAC__metadata_object_delete(tags);
+    fprintf(stderr, "%s: %d\n", fn, st.st_mtime);
+
+    return st.st_mtime;
+    */
+    return 1;
 }
 
 void insert_song(tag_t tag) {
     char *sql;
 
-    sql = sqlite3_mprintf("INSERT OR IGNORE INTO songs (file, artist, album, title, year, genre, track, type, lastupdate) VALUES (%Q, %Q, %Q, %Q, %.4Q, %Q, %Q, %Q, %d);",
-                          tag.fn, trim(tag.artist), trim(tag.album), trim(tag.title), trim(tag.year), trim(tag.genre), trim(tag.track), tag.type, 0 /*tag.lastupdate*/);
+    sql = sqlite3_mprintf("INSERT OR IGNORE INTO songs (file, artist, album, title, year, genre, track, type, lastupdate) VALUES (%Q, %Q, %Q, %Q, %.4d, %Q, %d, %Q, %d);",
+                          tag.fn, trim(tag.artist), trim(tag.album), trim(tag.title), tag.year, trim(tag.genre), tag.track, tag.type, tag.lastupdate);
 
     if (sqlite3_exec(db, sql, NULL, 0, NULL) != SQLITE_OK) {
         fprintf(stderr, "%s\n%s\n", sql, sqlite3_errmsg(db));
@@ -214,53 +185,43 @@ void insert_song(tag_t tag) {
     sqlite3_free(sql);
 }
 
-char *get_id3_tag(struct id3_tag *tag, const char *id) {
-    struct id3_frame *frame;
-    union id3_field *field;
-    id3_ucs4_t *value;
+char *trim(char *str) {
+    size_t len = 0;
+    char *frontp = str - 1;
+    char *endp = NULL;
 
-    if ((frame = id3_tag_findframe(tag, id, 0)) == NULL)
+    if (str == NULL)
         return NULL;
 
-    if ((field = id3_frame_field(frame, 1)) == NULL)
-        return NULL;
+    if (str[0] == '\0')
+        return str;
 
-    //TODO: Cat if multiple values
-    value = id3_field_getstrings(field, 0);
+    len = strlen(str);
+    endp = str + len;
 
-    return id3_ucs4_utf8duplicate(value);
-}
+    /* Move the front and back pointers to address
+     * the first non-whitespace characters from
+     * each end.
+     */
+    while (isspace(*(++frontp)));
+    while (isspace(*(--endp)) && endp != frontp);
 
-//TODO: Check if this is safe... I doubt so..
-char *trim(char *s) {
-    int i = 0, j, len;
+    if (str + len - 1 != endp)
+        *(endp + 1) = '\0';
+    else if (frontp != str &&  endp == frontp)
+        *str = '\0';
 
-    if (s == NULL)
-        return NULL;
-
-    len = strlen(s);
-
-    /* Trim spaces and tabs from beginning: */
-    while (i<len && (s[i]==' ') || (s[i]=='\t')) {
-        i++;
+    /* Shift the string so that it starts at str so
+     * that if it's dynamically allocated, we can
+     * still free it on the returned pointer.  Note
+     * the reuse of endp to mean the front of the
+     * string buffer now.
+     */
+    endp = str;
+    if (frontp != str) {
+        while(*frontp) *endp++ = *frontp++;
+        *endp = '\0';
     }
 
-    if (i>0) {
-        for (j=0; j<len; j++) {
-            s[j] = s[j+i];
-        }
-        s[j] = '\0';
-    }
-
-    /* Trim spaces and tabs from end: */
-    i = len-1;
-    while ((s[i]==' ') || (s[i]=='\t')) {
-        i--;
-    }
-
-    if (i < (len-1)) {
-        s[i+1] = '\0';
-    }
-
-    return s;
+    return str;
 }

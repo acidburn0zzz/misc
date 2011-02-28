@@ -3,17 +3,14 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* Define to 1 if you have the `FLAC' library (-lFLAC). */
-#undef HAVE_LIBFLAC
-
-/* Define to 1 if you have the `id3tag' library (-lid3tag). */
-#undef HAVE_LIBID3TAG
-
 /* Define to 1 if you have the `pcre' library (-lpcre). */
 #undef HAVE_LIBPCRE
 
 /* Define to 1 if you have the `sqlite3' library (-lsqlite3). */
 #undef HAVE_LIBSQLITE3
+
+/* Define to 1 if you have the `tag_c' library (-ltag_c). */
+#undef HAVE_LIBTAG_C
 
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
