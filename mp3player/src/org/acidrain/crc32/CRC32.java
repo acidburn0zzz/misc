@@ -2,10 +2,13 @@ package org.acidrain.crc32;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.GregorianCalendar;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public class CRC32 {
-	static int crcTable[] = {
+class CRC32 {
+    private int sum;
+
+    static int crc_table[] = {
         0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f, 0xe963a535, 0x9e6495a3,
         0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988, 0x09b64c2b, 0x7eb17cbd, 0xe7b82d07, 0x90bf1d91,
         0x1db71064, 0x6ab020f2, 0xf3b97148, 0x84be41de, 0x1adad47d, 0x6ddde4eb, 0xf4d4b551, 0x83d385c7,
@@ -39,84 +42,50 @@ public class CRC32 {
         0xbdbdf21c, 0xcabac28a, 0x53b39330, 0x24b4a3a6, 0xbad03605, 0xcdd70693, 0x54de5729, 0x23d967bf,
         0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94, 0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d,
     };
-	
-	public static int getChecksum(String s) {
-	    return getChecksum(new File(s));
-	}
-	
-	public static int getChecksum(File f) {
-        int crc = 0xFFFFFFFF;
-        int bufferSize = 16*1024;
-        
-        try {
-            FileInputStream fis = new FileInputStream(f);
 
-            if (bufferSize > fis.available())
-                bufferSize = fis.available();
-            
-            byte[] buffer = new byte[bufferSize];
-            while (fis.read(buffer) > 0) {
-                for (byte b : buffer) {
-                    crc = (crc >>> 8) ^ crcTable[(crc ^ b) & 0xff];
-                }
-                
-                if (bufferSize > fis.available()) {
-                    bufferSize = fis.available();
-                    buffer = new byte[bufferSize];
-                }
-            }
-
-            // flip bits
-            crc = crc ^ 0xFFFFFFFF;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
-		
-		return crc;
-	}
-    
-    public static void printHeader() {
-    	GregorianCalendar cal = new GregorianCalendar();
-    	String jour, mois, an, heure, min, sec;
-    	jour = String.valueOf(cal.get(GregorianCalendar.DAY_OF_MONTH));
-    	if (jour.length() == 1)
-    		jour = "0" + jour;
-    	mois = String.valueOf(cal.get(GregorianCalendar.MONTH));
-    	if (mois.length() == 1)
-    		mois = "0" + mois;
-    	an = String.valueOf(cal.get(GregorianCalendar.YEAR));
-    	heure = String.valueOf(cal.get(GregorianCalendar.HOUR));
-    	if (heure.length() == 1)
-    		heure = "0" + heure;
-    	min = String.valueOf(cal.get(GregorianCalendar.MINUTE));
-    	if (min.length() == 1)
-    		min = "0" + min;
-    	sec = String.valueOf(cal.get(GregorianCalendar.SECOND));
-    	if (sec.length() == 1)
-    		sec = "0" + sec;
-
-    	System.out.println("; AcidRain's CRC32 utility 0.1");
-    	System.out.println(";");
-    	System.out.println("; Genere le " + jour + "/" + mois + "/" + an
-    			+ " a " + heure + ":" + min + ":" + sec);
-    	System.out.println(";");
+    public CRC32() {
+        reset();
     }
-	
-	public static void main(String[] args) {
-        File file;
-        int crc;
-        
-        if (System.getProperty("os.name").toLowerCase().contains("linux"))
-            file = new File("/home/mathieu/a.mp3");
-        else
-            file = new File("c:\\musique\\04_-_timmy_2000.avi.wmv");
-        
-        printHeader();
 
-        long a = System.currentTimeMillis();
-        crc = CRC32.getChecksum(file);
-		System.out.println(file.getName() + " " + Integer.toHexString(crc).toUpperCase());
-		System.out.println((System.currentTimeMillis() - a) / 1000.0);
+    public int getSum() {
+        return sum ^ 0xffffffff;
+    }
+
+    void reset() {
+        sum = 0xffffffff;
+    }
+
+    public void hash(byte data[], int len) {
+        for (int i=0; i<len; i++)
+            sum = (sum >>> 8) ^ crc_table[(sum ^ data[i]) & 0xff];
+    }
+
+    public static int getHash(String str) {
+        CRC32 crc = new CRC32();
+        crc.hash(str.getBytes(), str.length());
+        return crc.getSum();
+    }
+
+    public static int getHash(File f) throws FileNotFoundException, IOException {
+        int bufferSize = 512;
+
+        CRC32 crc = new CRC32();
+
+        FileInputStream fis = new FileInputStream(f);
+
+        if (bufferSize > fis.available())
+            bufferSize = fis.available();
+
+        byte[] buffer = new byte[bufferSize];
+        while (fis.read(buffer) > 0) {
+            crc.hash(buffer, bufferSize);
+
+            if (bufferSize > fis.available()) {
+                bufferSize = fis.available();
+                buffer = new byte[bufferSize];
+            }
+        }
+
+        return crc.getSum();
     }
 }
