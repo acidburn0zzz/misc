@@ -25,8 +25,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**********
  * Classe servant a lire et ecrire les tags ID3v2 des mp3
@@ -260,8 +260,8 @@ public class ID3v2 {
          * Creation des bytes array de donnees
          **********/
         //Calcul du nombre de frames
-        for (Enumeration<String> en = infosPrincipales.keys(); en.hasMoreElements();)
-            if (!infosPrincipales.get(en.nextElement()).equals(""))
+        for (Iterator<String> it = infosPrincipales.keySet().iterator(); it.hasNext();)
+            if (!infosPrincipales.get(it.next()).equals(""))
                 nbFrames++;
         //nbFrames += infosSecondaires.size();
 
@@ -269,8 +269,8 @@ public class ID3v2 {
         donnees = new byte[nbFrames][2][];
 
         //Ajout des donnees au array
-        for (Enumeration<String> en = infosPrincipales.keys(); en.hasMoreElements();) {
-            String key = en.nextElement();
+        for (Iterator<String> it = infosPrincipales.keySet().iterator(); it.hasNext(); ) {
+            String key = it.next();
             if (!infosPrincipales.get(key).equals("")) {
                 donnees[noFrame] = createFrame(key, infosPrincipales.get(key));
                 noFrame++;
@@ -546,8 +546,8 @@ public class ID3v2 {
             if (tailleFrames + extendedHeaderSize + paddingSize + tailleHeaderFooter == tailleTotaleTag)
                 System.out.println("Tailles OK");
 
-            for (Enumeration<String> en = infosPrincipales.keys(); en.hasMoreElements(); ) {
-                String s = en.nextElement();
+            for (Iterator<String> it = infosPrincipales.keySet().iterator(); it.hasNext(); ) {
+                String s = it.next();
                 System.out.println(s + " = " + infosPrincipales.get(s));
             }
         } else {
