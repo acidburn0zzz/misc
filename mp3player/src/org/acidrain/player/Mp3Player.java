@@ -50,11 +50,11 @@ public class Mp3Player extends JFrame {
     private WavDiffuseur diffuseurChanson;
     private Timer timerSecondes;
     private Timer timerTitre;
-    
+
     private Hashtable<String, Playlist> listes;
     private Playlist playlist;
     private String nomPlaylistActuelle;
-    
+
     private ImageIcon icon = new ImageIcon("logo.jpg");
 
     private JButton btnPrec = new JButton("|<");
@@ -66,12 +66,12 @@ public class Mp3Player extends JFrame {
     private JToggleButton btnPlaylist = new JToggleButton("PL");
     private JToggleButton btnShuffle = new JToggleButton("SH");
     private JToggleButton btnRepeat = new JToggleButton("RE");
-    
+
     private JTextField txtTitre = new JTextField();
     private JTextField txtTemps = new JTextField();
     private JSlider sldTemps = new JSlider(0, 100, 0);
     private JSlider sldVolume = new JSlider(0, 100, 100);
-    
+
     private JPopupMenu popMenu = new JPopupMenu();
     private JMenuItem itmOuvrir = new JMenuItem("Ouvrir");
     private JMenuItem itmPrec = new JMenuItem("Precedent");
@@ -85,24 +85,24 @@ public class Mp3Player extends JFrame {
     private JMenu mnuLAF = new JMenu("Look & Feels");
     private JMenuItem [] itmLAF;
     private JMenuItem itmQuitter = new JMenuItem("Quitter");
-    
+
     private TrayIcon trayIcon;
     private SystemTray sysTray;
-    
+
     private String titreChanson;
     private String lastDir;
     private int positionTexte; //Pour animer le titre
     private static final int NB_CHAR_TITRE=40; //Nombre de caracteres a afficher pour le titre
     private static final String NOM_LOGICIEL="Acidrain Mp3 Player";
-    
+
     private LookAndFeelInfo [] lafs;
     private int noLookAndFeel;
-    
+
     //Je me base sur la font par defaut d'un bouton pour en faire une plus petite
     private Font fontBoutons = new Font(btnOuvrir.getFont().getFontName(), Font.PLAIN, btnOuvrir.getFont().getSize()-4);
     //Meme chose pour grossir celle de txtTemps
     private Font fontTxtTemps = new Font(txtTemps.getFont().getFontName(), Font.PLAIN, txtTemps.getFont().getSize()+16);
-    
+
     private boolean mute = false;
     private boolean pause = false;
     private boolean toggleAffichageTemps = false;
@@ -111,7 +111,7 @@ public class Mp3Player extends JFrame {
     private boolean showPlaylist;
     private boolean shuffle;
     private boolean repeat;
-    
+
     private Ecouteur e;
 
     public Mp3Player() {
@@ -122,23 +122,23 @@ public class Mp3Player extends JFrame {
             e.printStackTrace();
         }
     }
-    
+
     public void jbInit() throws Exception {
         this.setSize(400, 180);
         this.setResizable(false);
         this.setLayout(null);
         this.setFocusable(true);
         this.setIconImage(icon.getImage());
-        
+
         e = new Ecouteur();
         this.addMouseListener(e);
         this.addKeyListener(e);
-        
+
         timerSecondes = new Timer(1000, e);
         timerTitre = new Timer(500, e);
-        
+
         lafs = UIManager.getInstalledLookAndFeels();
-        
+
         //Disposition
         txtTemps.setBounds(10, 10, 125, 60);
         txtTemps.setEnabled(false);
@@ -232,51 +232,51 @@ public class Mp3Player extends JFrame {
         itmPause.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK));
         itmStop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_MASK));
         itmSuiv.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, KeyEvent.CTRL_MASK));
-        
+
         itmOuvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_MASK));
         itmPlaylist.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_MASK));
         itmShuffle.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
         itmRepeat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_MASK));
         itmQuitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.CTRL_MASK));
-        
+
         //TrayIcon
         if (SystemTray.isSupported()) {
             trayIcon = new TrayIcon(icon.getImage(), "AcidRain Mp3 Player");
             trayIcon.setImageAutoSize(true);
-            
+
             sysTray = SystemTray.getSystemTray();
             sysTray.add(trayIcon);
             trayIcon.addActionListener(e);
         }
-        
+
         //Chargement de la configuration precedente
         loadConfig();
     }
-    
+
     /********
      * Chargement de la configuration precedente
      ********/
     public void loadConfig() {
         Configuration c = null;
-        
+
         try {
-            File f = new File("config");
+            File f = new File(Configuration.getConfigurationPath());
             FileInputStream fis = new FileInputStream(f);
             ObjectInputStream input = new ObjectInputStream(fis);
-            
+
             c = (Configuration)input.readObject();
-            
+
             input.close();
             fis.close();
         } catch (FileNotFoundException fnfe) {
-            System.out.println("Le fichier \"config\" n'existe pas");
+            System.out.println("Le fichier \"" + Configuration.getConfigurationPath() + "\" n'existe pas");
             System.out.println("Chargement de la configuration par defaut");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         if (c != null) {
             //On va chercher les paramertes
             Hashtable<String, String> params = c.getParams();
@@ -288,21 +288,21 @@ public class Mp3Player extends JFrame {
             lastDir = params.get("lastDir");
             nomPlaylistActuelle = params.get("nomPlaylistActuelle");
             noLookAndFeel = Integer.valueOf(params.get("laf"));
-            
+
             /**********
              * Ceci fait que le slider change de valeur et affiche la
              * valeur du volume dans le textfield.
              */
             sldVolume.setValue(Integer.parseInt(params.get("volume")));
             txtTitre.setText("");
-            
+
             //On recree les playlists
             listes = new Hashtable<String, Playlist>();
-            
+
             Vector<File>[] listesFichiers = c.getListesFichiers();
             String[] noms = c.getNoms();
             int[] nosChansonsJouees = c.getNosChansonsJouees();
-            
+
             //Verification si il y a au moins une playlist
             if (listesFichiers.length > 0) {
                 for (int i=0; i<listesFichiers.length; i++) {
@@ -314,7 +314,7 @@ public class Mp3Player extends JFrame {
                     temp.addPropertyChangeListener(e);
                     listes.put(noms[i], temp);
                 }
-                
+
                 changerPlaylist(nomPlaylistActuelle);
             } else {
                 if (!ajouterPlaylist())
@@ -326,7 +326,7 @@ public class Mp3Player extends JFrame {
             setRepeat(repeat);
         } else { //Valeurs par defaut
             listes = new Hashtable<String, Playlist>();
-            
+
             //Creation d'une playlist
             if (listes.size() == 0) {
                 if (!ajouterPlaylist())
@@ -342,12 +342,12 @@ public class Mp3Player extends JFrame {
             setPlaylist(showPlaylist);
             setShuffle(shuffle);
             setRepeat(repeat);
-            
+
             lastDir = "";
             noLookAndFeel = 0;
         }
     }
-    
+
     /********
      * Cree un objet configuration qui contient ce qui est a sauvegarder
      * L'ecrit dans un fichier
@@ -356,7 +356,7 @@ public class Mp3Player extends JFrame {
     public void saveConfig() {
         try {
             Configuration c = new Configuration();
-            
+
             Hashtable<String, String> params = new Hashtable<String, String>();
             params.put("afficherTempsRestant", String.valueOf(afficherTempsRestant));
             params.put("animerTitre", String.valueOf(animerTitre));
@@ -367,13 +367,13 @@ public class Mp3Player extends JFrame {
             params.put("nomPlaylistActuelle", nomPlaylistActuelle);
             params.put("volume", String.valueOf(sldVolume.getValue()));
             params.put("laf", String.valueOf(noLookAndFeel));
-            
+
             int nbPlaylists = listes.size();
             int i=0;
             String noms[] = new String[nbPlaylists];
             Vector<File>[] listesFichiers = new Vector[nbPlaylists];
             int[] nosChansonsJouees = new int[nbPlaylists];
-            
+
             for (Enumeration<String> en = listes.keys(); en.hasMoreElements();) {
                 String s = en.nextElement();
                 noms[i] = listes.get(s).getNomPlaylist();
@@ -381,17 +381,17 @@ public class Mp3Player extends JFrame {
                 nosChansonsJouees[i] = listes.get(s).getNoChansonJouee();
                 i++;
             }
-    
+
             c.setParams(params);
             c.setListesFichiers(listesFichiers);
             c.setNoms(noms);
             c.setNosChansonsJouees(nosChansonsJouees);
-        
+
             //Ecriture dans le fichier
-            File f = new File("config");
+            File f = new File(Configuration.getConfigurationPath());
             FileOutputStream fos = new FileOutputStream(f, false);
             ObjectOutputStream output = new ObjectOutputStream(fos);
-            
+
             output.writeObject(c);
             output.flush();
             output.close();
@@ -404,46 +404,46 @@ public class Mp3Player extends JFrame {
             e.printStackTrace();
         }
     }
-    
+
     /********
      * Retourne le dernier repertoire ouvert
-     * 
+     *
      * @return Le repertoire
      ********/
     public String getLastDir() {
         return lastDir;
     }
-    
+
     /********
      * Change la valeur du dernier repertoire ouvert
-     * 
+     *
      * @param s La nouvelle valeur
      ********/
     public void setLastDir(String s) {
         lastDir = s;
     }
-    
+
     /********
      * Retourne la hashtable qui contient les playlists
-     * 
+     *
      * @return Les playlists
      ********/
     public Hashtable<String, Playlist> getListes() {
         return listes;
     }
-    
+
     /********
      * Change la playlist en cours
-     * 
+     *
      * @param s Le nom de la playlist
      ********/
     public void setListe(String nom) {
         playlist = listes.get(nom);
     }
-    
+
     /********
      * Retourne le statut de la chanson qui joue
-     * 
+     *
      * @return Statut de la chanson ou STOP si pas de chanson
      ********/
     public int getStatut() {
@@ -452,7 +452,7 @@ public class Mp3Player extends JFrame {
         else
             return WavDiffuseur.STOP;
     }
-    
+
     /********
      * Affiche le dialogue de selection de fichier
      * Demarre la chanson
@@ -463,51 +463,51 @@ public class Mp3Player extends JFrame {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Fichiers mp3", exts);
         fc.setFileFilter(filter);
         fc.setMultiSelectionEnabled(true);
-        
+
         int file_check = fc.showOpenDialog(this);
         if (file_check == JFileChooser.APPROVE_OPTION) {
             File[] f = fc.getSelectedFiles();
             lastDir = f[0].getParent();
-            
+
             playlist.viderPlaylist();
-            
+
             for (int i=0; i<f.length; i++) {
                 playlist.ajouterChanson(new Chanson(f[i]));
             }
-            
+
             demarrerChanson();
         }
     }
-    
+
     /********
      * Demarre la chanson a partir du debut
      ********/
     public void demarrerChanson() {
         //On ferme la chanson en cours
         stopperChanson();
-        
+
         //On va chercher la chanson en cours dans la playlist
         chanson = playlist.getChanson();
-        
+
         //fichierChanson sera null si il n'y a rien dans la playlist
         if (chanson != null) {
             //On ouvre la chanson
             infoChanson = new WavInfo(chanson.getFile());
-            
+
             //On demarre la chanson si il n'y a pas eu d'erreur a l'ouverture
             if (infoChanson.getNbSec() > 0) {
                 positionTexte = 0;
-            
+
                 sldTemps.setMaximum(infoChanson.getNbSec());
                 titreChanson = chanson.getTitre()+ " (" + chanson.getDuree() + ")";
-                
+
                 diffuseurChanson = new WavDiffuseur(infoChanson, sldVolume.getValue());
                 diffuseurChanson.start();
-                
+
                 //Animation titre et desactiver le combobox
                 animationTitre();
                 playlist.setCmbListesEnabled(false);
-                
+
                 timerSecondes.start();
                 timerTitre.start();
             }
@@ -516,7 +516,7 @@ public class Mp3Player extends JFrame {
             ouvrir();
         }
     }
-    
+
     /********
      * Joue la chanson du debut si elle est stoppee ou en cours de lecture
      * Joue la chanson de sa position actuelle si elle est sur pause
@@ -529,7 +529,7 @@ public class Mp3Player extends JFrame {
             demarrerChanson();
         }
     }
-    
+
     /********
      * Toggle entre play et pause
      ********/
@@ -545,7 +545,7 @@ public class Mp3Player extends JFrame {
             }
         }
     }
-    
+
     /********
      * Arrete la chanson
      ********/
@@ -558,20 +558,20 @@ public class Mp3Player extends JFrame {
             playlist.setCmbListesEnabled(true);
         }
     }
-    
+
     /********
      * Anime le titre de la chanson si la chanson joue
      * si le titre est plus long que "NB_CHAR_TITRE" caracteres
      ********/
     public void animationTitre() {
-        if (diffuseurChanson != null) {            
+        if (diffuseurChanson != null) {
             String nouveauTitre;
-            
+
             if (chanson.getArtiste().isEmpty() && chanson.getTitre().isEmpty())
                 //Titre par defaut si le tag est vide
                 nouveauTitre = chanson.getFile().getName();
             else
-                nouveauTitre = chanson.getArtiste() + " - " + chanson.getTitre() + 
+                nouveauTitre = chanson.getArtiste() + " - " + chanson.getTitre() +
                     " (" + chanson.getDuree() + ")";
 
             //On met a jour le titre de la chanson si il a ete modifie
@@ -580,20 +580,20 @@ public class Mp3Player extends JFrame {
                 titreChanson = nouveauTitre;
                 positionTexte = 0;
             }
-            
+
             String titre;
-            
+
             if (animerTitre) {
                 int positionFin;
-                
+
                 if (positionTexte == titreChanson.length())
                     positionTexte = 0;
-                
+
                 if (positionTexte+NB_CHAR_TITRE > titreChanson.length())
                     positionFin = titreChanson.length();
                 else
                     positionFin = positionTexte+NB_CHAR_TITRE;
-                
+
                 titre = titreChanson.substring(positionTexte, positionFin);
             } else {
                 if (NB_CHAR_TITRE <= titreChanson.length()) {
@@ -602,10 +602,10 @@ public class Mp3Player extends JFrame {
                     titre = titreChanson;
                 }
             }
-                
+
             txtTitre.setText(titre);
             this.setTitle(playlist.getNoChansonJouee()+1 + ". " + titre + " - " + NOM_LOGICIEL);
-            
+
             //Titre dans le tooltip du TrayIcon
             //N'est pas anime
             trayIcon.setToolTip(titreChanson);
@@ -615,7 +615,7 @@ public class Mp3Player extends JFrame {
             trayIcon.setToolTip(NOM_LOGICIEL);
         }
     }
-    
+
     /********
      * Affiche le temps ecoule ou restant a la chanson
      ********/
@@ -623,28 +623,28 @@ public class Mp3Player extends JFrame {
         if (diffuseurChanson != null) {
             String sTemps = "";
             int iTemps;
-            
+
             if (afficherTempsRestant) {
                 iTemps = diffuseurChanson.getNbSecRestantes();
                 sTemps += "-";
             } else {
                 iTemps = diffuseurChanson.getNbSecJouees();
             }
-            
+
             sTemps += nbSecToString(iTemps);
-            
+
             //Pour faire "flasher" le temps si en pause
             if (pause) {
                 toggleAffichageTemps = !toggleAffichageTemps;
                 if (toggleAffichageTemps)
                     sTemps = "";
             }
-            
+
             txtTemps.setText(sTemps);
             sldTemps.setValue(diffuseurChanson.getNbSecJouees());
         }
     }
-    
+
     /********
      * Pour changer le volume
      * Affiche le % a la place du titre
@@ -655,43 +655,43 @@ public class Mp3Player extends JFrame {
         }
         txtTitre.setText("Volume : " + sldVolume.getValue() + "%");
     }
-    
+
     /********
      * Cree une nouvelle playlist et l'ajoute au Hashtable
-     * 
+     *
      * @return Si la creation a fonctionne
      ********/
     public boolean ajouterPlaylist() {
         String nom = JOptionPane.showInputDialog(this, "Veuillez entrer un nom pour la nouvelle playlist"
                 , "Nouvelle playlist", JOptionPane.QUESTION_MESSAGE);
-        
+
         //L'utilisateur a clique sur cancel
         if (nom == null)
             return false;
-        
+
         //Verification si il y a un nom
         if (nom.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Une playlist ne peut pas avoir un nom vide", "Erreur", JOptionPane.ERROR_MESSAGE);
             return ajouterPlaylist();
         }
-        
+
         //Verification si le nom est unique
         if (listes.containsKey(nom)) {
             JOptionPane.showMessageDialog(this, "Une playlist du nom de \"" + nom + "\" existe deja.", "Erreur", JOptionPane.ERROR_MESSAGE);
             return ajouterPlaylist();
         }
-        
+
         Playlist temp = new Playlist(this, nom, shuffle, repeat);
         temp.addPropertyChangeListener(e);
         listes.put(nom, temp);
         changerPlaylist(nom);
-        
+
         return true;
     }
-    
+
     /********
      * Change la playlist affichee
-     * 
+     *
      * @param nom Le nom de la playlist a afficher
      ********/
     public void changerPlaylist(String nom) {
@@ -703,7 +703,7 @@ public class Mp3Player extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         playlist = listes.get(nom);
         nomPlaylistActuelle = nom;
         playlist.setBounds(10, 170, 373, 300);
@@ -713,17 +713,17 @@ public class Mp3Player extends JFrame {
         playlist.setRepeat(repeat);
         setLookAndFeel(noLookAndFeel);
     }
-    
+
     /********
      * Supprimer une playlisr
-     * 
+     *
      * @param nom Le nom de la playlist a supprimer
      ********/
     public void enleverPlaylist(String nom) {
         stopperChanson();
         this.remove(playlist);
         listes.remove(nom);
-        
+
         //Si il reste une playlist, on choisit la premiere
         //Sinon on en cree une autre
         if (listes.size() > 0) {
@@ -734,10 +734,10 @@ public class Mp3Player extends JFrame {
                 this.dispose();
         }
     }
-    
+
     /********
      * Renommer une playlist
-     * 
+     *
      * @param ancienNom Le nom de la playlist a renommer
      * @param nouveauNom Le nouveau nom de la playlist
      * @return True si le changement a eu lieu
@@ -745,11 +745,11 @@ public class Mp3Player extends JFrame {
     public boolean renommerPlaylist(String ancienNom, String nouveauNom) {
         //Verification si une playlist nouveauNom existe
         if (listes.containsKey(nouveauNom)) {
-            JOptionPane.showMessageDialog(this, "Il existe deja une playlist du nom de " + nouveauNom, 
+            JOptionPane.showMessageDialog(this, "Il existe deja une playlist du nom de " + nouveauNom,
                     "Attention", JOptionPane.WARNING_MESSAGE);
             return false;
         }
-        
+
         //Renommer la playlist
         Playlist temp = listes.get(ancienNom);
         listes.remove(ancienNom);
@@ -761,7 +761,7 @@ public class Mp3Player extends JFrame {
         changerPlaylist(nouveauNom);
         return true;
     }
-    
+
     /********
      * Recule d'une chanson si possible
      * Joue la nouvelle chanson si on a recule
@@ -771,7 +771,7 @@ public class Mp3Player extends JFrame {
             demarrerChanson();
         }
     }
-    
+
     /********
      * Recule d'une chanson si possible
      * Joue la nouvelle chanson si on a recule
@@ -781,7 +781,7 @@ public class Mp3Player extends JFrame {
             demarrerChanson();
         }
     }
-    
+
     /********
      * Alterne entre mute ou pas
      ********/
@@ -791,17 +791,17 @@ public class Mp3Player extends JFrame {
             mute = !mute;
         }
     }
-    
+
     /********
      * Definit si la playlist est visible ou non
-     * 
+     *
      * @param b Visible ou non
      ********/
     public void setPlaylist(boolean b) {
         showPlaylist = b;
         btnPlaylist.setSelected(b);
         itmPlaylist.setSelected(b);
-        
+
         if (b) {
             this.setSize(400, 500);
             playlist.setVisible(true);
@@ -811,36 +811,36 @@ public class Mp3Player extends JFrame {
             playlist.setVisible(false);
         }
     }
-    
+
     /********
      * Definit si les chansons joueront en ordre ou non
-     * 
+     *
      * @param b Shuffle ou non
      ********/
     public void setShuffle(boolean b) {
         shuffle = b;
         btnShuffle.setSelected(b);
         itmShuffle.setSelected(b);
-        
+
         playlist.setShuffle(b);
     }
-    
+
     /********
      * Definit si la playlist se repetera ou nons
-     * 
+     *
      * @param b Repeat ou non
      ********/
     public void setRepeat(boolean b) {
         repeat = b;
         btnRepeat.setSelected(b);
         itmRepeat.setSelected(b);
-        
+
         playlist.setRepeat(b);
     }
-    
+
     /********
      * Change le look and feel du logiciel
-     * 
+     *
      * @param no L'index du Look And Feel dans la liste lafs
      ********/
     public void setLookAndFeel(int no) {
@@ -856,26 +856,26 @@ public class Mp3Player extends JFrame {
             e.printStackTrace();
         }
     }
-    
+
     /********
      * Convertit un nombre de secondes en
      * un string de type m:ss
-     * 
+     *
      * @param nbSec Le nombre de secondes a convertir
      * @return Le temps au format m:ss
      ********/
     public static String nbSecToString(int nbSec) {
         String min, sec;
-        
+
         min = String.valueOf(nbSec/60);
         sec = String.valueOf(nbSec%60);
         if (sec.length() == 1) {
             sec = "0" + sec;
         }
-        
+
         return min + ":" + sec;
     }
-    
+
     /********
      * Arreter les timers et la chanson avant de fermer
      ********/
@@ -887,13 +887,13 @@ public class Mp3Player extends JFrame {
         saveConfig();
         System.exit(0);
     }
-    
+
     public static void main(String [] args) {
         Mp3Player pl = new Mp3Player();
         pl.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pl.setVisible(true);
     }
-    
+
     private class Ecouteur implements ActionListener, ChangeListener, MouseListener, PropertyChangeListener, KeyListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == btnPrec || e.getSource() == itmPrec) {
@@ -957,12 +957,12 @@ public class Mp3Player extends JFrame {
 
         public void mouseEntered(MouseEvent arg0) {
             // TODO Auto-generated method stub
-            
+
         }
 
         public void mouseExited(MouseEvent arg0) {
             // TODO Auto-generated method stub
-            
+
         }
 
         public void mousePressed(MouseEvent arg0) {
@@ -970,7 +970,7 @@ public class Mp3Player extends JFrame {
                 //Arreter le timer pour ne pas que le titre s'affiche
                 //a la place tu volume
                 timerTitre.stop();
-            } 
+            }
         }
 
         public void mouseReleased(MouseEvent arg0) {
@@ -1001,12 +1001,12 @@ public class Mp3Player extends JFrame {
 
         public void keyReleased(KeyEvent e) {
             // TODO Auto-generated method stub
-            
+
         }
 
         public void keyTyped(KeyEvent e) {
             // TODO Auto-generated method stub
-            
+
         }
     }
 }
