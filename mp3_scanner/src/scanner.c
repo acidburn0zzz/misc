@@ -7,8 +7,6 @@
 #include <sys/stat.h>
 #include <sqlite3.h>
 
-#include <FLAC/metadata.h>
-#include <id3tag.h>
 #include <taglib/tag_c.h>
 
 #include <config.h>
