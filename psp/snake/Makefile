@@ -17,8 +17,12 @@ $(PROGRAM): $(OBJS)
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
+psp:
+	make -f Makefile.psp
+
 clean:
 	$(RM) $(OBJS)
+	make -f Makefile.psp clean
 
 distclean:  clean
 	$(RM) $(PROGRAM)

@@ -7,7 +7,7 @@
 Dalek creerDalek(Dalek *daleks, Partie p) {
     Dalek d;
     int i;
-    
+
     d.posX = rand() % p.nbCasesX;
     d.posY = rand() % p.nbCasesY;
     d.isDead = 0;
@@ -18,13 +18,13 @@ Dalek creerDalek(Dalek *daleks, Partie p) {
             return creerDalek(daleks, p);
         }
     }
-    
+
     return d;
 }
 
 void moveDaleks(Dalek *daleks, Doc doc, Partie p) {
     int i;
-    
+
     for (i=0; i<p.niveau*5; i++) {
         if (daleks[i].isDead)
             continue;
