@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -O2 -pedantic -ansi -g
+CFLAGS=-Wall -g -pedantic
 CXXFLAGS=$(CFLAGS)
 LDFLAGS=
 
