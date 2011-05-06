@@ -35,6 +35,18 @@ void keyboard_watch(void) {
     return;
 }
 
+void print_grid(char grid[HEIGHT][WIDTH]) {
+    int x, y;
+
+    for (x=0; x<HEIGHT; x++) {
+        for (y=0; y<WIDTH; y++) {
+            move(x, y);
+            addch(grid[x][y] ? 'x' : ' ');
+        }
+    }
+}
+
+
 int main(int argc, char **argv) {
     char grid_old[HEIGHT][WIDTH], grid_new[HEIGHT][WIDTH], tmp[HEIGHT][WIDTH];
     int x, y, cnt;
@@ -49,16 +61,26 @@ int main(int argc, char **argv) {
     noecho();
     start_color();
 
-    for (x=0; x<HEIGHT; x++) {
-        for (y=0; y<WIDTH; y++) {
-            grid_old[x][y] = !(rand()%4);
+    if (argc > 1 && strcmp("--glider", argv[1]) == 0) {
+        memcpy(grid_old, glider_gun, sizeof(char) * HEIGHT * WIDTH);
+    } else if (argc > 1 && strcmp("--exploder", argv[1]) == 0) {
+        memcpy(grid_old, exploder, sizeof(char) * HEIGHT * WIDTH);
+    } else if (argc > 1 && strcmp("--row", argv[1]) == 0) {
+        memcpy(grid_old, row, sizeof(char) * HEIGHT * WIDTH);
+    } else {
+        for (x=0; x<HEIGHT; x++) {
+            for (y=0; y<WIDTH; y++) {
+                grid_old[x][y] = !(rand()%4);
+            }
         }
     }
 
-    memcpy(grid_old, glider_gun, sizeof(char) * HEIGHT * WIDTH);
     pthread_create(&keys_thread, NULL, keyboard_watch, NULL);
 
     while (!finished) {
+        print_grid(grid_old);
+        refresh();
+
         for (x=0; x<HEIGHT; x++) {
             for (y=0; y<WIDTH; y++) {
                 cnt = 0;
@@ -98,15 +120,6 @@ int main(int argc, char **argv) {
                     grid_new[x][y] = 0;
             }
         }
-
-        /* print */
-        for (x=0; x<HEIGHT; x++) {
-            for (y=0; y<WIDTH; y++) {
-                move(x, y);
-                addch(grid_new[x][y] ? 'x' : ' ');
-            }
-        }
-        refresh();
 
         memcpy(tmp, grid_old, sizeof(char) * HEIGHT * WIDTH);
         memcpy(grid_old, grid_new, sizeof(char) * HEIGHT * WIDTH);
