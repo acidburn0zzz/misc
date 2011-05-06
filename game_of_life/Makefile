@@ -7,7 +7,7 @@ SOURCES=main.c
 OBJS=$(SOURCES:.c=.o)
 
 INCLUDES=
-LDFLAGS=
+LDFLAGS=-lncurses -lpthread
 
 RM=rm -f
 INSTALL=install

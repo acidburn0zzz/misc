@@ -3,39 +3,16 @@
 #include <malloc.h>
 #include <time.h>
 #include <string.h>
+#include <ctype.h>
+#include <ncurses.h>
+#include <pthread.h>
 
 #include "patterns.h"
 
-void gotoxy(int x, int y) {
-    char essq[100]; /* String variable to hold the escape sequence */
-    char xstr[100]; /* Strings to hold the x and y coordinates */
-    char ystr[100]; /* Escape sequences must be built with characters */
+#define WIDTH 80
+#define HEIGHT 24
 
-    /* Convert the screen coordinates to strings */
-    sprintf(xstr, "%d", x);
-    sprintf(ystr, "%d", y);
-
-    /* Build the escape sequence (vertical move) */
-    essq[0] = '\0';
-    strcat(essq, "\033[");
-    strcat(essq, ystr);
-
-    /* Described in man terminfo as vpa=\E[%p1%dd
-       Vertical position absolute */
-    strcat(essq, "d");
-
-    /* Horizontal move
-       Horizontal position absolute */
-    strcat(essq, "\033[");
-    strcat(essq, xstr);
-
-    /* Described in man terminfo as hpa=\E[%p1%dG */
-    strcat(essq, "G");
-
-    /* Execute the escape sequence
-       This will move the cursor to x, y */
-    printf("%s", essq);
-}
+int finished = 0;
 
 void msleep(int ms) {
     struct timespec req;
@@ -49,59 +26,66 @@ void msleep(int ms) {
         continue;
 }
 
-void clrscr() {
-    int i;
+void keyboard_watch(void) {
+    while (!finished) {
+        if (tolower(getch()) == 'q')
+            finished = 1;
+    }
 
-    for (i=0; i<100; i++)
-        putchar('\n');
+    return;
 }
 
 int main(int argc, char **argv) {
-    char grid_old[25][80], grid_new[25][80], tmp[25][80];
+    char grid_old[HEIGHT][WIDTH], grid_new[HEIGHT][WIDTH], tmp[HEIGHT][WIDTH];
     int x, y, cnt;
-    int h = 25;
-    int w = 80;
-    int delay = 50;
+
+    pthread_t keys_thread;
 
     srand(time(NULL));
-    clrscr();
 
-    for (x=0; x<h; x++) {
-        for (y=0; y<w; y++) {
+    initscr();
+    /* raw(); Line buffering disabled */
+    keypad(stdscr, TRUE);
+    noecho();
+    start_color();
+
+    for (x=0; x<HEIGHT; x++) {
+        for (y=0; y<WIDTH; y++) {
             grid_old[x][y] = !(rand()%4);
         }
     }
 
-    memcpy(grid_old, glider_gun, sizeof(char) * h * w);
+    memcpy(grid_old, glider_gun, sizeof(char) * HEIGHT * WIDTH);
+    pthread_create(&keys_thread, NULL, keyboard_watch, NULL);
 
-    while (1) {
-        for (x=0; x<h; x++) {
-            for (y=0; y<w; y++) {
+    while (!finished) {
+        for (x=0; x<HEIGHT; x++) {
+            for (y=0; y<WIDTH; y++) {
                 cnt = 0;
 
                 /* Up */
                 if (x-1 >= 0 && grid_old[x-1][y])
                     cnt++;
                 /* Down */
-                if (x+1 < h && grid_old[x+1][y])
+                if (x+1 < HEIGHT && grid_old[x+1][y])
                     cnt++;
                 /* Left */
                 if (y-1 >= 0 && grid_old[x][y-1])
                     cnt++;
                 /* Right */
-                if (y+1 < w && grid_old[x][y+1])
+                if (y+1 < WIDTH && grid_old[x][y+1])
                     cnt++;
                 /* Up-Left */
                 if (x-1 >= 0 && y-1 >= 0 && grid_old[x-1][y-1])
                     cnt++;
                 /* Up-Right */
-                if (x-1 >= 0 && y+1 < w && grid_old[x-1][y+1])
+                if (x-1 >= 0 && y+1 < WIDTH && grid_old[x-1][y+1])
                     cnt++;
                 /* Down-Left */
-                if (x+1 < h && y-1 >= 0 && grid_old[x+1][y-1])
+                if (x+1 < HEIGHT && y-1 >= 0 && grid_old[x+1][y-1])
                     cnt++;
                 /* Down-Right */
-                if (x+1 < h && y+1 < w && grid_old[x+1][y+1])
+                if (x+1 < HEIGHT && y+1 < WIDTH && grid_old[x+1][y+1])
                     cnt++;
 
                 if ((cnt < 2 || cnt > 3) && grid_old[x][y])
@@ -116,19 +100,22 @@ int main(int argc, char **argv) {
         }
 
         /* print */
-        gotoxy(0, 0);
-        for (x=0; x<h; x++) {
-            for (y=0; y<w; y++) {
-                printf("%c", (grid_new[x][y] ? 'x' : ' '));
+        for (x=0; x<HEIGHT; x++) {
+            for (y=0; y<WIDTH; y++) {
+                move(x, y);
+                addch(grid_new[x][y] ? 'x' : ' ');
             }
-            printf("\n");
         }
+        refresh();
 
-        memcpy(tmp, grid_old, sizeof(char) * h * w);
-        memcpy(grid_old, grid_new, sizeof(char) * h * w);
-        memcpy(grid_new, tmp, sizeof(char) * h * w);
-        msleep(delay);
+        memcpy(tmp, grid_old, sizeof(char) * HEIGHT * WIDTH);
+        memcpy(grid_old, grid_new, sizeof(char) * HEIGHT * WIDTH);
+        memcpy(grid_new, tmp, sizeof(char) * HEIGHT * WIDTH);
+        msleep(50);
     }
+
+    pthread_join(keys_thread, NULL);
+    endwin();
 
     return EXIT_SUCCESS;
 }
