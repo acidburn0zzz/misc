@@ -3,7 +3,7 @@
 import sys
 import os
 
-lame_opts = ' -b 128 -B 320 -V2 -q0 -m s --add-id3v2'
+lame_opts = '-b 128 -B 320 -V2 -q0 -m s --add-id3v2'
 
 title = None
 artist = None
@@ -13,7 +13,7 @@ track = None
 genre = None
 
 def usage(prog):
-    print '%s [options] flac_files' % prog
+    print '%s flac_files' % prog
 
 def check_flac():
     flac = None
@@ -22,7 +22,7 @@ def check_flac():
         if os.path.isfile(i + '/flac'):
             flac = i + '/flac'
             break
-            
+
     if flac == None:
         print 'Error: flac not found'
         exit(-1)
@@ -34,7 +34,7 @@ def check_lame():
         if os.path.isfile(i + '/lame'):
             lame = i + '/lame'
             break
-    
+
     if lame == None:
         print 'Error: lame not found'
         exit(-1)
@@ -50,10 +50,10 @@ def convert_file(flac_file):
     #Est-ce un .flac
     if flac_file[len(flac_file)-5:] != '.flac':
         print flac_file + ': Not a .flac'
-    
+
     wav_file = flac_file[:-5] + '.wav'
     mp3_file = flac_file[:-5] + '.mp3'
-    
+
     #Creation des options
     _title = title
     _artist = artist
@@ -73,18 +73,16 @@ def convert_file(flac_file):
         _track = get_tag('TRACKNUMBER', flac_file) + '/' + get_tag('TRACKTOTAL', flac_file)
     if _genre == None:
         _genre = get_tag('GENRE', flac_file)
-    
-    options = ' --tt "%s" --ta "%s" --tl "%s" --ty "%s" --tn "%s" --tg "%s"' % (_title, _artist, _album, _year, _track, _genre)
-    
+
+    tag_opts = '--tt "%s" --ta "%s" --tl "%s" --ty "%s" --tn "%s" --tg "%s"' % (_title, _artist, _album, _year, _track, _genre)
+
     #Flac 2 wav
     os.system('flac -df -o %s %s' % (wav_file, flac_file))
-    
+
     #Wav 2 mp3
-    cmd = 'lame' + lame_opts
-    cmd = cmd + options
-    cmd = cmd + ' %s %s' % (wav_file, mp3_file)
+    cmd = 'lame %s %s %s %s' % (lame_opts, tag_opts, wav_file, mp3_file)
     os.system(cmd)
-    
+
     #rm wav
     os.system('rm %s' % wav_file)
 
@@ -92,6 +90,6 @@ if __name__ == '__main__':
     #Verification de l'existence de lame et flac
     check_flac()
     check_lame()
-    
+
     for i in sys.argv[1:]:
         convert_file(i)
