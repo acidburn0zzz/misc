@@ -31,7 +31,7 @@ int g15screen_fd;
 g15canvas *canvas;
 char pid_file[] = "/tmp/g15hella.pid";
 
-unsigned int textSize = G15_TEXT_LARGE;
+unsigned int textSize = G15_TEXT_HUGE;
 
 char row_name[512];
 char row_speed[512];

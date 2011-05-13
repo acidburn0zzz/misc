@@ -19,7 +19,7 @@ int g15screen_fd;
 g15canvas *canvas;
 char pid_file[256], song_file[256];
 
-unsigned int textSize = G15_TEXT_MED;
+unsigned int textSize = G15_TEXT_HUGE;
 
 int show_playing_song();
 void reset_screen();
@@ -55,7 +55,7 @@ void keyboard_watch(void) {
                 show_playing_song();
             }
         } else if(keystate & G15_KEY_L5) {
-            if (textSize < G15_TEXT_LARGE) {
+            if (textSize < G15_TEXT_HUGE) {
                 textSize++;
                 show_playing_song();
             }
@@ -212,6 +212,5 @@ int main(int argc, char **argv) {
     close(g15screen_fd);
 
     unlink(pid_file);
-    unlink(song_file);
     return EXIT_SUCCESS;
 }
