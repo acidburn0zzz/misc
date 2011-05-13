@@ -108,6 +108,7 @@ G15STATUS = G15StatusPlugin()
 def enable(exaile):
     G15STATUS.exaile = exaile
     event.add_callback(G15STATUS.on_play, 'playback_player_start')
+    event.add_callback(G15STATUS.on_play, 'playback_track_start')
     event.add_callback(G15STATUS.on_pause, 'playback_player_pause')
     event.add_callback(G15STATUS.on_stop, 'playback_player_end')
     event.add_callback(G15STATUS.on_play, 'playback_player_resume')
@@ -121,6 +122,7 @@ def enable(exaile):
 
 def disable(exaile):
     event.remove_callback(G15STATUS.on_play, 'playback_player_start')
+    event.remove_callback(G15STATUS.on_play, 'playback_track_start')
     event.remove_callback(G15STATUS.on_pause, 'playback_player_pause')
     event.remove_callback(G15STATUS.on_stop, 'playback_player_end')
     event.remove_callback(G15STATUS.on_play, 'playback_player_resume')
