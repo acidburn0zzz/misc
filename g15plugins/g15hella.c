@@ -22,12 +22,16 @@
 #define NAME "G15HellaNZB"
 #define VERSION "1.0"
 
+#define HELLANZB_DEFAULT_HOST "localhost"
+#define HELLANZB_DEFAULT_PORT "8760"
+#define HELLANZB_DEFAULT_PASSWD "changeme"
+
 int finished = 0;
 int g15screen_fd;
 g15canvas *canvas;
 char pid_file[] = "/tmp/g15hella.pid";
 
-unsigned int textSize = G15_TEXT_MED;
+unsigned int textSize = G15_TEXT_LARGE;
 
 char row_name[512];
 char row_speed[512];
@@ -64,7 +68,7 @@ void keyboard_watch(void) {
                 update_screen();
             }
         } else if(keystate & G15_KEY_L5) {
-            if (textSize < G15_TEXT_LARGE) {
+            if (textSize < G15_TEXT_HUGE) {
                 textSize++;
                 update_screen();
             }
@@ -149,53 +153,88 @@ xmlrpc_int get_eta(xmlrpc_env *env, xmlrpc_value *status) {
     return eta;
 }
 
-void status_loop() {
-    xmlrpc_env *env;
+xmlrpc_server_info *connect_to_hellanzb(xmlrpc_env *env, const char *server_url, const char *server_passwd) {
     xmlrpc_server_info *server;
-    xmlrpc_value *status = NULL;
-    char server_url[1024];
-
-    char *current_name;
-    xmlrpc_bool is_paused;
-    xmlrpc_int rate;
-    xmlrpc_int eta;
-
-    snprintf(server_url, 1024, "http://%s:%s", host ? host : "localhost", port ? port : "8760");
-
-    /* Start up our XML-RPC client library. */
-    env = malloc(sizeof(xmlrpc_env));
-    xmlrpc_client_init(XMLRPC_CLIENT_NO_FLAGS, NAME, VERSION);
-    xmlrpc_env_init(env);
 
     /* Make a new object to represent our XML-RPC server. */
     server = xmlrpc_server_info_new(env, server_url);
     die_if_fault_occurred(env);
 
     /* Set up our authentication information. */
-    xmlrpc_server_info_set_basic_auth(env, server, "hellanzb", passwd ? passwd : "changeme");
+    xmlrpc_server_info_set_basic_auth(env, server, "hellanzb", server_passwd);
     die_if_fault_occurred(env);
 
-    /* TODO: Handle the server becoming online/offline */
+    return server;
+}
+
+void status_loop() {
+    xmlrpc_env *env;
+    xmlrpc_server_info *server;
+    xmlrpc_value *status = NULL;
+    char server_url[1024];
+    char server_passwd[1024];
+
+    char *current_name;
+    xmlrpc_bool is_paused;
+    xmlrpc_int rate;
+    xmlrpc_int eta;
+
+    snprintf(server_url, 1024, "http://%s:%s", host ? host : HELLANZB_DEFAULT_HOST, port ? port : HELLANZB_DEFAULT_PORT);
+    snprintf(server_passwd, 1024, "%s", passwd ? passwd : HELLANZB_DEFAULT_PASSWD);
+
+    /* Start up our XML-RPC client library. */
+    env = malloc(sizeof(xmlrpc_env));
+    xmlrpc_client_init(XMLRPC_CLIENT_NO_FLAGS, NAME, VERSION);
+    xmlrpc_env_init(env);
+
+    server = connect_to_hellanzb(env, server_url, server_passwd);
+
+    /* "Ping" the server once to check if everything OK */
+    status = xmlrpc_client_call_server(env, server, "status", "()");
+    die_if_fault_occurred(env);
+
     while (!finished) {
-        status = xmlrpc_client_call_server(env, server, "status", "()");
-        die_if_fault_occurred(env);
+        /* Clear traces of previous error */
+        env->fault_occurred = 0;
 
-        /* Check if something is downloading */
-        current_name = get_current_name(env, status);
-        if (current_name) {
-            is_paused = get_is_paused(env, status);
-            snprintf(row_name, 512, "%s%s", current_name, is_paused ? " (Paused)" : "");
+        if (server == NULL)
+            server = connect_to_hellanzb(env, server_url, server_passwd);
 
-            /* Get current speed */
-            rate = get_rate(env, status);
-            sprintf(row_speed, "Speed: %d kB/s", rate);
+        if (server != NULL) {
+            status = xmlrpc_client_call_server(env, server, "status", "()");
 
-            /* Get current ETA */
-            eta = get_eta(env, status);
-            sprintf(row_eta, "ETA: %.2d:%.2d", eta/60, eta%60);
-        } else {
-            sprintf(row_name, "Nothing");
-            row_speed[0] = '\0';
+            /* Check if connection is still alive */
+            if (env->fault_occurred && env->fault_code == -504) {
+                xmlrpc_server_info_free(server);
+                server = NULL;
+            } else {
+                /* Check for other errors and continue as usual */
+                die_if_fault_occurred(env);
+
+                /* Check if something is downloading */
+                current_name = get_current_name(env, status);
+                if (current_name) {
+                    is_paused = get_is_paused(env, status);
+                    snprintf(row_name, 512, "%s%s", current_name, is_paused ? " (Paused)" : "");
+
+                    /* Get current speed */
+                    rate = get_rate(env, status);
+                    sprintf(row_speed, "Speed: %d kB/s", rate);
+
+                    /* Get current ETA */
+                    eta = get_eta(env, status);
+                    sprintf(row_eta, "ETA: %.2d:%.2d", eta/60, eta%60);
+                } else {
+                    sprintf(row_name, "Hellanzb");
+                    sprintf(row_speed, "Not downloading");
+                    row_eta[0] = '\0';
+                }
+            }
+        }
+
+        if (server == NULL) {
+            sprintf(row_name, "Hellanzb Error");
+            sprintf(row_speed, "Unable to connect");
             row_eta[0] = '\0';
         }
 
