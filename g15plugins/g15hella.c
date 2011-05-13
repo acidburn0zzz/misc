@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
+#include <time.h>
 #include <pthread.h>
+#include <getopt.h>
 #include <sys/socket.h>
 
 #include <libg15.h>
@@ -27,8 +29,15 @@ char pid_file[] = "/tmp/g15hella.pid";
 
 unsigned int textSize = G15_TEXT_MED;
 
-void hella_loop();
+char row_name[512];
+char row_speed[512];
+char row_eta[512];
+
+char *host = NULL, *port = NULL, *passwd = NULL;
+
+void status_loop();
 void reset_screen();
+void update_screen();
 
 void signal_handler(int sig) {
     switch (sig) {
@@ -52,10 +61,12 @@ void keyboard_watch(void) {
         } else if(keystate & G15_KEY_L4) {
             if (textSize > G15_TEXT_SMALL) {
                 textSize--;
+                update_screen();
             }
         } else if(keystate & G15_KEY_L5) {
             if (textSize < G15_TEXT_LARGE) {
                 textSize++;
+                update_screen();
             }
         }
 
@@ -73,74 +84,115 @@ static void die_if_fault_occurred(xmlrpc_env * const envP) {
     }
 }
 
-void hella_loop() {
-    xmlrpc_env env;
-    xmlrpc_server_info *server;
-    xmlrpc_value *result;
-    const char *server_url = "http://localhost:8760";
-
+char *get_current_name(xmlrpc_env *env, xmlrpc_value *status) {
     xmlrpc_value *current_nzb_arr;
     xmlrpc_value *current_nzb_p;
     xmlrpc_value *current_name_p;
     char *current_name;
 
+    /* Check if something is downloading */
+    xmlrpc_struct_find_value(env, status, "currently_downloading", &current_nzb_arr);
+    die_if_fault_occurred(env);
+    if (current_nzb_arr && xmlrpc_array_size(env, current_nzb_arr) > 0) {
+        /* Get current nzb name */
+        xmlrpc_array_read_item(env, current_nzb_arr, 0, &current_nzb_p);
+        die_if_fault_occurred(env);
+        xmlrpc_struct_find_value(env, current_nzb_p, "nzbName", &current_name_p);
+        die_if_fault_occurred(env);
+        xmlrpc_read_string(env, current_name_p, (const char**)&current_name);
+        die_if_fault_occurred(env);
+
+        xmlrpc_DECREF(current_nzb_arr);
+        xmlrpc_DECREF(current_nzb_p);
+        xmlrpc_DECREF(current_name_p);
+
+        return current_name;
+    } else {
+        xmlrpc_DECREF(current_nzb_arr);
+        return NULL;
+    }
+}
+
+xmlrpc_bool get_is_paused(xmlrpc_env *env, xmlrpc_value *status) {
     xmlrpc_value *is_paused_p;
     xmlrpc_bool is_paused;
 
+    xmlrpc_struct_find_value(env, status, "is_paused", &is_paused_p);
+    xmlrpc_read_bool(env, is_paused_p, &is_paused);
+
+    xmlrpc_DECREF(is_paused_p);
+
+    return is_paused;
+}
+
+xmlrpc_int get_rate(xmlrpc_env *env, xmlrpc_value *status) {
     xmlrpc_value *rate_p;
     xmlrpc_int rate;
 
+    xmlrpc_struct_find_value(env, status, "rate", &rate_p);
+    xmlrpc_read_int(env, rate_p, &rate);
+
+    xmlrpc_DECREF(rate_p);
+
+    return rate;
+}
+
+xmlrpc_int get_eta(xmlrpc_env *env, xmlrpc_value *status) {
     xmlrpc_value *eta_p;
     xmlrpc_int eta;
 
-    char row_name[512];
-    char row_speed[512];
-    char row_eta[512];
+    xmlrpc_struct_find_value(env, status, "eta", &eta_p);
+    xmlrpc_read_int(env, eta_p, &eta);
+
+    xmlrpc_DECREF(eta_p);
+
+    return eta;
+}
+
+void status_loop() {
+    xmlrpc_env *env;
+    xmlrpc_server_info *server;
+    xmlrpc_value *status = NULL;
+    char server_url[1024];
+
+    char *current_name;
+    xmlrpc_bool is_paused;
+    xmlrpc_int rate;
+    xmlrpc_int eta;
+
+    snprintf(server_url, 1024, "http://%s:%s", host ? host : "localhost", port ? port : "8760");
 
     /* Start up our XML-RPC client library. */
+    env = malloc(sizeof(xmlrpc_env));
     xmlrpc_client_init(XMLRPC_CLIENT_NO_FLAGS, NAME, VERSION);
-    xmlrpc_env_init(&env);
+    xmlrpc_env_init(env);
 
     /* Make a new object to represent our XML-RPC server. */
-    server = xmlrpc_server_info_new(&env, server_url);
-    die_if_fault_occurred(&env);
+    server = xmlrpc_server_info_new(env, server_url);
+    die_if_fault_occurred(env);
 
     /* Set up our authentication information. */
-    /* TODO: Not hardcoding passwd */
-    xmlrpc_server_info_set_basic_auth(&env, server, "hellanzb", "changeme");
-    die_if_fault_occurred(&env);
+    xmlrpc_server_info_set_basic_auth(env, server, "hellanzb", passwd ? passwd : "changeme");
+    die_if_fault_occurred(env);
 
     /* TODO: Handle the server becoming online/offline */
     while (!finished) {
-        result = xmlrpc_client_call_server(&env, server, "status", "()");
-        die_if_fault_occurred(&env);
+        status = xmlrpc_client_call_server(env, server, "status", "()");
+        die_if_fault_occurred(env);
 
         /* Check if something is downloading */
-        xmlrpc_struct_find_value(&env, result, "currently_downloading", &current_nzb_arr);
-        die_if_fault_occurred(&env);
-        if (current_nzb_arr && xmlrpc_array_size(&env, current_nzb_arr) > 0) {
-            /* Get current nzb name */
-            xmlrpc_array_read_item(&env, current_nzb_arr, 0, &current_nzb_p);
-            die_if_fault_occurred(&env);
-            xmlrpc_struct_find_value(&env, current_nzb_p, "nzbName", &current_name_p);
-            die_if_fault_occurred(&env);
-            xmlrpc_read_string(&env, current_name_p, (const char**)&current_name);
-            die_if_fault_occurred(&env);
-
-            xmlrpc_struct_find_value(&env, result, "is_paused", &is_paused_p);
-            xmlrpc_read_bool(&env, is_paused_p, &is_paused);
-
-            sprintf(row_name, "%s%s", current_name, is_paused ? " (Paused)" : "");
+        current_name = get_current_name(env, status);
+        if (current_name) {
+            is_paused = get_is_paused(env, status);
+            snprintf(row_name, 512, "%s%s", current_name, is_paused ? " (Paused)" : "");
 
             /* Get current speed */
-            xmlrpc_struct_find_value(&env, result, "rate", &rate_p);
-            xmlrpc_read_int(&env, rate_p, &rate);
-            sprintf(row_speed, "%d kB/s", rate);
+            rate = get_rate(env, status);
+            sprintf(row_speed, "Speed: %d kB/s", rate);
 
             /* Get current ETA */
-            xmlrpc_struct_find_value(&env, result, "eta", &eta_p);
-            xmlrpc_read_int(&env, eta_p, &eta);
-            sprintf(row_eta, "%.2d:%.2d", eta/60, eta%60);
+            eta = get_eta(env, status);
+            sprintf(row_eta, "ETA: %.2d:%.2d", eta/60, eta%60);
         } else {
             sprintf(row_name, "Nothing");
             row_speed[0] = '\0';
@@ -148,25 +200,25 @@ void hella_loop() {
         }
 
         /* Printing on screen */
-        g15r_clearScreen(canvas, G15_COLOR_WHITE);
-        g15r_renderString(canvas, (unsigned char *) row_name, 0, textSize, 0, 0);
-        g15r_renderString(canvas, (unsigned char *) row_speed, 1, textSize, 0, 0);
-        g15r_renderString(canvas, (unsigned char *) row_eta, 2, textSize, 0, 0);
-        g15_send(g15screen_fd, (char *) canvas->buffer, G15_BUFFER_LEN);
+        update_screen();
 
-        usleep(2*1000*1000);
+        usleep(2000000);
     }
 
-    xmlrpc_DECREF(current_nzb_arr);
-    xmlrpc_DECREF(current_nzb_p);
-    xmlrpc_DECREF(current_name_p);
-    xmlrpc_DECREF(is_paused_p);
-    xmlrpc_DECREF(eta_p);
-    xmlrpc_DECREF(result);
+    xmlrpc_DECREF(status);
 
     xmlrpc_server_info_free(server);
-    xmlrpc_env_clean(&env);
+    xmlrpc_env_clean(env);
+    free(env);
     xmlrpc_client_cleanup();
+}
+
+void update_screen() {
+    g15r_clearScreen(canvas, G15_COLOR_WHITE);
+    g15r_renderString(canvas, (unsigned char *) row_name, 0, textSize, 0, 0);
+    g15r_renderString(canvas, (unsigned char *) row_speed, 1, textSize, 0, 0);
+    g15r_renderString(canvas, (unsigned char *) row_eta, 2, textSize, 0, 0);
+    g15_send(g15screen_fd, (char *) canvas->buffer, G15_BUFFER_LEN);
 }
 
 void reset_screen() {
@@ -175,10 +227,15 @@ void reset_screen() {
     g15_send(g15screen_fd, (char *) canvas->buffer, G15_BUFFER_LEN);
 }
 
+void show_usage(char *prog) {
+    printf("Usage: %s [OPTIONS]\n\n", prog);
+}
+
 int main(int argc, char **argv) {
     struct sigaction act;
     pid_t pid;
     int i, daemonize_f = 0, kill_f = 0;
+    char opt;
 
     pthread_t keys_thread;
 
@@ -187,6 +244,26 @@ int main(int argc, char **argv) {
             daemonize_f = 1;
         else if (strcmp(argv[i], "-k") == 0)
             kill_f = 1;
+    }
+
+    while ((opt = getopt(argc, argv, "dkh:p:P:")) != -1) {
+        switch (opt) {
+        case 'd':
+            daemonize_f = 1;
+            break;
+        case 'k':
+            kill_f = 1;
+            break;
+        case 'h':
+            host = optarg;
+            break;
+        case 'p':
+            port = optarg;
+            break;
+        case 'P':
+            passwd = optarg;
+            break;
+        }
     }
 
     pid = is_app_running("g15hella", pid_file);
@@ -252,7 +329,7 @@ int main(int argc, char **argv) {
 
     pthread_create(&keys_thread, NULL, (void*)keyboard_watch, NULL);
 
-    hella_loop();
+    status_loop();
 
     pthread_join(keys_thread, NULL);
 
