@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
+#include <errno.h>
 #include <pthread.h>
 #include <sys/socket.h>
+#include <sys/time.h>
 
 #include <libg15.h>
 #include <libg15render.h>
@@ -61,7 +63,7 @@ void keyboard_watch(void) {
             }
         }
 
-        usleep(100 * 900);
+        usleep(100000);
     }
 
     return;
@@ -75,9 +77,12 @@ int show_playing_song() {
     int row = 0;
 
     fp = fopen(song_file, "r");
-    if (fp == NULL) {
-        perror(song_file);
+    if (fp == NULL && errno == ENOENT) {
+        /* No file, nothing playing */
         return false;
+    } else if (fp == NULL) {
+        perror(song_file);
+        exit(EXIT_FAILURE);
     }
 
     fseek(fp, 0, SEEK_END);
@@ -120,33 +125,70 @@ void reset_screen() {
     g15_send(g15screen_fd, (char *) canvas->buffer, G15_BUFFER_LEN);
 }
 
+inline long get_elapsed_ms(struct timeval before, struct timeval after) {
+    return ((after.tv_sec - before.tv_sec) * 1000 + (after.tv_usec - before.tv_usec) / 1000);
+}
+
 int main(int argc, char **argv) {
     struct sigaction act;
     pid_t pid;
-    int i, daemonize_f = 0, kill_f = 0;
+    int daemonize_f = 0, kill_f = 0, restart_f = 0;
+    char opt;
 
     pthread_t keys_thread;
 
-    for (i=1; i<argc; i++) {
-        if (strcmp(argv[i], "-d") == 0)
+    struct timeval t1, t2;
+
+    while ((opt = getopt(argc, argv, "dkr")) != -1) {
+        switch (opt) {
+        case 'd':
             daemonize_f = 1;
-        else if (strcmp(argv[i], "-k") == 0)
+            break;
+        case 'k':
             kill_f = 1;
+            break;
+        case 'r':
+            restart_f = 1;
+            break;
+        }
     }
 
     snprintf(pid_file, 256, "%s/.g15music.pid", "/tmp");
     snprintf(song_file, 256, "%s/.g15music_song", "/tmp");
 
-    pid = is_app_running("g15music", pid_file);
-
-    if (kill_f) {
-        if (pid > 0)
-            kill(pid, SIGINT);
-        return EXIT_SUCCESS;
+    if (kill_f && restart_f) {
+        fprintf(stderr, "You can't use -k and -r at the same time\n");
+        return EXIT_FAILURE;
     }
 
-    if (pid != 0) {
-        fprintf(stderr, "G15Music already running\n");
+    pid = is_app_running("g15music", pid_file);
+
+    if (kill_f || restart_f) {
+        if (pid <= 0) {
+            fprintf(stderr, "Cannot kill G15Music: Not running.\nExiting.\n");
+            return EXIT_FAILURE;
+        }
+
+        kill(pid, SIGINT);
+
+        if (kill_f)
+            return EXIT_SUCCESS;
+
+        /* We're restarting, wait until previous instance is actually killed
+         * Quit if it takes more than 2 seconds
+         */
+        gettimeofday(&t1, 0);
+        while (is_app_running("g15music", pid_file) != 0) {
+            gettimeofday(&t2, 0);
+            if (get_elapsed_ms(t1, t2) > 2000) {
+                fprintf(stderr, "Unable to kill G15Music.\nExiting.\n");
+                return EXIT_FAILURE;
+            }
+
+            usleep(10 * 1000);
+        }
+    } else if (pid != 0) {
+        fprintf(stderr, "G15Hella already running\n");
         return EXIT_FAILURE;
     }
 
@@ -168,12 +210,7 @@ int main(int argc, char **argv) {
         }
 
         if (freopen("/dev/null", "w", stdout) == NULL) {
-            perror("stderr");
-            return EXIT_FAILURE;
-        }
-
-        if (freopen("/dev/null", "w", stderr) == NULL) {
-            perror("stderr");
+            perror("stdout");
             return EXIT_FAILURE;
         }
     }
