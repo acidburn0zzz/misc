@@ -71,8 +71,10 @@ class G15StatusPlugin():
         artist = ""
         album = ""
 
+        if track.get_tag_display('tracknumber'):
+            title = track.get_tag_display('tracknumber') + ". "
         if track.get_tag_display('title'):
-            title = track.get_tag_display('title')
+            title = title + track.get_tag_display('title')
         if track.get_tag_display('artist'):
             artist = track.get_tag_display('artist')
         if track.get_tag_display('album'):
@@ -88,8 +90,10 @@ class G15StatusPlugin():
         artist = ""
         album = ""
 
+        if track.get_tag_display('tracknumber'):
+            title = track.get_tag_display('tracknumber') + ". "
         if track.get_tag_display('title'):
-            title = track.get_tag_display('title') + " (Paused)"
+            title = title + track.get_tag_display('title') + " (Paused)"
         if track.get_tag_display('artist'):
             artist = track.get_tag_display('artist')
         if track.get_tag_display('album'):
