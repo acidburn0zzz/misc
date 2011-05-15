@@ -223,7 +223,7 @@ void status_loop() {
 
                     /* Get current ETA */
                     eta = get_eta(env, status);
-                    sprintf(row_eta, "ETA: %.2d:%.2d", eta/60, eta%60);
+                    sprintf(row_eta, "ETA: %.2d:%.2d:%.2d", eta/3600, eta%3600/60, eta%60);
                 } else {
                     sprintf(row_name, "Hellanzb");
                     sprintf(row_speed, "Not downloading");
