@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 #-*- coding: utf-8 -*-
 
 """
@@ -48,12 +48,12 @@ def cleanup_foldername(strname):
     """
     valid_dir = re.compile(r"^[a-zA-z0-9_-]+$")
     invalid_stuff = re.compile(r"[^a-zA-z0-9_-]+")
-    strname = string.lower(strname)
+    strname = strname.lower()
     strname = enlever_accents(strname)
-    strname = re.sub("^[^\w]+","",strname) #trim the beginning
-    strname = re.sub("[^\w]+$","",strname) #trim the end
-    strname = invalid_stuff.sub("_",string.strip(strname)) #replace invalid stuff by _
-    strname = re.sub("_+","_",strname) #squeeze continuous _ to one _
+    strname = re.sub("^[^\w]+","", strname) #trim the beginning
+    strname = re.sub("[^\w]+$","", strname) #trim the end
+    strname = invalid_stuff.sub("_", strname.strip()) #replace invalid stuff by _
+    strname = re.sub("_+","_", strname) #squeeze continuous _ to one _
     if valid_dir.match(strname):
         return strname
     else:
@@ -63,10 +63,10 @@ def cleanup_filename(strname):
     """cleans up for a file name
     file name rules are similar to folder names, but it
     can and must have one extension"""
-    strname = string.lower(strname)
+    strname = strname.lower()
     (strfile, strext) = os.path.splitext(strname)
-    strext = string.strip(strext)
-    strfile = string.replace(strfile,'.','_')
+    strext = strext.strip()
+    strfile = strfile.replace('.', '_')
     if strext == '' or strext == '.' or strext[0]!='.':
         return ''
     strfile = cleanup_foldername(strfile)
@@ -81,7 +81,7 @@ def  ren_file(dir,f):
     """rename the file according to the rules"""
     c=cleanup_filename(f)
     if (c != "" and c != f):
-        print "%s -> %s" % (f,c)
+        print("%s -> %s" % (f,c))
         os.rename(dir+os.sep+f, dir+os.sep+c)
     return
 
