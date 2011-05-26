@@ -53,7 +53,10 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    while ((c = *buf) != 0x00) {
+    fclose(file);
+
+    while (buf - _buf < f_size) {
+        c = *buf;
         switch (c) {
         case '>':
             ++ptr;
