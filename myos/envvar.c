@@ -7,7 +7,9 @@
 typedef struct envvar_s envvar_t;
 
 envvar_t *addEnv(char *str, envvar_t *list) {
-    envvar_t *newVar = malloc(sizeof(envvar_t));
+    envvar_t *newVar, *cur, *prev;
+
+    newVar = malloc(sizeof(envvar_t));
 
     strtok(str, " ");
 
@@ -17,13 +19,29 @@ envvar_t *addEnv(char *str, envvar_t *list) {
 
     if (list == NULL) {
         list = newVar;
-    } else {
-        envvar_t *tmp = list;
-        while (tmp->next != NULL)
-            tmp = tmp->next;
-
-        tmp->next = newVar;
+        return list;
     }
+
+    cur = list;
+    if (strcmp(cur->key, newVar->key) == 0) {
+        newVar->next = cur->next;
+        free(cur);
+        return newVar;
+    }
+
+    while (cur != NULL) {
+        prev = cur;
+        cur = cur->next;
+
+        if (cur && strcmp(cur->key, newVar->key) == 0) {
+            newVar->next = cur->next;
+            prev->next = newVar;
+            free(cur);
+            return list;
+        }
+    }
+
+    prev->next = newVar;
 
     return list;
 }
@@ -36,4 +54,15 @@ char *getEnv(char *key, envvar_t *list) {
     }
 
     return NULL;
+}
+
+void cleanEnv(envvar_t *list) {
+    envvar_t *cur, *next;
+
+    cur = list;
+    while (cur != NULL) {
+        next = cur->next;
+        free(cur);
+        cur = next;
+    }
 }

@@ -9,5 +9,6 @@ struct envvar_s {
 
 struct envvar_s *addEnv(char *str, struct envvar_s *list);
 char *getEnv(char *key, struct envvar_s *list);
+void cleanEnv(struct envvar_s *list);
 
 #endif

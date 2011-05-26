@@ -7,6 +7,8 @@
 #include "panic.h"
 #include "shell.h"
 
+struct envvar_s *vars = NULL;
+
 void read_command(char *cmd, int size) {
     int i;
     char c;
@@ -31,6 +33,10 @@ void version() {
     puts("MyOS v0.001 by The Chancelor");
 }
 
+void cleanup() {
+    cleanEnv(vars);
+}
+
 void foo(struct envvar_s *list) {
     /* Dummy test function */
 
@@ -42,7 +48,6 @@ void foo(struct envvar_s *list) {
 
 void myshell(char verbose) {
     char cmd[256];
-    struct envvar_s *vars = NULL;
 
     puts("Welcome to AwesomeShell");
 
@@ -54,6 +59,7 @@ void myshell(char verbose) {
             continue;
 
         if (strcmp(cmd, "EXIT") == 0) {
+            cleanup();
             return;
         } else if (strcmp(cmd, "VER") == 0) {
             version();
