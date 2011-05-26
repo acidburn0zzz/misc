@@ -222,16 +222,16 @@ void Vue::updateStatusBar() {
         qs = tr("Welcome to Daleks");
     } else {
         std::stringstream s;
-        s << "Level : " << _cont->getLevel() << "\t\tPoints : " <<
-            _cont->getPts() << "\t\t\tZapper : " << _cont->getZaps();
-        qs = s.str().c_str();
+        qs.append(tr("Level: ")).append(QString::number(_cont->getLevel()))
+            .append("\t\t").append(tr("Points: ")).append(QString::number(_cont->getPts()))
+            .append("\t\t\t").append(tr("Zapper: ")).append(QString::number(_cont->getZaps()));
     }
 
     statusBar()->showMessage(qs);
 }
 
 void Vue::imagesMissing() {
-    showMessage("Error", "Images not found", MSG_CRITICAL);
+    showMessage(tr("Error"), tr("Images not found"), MSG_CRITICAL);
     exit(0);
 }
 
@@ -287,41 +287,35 @@ void Vue::zap() {
         _cont->zap();
 }
 
-/****
- * TODO:
- * Changer char* par QString dans le prototype
- ****/
-int Vue::showMessage(char *title, char *message, int type) {
-    QString q_title = tr(title);
-    QString q_mess = tr(message);
+int Vue::showMessage(QString title, QString message, int type) {
     if (type == MSG_ABOUT)
-        QMessageBox::about(this, q_title, q_mess);
+        QMessageBox::about(this, title, message);
     else if (type == MSG_INFORMATION)
-        QMessageBox::information(this, q_title, q_mess);
+        QMessageBox::information(this, title, message);
     else if (type == MSG_CRITICAL)
-        QMessageBox::critical(this, q_title, q_mess);
+        QMessageBox::critical(this, title, message);
     else if (type == MSG_QUESTION)
-        return QMessageBox::question(this, q_title, q_mess, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        return QMessageBox::question(this, title, message, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     return 0;
 }
 
 void Vue::showAbouDialog() {
-    showMessage("About Daleks", "Daleks, Version 0.9.6", MSG_ABOUT);
+    showMessage(tr("About Daleks"), tr("Daleks, Version 0.9.6"), MSG_ABOUT);
 }
 
 void Vue::showControls() {
-    showMessage("Controls", "Numpad : Move\nN : New game\nG : Toggle grid\nT : Teleport\n0 : Run\n. : Zap", MSG_INFORMATION);
+    showMessage(tr("Controls"), tr("Numpad : Move\nN : New game\nG : Toggle grid\nT : Teleport\n0 : Run\n. : Zap"), MSG_INFORMATION);
 }
 
 void Vue::askNewGame() {
-    if (showMessage("Abort", "Game running\nDo you want to start a new game?", MSG_QUESTION) == QMessageBox::Yes) {
+    if (showMessage(tr("Abort"), tr("Game running\nDo you want to start a new game?"), MSG_QUESTION) == QMessageBox::Yes) {
         _cont->nouvellePartie();
         drawGame();
     }
 }
 
 void Vue::askNewGameAfterLose() {
-    if (showMessage("You lose!", "Play again?", MSG_QUESTION) == QMessageBox::Yes) {
+    if (showMessage(tr("You lose!"), tr("Play again?"), MSG_QUESTION) == QMessageBox::Yes) {
         _cont->nouvellePartie();
         drawGame();
     } else {

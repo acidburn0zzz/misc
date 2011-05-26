@@ -3,11 +3,10 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 
-CONFIG += qt debug
 QT += opengl
 
 DESTDIR = ./bin
@@ -24,3 +23,13 @@ SOURCES += board.cpp \
            main.cpp \
            partie.cpp \
            vue.cpp
+
+!rel {
+    CONFIG += qt debug
+    DEFINES += DEBUG
+    message("debug")
+}
+rel {
+    CONFIG += qt release
+    message("release")
+}

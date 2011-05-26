@@ -23,7 +23,7 @@ public:
 
     int getNbCases();
     int getNbDaleks();
-    int showMessage(char *title, char *message, int type);
+    int showMessage(QString title, QString message, int type);
     void askNewGame();
     void askNewGameAfterLose();
     void drawGame();
