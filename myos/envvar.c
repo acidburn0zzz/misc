@@ -46,6 +46,42 @@ envvar_t *addEnv(char *str, envvar_t *list) {
     return list;
 }
 
+
+envvar_t *rmEnv(char *key, envvar_t *list) {
+    envvar_t *cur, *prev, *tmp;
+
+    if (list == NULL)
+        return NULL;
+
+    /* TODO: I can do better than this */
+    if (key == NULL)
+        return list;
+
+    cur = list;
+    if (strcmp(cur->key, key) == 0) {
+        tmp = cur->next;
+        free(cur);
+        return tmp;
+    }
+
+    prev = cur;
+    cur = cur->next;
+
+    while (cur) {
+        if (strcmp(cur->key, key) == 0) {
+            prev->next = cur->next;
+            free(cur);
+
+            return list;
+        }
+        
+        prev = cur;
+        cur = cur->next;
+    }
+
+    return list;
+}
+
 char *getEnv(char *key, envvar_t *list) {
     while (list != NULL) {
         if (strcmp(list->key, key) == 0)

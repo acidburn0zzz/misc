@@ -67,6 +67,8 @@ void myshell(char verbose) {
             system("clear");
         } else if (strncmp(cmd, "SET ", (strlen(cmd) >= 4 ? 4 : 3)) == 0) {
             vars = addEnv(cmd+4, vars);
+        } else if (strncmp(cmd, "UNSET ", (strlen(cmd) >= 6 ? 6 : 5)) == 0) {
+            vars = rmEnv(cmd+6, vars);
         } else if (strncmp(cmd, "ECHO ", (strlen(cmd) >= 5 ? 5 : 4)) == 0) {
             char *tmp = getEnv(cmd+5, vars);
             puts(tmp != NULL ? tmp : "");
