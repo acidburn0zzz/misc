@@ -40,15 +40,17 @@
     (((uint32_t)(bp)[0] << 8) & 0x0000FF00) | \
     ((uint32_t) (bp)[1] & 0x000000FF)
 
-void log_header(FILE *log_file) {
+FILE *log_file;
+
+void log_header(FILE *log_file, char *title) {
     fprintf(log_file, "Acid IPS Version 1.00\n");
-    fprintf(log_file, "Apply IPS Patch Log\n\n");
+    fprintf(log_file, "%s\n\n", title);
     fprintf(log_file, "Offset    Size    RLE    IPS Range            Patch Size\n");
 }
 
 void log_ips(FILE *log_file, uint32_t offset, uint32_t size, uint32_t rle, uint32_t patch_range_b,
              uint32_t patch_range_e) {
-    fprintf(log_file, "%.6X    %4X    %-3s    %.8X-%.8X    %5X\n", offset, rle ? rle : size, rle ? "Yes" : "No",
+    fprintf(log_file, "%.6X    %.4X    %-3s    %.8X-%.8X    %5X\n", offset, rle ? rle : size, rle ? "Yes" : "No",
             patch_range_b, patch_range_e - 1, patch_range_e - patch_range_b);
 }
 
@@ -108,7 +110,7 @@ int apply_patch(char *s_original_file, char *s_ips_file, char *s_output_file) {
     if (strncmp((const char *) buffer, "PATCH", 5) != 0)
         fail("%s: Not an IPS patch", s_ips_file);
 
-    log_header(stdout);
+    log_header(log_file, "IPS Patch log");
 
     while (!eof) {
         patch_range_a = ftell(f_ips_file);
@@ -171,7 +173,7 @@ int apply_patch(char *s_original_file, char *s_ips_file, char *s_output_file) {
         fseek(f_original_file, pos, SEEK_SET);
 
         patch_range_b = ftell(f_ips_file);
-        log_ips(stdout, offset, size, rle, patch_range_a, patch_range_b);
+        log_ips(log_file, offset, size, rle, patch_range_a, patch_range_b);
         count++;
     }
 
@@ -186,9 +188,10 @@ int apply_patch(char *s_original_file, char *s_ips_file, char *s_output_file) {
             fail("Unable to write to: %s", s_output_file);
     }
 
-    log_footer(stdout, count);
+    log_footer(log_file, count);
 
     free(buffer);
+    fclose(f_original_file);
     fclose(f_ips_file);
     fclose(f_output_file);
 
@@ -201,14 +204,22 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    log_file = fopen("ips.log", "w");
+    if (log_file == NULL) {
+        perror("ips.log");
+        return EXIT_FAILURE;
+    }
+
     if (tolower(argv[1][0]) == 'a') {
-        return apply_patch(argv[2], argv[3], argv[4]);
+        apply_patch(argv[2], argv[3], argv[4]);
     } else if (tolower(argv[1][0]) == 'c') {
         /* Create */
         /* return create_patch(argv[2], argv[3], argv[4]); */
     } else {
         usage(argv[0]);
-        return 1;
     }
+
+    fclose(log_file);
+
     return 0;
 }
