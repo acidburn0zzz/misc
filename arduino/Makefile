@@ -49,7 +49,7 @@ PORT = /dev/ttyUSB0
 #PORT = /dev/tty.usbserial-*
 TARGET = main
 
-ARDUINO = /home/mathieu/src/dev/arduino-0021
+ARDUINO = /home/mathieu/src/dev/arduino
 ARDUINO_SRC = $(ARDUINO)/hardware/arduino/cores/arduino
 ARDUINO_LIB_SRC = $(ARDUINO)/hardware/libraries
 
