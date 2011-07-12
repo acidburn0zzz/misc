@@ -5,17 +5,27 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include "hexdump.h"
+
 /* Comment to remove line comment */
 #define LINE_COMMENT 1
 
 /* Un-comment to add debug output */
-#define DEBUG 1
+/* #define DEBUG 1 */
 
 /* Should be at least 0x7530 (30 000) */
 #define ARRAY_SIZE 0x8000
 
+/* Prototypes */
+void debug_print(const char *fmt, ...);
+void shell(void);
+void prompt(void);
+void get_user_command(void);
+int execute_debug_cmd(void);
+void interpret_next_command(void);
+
+/* Globals */
 unsigned char *ptr, *buf, *_ptr, *_buf, c;
-void hexdump(const char *buf, int offset, int len);
 
 #ifdef DEBUG
 #define BUFFER_MAX_LENGTH 256
@@ -82,41 +92,12 @@ void shell() {
 }
             
 #else
-void debug_print(const char *fmt, ...) { }
-void shell() { }
+inline void debug_print(const char *fmt, ...) { }
+inline void shell() { }
 #endif
-
-void hexdump(const char *buf, int offset, int len) {
-    int i;
-    char *begin, *end, c;
-
-    begin = buf + offset;
-    end = begin + len;
-
-    printf("\n");
-
-    while (begin < end) {
-        for (i=0; i<16; i++) {
-            if (i != 0 && i % 4 == 0)
-                printf(" ");
-
-            printf("%.2x ", (int) *(begin+i));
-        }
-        for (i=0; i<16; i++) {
-            if (i != 0 && i % 8 == 0)
-                printf(" ");
-
-            c = *(begin+i);
-            printf("%c", (c >= 0x20 && c <= 0x7e) ? c : '.');
-        }
-        printf("\n");
-        begin += 16;
-    }
-}
 
 void interpret_next_command() {
     int i;
-    static unsigned char c;
 
     c = *buf;
 
@@ -226,7 +207,7 @@ int main(int argc, char *argv[]) {
         shell();
     }
 
-    hexdump((const char*)_ptr, 0, 256);
+    hexdump((const void*)_ptr, 0, 256);
     printf("Done\n");
 
     free(_buf);

@@ -1,24 +1,22 @@
 CC=gcc
-CFLAGS=-Wall -g -pedantic
+CFLAGS=-g -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -I../misc
 CXXFLAGS=$(CFLAGS)
 LDFLAGS=
 
-PROGRAM=bfint
-SOURCES=main.c
-OBJS=$(SOURCES:.c=.o)
+PROGRAMS=bfint bfdbg
 
 PREFIX=/usr/local
 
-all:	$(PROGRAM)
+all:	$(PROGRAMS)
 
-bfint: $(OBJS)
-	$(CC) -o $(PROGRAM) $(OBJS) $(LDFLAGS)
+bfint:
+	$(CC) -o bfint $(CFLAGS) main.c ../misc/hexdump.c $(LDFLAGS)
 
-.c.o:
-	$(CC) $(CFLAGS) -c $< -o $@
+bfdbg:
+	$(CC) -o bfdbg $(CFLAGS) -DDEBUG main.c ../misc/hexdump.c $(LDFLAGS)
 
 install:
-	$(INSTALL) -D $(PROGRAM) $(PREFIX)/bin/$(PROGRAM)
+	$(INSTALL) -D $(PROGRAMS) $(PREFIX)/bin/$(PROGRAM)
 
 clean:
-	$(RM) $(OBJS) *~
+	$(RM) $(PROGRAMS) *~
