@@ -7,16 +7,12 @@ PROGRAMS=bfint bfdbg
 
 PREFIX=/usr/local
 
-all:	$(PROGRAMS)
-
-bfint:
+all:
 	$(CC) -o bfint $(CFLAGS) main.c ../misc/hexdump.c $(LDFLAGS)
-
-bfdbg:
 	$(CC) -o bfdbg $(CFLAGS) -DDEBUG main.c ../misc/hexdump.c $(LDFLAGS)
 
 install:
 	$(INSTALL) -D $(PROGRAMS) $(PREFIX)/bin/$(PROGRAM)
 
 clean:
-	$(RM) $(PROGRAMS) *~
+	$(RM) bfint bfdbg *~

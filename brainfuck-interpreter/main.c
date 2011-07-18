@@ -207,9 +207,6 @@ int main(int argc, char *argv[]) {
         shell();
     }
 
-    hexdump((const void*)_ptr, 0, 256);
-    printf("Done\n");
-
     free(_buf);
     free(_ptr);
     return EXIT_SUCCESS;
