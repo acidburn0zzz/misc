@@ -68,8 +68,8 @@ extern "C" {
     unsigned int crc32_hash_string(unsigned char *str);
     int crc32_hash_file(char *fn, uint32_t *sum);
 
-    /* void crc32_generate_table(); */
-    int crc32_test();
+    /* void crc32_generate_table(void); */
+    int crc32_test(void);
 
 #ifdef __cplusplus
 }

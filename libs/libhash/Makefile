@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -O2 -g -pedantic -ansi -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE
+CFLAGS=-g -O2 -pedantic -ansi -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE
 CXXFLAGS=$(CFLAGS)
 INCLUDES=
 LDFLAGS=

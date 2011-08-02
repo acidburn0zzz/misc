@@ -1,9 +1,6 @@
-#include <getopt.h>
 #include <stdio.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include <pthread.h>
 #include <ctype.h>
 #include <unistd.h>
@@ -18,6 +15,15 @@
 unsigned long size, remain;
 char *cur_file;
 
+void msleep(int ms);
+void usage(char *app_name);
+int get_console_width(void);
+void print_header(void);
+void print_head_foot(char *fn);
+void pct(void);
+int hash_file(char *fn, uint32_t *sum);
+int check_sfv_file(char *fn);
+
 void msleep(int ms) {
     struct timespec req;
     time_t sec = (ms/1000);
@@ -30,12 +36,12 @@ void msleep(int ms) {
         continue;
 }
 
-void usage(char *prog) {
+void usage(char *app_name) {
     fprintf(stderr, "AcidCRC32 %s\n", __PROG_VERSION__);
     fprintf(stderr, "Usage :\n");
-    fprintf(stderr, "\t%s [-u] file(s)\n", prog);
+    fprintf(stderr, "\t%s [-u] file(s)\n", app_name);
     fprintf(stderr, "OR\n");
-    fprintf(stderr, "\t%s [-u] -c sfv_file\n", prog);
+    fprintf(stderr, "\t%s [-u] -c sfv_file\n", app_name);
 }
 
 int get_console_width() {
