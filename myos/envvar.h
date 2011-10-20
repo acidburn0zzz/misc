@@ -1,15 +1,17 @@
 #ifndef __ENVVAR_H__
 #define __ENVVAR_H__
 
-struct envvar_s {
-    char key[256];
-    char val[256];
-    struct envvar_s *next;
+struct item_s {
+    char *key;
+    void *val;
+    struct item_s *next;
 };
 
-struct envvar_s *addEnv(char *str, struct envvar_s *list);
-struct envvar_s *rmEnv(char *key, struct envvar_s *list);
-char *getEnv(char *key, struct envvar_s *list);
-void cleanEnv(struct envvar_s *list);
+typedef struct item_s item_t;
+
+struct item_s *add_item(struct item_s *list, char *key, void *value);
+struct item_s *del_item(struct item_s *list, char *key);
+void *get_item(struct item_s *list, char *key);
+void delete_list(struct item_s *list);
 
 #endif

@@ -4,51 +4,53 @@
 
 #include "envvar.h"
 
-typedef struct envvar_s envvar_t;
+void free_item(item_t *item) {
+	free(item->key);
+	free(item->val);
+	free(item);
+}
 
-envvar_t *addEnv(char *str, envvar_t *list) {
-    envvar_t *newVar, *cur, *prev;
+item_t *add_item(item_t *list, char *key, void *value) {
+    item_t *new_item, *cur, *prev;
 
-    newVar = malloc(sizeof(envvar_t));
+    new_item = malloc(sizeof(item_t));
 
-    strtok(str, " ");
-
-    strcpy(newVar->key, str);
-    strcpy(newVar->val, str + strlen(str) + 1);
-    newVar->next = NULL;
+    new_item->key = key;
+    new_item->val = value;
+    new_item->next = NULL;
 
     if (list == NULL) {
-        list = newVar;
+        list = new_item;
         return list;
     }
 
     cur = list;
-    if (strcmp(cur->key, newVar->key) == 0) {
-        newVar->next = cur->next;
-        free(cur);
-        return newVar;
+    if (strcmp(cur->key, new_item->key) == 0) {
+        new_item->next = cur->next;
+        free_item(cur);
+        return new_item;
     }
 
     while (cur != NULL) {
         prev = cur;
         cur = cur->next;
 
-        if (cur && strcmp(cur->key, newVar->key) == 0) {
-            newVar->next = cur->next;
-            prev->next = newVar;
-            free(cur);
+        if (cur && strcmp(cur->key, new_item->key) == 0) {
+            new_item->next = cur->next;
+            prev->next = new_item;
+            free_item(cur);
             return list;
         }
     }
 
-    prev->next = newVar;
+    prev->next = new_item;
 
     return list;
 }
 
 
-envvar_t *rmEnv(char *key, envvar_t *list) {
-    envvar_t *cur, *prev, *tmp;
+item_t *del_item(item_t *list, char *key) {
+    item_t *cur, *prev, *tmp;
 
     if (list == NULL)
         return NULL;
@@ -60,7 +62,7 @@ envvar_t *rmEnv(char *key, envvar_t *list) {
     cur = list;
     if (strcmp(cur->key, key) == 0) {
         tmp = cur->next;
-        free(cur);
+        free_item(cur);
         return tmp;
     }
 
@@ -70,7 +72,7 @@ envvar_t *rmEnv(char *key, envvar_t *list) {
     while (cur) {
         if (strcmp(cur->key, key) == 0) {
             prev->next = cur->next;
-            free(cur);
+            free_item(cur);
 
             return list;
         }
@@ -82,7 +84,7 @@ envvar_t *rmEnv(char *key, envvar_t *list) {
     return list;
 }
 
-char *getEnv(char *key, envvar_t *list) {
+void *get_item(item_t *list, char *key) {
     while (list != NULL) {
         if (strcmp(list->key, key) == 0)
             return list->val;
@@ -92,13 +94,13 @@ char *getEnv(char *key, envvar_t *list) {
     return NULL;
 }
 
-void cleanEnv(envvar_t *list) {
-    envvar_t *cur, *next;
+void delete_list(item_t *list) {
+    item_t *cur, *next;
 
     cur = list;
     while (cur != NULL) {
         next = cur->next;
-        free(cur);
+        free_item(cur);
         cur = next;
     }
 }
