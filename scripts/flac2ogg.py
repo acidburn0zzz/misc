@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python2
 #-*- coding: utf-8 -*-
 import sys
 import os
@@ -12,31 +12,29 @@ year = None
 track = None
 genre = None
 
+win32 = False
+
 def usage(prog):
     print '%s flac_files' % prog
 
-def check_flac():
-    flac = None
-    path = os.getenv('PATH').split(':')
-    for i in path:
-        if os.path.isfile(i + '/flac'):
-            flac = i + '/flac'
-            break
+def check_exe(name):
+    exe = None
+    ext = ''
 
-    if flac == None:
-        print 'Error: flac not found'
-        exit(-1)
+    if win32:
+        ext = '.exe'
 
-def check_ogg():
-    oggenc = None
-    path = os.getenv('PATH').split(':')
-    for i in path:
-        if os.path.isfile(i + '/oggenc'):
-            oggenc = i + '/oggenc'
-            break
+    if os.path.isfile(name + ext):
+        exe = name + ext
+    else:
+        path = os.getenv('PATH').split(';' if win32 else ':')
+        for i in path:
+            if os.path.isfile(i + '/' + name + ext):
+                exe = i + '/' + name + ext
+                break
 
-    if oggenc == None:
-        print 'Error: oggenc not found'
+    if exe == None:
+        print 'Error: %s not found' % name
         exit(-1)
 
 def get_tag(tag, file):
@@ -83,12 +81,16 @@ def convert_file(flac_file):
     cmd = 'oggenc %s %s %s -o %s' % (oggenc_opts, tag_opts, wav_file, ogg_file)
     os.system(cmd)
 
+    #rm wav
     os.system('rm %s' % wav_file)
 
 if __name__ == '__main__':
-    #Verification de l'existence de oggenc et flac
-    check_flac()
-    check_ogg()
+    if sys.platform == 'win32':
+        win32 = True
+
+    #Verification de l'existence de lame et flac
+    check_exe('flac')
+    check_exe('oggenc')
 
     for i in sys.argv[1:]:
         convert_file(i)
