@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-g -pedantic -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -I../misc
+CFLAGS=-g -pedantic -std=c99 -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes -I../misc
 CXXFLAGS=$(CFLAGS)
 LDFLAGS=
 

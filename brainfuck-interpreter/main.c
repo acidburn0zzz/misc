@@ -16,6 +16,10 @@
 /* Should be at least 0x7530 (30 000) */
 #define ARRAY_SIZE 0x8000
 
+typedef int bool;
+#define TRUE 1
+#define FALSE 0
+
 /* Prototypes */
 void debug_print(const char *fmt, ...);
 void shell(void);
@@ -25,14 +29,16 @@ int execute_debug_cmd(void);
 void interpret_next_command(void);
 
 /* Globals */
-unsigned char *ptr, *buf, *_ptr, *_buf, c;
+unsigned char *ptr, *buf, *_ptr, *_buf;
+unsigned int break_pos;
+size_t buf_size;
 
 #ifdef DEBUG
-#define BUFFER_MAX_LENGTH 256
+#define CMD_BUFFER_MAX_LENGTH 256
 
 static char *debug_cmd;
-static char input_buffer[BUFFER_MAX_LENGTH];
-static int buffer_chars;
+static char cmd_buffer[CMD_BUFFER_MAX_LENGTH];
+static int cmd_buffer_len;
 static char user_input = '\0';
 
 void debug_print(const char *fmt, ...) {
@@ -49,18 +55,21 @@ void prompt() {
 }
 
 void get_user_command() {
-    buffer_chars = 0;
-    while (user_input != '\n' && buffer_chars < BUFFER_MAX_LENGTH) {
-        input_buffer[buffer_chars++] = user_input;
+    cmd_buffer_len = 0;
+    while (user_input != '\n' && cmd_buffer_len < CMD_BUFFER_MAX_LENGTH) {
+        cmd_buffer[cmd_buffer_len++] = user_input;
         user_input = getchar();
     }
-    input_buffer[buffer_chars] = '\0';
+    cmd_buffer[cmd_buffer_len] = '\0';
 
-    debug_cmd = strtok(input_buffer, " ");
+    debug_cmd = strtok(cmd_buffer, " ");
 }
 
 int execute_debug_cmd() {
     if (strcmp("exit", debug_cmd) == 0) {
+        exit(EXIT_SUCCESS);
+    }
+    if (strcmp("q", debug_cmd) == 0) {
         exit(EXIT_SUCCESS);
     }
     if (strcmp("cont", debug_cmd) == 0 || strcmp("continue", debug_cmd) == 0) {
@@ -98,82 +107,91 @@ inline void shell() { }
 
 void interpret_next_command() {
     int i;
+    char c;
+    
+    while (buf - _buf < buf_size) {
+        c = *buf;
 
-    c = *buf;
-
-    switch (c) {
-    case '>':
-        ++ptr;
-        if (ptr >= _ptr + ARRAY_SIZE) {
-            fprintf(stderr, "Error: Pointer can't go over 0x%x\n", ARRAY_SIZE);
-            exit(EXIT_FAILURE);
-        }
-        debug_print("(%.3ld): %c | Pos. is %ld\n", buf - _buf, c, ptr - _ptr);
-        break;
-    case '<':
-        --ptr;
-        if (ptr < _ptr) {
-            fprintf(stderr, "Error: Pointer can't go under 0\n");
-            exit(EXIT_FAILURE);
-        }
-        debug_print("(%.3ld): %c | Pos. is %ld\n", buf - _buf, c, ptr - _ptr);
-        break;
-    case '+':
-        ++(*ptr);
-        debug_print("(%.3ld): %c | v[%ld]=%d\n", buf - _buf, c, ptr - _ptr, *ptr);
-        break;
-    case '-':
-        --(*ptr);
-        debug_print("(%.3ld): %c | v[%ld]=%d\n", buf - _buf, c, ptr - _ptr, *ptr);
-        break;
-    case '.':
-        putchar(*ptr);
-        debug_print("(%.3ld): %c | output '%d' %c\n", buf - _buf, c, *ptr, *ptr);
-        break;
-    case ',':
-        *ptr = getchar();
-        debug_print("(%.3ld): %c | read '%d' %c\n", buf - _buf, c, *ptr, *ptr);
-        break;
-    case '[':
-        if (*ptr == 0) {
-            i = 0;
-            c = *(++buf);
-            while (c != ']' || i != 0) {
-                if (c == '[')
-                    i++;
-                if (c == ']')
-                    i--;
+        switch (c) {
+        case '>':
+            ++ptr;
+            if (ptr >= _ptr + ARRAY_SIZE) {
+                fprintf(stderr, "Error: Pointer can't go over 0x%x\n", ARRAY_SIZE);
+                exit(EXIT_FAILURE);
+            }
+            debug_print("(%.3ld): %c | Pos. is %ld\n", buf - _buf, c, ptr - _ptr);
+            break;
+        case '<':
+            --ptr;
+            if (ptr < _ptr) {
+                fprintf(stderr, "Error: Pointer can't go under 0\n");
+                exit(EXIT_FAILURE);
+            }
+            debug_print("(%.3ld): %c | Pos. is %ld\n", buf - _buf, c, ptr - _ptr);
+            break;
+        case '+':
+            ++(*ptr);
+            debug_print("(%.3ld): %c | v[%ld]=%d\n", buf - _buf, c, ptr - _ptr, *ptr);
+            break;
+        case '-':
+            --(*ptr);
+            debug_print("(%.3ld): %c | v[%ld]=%d\n", buf - _buf, c, ptr - _ptr, *ptr);
+            break;
+        case '.':
+            putchar(*ptr);
+            debug_print("(%.3ld): %c | output '%d' %c\n", buf - _buf, c, *ptr, *ptr);
+            break;
+        case ',':
+            *ptr = getchar();
+            debug_print("(%.3ld): %c | read '%d' %c\n", buf - _buf, c, *ptr, *ptr);
+            break;
+        case '[':
+            if (*ptr == 0) {
+                i = 0;
                 c = *(++buf);
+                while (c != ']' || i != 0) {
+                    if (c == '[')
+                        i++;
+                    if (c == ']')
+                        i--;
+                    c = *(++buf);
+                }
             }
-        }
-        break;
-    case ']':
-        if (*ptr != 0) {
-            i = 0;
-            c = *(--buf);
-            while (c != '[' || i != 0) {
-                if (c == '[')
-                    i--;
-                if (c == ']')
-                    i++;
+            break;
+        case ']':
+            if (*ptr != 0) {
+                i = 0;
                 c = *(--buf);
+                while (c != '[' || i != 0) {
+                    if (c == '[')
+                        i--;
+                    if (c == ']')
+                        i++;
+                    c = *(--buf);
+                }
             }
-        }
-        break;
+            break;
 #ifdef LINE_COMMENT
-    case '#':
-    case ';':
-        while (c != 0x0a && c != 0x0d && c != 0x00)
-            c = *(++buf);
-        break;
+        case '#':
+        case ';':
+            while (c != 0x0a && c != 0x0d && c != 0x00)
+                c = *(++buf);
+            break;
+#endif
+        }
+
+        buf++;
+
+#ifdef DEBUG
+        if (buf - _buf == break_pos) {
+            printf("Breakpoint reached at char #%d (%c)\n", break_pos, c);
+            return;
+        }
 #endif
     }
-
-    buf++;
 }
 
 int main(int argc, char *argv[]) {
-    int f_size;
     FILE *file;
 
     if (argc < 2) {
@@ -188,13 +206,13 @@ int main(int argc, char *argv[]) {
     }
 
     fseek(file, 0, SEEK_END);
-    f_size = ftell(file);
+    buf_size = ftell(file);
     fseek(file, 0, SEEK_SET);
 
     ptr = _ptr = calloc(1, ARRAY_SIZE);
-    buf = _buf = malloc(f_size);
+    buf = _buf = malloc(buf_size);
 
-    if (fread(buf, f_size, sizeof(char), file) != sizeof(char)) {
+    if (fread(buf, buf_size, sizeof(char), file) != sizeof(char)) {
         fprintf(stderr, "Error: Unable to read from file: %s\n", argv[1]);
         return EXIT_FAILURE;
     }
@@ -202,7 +220,7 @@ int main(int argc, char *argv[]) {
     fclose(file);
 
     shell();
-    while (buf - _buf < f_size) {
+    while (buf - _buf < buf_size) {
         interpret_next_command();
         shell();
     }
