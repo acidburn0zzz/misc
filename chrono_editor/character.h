@@ -1,3 +1,23 @@
+/***************************************************************************
+ * Copyright (C) 2010 Lemay, Mathieu                                       *
+ *                                                                         *
+ * This program is free software; you can redistribute it and/or modify    *
+ * it under the terms of the GNU General Public License as published by    *
+ * the Free Software Foundation; either version 2 of the License, or       *
+ * (at your option) any later version.                                     *
+ *                                                                         *
+ * This program is distributed in the hope that it will be useful,         *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of          *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the            *
+ * GNU General Public License for more details.                            *
+ *                                                                         *
+ * You should have received a copy of the GNU General Public License along *
+ * with this program; if not, write to the Free Software Foundation, Inc., *
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.             *
+ *                                                                         *
+ * You can contact the original author at acidrain1@gmail.com              *
+ ***************************************************************************/
+
 #ifndef __CHARACTER_H__
 #define __CHARACTER_H__
 
@@ -7,87 +27,56 @@ enum {CRONO, MARLE, LUCCA, ROBO, FROG, AYLA, MAGUS, EPOCH};
 
 class Character {
 public:
-    Character();
+    Character(character_t character);
 
-    unsigned char   getId();
-    unsigned char   getCharId();
-    unsigned char*  getName();
-    unsigned char*  getNameForSRAM();
-    unsigned short  getCurrentHP();
-    unsigned short  getMaxHP();
-    unsigned short  getCurrentMP();
-    unsigned short  getMaxMP();
-    unsigned char   getBasePower();
-    unsigned char   getBaseStamina();
-    unsigned char   getBaseSpeed();
-    unsigned char   getBaseMagic();
-    unsigned char   getBaseHit();
-    unsigned char   getBaseEvade();
-    unsigned char   getBaseMagicDef();
-    unsigned char   getLevel();
-    unsigned int    getExp();
-    unsigned char   getHelmet();
-    unsigned char   getArmor();
-    unsigned char   getWeapon();
-    unsigned char   getRelic();
-    unsigned short  getXpForLevelUp();
-    unsigned short  getSpForNextTech();
+    character_t getCharStruct();
+    void setCharStruct(character_t character);
 
-    void setId(unsigned char id);
-    void setCharId(unsigned char charId);
-    void setName(unsigned char *name);
-    void setNameFromSRAM(unsigned char *name);
-    void setCurrentHP(unsigned short currentHP);
-    void setMaxHP(unsigned short maxHP);
-    void setCurrentMP(unsigned short currentMP);
-    void setMaxMP(unsigned short currentHP);
-    void setBasePower(unsigned char basePower);
-    void setBaseStamina(unsigned char baseStamina);
-    void setBaseSpeed(unsigned char baseSpeed);
-    void setBaseMagic(unsigned char baseMagic);
-    void setBaseHit(unsigned char baseHit);
-    void setBaseEvade(unsigned char baseEvade);
-    void setBaseMagicDef(unsigned char baseMagicDef);
-    void setLevel(unsigned char level);
-    void setExp(unsigned int exp);
-    void setHelmet(unsigned char helmet);
-    void setArmor(unsigned char armor);
-    void setWeapon(unsigned char weapon);
-    void setRelic(unsigned char relic);
+    u8   getId();
+    u8   getCharId();
+    u16  getCurrentHP();
+    u16  getMaxHP();
+    u16  getCurrentMP();
+    u16  getMaxMP();
+    //u8   getBasePower();
+    //u8   getBaseStamina();
+    //u8   getBaseSpeed();
+    //u8   getBaseMagic();
+    //u8   getBaseHit();
+    //u8   getBaseEvade();
+    //u8   getBaseMagicDef();
+    //u8   getLevel();
+    //u32  getExp();
+    //u8   getHelmet();
+    //u8   getArmor();
+    //u8   getWeapon();
+    //u8   getRelic();
+    //u16  getXpForLevelUp();
+    //u16  getSpForNextTech();
 
-    bool checkIfWeaponOK(unsigned char wpn);
+    void setId(u8 id);
+    void setCharId(u8 charId);
+    void setCurrentHP(u16 currentHP);
+    void setMaxHP(u16 maxHP);
+    void setCurrentMP(u16 currentMP);
+    void setMaxMP(u16 currentHP);
+    //void setBasePower(u8 basePower);
+    //void setBaseStamina(u8 baseStamina);
+    //void setBaseSpeed(u8 baseSpeed);
+    //void setBaseMagic(u8 baseMagic);
+    //void setBaseHit(u8 baseHit);
+    //void setBaseEvade(u8 baseEvade);
+    //void setBaseMagicDef(u8 baseMagicDef);
+    //void setLevel(u8 level);
+    //void setExp(u32 exp);
+    //void setHelmet(u8 helmet);
+    //void setArmor(u8 armor);
+    //void setWeapon(u8 weapon);
+    //void setRelic(u8 relic);
+
+    bool checkIfWeaponOK(u8 wpn);
 private:
-    unsigned char   id;
-    unsigned char   charId;
-    unsigned char   name[6];
-    unsigned short  currentHP;
-    unsigned short  maxHP;
-    unsigned short  currentMP;
-    unsigned short  maxMP;
-    unsigned char   basePower;
-    unsigned char   baseStamina;
-    unsigned char   baseSpeed;
-    unsigned char   baseMagic;
-    unsigned char   baseHit;
-    unsigned char   baseEvade;
-    unsigned char   baseMagicDef;
-    unsigned char   level;
-    unsigned int    exp;
-    unsigned char   helmet;
-    unsigned char   armor;
-    unsigned char   weapon;
-    unsigned char   relic;
-    unsigned short  xpForLevelUp;
-    unsigned short  spForNextTech;
-    unsigned char   currentPower;
-    unsigned char   currentStamina;
-    unsigned char   currentSpeed;
-    unsigned char   currentMagic;
-    unsigned char   currentHit;
-    unsigned char   currentEvade;
-    unsigned char   currentMagicDef;
-    unsigned char   currentDefense;
-    unsigned short  currentMaxHP;
+    character_t _char;
 };
 
 #endif //__CHARACTER_H__

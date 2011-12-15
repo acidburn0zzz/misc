@@ -18,36 +18,66 @@
  * You can contact the original author at acidrain1@gmail.com              *
  ***************************************************************************/
 
+#include <cstring>
+
 #include "game.h"
 
 using namespace std;
 
-Game::Game() {
+Game::Game(game_t game) {
+	_game = game;
 }
 
-Game::~Game() {
+game_t Game::getGameStruct() {
+	return _game;
 }
 
-char Game::getNo() {
-    return _no;
+void Game::setGameStruct(game_t game) {
+	_game = game;
 }
 
-void Game::setNo(char no) {
-    _no = no;
+Character Game::getCharacter(int charId) {
+    return Character(_game.characters[charId]);
 }
 
-Character Game::getCharacter(int charNo) {
-    return _chars[charNo];
+void Game::setCharacter(Character c, int charId) {
+	_game.characters[charId] = c.getCharStruct();
 }
 
-void Game::setCharacter(Character c, int charNo) {
-    _chars[charNo] = c;
+u8* Game::getName(int charId) {
+    decodeName(charId);
+    return _namesDec[charId];
 }
 
-unsigned int Game::getGold() {
-    return _gold;
+void Game::setName(u8* name, int charId) {
+    for (int i=0; i<5; i++) {
+        if (name[i] >= 'A' && name[i] <= 'Z')
+            _game.names[charId][i] = name[i] + 95;
+        else if (name[i] >= 'a' && name[i] <= 'z')
+            _game.names[charId][i] = name[i] + 89;
+        else
+            _game.names[charId][i] = name[i];
+    }
+    _game.names[charId][5] = '\0';
 }
 
-void Game::setGold(unsigned int gold) {
-    _gold = gold;
+u32 Game::getGold() {
+    return ((u32)_game.gold1 | (u32)_game.gold2 << 16);
+}
+
+void Game::setGold(u32 gold) {
+	_game.gold1 = gold & 0xffff;
+	_game.gold2 = (gold & 0xff0000) >> 16;
+}
+
+void Game::decodeName(int charId) {
+    for (int i=0; i<5; i++) {
+        if (_game.names[charId][i] >= 0xa0 && _game.names[charId][i] <= 0xb9)
+            _namesDec[charId][i] = _game.names[charId][i] - 95;
+        else if (_game.names[charId][i] >= 0xba && _game.names[charId][i] <= 0xd3)
+            _namesDec[charId][i] = _game.names[charId][i] - 89;
+        else
+            _namesDec[charId][i] = _game.names[charId][i];
+        _namesDec[charId][5] = '\0';
+    }
 }

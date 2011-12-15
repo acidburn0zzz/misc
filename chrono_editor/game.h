@@ -21,31 +21,34 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
-#include <iostream>
-
 #include "character.h"
 #include "struct.h"
 
 class Game {
 public:
-    Game();
-    ~Game();
+    Game(game_t game);
 
-    char getNo();
-    void setNo(char no);
+    //char getNo();
+    //void setNo(char no);
+    
+    game_t getGameStruct();
+    void setGameStruct(game_t);
+    
+    Character getCharacter(int charId);
+    void setCharacter(Character c, int charId);
 
-    Character getCharacter(int charNo);
-    void setCharacter(Character c, int charNo);
-    unsigned int getGold();
-    void setGold(unsigned int gold);
+    u8*  getName(int charId);
+    void setName(u8* name, int charId);
+
+    u32 getGold();
+    void setGold(u32 gold);
 
 private:
     char _no;
+    game_t _game;
+    u8 _namesDec[8][6];
 
-    Character _chars[7];
-    s_items _items;
-    unsigned int _gold;
-    s_time _time;
+    void decodeName(int charId);
 };
 
 #endif //__GAME_H__

@@ -1,82 +1,114 @@
+/***************************************************************************
+ * Copyright (C) 2010 Lemay, Mathieu                                       *
+ *                                                                         *
+ * This program is free software; you can redistribute it and/or modify    *
+ * it under the terms of the GNU General Public License as published by    *
+ * the Free Software Foundation; either version 2 of the License, or       *
+ * (at your option) any later version.                                     *
+ *                                                                         *
+ * This program is distributed in the hope that it will be useful,         *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of          *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the            *
+ * GNU General Public License for more details.                            *
+ *                                                                         *
+ * You should have received a copy of the GNU General Public License along *
+ * with this program; if not, write to the Free Software Foundation, Inc., *
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.             *
+ *                                                                         *
+ * You can contact the original author at acidrain1@gmail.com              *
+ ***************************************************************************/
+
 #ifndef __STRUCT_H__
 #define __STRUCT_H__
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef uint8_t  u8;
 typedef uint16_t u16;
 typedef uint32_t u32;
-typedef int8_t  s8;
-typedef int16_t s16;
-typedef int32_t s32;
+typedef int8_t   s8;
+typedef int16_t  s16;
+typedef int32_t  s32;
 
-//~ struct s_ioCharacter {
-    //~ uint8_t   useless0; //Pour commencer a lire le fichier 1 octet + tot, fonctionne pas sans
-    //~ uint8_t   who;
-    //~ uint8_t   useless1[2];
-    //~ uint16_t  currentHP;
-    //~ uint16_t  maxHP;
-    //~ uint16_t  currentMP;
-    //~ uint16_t  maxMP;
-    //~ uint8_t   power;
-    //~ uint8_t   stamina;
-    //~ uint8_t   speed;
-    //~ uint8_t   magic;
-    //~ uint8_t   hit;
-    //~ uint8_t   evade;
-    //~ uint8_t   magicDef;
-    //~ uint8_t   level;
-    //~ uint32_t  exp; //TODO: S'assurer que l'exp est bien 4 bytes
-    //~ uint8_t   useless2[16]; // +2 bytes si l'exp est 2 bytes
-    //~ uint8_t   helmet;
-    //~ uint8_t   armor;
-    //~ uint8_t   weapon;
-    //~ uint8_t   relic;
-    //~ uint16_t  xpForLevelUp;
-    //~ uint16_t  spForNextTech;
-    //~ uint8_t   useless3[32];
-//~ };
+static const int CHARACTER_SIZE = 0x0050;
+static const int NAME_SIZE = 0x0006;
+static const int GAME_SIZE = 0x0A00;
+static const int SRAM_SIZE = 0x2000;
+static const int CHECKSUM_OFFSET = 0x1FF0;
 
 struct character_s {
-    uint8_t   Id;
-    uint8_t   charId;
-    uint16_t  currentHP;
-    uint16_t  maxHP;
-    uint16_t  currentMP;
-    uint16_t  maxMP;
-    uint8_t   basePower;
-    uint8_t   baseStamina;
-    uint8_t   baseSpeed;
-    uint8_t   baseMagic;
-    uint8_t   baseHit;
-    uint8_t   baseEvade;
-    uint8_t   baseMagicDef;
-    uint8_t   level;
-    uint32_t  exp;
-    uint8_t   dummy2[16];
-    uint8_t   helmet;
-    uint8_t   armor;
-    uint8_t   weapon;
-    uint8_t   relic;
-    uint16_t  xpForLevelUp;
-    uint16_t  spForNextTech;
-    uint8_t   dummy3[7];
-    uint8_t   currentPower;
-    uint8_t   currentStamina;
-    uint8_t   currentSpeed;
-    uint8_t   currentMagic;
-    uint8_t   currentHit;
-    uint8_t   currentEvade;
-    uint8_t   currentMagicDef;
-    uint8_t   currentDefense;
-    uint16_t  currentMaxHP;
-    uint8_t   dummy4[13];
-};
+    u8  id;
+    u8  charId;
+    u8  unk1;
+    u16 currentHP;
+    u16 maxHP;
+    u16 currentMP;
+    u16 maxMP;
+    u8  power;
+    u8  stamina;
+    u8  speed;
+    u8  magic;
+    u8  hit;
+    u8  evade;
+    u8  magicDef;
+    u8  level;
+    u32 exp;
+    u8  unk2[16];
+    u8  helmet;
+    u8  armor;
+    u8  weapon;
+    u8  relic;
+    u16 xpForLevelUp;
+    u16 spForNextTech;
+    u8  unk3[7];
+    u8  currentPower;
+    u8  currentStamina;
+    u8  currentSpeed;
+    u8  currentMagic;
+    u8  currentHit;
+    u8  currentEvade;
+    u8  currentMagicDef;
+    u8  currentDefense;
+    u16 currentMaxHP;
+    u8  unk4[16];
+} __attribute__((packed));
+typedef struct character_s character_t;
 
-struct s_items {
+struct items_s {
     uint8_t item[256];
     uint8_t count[256];
 };
+typedef struct items_s items_t;
+
+struct game_s {
+    items_t     items;
+    character_t characters[8];
+    u8  unk1[256];
+    u8  partyMember1;
+    u8  partyMember2;
+    u8  partyMember3;
+    u8  unk2[25];
+    u8  saveCount;
+    u8  unk3[19];
+    u8  names[8][6];
+    u16 gold1; // gold & 0x00ffff
+    u8  gold2; // gold & 0xff0000
+    u8  unk4;
+    u8  fill[1052];
+};// __attribute__((packed));
+typedef struct game_s game_t;
+
+struct sram_s {
+    game_t games[3];
+    u8 unk1[496];
+    u16 crc[3];
+    u8 unk2[10];
+};
+typedef struct sram_s sram_t;
 
 struct s_time {
     uint8_t min2; //2eme chiffre des minutes
@@ -319,5 +351,9 @@ static const char *itemList[] = {
     "2 Horns",
     "2 Feathers"
 };
+
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif
 
 #endif //__STRUCT_H__

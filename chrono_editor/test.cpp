@@ -19,13 +19,32 @@
  ***************************************************************************/
 
 #include <iostream>
+#include <iomanip>
+#include <fstream>
 
+#include "game.h"
 #include "sramfile.h"
+#include "struct.h"
+
+using namespace std;
 
 int main(int, char **) {
-    SRAMFile sf(std::string("/home/mathieu/jeux/snes/saves/chrono_trigger_u.smc.srm"));
-
-    sf.foo();
+    cout << sizeof(sram_t) << endl;
+    try {
+        SRAMFile sf(std::string("test.srm"));
+        sf.read();
+        
+        Game g = sf.getGame(0);
+        Character c = g.getCharacter(0);
+        cout << g.getName(0) << endl;
+        character_t cs = c.getCharStruct();
+        cout << cs.maxHP << endl;
+        //sf.setGame(g, 1);
+        //sf.write();
+        //sf.foo(0);
+    } catch (std::exception e) {
+        std::cerr << e.what() << std::endl;
+    }
 
     return 0;
 }

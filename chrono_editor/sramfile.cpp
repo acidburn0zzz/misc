@@ -33,13 +33,6 @@ using namespace std;
 
 SRAMFile::SRAMFile(const std::string fn) throw(exception) {
     this->fn = fn;
-    sram = new unsigned char[SRAM_SIZE];
-
-    read();
-}
-
-SRAMFile::~SRAMFile() {
-    if (sram) delete [] sram;
 }
 
 void SRAMFile::read() throw(exception) {
@@ -65,7 +58,7 @@ void SRAMFile::read() throw(exception) {
     }
 
     file.seekg(0, ios_base::beg);
-    file.read((char*)sram, SRAM_SIZE);
+    file.read((char *)&sram, SRAM_SIZE);
     file.close();
 }
 
@@ -80,24 +73,27 @@ void SRAMFile::write() throw(exception) {
         throw e;
     }
 
-    checksum();
+    computeChecksums();
 
-    file.write((char*)sram, SRAM_SIZE);
+    file.write((char *)&sram, SRAM_SIZE);
     file.close();
 }
 
-void SRAMFile::checksum() {
-    uint32_t checksum;
-    uint16_t *tmp, *offset, over;
+void SRAMFile::computeChecksums() {
+    u32 checksum;
+    u16 *tmp, *offset, over;
+	u8 *pSram;
     int g, i;
+
+	pSram = (u8 *)&sram;
 
     for (g=0; g<3; g++) {
         checksum = 0x00000000;
         over = 0;
-        offset = (uint16_t *)(sram + CHECKSUM_OFFSET + 2 * g);
+        offset = (u16 *)(pSram + CHECKSUM_OFFSET + 2 * g);
 
         for (i=0; i<GAME_SIZE; i+=2) {
-            tmp = (uint16_t *)(sram + i + g * GAME_SIZE);
+            tmp = (u16 *)(pSram + i + g * GAME_SIZE);
             checksum += *tmp;
             checksum += over;
 
@@ -109,77 +105,49 @@ void SRAMFile::checksum() {
             }
         }
 
-        *offset = (uint16_t)checksum;
+        *offset = (u16) checksum;
     }
 }
 
-void SRAMFile::getGame(Game *game, int gameNo) {
-    int i, gameOffset, charOffset;
-    unsigned int gold;
+Game SRAMFile::getGame(int gameNo) {
+    return Game(sram.games[gameNo]);
+}
 
-    gameOffset = gameNo * GAME_SIZE;
+void SRAMFile::setGame(Game game, int gameNo) {
+	sram.games[gameNo] = game.getGameStruct();
+}
 
-    for (i=0; i<7; i++) {
-        charOffset = gameOffset + VALUE_OFFSETS[CHARACTERS] + i * CHARACTER_SIZE;
-        Character c;
-        unsigned int exp;
-
-        c.setId(sram[charOffset + CHAR_VALUE_OFFSETS[ID]]);
-        c.setCharId(sram[charOffset + CHAR_VALUE_OFFSETS[CHAR_ID]]);
-        c.setCurrentHP(*((unsigned short *)(sram + charOffset + CHAR_VALUE_OFFSETS[CUR_HP])));
-        c.setMaxHP(*((unsigned short *)(sram + charOffset + CHAR_VALUE_OFFSETS[MAX_HP])));
-        c.setCurrentMP(*((unsigned short *)(sram + charOffset + CHAR_VALUE_OFFSETS[CUR_MP])));
-        c.setMaxMP(*((unsigned short *)(sram + charOffset + CHAR_VALUE_OFFSETS[MAX_MP])));
-        c.setBasePower(sram[charOffset + CHAR_VALUE_OFFSETS[BASE_POW]]);
-        c.setBaseStamina(sram[charOffset + CHAR_VALUE_OFFSETS[BASE_STA]]);
-        c.setBaseSpeed(sram[charOffset + CHAR_VALUE_OFFSETS[BASE_SPD]]);
-        c.setBaseMagic(sram[charOffset + CHAR_VALUE_OFFSETS[BASE_MAG]]);
-        c.setBaseHit(sram[charOffset + CHAR_VALUE_OFFSETS[BASE_HIT]]);
-        c.setBaseEvade(sram[charOffset + CHAR_VALUE_OFFSETS[BASE_EVD]]);
-        c.setBaseMagicDef(sram[charOffset + CHAR_VALUE_OFFSETS[BASE_MDEF]]);
-        c.setLevel(sram[charOffset + CHAR_VALUE_OFFSETS[LEVEL]]);
-        c.setHelmet(sram[charOffset + CHAR_VALUE_OFFSETS[HELMET]]);
-        c.setArmor(sram[charOffset + CHAR_VALUE_OFFSETS[ARMOR]]);
-        c.setWeapon(sram[charOffset + CHAR_VALUE_OFFSETS[WEAPON]]);
-        c.setRelic(sram[charOffset + CHAR_VALUE_OFFSETS[RELIC]]);
-        c.setNameFromSRAM(sram + VALUE_OFFSETS[NAMES] + i * NAME_SIZE);
-
-        exp = *((unsigned int *)(sram + charOffset + CHAR_VALUE_OFFSETS[EXP]));
-        exp &= 0x00ffffff;
-        c.setExp(exp);
-
-        game->setCharacter(c, i);
+void decryptName(u8 *name) {
+	for (int i=0; i<5; i++) {
+        if (name[i] >= 0xa0 && name[i] <= 0xb9)
+            name[i] = name[i] - 95;
+        else if (name[i] >= 0xba && name[i] <= 0xd3)
+            name[i] = name[i] - 89;
+        else
+            name[i] = name[i];
     }
-
-    gold = *((unsigned int *)(sram + gameOffset + VALUE_OFFSETS[GOLD]));
-    gold &= 0x00ffffff;
-    game->setGold(gold);
-
-    game->setNo(gameNo);
 }
 
-void SRAMFile::setGame(Game *game, int gameNo) {
+void SRAMFile::foo(int gameNo) {
+    game_t g;
 
-}
+    g = getGame(gameNo).getGameStruct();
 
-void SRAMFile::foo() {
-    Game g;
-
-    getGame(&g, 0);
-
-    for (int i=0; i<7; i++) {
+    for (int i=0; i<8; i++) {
+		character_t c = g.characters[i];
+		decryptName(g.names[i]);
         printf("Char %d\n", i);
-        printf("\tName: %s\n", g.getCharacter(i).getName());
-        printf("\tExp: %d\n", g.getCharacter(i).getExp());
-        printf("\tHP: %d\n", g.getCharacter(i).getCurrentHP());
-        printf("\tMP: %d\n", g.getCharacter(i).getCurrentMP());
-        printf("\tWeapon: %s\n", itemList[g.getCharacter(i).getWeapon()]);
-        printf("\tArmor: %s\n", itemList[g.getCharacter(i).getArmor()]);
-        printf("\tHelmet: %s\n", itemList[g.getCharacter(i).getHelmet()]);
-        printf("\tRelic: %s\n", itemList[g.getCharacter(i).getRelic()]);
+        printf("\tName: %s\n", g.names[i]);
+        printf("\tExp: %d\n", c.exp & 0x00ffffff);
+        printf("\tHP: %d\n", c.currentHP);
+        printf("\tMP: %d\n", c.currentMP);
+        printf("\tWeapon: %s\n", itemList[c.weapon]);
+        printf("\tArmor: %s\n", itemList[c.armor]);
+        printf("\tHelmet: %s\n", itemList[c.helmet]);
+        printf("\tRelic: %s\n", itemList[c.relic]);
     }
 
-    printf("Gold: %d\n", g.getGold());
+    printf("Gold: %d\n", getGame(gameNo).getGold());
 
     write();
 }
