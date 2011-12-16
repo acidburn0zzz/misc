@@ -3,7 +3,7 @@
 import sys
 import os
 
-oggenc_opts = '-q 7'
+oggenc_opts = '-q 9'
 
 title = None
 artist = None

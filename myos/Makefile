@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -O2 -g -pedantic -ansi
+CFLAGS=-Wall -O2 -g -pedantic -ansi -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes
 CXXFLAGS=$(CFLAGS)
 
 PROGRAM=myos

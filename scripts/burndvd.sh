@@ -1,8 +1,8 @@
 #! /bin/bash
 
 if [ $# -ne 1 ]; then
-    echo Usage: $0 image.iso
-    exit -1
+    echo "Usage: $0 image.iso"
+    exit 1
 fi
 
-wodim -v -dao speed=4 dev=/dev/sr0 $1
+growisofs -use-the-force-luke=dao -speed=4 -Z /dev/sr0=$1
