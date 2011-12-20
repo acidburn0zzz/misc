@@ -1,0 +1,510 @@
+Release date: April 16 2000
+[Chrono Trigger Save State Hacking]
+By Dominic Catellier
+
+I have written a cheat in C++ to set the XP needed + Tech points 
+needed for every character to 1 so with one battle, you learna a 
+tech and you gain a level. Visit: http://mercury.spaceports.com/~syralid/ 
+for more info, I'll be uploading the program soon.
+
+Any comments, tips, or things to add? WEll e-mail me at dcatellier@videotron.ca
+
+
+Alright, all you need to hack you save state for CT is ZSNES, 
+the CT rom and a saved game (saved via ZSNES)
+
+I'm not here to show you how to hex edit so if you don't know read on it.
+
+Here are the offsets
+
+|------------------------|
+|      Gold Pieces       |
+|------------------------|
+B3 B2 B1	(B for "Byte #")
+It will be rearranged in the emu like
+B1 B2 B3
+So one gold would read:
+01 00 00
+but would be equivalent to:
+000001 in hex
+This strange system is used many times during this file.
+
+3866: Third byte for GP
+3867: Second byte for GP
+3868: First byte for GP
+
+|------------------------|
+|      Crono Stats       |
+|------------------------|
+
+3216: Second byte for current HP
+3217: First byte for current HP
+
+3218: Second byte for Max HP
+3219: First byte for Max HP
+
+321A: Current MP
+321C: Max MP
+
+321E: Power
+321F: Stamina
+3221: Magic
+3222: Hit rate
+3223: Evade
+
+3225: Level
+
+3226: Second byte for experience
+3227: First byte for experience
+
+323E: Second byte for next level experience
+323F: First byte for next level experience
+
+3240: Second byte for needed skill points
+3241: First byte for needed skill points
+
+|------------------------|
+|      Marle Stats       |
+|------------------------|
+
+3266: Second byte for current HP
+3267: First byte for current HP
+
+3268: Second byte for Max HP
+3269: First byte for Max HP
+
+326A: Current MP
+326C: Max MP
+
+326E: Power
+326F: Stamina
+3271: Magic
+3272: Hit rate
+3273: Evade
+
+3275: Level
+
+3276: Second byte for experience
+3277: First byte for experience
+
+328E: Second byte for next level experience
+328F: First byte for next level experience
+
+3290: Second byte for needed skill points
+3291: First byte for needed skill points
+
+|------------------------|
+|      Frog  Stats       |
+|------------------------|
+
+3356: Second byte for current HP
+3357: First byte for current HP
+
+3358: Second byte for Max HP
+3359: First byte for Max HP
+
+335A: Current MP
+335C: Max MP
+
+335E: Power
+335F: Stamina
+3361: Magic
+3362: Hit rate
+3363: Evade
+
+3365: Level
+
+3366: Second byte for experience
+3367: First byte for experience
+
+337E: Second byte for next level experience
+337F: First byte for next level experience
+
+3380: Second byte for needed skill points
+3381: First byte for needed skill points
+
+
+|------------------------|
+|      Lucca Stats       |
+|------------------------|
+
+32B6: Second byte for current HP
+32B7: First byte for current HP
+
+32B8: Second byte for Max HP
+32B9: First byte for Max HP
+
+32BA: Current MP
+32BC: Max MP
+
+32BE: Power
+32BF: Stamina
+32C1: Magic
+32C2: Hit rate
+32C3: Evade
+
+32C5: Level
+
+32C6: Second byte for experience
+32C7: First byte for experience
+
+32DE: Second byte for next level experience
+32DF: First byte for next level experience
+
+32E0: Second byte for needed skill points
+32E1: First byte for needed skill points
+
+|------------------------|
+|      Robo Stats        |
+|------------------------|
+
+3306: Second byte for current HP
+3307: First byte for current HP
+
+3308: Second byte for Max HP
+3309: First byte for Max HP
+
+330A: Current MP
+330C: Max MP
+
+330E: Power
+330F: Stamina
+3311: Magic
+3312: Hit rate
+3313: Evade
+
+3315: Level
+
+3316: Second byte for experience
+3317: First byte for experience
+
+332E: Second byte for next level experience
+332F: First byte for next level experience
+
+3330: Second byte for needed skill points
+3331: First byte for needed skill points
+
+
+|------------------------|
+|       Ayla Stats       |
+|------------------------|
+
+33A6: Second byte for current HP
+33A7: First byte for current HP
+
+33A8: Second byte for Max HP
+33A9: First byte for Max HP
+
+33AA: Current MP
+33AC: Max MP
+
+33AE: Power
+33AF: Stamina
+33B1: Magic
+33B2: Hit Rate
+33B3: Evade
+
+33B5: Level
+
+33B6: Second byte for experience
+33B7: First byte for experience
+
+33CE: Second byte for next level experience
+33CF: First byte for next level experience
+
+33D0: Second byte for needed skill points
+33D1: First byte for needed skill points
+
+|------------------------|
+|       Magus stats      |
+|------------------------|
+
+33F6: Second byte for current HP
+33F7: First byte for current HP
+
+33F8: Second byte for Max HP
+33F9: First byte for Max HP
+
+33FA: Current MP
+33FC: Max MP
+
+33FE: Power
+340F: Stamina
+3401: Magic
+3402: Hit Rate
+3403: Evade
+
+3405: Level
+
+3406: Second byte for experience
+3407: First byte for experience
+
+341E: Second byte for next level experience
+341F: First byte for next level experience
+
+3420: Second byte for needed skill points
+3421: First byte for needed skill points
+
+|------------------------|
+|      Item Hacking      |
+|------------------------|
+
+1.1 OFFSETS
+
+Items: 3013-3112
+Item number start: 3113-3212
+Item max = 99 = 0x63
+
+1.2 ITEM VALUES:
+
+Swords (For Crono):
+
+02 Iron Blade
+03 Steel Saber
+04 Lode Sword
+05 Red Katana
+06 Flint Edge
+07 Dark saber
+08 Aeon Blade
+09 Demon Edge
+0A AlloyBlade
+0B star Sword
+0C Vedic Blade
+0D Kali Blade
+0E Shiva Sword
+0F Bolt Sword
+10 Slasher
+4F Mop
+53 Swallow
+54 Slasher 2
+55 Rainbow
+
+Bows (For Marle):
+
+11 Bronze Bow
+12 Iron Bow
+13 Lode Bow
+14 Robin Bow
+15 Sage Bow
+16 Dream Bow
+17 CometArrow
+18 SonicArrow
+19 Valkerye
+1A Siren
+
+Guns (For Lucca):
+
+1F Air Gun
+20 Dart Gun
+21 Auto Gun
+22 PicoMagnum
+23 Plasma Gun
+24 Ruby Gun
+25 Dream Gun
+26 Megablast
+27 Shock Wave
+28 Wonder Shot
+29 Graedus
+
+Arms (For Robo):
+
+2E Tin Arm
+2F hammer Arm
+30 Mirage Hand
+31 Stone Arm
+32 Doom Finger
+33 Magma Hand
+34 MegatonArm
+35 Big hand
+36 Kaiser Arm
+37 Giga Arm
+38 Terra Arm
+39 Crisis Arm
+
+Blades (For Frog):
+
+3B Bronze Edge
+3C Iron Sword
+3D Masamune
+3E Flash Blade
+3F Pearl Edge
+40 Rune Blade
+41 Brave Sword
+42 Masamune
+43 Demon Hit
+50 Bent Sword
+51 Bent Hilt
+52 Masamune
+
+Fists (For Ayla):
+
+44 Fist
+45 Fist
+46 Fist
+47 Iron Fist
+48 Bronze Fist
+
+Scythes (For Magus):
+
+4B DarkScythe
+4C Hurricane
+4D StarScythe
+4E DoomSickle
+
+Body Armor:
+
+5B Hide Tunic
+5C Karate Gi
+5D Bronze Mail
+5E Maiden Suit
+5F Iron Suit
+60 Titan Vest
+61 Gold Suit
+62 Ruby Vest
+63 Dark Mail
+64 Mist Robe
+65 Meso Mail
+66 Lumin Robe
+67 Flash Mail
+68 Lode Vest
+69 Aeon Suit
+6A Zodiac cape
+6B Nova Armor
+6C Prism Dress
+6D Moon Armor
+6E Ruby Armor
+6F Raven Armor
+70 Gloom Cape
+71 White Mail
+72 Black Mail
+73 Blue Mail
+74 Red Mail
+75 White Vest
+76 Black Vest
+77 Blue Vest
+78 Red Vest
+79 Taban Vest
+7A Taban Suit
+
+
+Hats and Helmets:
+
+7C Hide Cap
+7D BronzeHelm
+7E Iron Helm
+7F Beret
+80 Gold Helm
+81 Rock Helm
+82 CeraTopper
+83 Glow Helm
+84 Lode Helm
+85 Aeon Helm
+86 Prism Helm
+87 Doom Helm
+88 Dark Helm
+89 Gloom Helm
+8A safe Helm
+8B Taban Helm
+8C Sight Cap
+8D MemoryCap
+8E Time Hat
+8F Vigil Hat
+90 Ozzie Pants
+91 Haste Helm
+92 R'bow Helm
+93 MermaidHelm
+
+Relics:
+
+95 Bandana
+96 Ribbon
+97 PowerGlove
+98 Defender
+99 Magic Scarf
+9A Amulet
+9B Dash Ring
+9C Hit Ring
+9D Power Ring
+9E Magic Ring
+9F Wall Ring
+A0 SilverErng
+A1 Gold Erng
+A2 SilverStud
+A3 Gold Stud
+A4 SightScope
+A5 Charm Top
+A6 Rage Band
+A7 Frenzy Band
+A8 Third Eye
+A9 wallet
+AA Green Dream
+AB Berserker
+AC Power scarf
+AD Speed Belt
+AE Black Rock
+AF Blue Rock
+B0 Silver Rock
+B1 White Rock
+B2 Gold Rock
+B3 Hero Medal
+B4 Muscle Ring
+B5 Flea Vest
+B6 Magic Seal
+B7 Power Seal
+B8 Relic
+B9 SeraphSong
+BA Sun Shades
+BB Prism Specs
+
+Items:
+
+BD Tonic
+BE Mid Tonic
+BF Full Tonic
+C0 Ether
+C1 Mid Ether
+C2 Full Ether
+C3 Elixir
+C4 hyper Ether
+C5 Mega Elixir
+C6 Heal
+C7 Revive
+C8 Shelter
+C9 Power Meal
+CA Lapis
+CB Barrier
+CC Shield
+
+Tabs:
+
+CD Power Tab
+CE Magic Tab
+CF Speed Tab
+
+Others:
+
+D0 Petal
+D1 Fang
+D2 Horn
+D3 Feather
+D4 seed
+D5 Bike Key
+D6 Pendant
+D7 Gate Key
+D8 PrismShard
+D9 C. Trigger
+DA Tools
+DB Jerky
+DC Dreamstone
+DD Race Log
+DE Moon Stone
+DF Sun Stone
+E0 Ruby Knife
+E1 Yakra Key
+E2 Clone
+E3 Toma's Pop
+E4 2 Petals
+E5 2 Fangs
+E6 2 Horns
+E7 2 Feathers
+

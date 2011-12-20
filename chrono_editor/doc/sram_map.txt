@@ -1,0 +1,63 @@
+File Structure (0x2000 = 8192 bytes)
+
+	Offset | Len  | Description
+	_______|______|____________
+	0x0000 | 2560 | Slot #1
+	0x0A00 | 2560 | Slot #2
+	0x1400 | 2560 | Slot #3
+	0x1FE0 |    1 | Last Save
+	0x1FF0 |    6 | Checksums (3 slots of 2 bytes)
+
+Save Slot Structure (0xA00 = 2560 bytes)
+
+	Hex | Len | Description
+	____|_____|____________
+	000 | 256 | Item Type
+	100 | 256 | Item Count
+	200 | 80  | Crono
+	250 | 80  | Marle
+	2A0 | 80  | Lucca
+	2F0 | 80  | Robo
+	340 | 80  | Frog
+	390 | 80  | Ayla
+	3E0 | 80  | Magus
+	430 | 80  | Epoch
+	580 | 3   | Party Members
+	59C | 1   | Save Count
+	5B0 | 48  | Names (8 slots, 6 byte C-style strings) (A=0xa0, Z=0xb9, a=0xba, z=0xd3)
+	5E0 | 3   | Gold
+	5E3 | 6   | Time (MS, SS, MM, HH)
+	5F3 | 2   | World
+	5F5 | 2   | Player X, Y
+
+Character Structure (0x50 = 80 bytes)
+
+	Hex| Len| Description
+	___|____|____________
+	00 | 1  | Name ID
+	01 | 1  | Character ID
+	03 | 2  | Current HP
+	05 | 2  | Max Hp
+	07 | 2  | Current MP
+	09 | 2  | Base Max HP
+	0B | 1  | Base Power
+	0C | 1  | Base Stamina
+	0D | 1  | Base Speed
+	0E | 1  | Base Magic
+	0F | 1  | Base Hit
+	10 | 1  | Base Evade
+	11 | 1  | Base Magic Defence
+	12 | 1  | Level
+	13 | 3  | Experience
+	27 | 4  | Equip x 4
+	2B | 2  | Exp To Level
+	36 | 1  | Current Power
+	37 | 1  | Current Stamina
+	38 | 1  | Current Speed
+	39 | 1  | Current Magic
+	3A | 1  | Current Hit
+	3B | 1  | Current Evade
+	3C | 1  | Current Magic Defence
+	3D | 1  | Current Attack
+	3E | 1  | Current Defence
+	3F | 2  | Current Max HP
