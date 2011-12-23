@@ -25,15 +25,15 @@
 using namespace std;
 
 Game::Game(game_t game) {
-	_game = game;
+    _game = game;
 }
 
 game_t Game::getGameStruct() {
-	return _game;
+    return _game;
 }
 
 void Game::setGameStruct(game_t game) {
-	_game = game;
+    _game = game;
 }
 
 Character Game::getCharacter(int charId) {
@@ -41,7 +41,7 @@ Character Game::getCharacter(int charId) {
 }
 
 void Game::setCharacter(Character c, int charId) {
-	_game.characters[charId] = c.getCharStruct();
+    _game.characters[charId] = c.getCharStruct();
 }
 
 u8* Game::getName(int charId) {
@@ -66,8 +66,8 @@ u32 Game::getGold() {
 }
 
 void Game::setGold(u32 gold) {
-	_game.gold1 = gold & 0xffff;
-	_game.gold2 = (gold & 0xff0000) >> 16;
+    _game.gold1 = gold & 0xffff;
+    _game.gold2 = (gold & 0xff0000) >> 16;
 }
 
 void Game::decodeName(int charId) {

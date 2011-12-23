@@ -82,10 +82,10 @@ void SRAMFile::write() throw(exception) {
 void SRAMFile::computeChecksums() {
     u32 checksum;
     u16 *tmp, *offset, over;
-	u8 *pSram;
+    u8 *pSram;
     int g, i;
 
-	pSram = (u8 *)&sram;
+    pSram = (u8 *)&sram;
 
     for (g=0; g<3; g++) {
         checksum = 0x00000000;
@@ -114,11 +114,11 @@ Game SRAMFile::getGame(int gameNo) {
 }
 
 void SRAMFile::setGame(Game game, int gameNo) {
-	sram.games[gameNo] = game.getGameStruct();
+    sram.games[gameNo] = game.getGameStruct();
 }
 
 void decryptName(u8 *name) {
-	for (int i=0; i<5; i++) {
+    for (int i=0; i<5; i++) {
         if (name[i] >= 0xa0 && name[i] <= 0xb9)
             name[i] = name[i] - 95;
         else if (name[i] >= 0xba && name[i] <= 0xd3)
@@ -134,8 +134,8 @@ void SRAMFile::foo(int gameNo) {
     g = getGame(gameNo).getGameStruct();
 
     for (int i=0; i<8; i++) {
-		character_t c = g.characters[i];
-		decryptName(g.names[i]);
+        character_t c = g.characters[i];
+        decryptName(g.names[i]);
         printf("Char %d\n", i);
         printf("\tName: %s\n", g.names[i]);
         printf("\tExp: %d\n", c.exp & 0x00ffffff);
