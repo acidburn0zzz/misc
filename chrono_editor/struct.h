@@ -86,15 +86,18 @@ typedef struct items_s items_t;
 
 struct game_s {
     items_t     items;
-    character_t characters[8];
-    u8  unk1[256];
+    character_t characters[7];
+    u8  maybe_tech_related[7];
+    u8  techs[7];
+    u8  unk1[322];
     u8  partyMember1;
     u8  partyMember2;
     u8  partyMember3;
     u8  unk2[25];
     u8  saveCount;
     u8  unk3[19];
-    u8  names[8][6];
+    u8  names[7][6];
+    u8  epoch_name[6];
     u16 gold1; // gold & 0x00ffff
     u8  gold2; // gold & 0xff0000
     u8  unk4;
@@ -350,6 +353,16 @@ static const char *itemList[] = {
     "2 Fangs",
     "2 Horns",
     "2 Feathers"
+};
+
+static const char *techniquesList[7][8] {
+    {"Cyclone", "Slash", "Lightning", "Spincut", "Lightning 2", "Life", "Confuse", "Luminaire"},
+    {"Aura", "Provoke", "Ice", "Cure", "Haste", "Ice 2", "Cure 2", "Life 2"},
+    {"Flame Toss", "Hypno Wave", "Fire", "Napalm", "Protect", "Fire 2", "Mega Bomb", "Flare"},
+    {"Slurp", "Slurp Cut", "Water", "Heal", "Leap Slash", "Water 2", "Cure 2", "Frog Squash"},
+    {"Rocket Punch", "Cure Beam", "Laser Spin", "Robo Tackle", "Heal Beam", "Uzzi Punch", "Area Bomb", "Shock"},
+    {"Kiss", "Rollo Kick", "Cat Attack", "Rock Throw", "Charm", "Tail Spin", "Dino Tail", "Triple Kick"},
+    {"Lightning 2", "Ice 2", "Fire 2", "Dark Bomb", "Magic Wall", "Dark Mist", "Black Hole", "Dark Matter"}
 };
 
 #ifdef __cplusplus
