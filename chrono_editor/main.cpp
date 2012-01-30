@@ -25,8 +25,6 @@
 #include <QLocale>
 #include <QTranslator>
 
-#include "state.h"
-#include "struct.h"
 #include "vue.h"
 
 using namespace std;

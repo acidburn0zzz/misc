@@ -23,6 +23,8 @@
 
 #include <QMainWindow>
 
+#include "game.h"
+
 class QAction;
 class QComboBox;
 class QFileDialog;
@@ -112,7 +114,7 @@ private:
     QComboBox *cmbRelic;
 
     SRAMFile *_sramFile;
-    Game *_game;
+    Game _game;
 
     void init();
     void creerMenus();
