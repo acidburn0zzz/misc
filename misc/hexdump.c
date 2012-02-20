@@ -22,11 +22,22 @@ void hexdump(const void *data, unsigned int offset, unsigned int size) {
 	data = ((void *) ((size_t) data + offset));
 	p = (const unsigned char *) data;
 
-    for(n=1;n<=size;n++) {
-        if (n%16 == 1) {
+    for(n=0; n<size; n++) {
+        if (n%16 == 0) {
+            if (n > 0) {
+                printf("[%4.4s]   %-50.50s  %s\n", addrstr, hexstr, charstr);
+            }
+
+            hexstr[0] = 0;
+            charstr[0] = 0;
+
             /* store address for this line */
             snprintf(addrstr, sizeof(addrstr), "%.4lx",
                ((size_t) p - (size_t) data + (size_t) offset));
+        } else if (n%8 == 0) {
+            /* half line: add whitespaces */
+            strncat(hexstr, "  ", sizeof(hexstr)-strlen(hexstr)-1);
+            strncat(charstr, " ", sizeof(charstr)-strlen(charstr)-1);
         }
 
         c = *p;
@@ -42,16 +53,6 @@ void hexdump(const void *data, unsigned int offset, unsigned int size) {
         snprintf(bytestr, sizeof(bytestr), "%c", c);
         strncat(charstr, bytestr, sizeof(charstr)-strlen(charstr)-1);
 
-        if(n%16 == 0) {
-            /* line completed */
-            printf("[%4.4s]   %-50.50s  %s\n", addrstr, hexstr, charstr);
-            hexstr[0] = 0;
-            charstr[0] = 0;
-        } else if(n%8 == 0) {
-            /* half line: add whitespaces */
-            strncat(hexstr, "  ", sizeof(hexstr)-strlen(hexstr)-1);
-            strncat(charstr, " ", sizeof(charstr)-strlen(charstr)-1);
-        }
         p++; /* next byte */
     }
 
@@ -60,4 +61,3 @@ void hexdump(const void *data, unsigned int offset, unsigned int size) {
         printf("[%4.4s]   %-50.50s  %s\n", addrstr, hexstr, charstr);
     }
 }
-
