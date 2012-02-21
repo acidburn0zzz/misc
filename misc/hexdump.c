@@ -26,7 +26,7 @@ void hexdump(const void *data, unsigned int offset, unsigned int size) {
     for(n=0; n<size; n++) {
         if (n%16 == 0) {
             if (n > 0) {
-                printf("[%4.4s]   %-50.50s  %s\n", addrstr, hexstr, charstr);
+                printf(line_format, addrstr, hexstr, charstr);
             }
 
             hexstr[0] = 0;
