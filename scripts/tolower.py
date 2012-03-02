@@ -22,22 +22,14 @@ import string
 import os
 
 def enlever_accents(strname):
-    """experimental, remplacer accents par la lettre sans accent"""
-    strname = re.sub("[éèêë]", "e_accent", strname) #va remplacer 2 fois, prob a cause de utf-8
-    strname = re.sub("(e_accent){2}", "e", strname)
-    strname = re.sub("[áàâä]", "a_accent", strname) #remplace les a par ea ?!
-    strname = re.sub("e_accenta_accent", "a", strname)
-    strname = re.sub("[úùûü]", "u_accent", strname) #remplace les u par eu ?!
-    strname = re.sub("e_accentu_accent", "u", strname)
-    strname = re.sub("[óòôö]", "o_accent", strname) #remplace les o par eo ?!
-    strname = re.sub("e_accento_accent", "o", strname)
-    strname = re.sub("[íìîï]", "i_accent", strname) #remplace les i par ei ?!
-    strname = re.sub("e_accenti_accent", "i", strname)
-    strname = re.sub("[ýÿ]", "y_accent", strname) #remplace les y par ey ?!
-    strname = re.sub("e_accenty_accent", "y", strname)
-    strname = re.sub("[ç]", "c_cedil", strname) #remplace les c par ec ?!
-    strname = re.sub("e_accentc_cedil", "c", strname)
-    """fin de la partie experimentale"""
+    strname = re.sub("[éèêë]", "e", strname)
+    strname = re.sub("[áàâä]", "a", strname)
+    strname = re.sub("[úùûü]", "u", strname)
+    strname = re.sub("[óòôö]", "o", strname)
+    strname = re.sub("[íìîï]", "i", strname)
+    strname = re.sub("[ýÿ]", "y", strname)
+    strname = re.sub("[ç]", "c", strname)
+    strname = re.sub("[&]", "and", strname) 
 
     return strname
 
