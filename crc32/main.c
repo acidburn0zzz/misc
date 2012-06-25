@@ -222,7 +222,8 @@ int check_sfv_file(char *fn) {
 
 int main(int argc, char **argv) {
     uint32_t crc32;
-    char opt, *sfv_file = NULL;
+    int8_t opt;
+    char *sfv_file = NULL;
     int sfv = 0;
     int upper_case = 0;
 
