@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    pthread_create(&keys_thread, NULL, keyboard_watch, NULL);
+    pthread_create(&keys_thread, NULL, (void * (*)(void *))keyboard_watch, NULL);
 
     while (!finished) {
         print_grid(grid_old);
