@@ -10,6 +10,8 @@ INCLUDEPATH += .
 CONFIG += qt debug
 QT += 
 
+LIBS=-lz
+
 DESTDIR = ./bin
 MOC_DIR = ./moc
 OBJECTS_DIR = ./obj
