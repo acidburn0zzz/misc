@@ -4,6 +4,9 @@
 
 long int count = 0;
 
+long int fibonacci(int n);
+int get_interval_in_ms(struct timeval a, struct timeval b);
+
 long int fibonacci(int n) {
     count++;
     return (n <= 1) ? n : fibonacci(n - 1) + fibonacci(n - 2);
