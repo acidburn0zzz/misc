@@ -5,13 +5,6 @@ import os
 
 oggenc_opts = '-q 9'
 
-title = None
-artist = None
-album = None
-year = None
-track = None
-genre = None
-
 win32 = False
 
 def usage(prog):
@@ -53,32 +46,20 @@ def convert_file(flac_file):
     ogg_file = flac_file[:-5] + '.ogg'
 
     #Creation des options
-    _title = title
-    _artist = artist
-    _album = album
-    _year = year
-    _track = track
-    _genre = genre
-    if _title == None:
-        _title = get_tag('TITLE', flac_file)
-    if _artist == None:
-        _artist = get_tag('ARTIST', flac_file)
-    if _album == None:
-        _album = get_tag('ALBUM', flac_file)
-    if _year == None:
-        _year = get_tag('DATE', flac_file)
-    if _track == None:
-        _track = get_tag('TRACKNUMBER', flac_file) + '/' + get_tag('TRACKTOTAL', flac_file)
-    if _genre == None:
-        _genre = get_tag('GENRE', flac_file)
+    title = get_tag('TITLE', flac_file)
+    artist = get_tag('ARTIST', flac_file)
+    album = get_tag('ALBUM', flac_file)
+    year = get_tag('DATE', flac_file)
+    track = get_tag('TRACKNUMBER', flac_file) + '/' + get_tag('TRACKTOTAL', flac_file)
+    genre = get_tag('GENRE', flac_file)
 
-    tag_opts = '--title "%s" --artist "%s" --album "%s" --date "%s" --tracknum "%s" --genre "%s"' % (_title, _artist, _album, _year, _track, _genre)
+    tag_opts = '--title "%s" --artist "%s" --album "%s" --date "%s" --tracknum "%s" --genre "%s"' % (title, artist, album, year, track, genre)
 
     #Flac 2 wav
-    os.system('flac -df -o %s %s' % (wav_file, flac_file))
+    os.system('flac -df -o "%s" "%s"' % (wav_file, flac_file))
 
     #Wav 2 ogg
-    cmd = 'oggenc %s %s %s -o %s' % (oggenc_opts, tag_opts, wav_file, ogg_file)
+    cmd = 'oggenc %s %s "%s" -o "%s"' % (oggenc_opts, tag_opts, wav_file, ogg_file)
     os.system(cmd)
 
     #rm wav

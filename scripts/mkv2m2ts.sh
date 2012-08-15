@@ -1,8 +1,13 @@
 #! /bin/bash
 
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 mkv_file"
+    exit 1
+fi
+
 BASENAME=`echo $1 | awk -F . '{print $1}'`
-VIDEO=1
-AUDIO=2
+VIDEO=`mkvinfo $1 | grep -B 2 'type: video' | head -n1 | grep -o '[0-9]' | head -n1`
+AUDIO=`mkvinfo $1 | grep -B 2 'type: audio' | head -n1 | grep -o '[0-9]' | head -n1`
 
 cat << EOF > meta 
 MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr  --vbv-len=500
