@@ -51,7 +51,7 @@ EOF
 for i in $(ls *.jpg *.png 2>/dev/null); do
     echo "Generating thumbnail for $i"
     convert -thumbnail $SIZE $i thumbs/$i;
-    mogrify -quality '75%' thumbs/$i;
+    mogrify -quality 85 thumbs/$i;
 
     let MOD=COUNT%NBPL
     if [ $MOD = 0 ];

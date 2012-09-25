@@ -31,7 +31,7 @@ def check_exe(name):
         exit(-1)
 
 def get_tag(tag, file):
-    tmp = os.popen('metaflac --show-tag=%s %s' % (tag, file)).read()
+    tmp = os.popen('metaflac --show-tag=%s "%s"' % (tag, file)).read()
     if len(tmp) > 0:
         return tmp.split('=')[1][:-1]
     else:
@@ -63,7 +63,7 @@ def convert_file(flac_file):
     os.system(cmd)
 
     #rm wav
-    os.system('rm %s' % wav_file)
+    os.system('rm "%s"' % wav_file)
 
 if __name__ == '__main__':
     if sys.platform == 'win32':
