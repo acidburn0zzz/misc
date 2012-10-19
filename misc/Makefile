@@ -1,6 +1,6 @@
 CC=gcc
 CXX=g++
-CFLAGS=-g -O2 -pedantic -ansi -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes
+CFLAGS=-g -O2 -pedantic -std=c99 -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes
 CXXFLAGS=$(CFLAGS)
 
 PROGRAMS=bin2iso chuck_norris_facts dlink format fibonacci ips keygen quicksort

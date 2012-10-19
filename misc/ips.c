@@ -42,19 +42,29 @@
 
 FILE *log_file;
 
-void log_header(FILE *log_file, char *title) {
+void log_header(char *title);
+void log_ips(uint32_t offset, uint32_t size, uint32_t rle,
+             uint32_t patch_range_b, uint32_t patch_range_e);
+void log_footer(uint32_t nb_patches);
+
+void fail(const char *fmt, ...);
+FILE *open_file(char *path, char *mode);
+void usage(char *cmd);
+int apply_patch(char *s_original_file, char *s_ips_file, char *s_output_file);
+
+void log_header(char *title) {
     fprintf(log_file, "Acid IPS Version 1.00\n");
     fprintf(log_file, "%s\n\n", title);
     fprintf(log_file, "Offset    Size    RLE    IPS Range            Patch Size\n");
 }
 
-void log_ips(FILE *log_file, uint32_t offset, uint32_t size, uint32_t rle, uint32_t patch_range_b,
-             uint32_t patch_range_e) {
+void log_ips(uint32_t offset, uint32_t size, uint32_t rle,
+             uint32_t patch_range_b, uint32_t patch_range_e) {
     fprintf(log_file, "%.6X    %.4X    %-3s    %.8X-%.8X    %5X\n", offset, rle ? rle : size, rle ? "Yes" : "No",
             patch_range_b, patch_range_e - 1, patch_range_e - patch_range_b);
 }
 
-void log_footer(FILE *log_file, uint32_t nb_patches) {
+void log_footer(uint32_t nb_patches) {
     fprintf(log_file, "\nTotal Patches: %u\n", nb_patches);
 }
 
@@ -110,7 +120,7 @@ int apply_patch(char *s_original_file, char *s_ips_file, char *s_output_file) {
     if (strncmp((const char *) buffer, "PATCH", 5) != 0)
         fail("%s: Not an IPS patch", s_ips_file);
 
-    log_header(log_file, "IPS Patch log");
+    log_header("IPS Patch log");
 
     while (!eof) {
         patch_range_a = ftell(f_ips_file);
@@ -173,7 +183,7 @@ int apply_patch(char *s_original_file, char *s_ips_file, char *s_output_file) {
         fseek(f_original_file, pos, SEEK_SET);
 
         patch_range_b = ftell(f_ips_file);
-        log_ips(log_file, offset, size, rle, patch_range_a, patch_range_b);
+        log_ips(offset, size, rle, patch_range_a, patch_range_b);
         count++;
     }
 
@@ -188,7 +198,7 @@ int apply_patch(char *s_original_file, char *s_ips_file, char *s_output_file) {
             fail("Unable to write to: %s", s_output_file);
     }
 
-    log_footer(log_file, count);
+    log_footer(count);
 
     free(buffer);
     fclose(f_original_file);

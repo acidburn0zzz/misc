@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+void usage(char *prog);
+void format_file(char *fn, int len);
+
 void usage(char *prog) {
     fprintf(stderr, "Usage :\n");
     fprintf(stderr, "\t%s [-l line_size] file(s)\n", prog);

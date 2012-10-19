@@ -218,6 +218,8 @@ const char *facts[] = {
     "They once tried to carve Chuck Norris' face into Mount Rushmore, but the granite wasn't hard enough for his beard"
 };
 
+void print_fact(const char *fact, int nb);
+
 void print_fact(const char *fact, int nb) {
     printf("**********************\n");
     printf("* Chuck Norris Facts *\n");
