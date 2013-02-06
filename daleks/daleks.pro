@@ -7,16 +7,13 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 
-QT += opengl
-
 DESTDIR = ./bin
 MOC_DIR = ./moc
 OBJECTS_DIR = ./obj
 
 # Input
-HEADERS += board.h boardgl.h controlleur.h dalek.h doc.h partie.h vue.h
+HEADERS += board.h controlleur.h dalek.h doc.h partie.h vue.h
 SOURCES += board.cpp \
-           boardgl.cpp \
            controlleur.cpp \
            dalek.cpp \
            doc.cpp \

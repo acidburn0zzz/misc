@@ -13,7 +13,6 @@
 #include <sstream>
 
 #include "board.h"
-#include "boardgl.h"
 #include "controlleur.h"
 #include "vue.h"
 
@@ -23,11 +22,6 @@ Vue::Vue(Controlleur *cont, QWidget *parent) : QMainWindow(parent) {
 }
 
 void Vue::init() {
-    /*if (showMessage("Graphics", "Do you want OpenGL?", MSG_QUESTION) == QMessageBox::Yes)
-        _openGL = true;
-    else*/
-        _openGL = false;
-
     QWidget *centralWidget = new QWidget;
     setCentralWidget(centralWidget);
     setWindowTitle("Daleks");
@@ -40,13 +34,8 @@ void Vue::init() {
     btnZap = new QPushButton(tr("&Zapper"));
     btnZap->setEnabled(false);
 
-    if (_openGL) {
-        boardGL = new BoardGL(_NB_CASES);
-        boardGL->setEnabled(false);
-    } else {
-        board = new Board(_NB_CASES);
-        board->setEnabled(false);
-    }
+    board = new Board(_NB_CASES);
+    board->setEnabled(false);
 
     QHBoxLayout *hlayButtons = new QHBoxLayout;
     hlayButtons->addWidget(btnNew);
@@ -56,22 +45,15 @@ void Vue::init() {
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addLayout(hlayButtons, 0);
-    if (_openGL)
-        layout->addWidget(boardGL);
-    else
-        layout->addWidget(board);
+    layout->addWidget(board);
 
     connect(btnNew, SIGNAL(clicked()), this, SLOT(newGame()));
     connect(btnTeleport, SIGNAL(clicked()), this, SLOT(teleport()));
     connect(btnRun, SIGNAL(clicked()), this, SLOT(run()));
     connect(btnZap, SIGNAL(clicked()), this, SLOT(zap()));
 
-    if (_openGL) {
-        connect(boardGL, SIGNAL(move(int)), this, SLOT(move(int)));
-    } else {
-        connect(board, SIGNAL(move(int)), this, SLOT(move(int)));
-        connect(board, SIGNAL(imagesMissing()), this, SLOT(imagesMissing()));
-    }
+    connect(board, SIGNAL(move(int)), this, SLOT(move(int)));
+    connect(board, SIGNAL(imagesMissing()), this, SLOT(imagesMissing()));
 
     createActions();
     createMenus();
@@ -94,10 +76,7 @@ void Vue::createActions() {
     actToggleGrid = new QAction(tr("Toggle &Grid"), this);
     actToggleGrid->setShortcut(tr("Ctrl+G"));
     actToggleGrid->setStatusTip(tr("Toggle the board grid"));
-    if (_openGL)
-        connect(actToggleGrid, SIGNAL(triggered()), boardGL, SLOT(toggleGrid()));
-    else
-        connect(actToggleGrid, SIGNAL(triggered()), board, SLOT(toggleGrid()));
+    connect(actToggleGrid, SIGNAL(triggered()), board, SLOT(toggleGrid()));
 
     actControls = new QAction(tr("Show &Controls"), this);
     actControls->setShortcut(tr("Ctrl+C"));
@@ -192,10 +171,7 @@ void Vue::newGame() {
         btnRun->setEnabled(true);
         btnZap->setEnabled(true);
 
-        if (_openGL)
-            boardGL->setEnabled(true);
-        else
-            board->setEnabled(true);
+        board->setEnabled(true);
 
         _cont->nouvellePartie();
         drawGame();
@@ -205,10 +181,7 @@ void Vue::newGame() {
 }
 
 void Vue::drawGame() {
-    if (_openGL)
-        boardGL->updateCharacters(_cont->getListeDaleks(), _cont->getNbDaleks(), _cont->getDoc());
-    else
-        board->updateCharacters(_cont->getListeDaleks(), _cont->getNbDaleks(), _cont->getDoc());
+    board->updateCharacters(_cont->getListeDaleks(), _cont->getNbDaleks(), _cont->getDoc());
     updateStatusBar();
 }
 
