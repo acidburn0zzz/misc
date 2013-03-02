@@ -3,12 +3,12 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET =
+TARGET = ctse
 DEPENDPATH += .
 INCLUDEPATH += .
 
 CONFIG += qt debug
-QT +=
+QT += widgets
 
 DESTDIR = ./bin
 MOC_DIR = ./moc
