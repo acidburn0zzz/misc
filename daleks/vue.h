@@ -4,7 +4,6 @@
 #include <QMainWindow>
 
 class Board;
-class BoardGL;
 class Buttons;
 class Controlleur;
 
@@ -45,7 +44,6 @@ private slots:
 private:
     Controlleur *_cont;
     const static int _NB_CASES = 30;
-    bool _openGL;
 
     QMenu *mnuFile;
     QAction *actNewGame;
@@ -63,7 +61,6 @@ private:
     QPushButton *btnZap;
 
     Board *board;
-    BoardGL *boardGL;
 
     void init();
     void createActions();
