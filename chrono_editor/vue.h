@@ -23,7 +23,7 @@
 
 #include <QMainWindow>
 
-#include "game.h"
+//#include "game.h"
 
 class QAction;
 class QComboBox;
@@ -114,7 +114,7 @@ private:
     QComboBox *cmbRelic;
 
     SRAMFile *_sramFile;
-    Game _game;
+    Game *_game;
 
     void init();
     void creerMenus();

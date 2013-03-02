@@ -32,8 +32,8 @@ public:
     void read() throw(std::exception);
     void write() throw(std::exception);
 
-    Game getGame(int gameNo);
-    void setGame(Game game, int gameNo);
+    Game *getGame(int gameNo);
+    void setGame(Game *game, int gameNo);
 
     void foo(int gameNo);
 

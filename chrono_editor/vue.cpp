@@ -35,8 +35,8 @@
 
 #include <cstring>
 
+#include "game.h"
 #include "sramfile.h"
-#include "struct.h"
 #include "vue.h"
 
 Vue::Vue(QWidget *parent) : QMainWindow(parent) {
@@ -332,25 +332,25 @@ void Vue::fillSpecificPerso(int perso) {
 void Vue::selectItems(int perso) {
     //Helmet
     for (int i=0; i<cmbHelmet[perso].count(); i++) {
-        if (cmbHelmet[perso].itemData(i) == _game.getCharacter(perso).getHelmet()) {
+        if (cmbHelmet[perso].itemData(i) == _game->getCharacter(perso).getHelmet()) {
             cmbHelmet[perso].setCurrentIndex(i);
         }
     }
     //Armor
     for (int i=0; i<cmbArmor[perso].count(); i++) {
-        if (cmbArmor[perso].itemData(i) == _game.getCharacter(perso).getArmor()) {
+        if (cmbArmor[perso].itemData(i) == _game->getCharacter(perso).getArmor()) {
             cmbArmor[perso].setCurrentIndex(i);
         }
     }
     //Weapon
     for (int i=0; i<cmbWeapon[perso].count(); i++) {
-        if (cmbWeapon[perso].itemData(i) == _game.getCharacter(perso).getWeapon()) {
+        if (cmbWeapon[perso].itemData(i) == _game->getCharacter(perso).getWeapon()) {
             cmbWeapon[perso].setCurrentIndex(i);
         }
     }
     //Relic
     for (int i=0; i<cmbRelic[perso].count(); i++) {
-        if (cmbRelic[perso].itemData(i) == _game.getCharacter(perso).getRelic()) {
+        if (cmbRelic[perso].itemData(i) == _game->getCharacter(perso).getRelic()) {
             cmbRelic[perso].setCurrentIndex(i);
         }
     }
@@ -365,6 +365,7 @@ void Vue::open(QString fn) {
 
     if (_sramFile) delete _sramFile;
     _sramFile = new SRAMFile(fn.toStdString());
+    _sramFile->read();
 
     selectGame(0);
 
@@ -394,19 +395,21 @@ void Vue::afficherInformations() {
         return;
 
     for (int i=0; i<7; i++) {
-        sbLevel[i].setValue(_game.getCharacter(i).getLevel());
-        sbExp[i].setValue(_game.getCharacter(i).getExp());
-        sbCurrentHP[i].setValue(_game.getCharacter(i).getCurrentHP());
-        sbMaxHP[i].setValue(_game.getCharacter(i).getMaxHP());
-        sbCurrentMP[i].setValue(_game.getCharacter(i).getCurrentMP());
-        sbMaxMP[i].setValue(_game.getCharacter(i).getMaxMP());
-        sbPower[i].setValue(_game.getCharacter(i).getBasePower());
-        sbStamina[i].setValue(_game.getCharacter(i).getBaseStamina());
-        sbSpeed[i].setValue(_game.getCharacter(i).getBaseSpeed());
-        sbMagic[i].setValue(_game.getCharacter(i).getBaseMagic());
-        sbHit[i].setValue(_game.getCharacter(i).getBaseHit());
-        sbEvade[i].setValue(_game.getCharacter(i).getBaseEvade());
-        sbMagicDef[i].setValue(_game.getCharacter(i).getBaseMagicDef());
+        Character c = _game->getCharacter(i);
+
+        sbLevel[i].setValue(c.getLevel());
+        sbExp[i].setValue(c.getExp());
+        sbCurrentHP[i].setValue(c.getCurrentHP());
+        sbMaxHP[i].setValue(c.getMaxHP());
+        sbCurrentMP[i].setValue(c.getCurrentMP());
+        sbMaxMP[i].setValue(c.getMaxMP());
+        sbPower[i].setValue(c.getBasePower());
+        sbStamina[i].setValue(c.getBaseStamina());
+        sbSpeed[i].setValue(c.getBaseSpeed());
+        sbMagic[i].setValue(c.getBaseMagic());
+        sbHit[i].setValue(c.getBaseHit());
+        sbEvade[i].setValue(c.getBaseEvade());
+        sbMagicDef[i].setValue(c.getBaseMagicDef());
 
         selectItems(i);
     }
@@ -417,20 +420,20 @@ void Vue::updateGame() {
         return;
 
     for (int i=0; i<7; i++) {
-        _game.getCharacter(i).setLevel(sbLevel[i].value());
-        _game.getCharacter(i).setExp(sbExp[i].value());
-        _game.getCharacter(i).setCurrentHP(sbCurrentHP[i].value());
-        _game.getCharacter(i).setMaxHP(sbMaxHP[i].value());
-        _game.getCharacter(i).setCurrentMP(sbCurrentMP[i].value());
-        _game.getCharacter(i).setMaxMP(sbMaxMP[i].value());
-        _game.getCharacter(i).setBasePower(sbPower[i].value());
-        _game.getCharacter(i).setBaseStamina(sbStamina[i].value());
-        _game.getCharacter(i).setBaseSpeed(sbSpeed[i].value());
-        _game.getCharacter(i).setBaseMagic(sbMagic[i].value());
-        _game.getCharacter(i).setBaseHit(sbHit[i].value());
-        _game.getCharacter(i).setBaseEvade(sbEvade[i].value());
-        _game.getCharacter(i).setBaseMagicDef(sbMagicDef[i].value());
+        _game->getCharacter(i).setLevel(sbLevel[i].value());
+        _game->getCharacter(i).setExp(sbExp[i].value());
+        _game->getCharacter(i).setCurrentHP(sbCurrentHP[i].value());
+        _game->getCharacter(i).setMaxHP(sbMaxHP[i].value());
+        _game->getCharacter(i).setCurrentMP(sbCurrentMP[i].value());
+        _game->getCharacter(i).setMaxMP(sbMaxMP[i].value());
+        _game->getCharacter(i).setBasePower(sbPower[i].value());
+        _game->getCharacter(i).setBaseStamina(sbStamina[i].value());
+        _game->getCharacter(i).setBaseSpeed(sbSpeed[i].value());
+        _game->getCharacter(i).setBaseMagic(sbMagic[i].value());
+        _game->getCharacter(i).setBaseHit(sbHit[i].value());
+        _game->getCharacter(i).setBaseEvade(sbEvade[i].value());
+        _game->getCharacter(i).setBaseMagicDef(sbMagicDef[i].value());
     }
 
-    _sramFile->setGame(_game, _game.getNo());
+    _sramFile->setGame(_game, _game->getSlot());
 }

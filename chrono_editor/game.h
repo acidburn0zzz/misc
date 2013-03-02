@@ -28,27 +28,27 @@ class Game {
 public:
     Game(game_t game);
 
-    //char getNo();
-    //void setNo(char no);
-    
+    u8 getSlot();
+    void setSlot(u8 slot);
+
     game_t getGameStruct();
     void setGameStruct(game_t);
-    
-    Character getCharacter(int charId);
-    void setCharacter(Character c, int charId);
 
-    u8*  getName(int charId);
-    void setName(u8* name, int charId);
+    Character getCharacter(u8 charId);
+    void setCharacter(Character c, u8 charId);
+
+    u8*  getName(u8 charId);
+    void setName(u8* name, u8 charId);
 
     u32 getGold();
     void setGold(u32 gold);
 
 private:
-    char _no;
+    u8 _slot;
     game_t _game;
     u8 _namesDec[8][6];
 
-    void decodeName(int charId);
+    void decodeName(u8 charId);
 };
 
 #endif //__GAME_H__

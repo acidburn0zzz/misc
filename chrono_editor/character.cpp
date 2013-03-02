@@ -79,163 +79,161 @@ u16 Character::getMaxMP() {
 void Character::setMaxMP(u16 maxMP) {
     _char.maxMP = maxMP > 99 ? 99 : maxMP;
 }
-//
-//u8 Character::getBasePower() {
-//    return basePower;
-//}
-//
-//u8 Character::getBaseStamina() {
-//    return baseStamina;
-//}
-//
-//u8 Character::getBaseSpeed() {
-//    return baseSpeed;
-//}
-//
-//u8 Character::getBaseMagic() {
-//    return baseMagic;
-//}
-//
-//u8 Character::getBaseHit() {
-//    return baseHit;
-//}
-//
-//u8 Character::getBaseEvade() {
-//    return baseEvade;
-//}
-//
-//u8 Character::getBaseMagicDef() {
-//    return baseMagicDef;
-//}
-//
-//u8 Character::getLevel() {
-//    return level;
-//}
-//
-//u32 Character::getExp() {
-//    return exp;
-//}
-//
-//u8 Character::getHelmet() {
-//    return helmet;
-//}
-//
-//u8 Character::getArmor() {
-//    return armor;
-//}
-//
-//u8 Character::getWeapon() {
-//    return weapon;
-//}
-//
-//u8 Character::getRelic() {
-//    return relic;
-//}
-//
-//u16 Character::getXpForLevelUp() {
-//    return xpForLevelUp;
-//}
-//
-//u16 Character::getSpForNextTech() {
-//    return spForNextTech;
-//}
-//
-//
-//void Character::setBasePower(u8 basePower) {
-//    if (basePower > 99)
-//        basePower = 99;
-//
-//    this->basePower = basePower;
-//}
-//
-//
-//void Character::setBaseStamina(u8 baseStamina) {
-//    if (baseStamina > 99)
-//        baseStamina = 99;
-//
-//    this->baseStamina = baseStamina;
-//}
-//
-//void Character::setBaseSpeed(u8 baseSpeed) {
-//    if (baseSpeed > 16)
-//        baseSpeed = 16;
-//
-//    this->baseSpeed = baseSpeed;
-//}
-//
-//void Character::setBaseMagic(u8 baseMagic) {
-//    if (baseMagic > 99)
-//        baseMagic = 99;
-//
-//    this->baseMagic = baseMagic;
-//}
-//
-//void Character::setBaseHit(u8 baseHit) {
-//    if (baseHit > 99)
-//        baseHit = 99;
-//
-//    this->baseHit = baseHit;
-//}
-//
-//void Character::setBaseEvade(u8 baseEvade) {
-//    if (baseEvade > 99)
-//        baseEvade = 99;
-//
-//    this->baseEvade = baseEvade;
-//}
-//
-//void Character::setBaseMagicDef(u8 baseMagicDef) {
-//    if (baseMagicDef > 99)
-//        baseMagicDef = 99;
-//
-//    this->baseMagicDef = baseMagicDef;
-//}
-//
-//void Character::setLevel(u8 level) {
-//    if (level > 99)
-//        level = 99;
-//
-//    this->level = level;
-//}
-//
-//void Character::setExp(u32 exp) {
-//    if (exp > 9999999)
-//        exp = 9999999;
-//
-//    this->exp = exp;
-//}
-//
-//void Character::setHelmet(u8 helmet) {
-//    if (helmet < 0x7c)
-//        helmet = 0x7c;
-//    else if (helmet > 0x93)
-//        helmet = 0x93;
-//
-//    this->helmet = helmet;
-//}
-//
-//void Character::setArmor(u8 armor) {
-//    if (armor < 0x5b)
-//        armor = 0x5b;
-//    else if (armor > 0x7a)
-//        armor = 0x7a;
-//
-//    this->armor = armor;
-//}
-//
-//void Character::setWeapon(u8 weapon) {
-//    if (checkIfWeaponOK(weapon))
-//        this->weapon = weapon;
-//}
-//
-//void Character::setRelic(u8 relic) {
-//    if (relic < 0x95)
-//        relic = 0x95;
-//    else if (relic > 0xbb)
-//        relic = 0xbb;
-//
-//    this->relic = relic;
-//}
+
+u8 Character::getBasePower() {
+    return _char.basePower;
+}
+
+u8 Character::getBaseStamina() {
+    return _char.baseStamina;
+}
+
+u8 Character::getBaseSpeed() {
+    return _char.baseSpeed;
+}
+
+u8 Character::getBaseMagic() {
+    return _char.baseMagic;
+}
+
+u8 Character::getBaseHit() {
+    return _char.baseHit;
+}
+
+u8 Character::getBaseEvade() {
+    return _char.baseEvade;
+}
+
+u8 Character::getBaseMagicDef() {
+    return _char.baseMagicDef;
+}
+
+u8 Character::getLevel() {
+    return _char.level;
+}
+
+u32 Character::getExp() {
+    return _char.exp & 0x00ffffff;
+}
+
+u8 Character::getHelmet() {
+    return _char.helmet;
+}
+
+u8 Character::getArmor() {
+    return _char.armor;
+}
+
+u8 Character::getWeapon() {
+    return _char.weapon;
+}
+
+u8 Character::getRelic() {
+    return _char.relic;
+}
+
+u16 Character::getXpForLevelUp() {
+    return _char.xpForLevelUp;
+}
+
+u16 Character::getSpForNextTech() {
+    return _char.spForNextTech;
+}
+
+void Character::setBasePower(u8 basePower) {
+    if (basePower > 99)
+        basePower = 99;
+
+    _char.basePower = basePower;
+}
+
+void Character::setBaseStamina(u8 baseStamina) {
+    if (baseStamina > 99)
+        baseStamina = 99;
+
+    _char.baseStamina = baseStamina;
+}
+
+void Character::setBaseSpeed(u8 baseSpeed) {
+    if (baseSpeed > 16)
+        baseSpeed = 16;
+
+    _char.baseSpeed = baseSpeed;
+}
+
+void Character::setBaseMagic(u8 baseMagic) {
+    if (baseMagic > 99)
+        baseMagic = 99;
+
+    _char.baseMagic = baseMagic;
+}
+
+void Character::setBaseHit(u8 baseHit) {
+    if (baseHit > 99)
+        baseHit = 99;
+
+    _char.baseHit = baseHit;
+}
+
+void Character::setBaseEvade(u8 baseEvade) {
+    if (baseEvade > 99)
+        baseEvade = 99;
+
+    _char.baseEvade = baseEvade;
+}
+
+void Character::setBaseMagicDef(u8 baseMagicDef) {
+    if (baseMagicDef > 99)
+        baseMagicDef = 99;
+
+    _char.baseMagicDef = baseMagicDef;
+}
+
+void Character::setLevel(u8 level) {
+    if (level > 99)
+        level = 99;
+
+    _char.level = level;
+}
+
+void Character::setExp(u32 exp) {
+    if (exp > 9999999)
+        exp = 9999999;
+
+    _char.exp = exp;
+}
+
+void Character::setHelmet(u8 helmet) {
+    if (helmet < 0x7c)
+        helmet = 0x7c;
+    else if (helmet > 0x93)
+        helmet = 0x93;
+
+    _char.helmet = helmet;
+}
+
+void Character::setArmor(u8 armor) {
+    if (armor < 0x5b)
+        armor = 0x5b;
+    else if (armor > 0x7a)
+        armor = 0x7a;
+
+    _char.armor = armor;
+}
+
+void Character::setWeapon(u8 weapon) {
+    if (checkIfWeaponOK(weapon))
+        _char.weapon = weapon;
+}
+
+void Character::setRelic(u8 relic) {
+    if (relic < 0x95)
+        relic = 0x95;
+    else if (relic > 0xbb)
+        relic = 0xbb;
+
+    _char.relic = relic;
+}
 
 bool Character::checkIfWeaponOK(u8 wpn) {
     switch (_char.id) {

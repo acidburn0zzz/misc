@@ -48,13 +48,13 @@ struct character_s {
     u16 maxHP;
     u16 currentMP;
     u16 maxMP;
-    u8  power;
-    u8  stamina;
-    u8  speed;
-    u8  magic;
-    u8  hit;
-    u8  evade;
-    u8  magicDef;
+    u8  basePower;
+    u8  baseStamina;
+    u8  baseSpeed;
+    u8  baseMagic;
+    u8  baseHit;
+    u8  baseEvade;
+    u8  baseMagicDef;
     u8  level;
     u32 exp;
     u8  unk2[16];
@@ -355,7 +355,7 @@ static const char *itemList[] = {
     "2 Feathers"
 };
 
-static const char *techniquesList[7][8] {
+/*static const char *techniquesList[7][8] = {
     {"Cyclone", "Slash", "Lightning", "Spincut", "Lightning 2", "Life", "Confuse", "Luminaire"},
     {"Aura", "Provoke", "Ice", "Cure", "Haste", "Ice 2", "Cure 2", "Life 2"},
     {"Flame Toss", "Hypno Wave", "Fire", "Napalm", "Protect", "Fire 2", "Mega Bomb", "Flare"},
@@ -363,7 +363,7 @@ static const char *techniquesList[7][8] {
     {"Rocket Punch", "Cure Beam", "Laser Spin", "Robo Tackle", "Heal Beam", "Uzzi Punch", "Area Bomb", "Shock"},
     {"Kiss", "Rollo Kick", "Cat Attack", "Rock Throw", "Charm", "Tail Spin", "Dino Tail", "Triple Kick"},
     {"Lightning 2", "Ice 2", "Fire 2", "Dark Bomb", "Magic Wall", "Dark Mist", "Black Hole", "Dark Matter"}
-};
+};*/
 
 #ifdef __cplusplus
 }  /* extern "C" */

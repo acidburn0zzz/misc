@@ -109,12 +109,12 @@ void SRAMFile::computeChecksums() {
     }
 }
 
-Game SRAMFile::getGame(int gameNo) {
-    return Game(sram.games[gameNo]);
+Game *SRAMFile::getGame(int gameNo) {
+    return new Game(sram.games[gameNo]);
 }
 
-void SRAMFile::setGame(Game game, int gameNo) {
-    sram.games[gameNo] = game.getGameStruct();
+void SRAMFile::setGame(Game *game, int gameNo) {
+    sram.games[gameNo] = game->getGameStruct();
 }
 
 void decryptName(u8 *name) {
@@ -129,15 +129,18 @@ void decryptName(u8 *name) {
 }
 
 void SRAMFile::foo(int gameNo) {
-    game_t g;
+    Game *g;
+    game_t gst;
 
-    g = getGame(gameNo).getGameStruct();
+    g = getGame(gameNo);
+    gst = g->getGameStruct();
 
     for (int i=0; i<8; i++) {
-        character_t c = g.characters[i];
-        decryptName(g.names[i]);
+        character_t c = gst.characters[i];
+        decryptName(gst.names[i]);
         printf("Char %d\n", i);
-        printf("\tName: %s\n", g.names[i]);
+        printf("\tName: %s\n", gst.names[i]);
+        printf("\tLevel: %d\n", c.level);
         printf("\tExp: %d\n", c.exp & 0x00ffffff);
         printf("\tHP: %d\n", c.currentHP);
         printf("\tMP: %d\n", c.currentMP);
@@ -147,7 +150,9 @@ void SRAMFile::foo(int gameNo) {
         printf("\tRelic: %s\n", itemList[c.relic]);
     }
 
-    printf("Gold: %d\n", getGame(gameNo).getGold());
+    printf("Gold: %d\n", g->getGold());
+
+    delete g;
 
     write();
 }

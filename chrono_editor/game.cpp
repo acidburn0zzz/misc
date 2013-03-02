@@ -36,20 +36,28 @@ void Game::setGameStruct(game_t game) {
     _game = game;
 }
 
-Character Game::getCharacter(int charId) {
+u8 Game::getSlot() {
+    return _slot;
+}
+
+void Game::setSlot(u8 slot) {
+    _slot = slot;
+}
+
+Character Game::getCharacter(u8 charId) {
     return Character(_game.characters[charId]);
 }
 
-void Game::setCharacter(Character c, int charId) {
+void Game::setCharacter(Character c, u8 charId) {
     _game.characters[charId] = c.getCharStruct();
 }
 
-u8* Game::getName(int charId) {
+u8* Game::getName(u8 charId) {
     decodeName(charId);
     return _namesDec[charId];
 }
 
-void Game::setName(u8* name, int charId) {
+void Game::setName(u8* name, u8 charId) {
     for (int i=0; i<5; i++) {
         if (name[i] >= 'A' && name[i] <= 'Z')
             _game.names[charId][i] = name[i] + 95;
@@ -70,7 +78,7 @@ void Game::setGold(u32 gold) {
     _game.gold2 = (gold & 0xff0000) >> 16;
 }
 
-void Game::decodeName(int charId) {
+void Game::decodeName(u8 charId) {
     for (int i=0; i<5; i++) {
         if (_game.names[charId][i] >= 0xa0 && _game.names[charId][i] <= 0xb9)
             _namesDec[charId][i] = _game.names[charId][i] - 95;
