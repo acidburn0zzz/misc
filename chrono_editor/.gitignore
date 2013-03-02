@@ -7,3 +7,5 @@ smse-1.0a
 *.scite_session
 *.zst
 *.srm
+
+!test.srm
