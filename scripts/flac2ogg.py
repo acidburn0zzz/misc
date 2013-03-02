@@ -3,7 +3,7 @@
 import sys
 import os
 
-oggenc_opts = '-q 9'
+oggenc_opts = '-q 10'
 
 win32 = False
 
