@@ -1,0 +1,643 @@
+                                Chrono Trigger
+                        Save State Hacking Guide V. 1.0
+
+                                      By
+
+                      Terii Senshi (teriisenshi@aol.com)
+
+
+*****************
+Table of contents
+*****************
+
+1.0 Introduction
+
+2.0 Characters
+   2.1 Crono
+   2.2 Marle
+   2.3 Lucca
+   2.4 Robo
+   2.5 Frog
+   2.6 Ayla
+   2.7 Magus
+
+3.0 Gold and Time
+
+4.0 Dual/Triple Techs
+
+5.0 Items
+
+
+                               ******************
+                                1.0 Introduction   
+                               ******************
+
+This FAQ is to help people edit save states for Chrono Trigger. The offsets
+listed will only work for ZSNES save states. By editing save states you can
+change the character's stats, what items you have etc. Everything is stored
+in the save state, and if you know where you can edit anything. This FAQ
+tells you where certain values are stored in save states.
+
+In order to edit a save state, you will need a Hex Editor. The one I use is
+FxEdit which you can get at www.gregorybraun.com/fxedit.html. However any
+Hex Editor will do. This FAQ is not designed to teach you how to hex edit or
+about the hexadecimal number system. If you don't know how to hex edit, you
+can find information available on the Internet.
+
+A word of note. Any value that takes up 2 bytes is stored in reverse order.
+The first byte in the save state is actually the second byte of the number.
+For example 4E20 (20,000 in decimal) would be stored as 20 4E in a save state.
+
+If you don't want to mess with hex editing, I made a save state editor that
+can edit most of what's listed here. You can find it at my website
+(http://www.geocities.com/teriisenshi/chrono/sse/index.htm).
+
+                               ****************
+                                2.0 Characters
+                               ****************
+***********
+ 2.1 Crono
+***********
+
+3213: Which Character
+
+Changing this byte will actually changed which character it is, the name,
+portrait, almost everything.
+
+3216: Current HP (2 bytes)
+3218: Max HP (2 bytes)
+
+321A: Current MP (2 bytes)
+321C: Max MP (2 bytes)
+
+321E: Power
+321F: Stamina
+3220: Speed
+3221: Magic
+3222: Hit
+3223: Evade
+3224: Magic Defense
+
+3225: Level
+
+3226: Experience (2 bytes)
+
+323A: Helmet
+323B: Armor
+323C: Sword
+323D: Relic
+
+Section 5.0 has a list of values to set these addresses to.
+
+323E: XP needed to level up (2 bytes)
+3240: Skill Points needed to gain next tech (2 bytes)
+
+344A: Techs learned
+
+Each bit in this location refers to a different tech for Crono. To set what
+techs are known you need to set each bit individually. Basically to get all 8
+techs set this address to FF.
+
+3836: Name
+
+For name the values are as follows:
+
+A0 - BA = 'A' .. 'Z'
+BA - D3 = 'a' .. 'z'
+D4 - DD = '0' .. '9'
+
+So, 'Crono' would be A2 CB C8 C7 C8
+
+***********
+ 2.2 Marle
+***********
+
+3263: Which Character
+
+3266: Current HP (2 bytes)
+3268: Max HP (2 bytes)
+
+326A: Current MP (2 bytes)
+326C: Max MP (2 bytes)
+
+326E: Power
+326F: Stamina
+3270: Speed
+3271: Magic
+3272: Hit
+3273: Evade
+3274: Magic Defense
+
+3275: Level
+
+3276: Experience (2 bytes)
+
+328A: Helmet
+328B: Armor
+328C: Sword
+328D: Relic
+
+328E: XP needed to level up (2 bytes)
+3290: Skill Points needed to gain next tech (2 bytes)
+
+344B: Techs learned
+
+383C: Name
+
+***********
+ 2.3 Lucca
+***********
+
+32B3: Which Character
+
+32B6: Current HP (2 bytes)
+32B8: Max HP (2 bytes)
+
+32BA: Current MP (2 bytes)
+32BC: Max MP (2 bytes)
+
+32BE: Power
+32BF: Stamina
+32C0: Speed
+32C1: Magic
+32C2: Hit
+32C3: Evade
+32C4: Magic Defense
+
+32C5: Level
+
+32C6: Experience (2 bytes)
+
+32DA: Helmet
+32DB: Armor
+32DC: Sword
+32DD: Relic
+
+32DE: XP needed to level up (2 bytes)
+32E0: Skill Points needed to gain next tech (2 bytes)
+
+344C: Techs learned
+
+3842: Name
+
+**********
+ 2.4 Robo
+**********
+
+3303: Which Character
+
+3306: Current HP (2 bytes)
+3308: Max HP (2 bytes)
+
+330A: Current MP (2 bytes)
+330C: Max MP (2 bytes)
+
+330E: Power
+330F: Stamina
+3310: Speed
+3311: Magic
+3312: Hit
+3313: Evade
+3314: Magic Defense
+
+3315: Level
+
+3316: Experience (2 bytes)
+
+332A: Helmet
+332B: Armor
+332C: Sword
+332D: Relic
+
+332E: XP needed to level up (2 bytes)
+3330: Skill Points needed to gain next tech (2 bytes)
+
+344D: Techs learned
+
+3848: Name
+
+**********
+ 2.5 Frog
+**********
+
+3353: Which Character
+
+3356: Current HP (2 bytes)
+3358: Max HP (2 bytes)
+
+335A: Current MP (2 bytes)
+335C: Max MP (2 bytes)
+
+335E: Power
+335F: Stamina
+3360: Speed
+3361: Magic
+3362: Hit
+3363: Evade
+3364: Magic Defense
+
+3365: Level
+
+3366: Experience (2 bytes)
+
+337A: Helmet
+337B: Armor
+337C: Sword
+337D: Relic
+
+337E: XP needed to level up (2 bytes)
+3380: Skill Points needed to gain next tech (2 bytes)
+
+344E: Techs learned
+
+384E: Name
+
+**********
+ 2.6 Ayla
+**********
+
+33A3: Which Character
+
+33A6: Current HP (2 bytes)
+33A8: Max HP (2 bytes)
+
+33AA: Current MP (2 bytes)
+33AC: Max MP (2 bytes)
+
+33AE: Power
+33AF: Stamina
+33B0: Speed
+33B1: Magic
+33B2: Hit
+33B3: Evade
+33B4: Magic Defense
+
+33B5: Level
+
+33B6: Experience (2 bytes)
+
+33CA: Helmet
+33CB: Armor
+33CC: Sword
+33CD: Relic
+
+33CE: XP needed to level up (2 bytes)
+33D0: Skill Points needed to gain next tech (2 bytes)
+
+344F: Techs learned
+
+3854: Name
+
+***********
+ 2.7 Magus
+***********
+
+33F3: Which Character
+
+33F6: Current HP (2 bytes)
+33F8: Max HP (2 bytes)
+
+33FA: Current MP (2 bytes)
+33FC: Max MP (2 bytes)
+
+33FE: Power
+33FF: Stamina
+3400: Speed
+3401: Magic
+3402: Hit
+3403: Evade
+3404: Magic Defense
+
+3405: Level
+
+3406: Experience (2 bytes)
+
+341A: Helmet
+341B: Armor
+341C: Sword
+341D: Relic
+
+341E: XP needed to level up (2 bytes)
+3420: Skill Points needed to gain next tech (2 bytes)
+
+3450: Techs learned
+
+385A: Name
+
+
+                              *******************
+                               3.0 Gold and Time
+                              *******************
+
+Gold is stored starting at 3866. It's 3 bytes long and stored in reverse
+order. So 186A0 (100,000) Gold would be stored 00 6A 18.
+
+3866: 3rd byte of gold
+3867: 2nd byte of gold
+3868: 1st byte of gold
+
+The amount of time is stored at 1015, in BCD format, in reverse order.
+So if your time was 24:31 it would be stored as 01 03 04 02
+
+1015: Second digit of minutes
+1016: First digit of minutes
+1017: Second digit of hours
+1018: First digit of hours
+
+
+                           ***********************
+                            4.0 Dual/Triple Techs
+                           ***********************
+
+Which Dual and Triple techs you have learned starts at 3451. For Dual Techs
+each byte contains whether you have learned 3 different techs. To determine
+which tech you are changing you need to individually set the first 3 bits
+of each byte. For Triple techs each byte only determines one tech. The first
+bit is the only one that matters, so if the value is 80 or higher you know
+that tech if it lowers then you don't.
+
+To gain all the dual techs set bytes 3451 to 345F all to E0. To gain each
+Triple tech set bytes 3460 to 3469 to 80. The next 5 bytes contain triple
+techs as well, but you need rocks to learn them, so changing the value
+doesn't mean much.
+
+Double Tech:
+
+3451: Aura Whirl (80), Ice Sword (40), Ice Sword 2 (20)
+3452: Fire Whirl (80), Fire Sword (40), Fire Sword 2 (20)
+3453: Rocket Roll (80), Max Cyclone (40), Super Volt (20)
+3454: X Strike (80), SwordStream (40), Spire (20)
+3455: Drill Kick (80), Volt Bite (40), Falcon Hit (20)
+3456: Antipode (80), Antipode 2 (40), Antipode 3(20)
+3457: Aura Beam (80), Ice Tackle (40), Cure Touch (20)
+3458: Ice Water (80), Glacier (40), Double Cure (20)
+3459: Twin Charm (80), Ice Toss (40), Cube Toss (20)
+345A: Fire Punch(80), Fire Tackle (40), Double Bomb (20)
+345B: Flame Kick (80), Fire Whirl (40), Blaze Kick (20)
+345C: Blade Toss (80), Bubble Snap (40), Cure Wave (20)
+345D: Boogie (80), Spin Kick (40), Beast Toss (20)
+345E: Slurp Kiss (80), Bubble Hit (40), Drop Kick (20)
+345F: Red Pin (80), Line Bomb (40), Flog Flare (20)
+
+Triple Tech:
+
+3460: Delta Force
+3461: Lifeline
+3462: Arc Impulse
+3463: Final Kick
+3464: Fire Zone
+3465: Delta Storm
+3466: GatlingKick
+3467: Triple Raid
+3468: Twister
+3469: 3D Attack
+
+                                 ***********
+                                  5.0 Items
+                                 ***********
+
+Which items you have starts at offset 3013. Each byte contains one item
+The number of items of each that you have 3113. So, the number of items you
+have of the item in offset 3013 is stored in 3113.
+
+Items:
+
+00: Empty
+01: Wood Sword
+02: Iron Blade
+03: SteelSaber
+04: Lode Sword
+05: Red Katana
+06: Flint Edge
+07: Dark Saber
+08: Aeon Blade
+09: Demon Edge
+0A: AlloyBlade
+0B: Star Sword
+0C: VedicBlade
+0D: Kali Blade
+0E: Shiva Edge
+0F: Bolt Sword
+10: Slasher
+11: Bronze Bow
+12: Iron Bow
+13: Lode Bow
+14: Robin Bow
+15: Sage Bow
+16: Dream Bow
+18: SonicArrow
+19: Valkerye
+1A: Siren
+1F: Air Gun
+20: Dart Gun
+21: Auto Gun
+22: PicoMagnum
+23: Plasma Gun
+24: Ruby Gun
+25: Dream Gun
+26: Megablast
+27: Shock Wave
+28: Wonder Shot
+29: Graedus
+2E: Tin Arm
+2F: Hammer Arm
+31: Stone Arm
+32: DoomFinger
+33: Magma Hand
+34: MegatonArm
+35: Big Hand
+36: Kaiser Arm
+37: Giga Arm
+38: Terra Arm
+39: Crisis Arm
+3B: BronzeEdge
+3C: Iron Sword
+3D: Masamune (I)
+3E: FlashBlade
+3F: Pearl Edge
+40: Rune Blade
+41: BraveSword
+42: Masamune (II)
+43: Demon Hit
+44: Fist (I)
+45: Fist (II)
+46: Fist (III)
+47: Iron Fist
+48: Bronze Fist
+4B: DarkScythe
+4C: Hurricane
+4D: StarScythe
+4E: DoomSickle
+4F: Mop
+50: Bent Sword
+51: Bent Hilt
+52: Masamune (0)
+53: Swallow
+54: Slasher 2
+55: Rainbow
+5B: Hide Tunic
+5C: Karate Gi
+5D: BronzeMail
+5E: MaidenSuit
+5F: Iron Suit
+60: Titan Vest
+61: Gold Suit
+62: Ruby Vest
+63: Dark Mail
+64: Mist Robe
+65: Meso Mail
+66: Lumin Robe
+67: Flash Mail
+68: Lode Vest
+69: Aeon Suit
+6A: ZodiacCape
+6B: Nova Armor
+6C: PrismDress
+6D: Moon Armor
+6E: Ruby Armor
+6F: RavenArmor
+70: Gloom Cape
+71: White Mail
+72: Black Mail
+73: Blue Mail
+74: Red Mail
+75: White Vest
+76: Black Vest
+77: Blue Vest
+78: Red Vest
+79: Taban Vest
+7A: Taban Suit
+7C: Hide Cap
+7D: BronzeHelm
+7E: Iron Helm
+7F: Beret
+80: Gold Helm
+81: Rock Helm
+82: CeraTopper
+83: Glow Helm
+84: Lode Helm
+85: Aeon Helm
+86: Prism Helm
+87: Doom Helm
+88: Dark Helm
+89: Gloom Helm
+8A: Safe Helm
+8B: Taban Helm
+8C: Sight Cap
+8D: Memory Cap
+8E: Time Hat
+8F: Vigil Hat
+90: OzziePants
+91: Haste Helm
+92: R'bow Helm
+93: MermaidCap
+95: Bandana
+96: Ribbon
+97: PowerGlove
+98: Defender
+99: MagicScarf
+9A: Amulet
+9B: Dash Ring
+9C: Hit Ring
+9D: Power Ring
+9E: Magic Ring
+9F: Wall Ring
+A0: SilverErng
+A1: Gold Erng
+A2: SilverStud
+A3: Gold Stud
+A4: SightScope
+A5: Charm Top
+A6: Rage Band
+A7: FrenzyBand
+A8: Third Eye
+A9: Wallet
+AA: GreenDream
+AB: Berserker
+AC: PowerScarf
+AD: Speed Belt
+AE: Black Rock
+AF: Blue Rock
+B0: SilverRock
+B1: White Rock
+B2: Gold Rock
+B3: Hero Medal
+B4: MuscleRing
+B5: Flea Vest
+B6: Magic Seal
+B7: Power Seal
+C2: Relic
+B9: SeraphSong
+BA: Sun Shades
+BB: PrismSpecs
+BD: Tonic
+BE: Mid Tonic
+BF: Full Tonic
+C0: Ether
+C1: Mid Ether
+C2: Full Ether
+C3: Elixir
+C4: HyperEther
+C5: MegaElixir
+C6: Heal
+C7: Revive
+C8: Shelter
+C9: Power Meal
+CA: Lapis
+CB: Barrier
+CC: Shield
+CD: Power Tab
+CE: Magic Tab
+CF: Speed Tab
+D0: Petal
+D1: Fang
+D2: Horn
+D3: Feather
+D4: Seed
+D5: Bike Key
+D6: Pendant
+D7: Gate Key
+D8: PrsimShard
+D9: C. Trigger
+DA: Tools
+DB: Jerky
+DC: DreamStone
+DD: Race Log
+DE: Moon Stone
+DF: Sun Stone
+E0: Ruby Knife
+E1: Yakra Key
+E2: Clone
+E3: Toma's Pop
+E4: 2 Petals
+E5: 2 Fangs
+E6: 2 Horns
+E7: 2 Feathers
+
+Any other values will result in bogus unnamed items.
+
+A note about some of these items. Dark Saber, PicoMagnum, SeraphSong, and
+Relic were all in the original Japanese version, but were dummied out in the
+American version.
+
+Fist (I), Fist (II), and Fist (III) are all Ayla's fists. In the game they
+are called "Fist", I simply numbered them to tell them apart. Ayla starts
+with Fist (I) and as she goes up levels she gets better fists, eventually
+getting the Iron and Bronze Fist.
+
+Masamune (0) is the Masamune you have after you fix it but before Frog can
+equip it. Masamune (I) is the Masamune you get when Frog gains the ability
+to equip it. Masamune (II) is the powered up Masamune you get at the
+Northern Ruins.
+
+/**************************************************************************/
+Copyright notice:
+This document is Copyright 2001 by Kris DeHart. I do not authorize any part
+of this FAQ to be copied or used in anyone else's FAQ without my explicit
+permission. The most recent version of this FAQ and all my other FAQS can
+always be found at GameFAQs (http://www.gamefaqs.com) or my website
+(http://www.geocities.com/teriisenshi)
+/***************************************************************************/
+
+
+

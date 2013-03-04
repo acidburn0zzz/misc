@@ -18,51 +18,37 @@
  * You can contact the original author at acidrain1@gmail.com              *
  ***************************************************************************/
 
-#ifndef __STATE_H__
-#define __STATE_H__
-
-#include <fstream>
+#ifndef __GAME_H__
+#define __GAME_H__
 
 #include "character.h"
 #include "struct.h"
 
-enum type {ZSNES, SNES9X};
-
-class State {
-private:
-    //Valeurs de la partie
-    Character *_chars;
-    s_items _items;
-    unsigned int _gold;
-    s_time _time;
-
-    //Informations sur le fichier
-    unsigned char *_buffer;
-    char *_fileName;
-    unsigned int _fileSize;
-    std::fstream _file;
-    char _savetype;
-    int _offset;
-
+class Game {
 public:
-    State(const char *file);
-    ~State();
+    Game(game_t game, int slot);
 
-    Character *getChars();
-    s_items getItems();
-    void setItems(s_items items);
-    unsigned int getGold();
-    void setGold(unsigned int gold);
-    unsigned int getTime(); //Retourne le temps en minutes
-    void setTime(unsigned int time); //Param : temps en minutes
-    //void setChars(Character *chars);
+    u8 getSlot();
+    void setSlot(u8 slot);
 
-    int readFile();
-    int writeFile();
+    game_t getGameStruct();
+    void setGameStruct(game_t);
 
-    int getFileSize();
+    Character getCharacter(u8 charId);
+    void setCharacter(Character c, u8 charId);
 
-    int uncompressGzSave();
+    u8*  getName(u8 charId);
+    void setName(u8* name, u8 charId);
+
+    u32 getGold();
+    void setGold(u32 gold);
+
+private:
+    u8 _slot;
+    game_t _game;
+    u8 _namesDec[8][6];
+
+    void decodeName(u8 charId);
 };
 
-#endif //__STATE_H__
+#endif //__GAME_H__

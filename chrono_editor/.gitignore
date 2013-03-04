@@ -5,6 +5,7 @@ smse-1.0a
 /moc
 
 *.scite_session
-*.txt
 *.zst
 *.srm
+
+!test.srm

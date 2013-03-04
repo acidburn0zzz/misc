@@ -1,223 +1,243 @@
+/***************************************************************************
+ * Copyright (C) 2010 Lemay, Mathieu                                       *
+ *                                                                         *
+ * This program is free software; you can redistribute it and/or modify    *
+ * it under the terms of the GNU General Public License as published by    *
+ * the Free Software Foundation; either version 2 of the License, or       *
+ * (at your option) any later version.                                     *
+ *                                                                         *
+ * This program is distributed in the hope that it will be useful,         *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of          *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the            *
+ * GNU General Public License for more details.                            *
+ *                                                                         *
+ * You should have received a copy of the GNU General Public License along *
+ * with this program; if not, write to the Free Software Foundation, Inc., *
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.             *
+ *                                                                         *
+ * You can contact the original author at acidrain1@gmail.com              *
+ ***************************************************************************/
+
 #include "character.h"
 
-Character::Character() {
-    //DUDE!
+Character::Character(character_t character) {
+    _char = character;
 }
 
-Character::Character(s_ioCharacter c) {
-    _ioChar = c;
+character_t Character::getCharStruct() {
+    return _char;
 }
 
-unsigned char Character::getWho() {
-    return _ioChar.who;
+void Character::setCharStruct(character_t character) {
+    _char = character;
 }
 
-unsigned short Character::getCurrentHP() {
-    return _ioChar.currentHP;
+u8 Character::getId() {
+    return _char.id;
 }
 
-unsigned short Character::getMaxHP() {
-    return _ioChar.maxHP;
+void Character::setId(u8 id) {
+    _char.id = id;
 }
 
-unsigned short Character::getCurrentMP() {
-    return _ioChar.currentMP;
+u8 Character::getCharId() {
+    return _char.charId;
 }
 
-unsigned short Character::getMaxMP() {
-    return _ioChar.maxMP;
+void Character::setCharId(u8 charId) {
+    _char.charId = charId;
 }
 
-unsigned char Character::getPower() {
-    return _ioChar.power;
+u16 Character::getCurrentHP() {
+    return _char.currentHP;
 }
 
-unsigned char Character::getStamina() {
-    return _ioChar.stamina;
+void Character::setCurrentHP(u16 currentHP) {
+    _char.currentHP = currentHP > 999 ? 999 : currentHP;
 }
 
-unsigned char Character::getSpeed() {
-    return _ioChar.speed;
+u16 Character::getMaxHP() {
+    return _char.maxHP;
 }
 
-unsigned char Character::getMagic() {
-    return _ioChar.magic;
+void Character::setMaxHP(u16 maxHP) {
+    _char.maxHP = maxHP > 999 ? 999 : maxHP;
 }
 
-unsigned char Character::getHit() {
-    return _ioChar.hit;
+u16 Character::getCurrentMP() {
+    return _char.currentMP;
 }
 
-unsigned char Character::getEvade() {
-    return _ioChar.evade;
+void Character::setCurrentMP(u16 currentMP) {
+    _char.currentMP = currentMP > 999 ? 999 : currentMP;
 }
 
-unsigned char Character::getMagicDef() {
-    return _ioChar.magicDef;
+u16 Character::getMaxMP() {
+    return _char.maxMP;
 }
 
-unsigned char Character::getLevel() {
-    return _ioChar.level;
+void Character::setMaxMP(u16 maxMP) {
+    _char.maxMP = maxMP > 99 ? 99 : maxMP;
 }
 
-unsigned int Character::getExp() {
-    return _ioChar.exp;
+u8 Character::getBasePower() {
+    return _char.basePower;
 }
 
-unsigned char Character::getHelmet() {
-    return _ioChar.helmet;
+u8 Character::getBaseStamina() {
+    return _char.baseStamina;
 }
 
-unsigned char Character::getArmor() {
-    return _ioChar.armor;
+u8 Character::getBaseSpeed() {
+    return _char.baseSpeed;
 }
 
-unsigned char Character::getWeapon() {
-    return _ioChar.weapon;
+u8 Character::getBaseMagic() {
+    return _char.baseMagic;
 }
 
-unsigned char Character::getRelic() {
-    return _ioChar.relic;
+u8 Character::getBaseHit() {
+    return _char.baseHit;
 }
 
-unsigned short Character::getXpForLevelUp() {
-    return _ioChar.xpForLevelUp;
+u8 Character::getBaseEvade() {
+    return _char.baseEvade;
 }
 
-unsigned short Character::getSpForNextTech() {
-    return _ioChar.spForNextTech;
+u8 Character::getBaseMagicDef() {
+    return _char.baseMagicDef;
 }
 
-s_ioCharacter Character::getIOCharacter() {
-    return _ioChar;
+u8 Character::getLevel() {
+    return _char.level;
 }
 
-void Character::setCurrentHP(unsigned short currentHP) {
-    if (currentHP > 999)
-        currentHP = 999;
-    
-    _ioChar.currentHP = currentHP;
+u32 Character::getExp() {
+    return _char.exp & 0x00ffffff;
 }
 
-void Character::setMaxHP(unsigned short maxHP) {
-    if (maxHP > 999)
-        maxHP = 999;
-    
-    _ioChar.maxHP = maxHP;
+u8 Character::getHelmet() {
+    return _char.helmet;
 }
 
-void Character::setCurrentMP(unsigned short currentMP) {
-    if (currentMP > 99)
-        currentMP = 99;
-    
-    _ioChar.currentMP = currentMP;
+u8 Character::getArmor() {
+    return _char.armor;
 }
 
-void Character::setMaxMP(unsigned short maxMP) {
-    if (maxMP > 99)
-        maxMP = 99;
-    
-    _ioChar.maxMP = maxMP;
+u8 Character::getWeapon() {
+    return _char.weapon;
 }
 
-void Character::setPower(unsigned char power) {
-    if (power > 99)
-        power = 99;
-    
-    _ioChar.power = power;
+u8 Character::getRelic() {
+    return _char.relic;
 }
 
-
-void Character::setStamina(unsigned char stamina) {
-    if (stamina > 99)
-        stamina = 99;
-    
-    _ioChar.stamina = stamina;
+u16 Character::getXpForLevelUp() {
+    return _char.xpForLevelUp;
 }
 
-void Character::setSpeed(unsigned char speed) {
-    if (speed > 16)
-        speed = 16;
-    
-    _ioChar.speed = speed;
+u16 Character::getSpForNextTech() {
+    return _char.spForNextTech;
 }
 
-void Character::setMagic(unsigned char magic) {
-    if (magic > 99)
-        magic = 99;
-    
-    _ioChar.magic = magic;
+void Character::setBasePower(u8 basePower) {
+    if (basePower > 99)
+        basePower = 99;
+
+    _char.basePower = basePower;
 }
 
-void Character::setHit(unsigned char hit) {
-    if (hit > 99)
-        hit = 99;
-    
-    _ioChar.hit = hit;
+void Character::setBaseStamina(u8 baseStamina) {
+    if (baseStamina > 99)
+        baseStamina = 99;
+
+    _char.baseStamina = baseStamina;
 }
 
-void Character::setEvade(unsigned char evade) {
-    if (evade > 99)
-        evade = 99;
-    
-    _ioChar.evade = evade;
+void Character::setBaseSpeed(u8 baseSpeed) {
+    if (baseSpeed > 16)
+        baseSpeed = 16;
+
+    _char.baseSpeed = baseSpeed;
 }
 
-void Character::setMagicDef(unsigned char magicDef) {
-    if (magicDef > 99)
-        magicDef = 99;
-    
-    _ioChar.magicDef = magicDef;
+void Character::setBaseMagic(u8 baseMagic) {
+    if (baseMagic > 99)
+        baseMagic = 99;
+
+    _char.baseMagic = baseMagic;
 }
 
-void Character::setLevel(unsigned char level) {
+void Character::setBaseHit(u8 baseHit) {
+    if (baseHit > 99)
+        baseHit = 99;
+
+    _char.baseHit = baseHit;
+}
+
+void Character::setBaseEvade(u8 baseEvade) {
+    if (baseEvade > 99)
+        baseEvade = 99;
+
+    _char.baseEvade = baseEvade;
+}
+
+void Character::setBaseMagicDef(u8 baseMagicDef) {
+    if (baseMagicDef > 99)
+        baseMagicDef = 99;
+
+    _char.baseMagicDef = baseMagicDef;
+}
+
+void Character::setLevel(u8 level) {
     if (level > 99)
         level = 99;
-    
-    _ioChar.level = level;
+
+    _char.level = level;
 }
 
-void Character::setExp(unsigned int exp) {
+void Character::setExp(u32 exp) {
     if (exp > 9999999)
         exp = 9999999;
-    
-    _ioChar.exp = exp;
+
+    //  Keep the high byte, exp is only 24bit
+    _char.exp = (_char.exp & 0xff000000) | exp;
 }
 
-void Character::setHelmet(unsigned char helmet) {
+void Character::setHelmet(u8 helmet) {
     if (helmet < 0x7c)
         helmet = 0x7c;
     else if (helmet > 0x93)
         helmet = 0x93;
-    
-    _ioChar.helmet = helmet;
+
+    _char.helmet = helmet;
 }
 
-void Character::setArmor(unsigned char armor) {
+void Character::setArmor(u8 armor) {
     if (armor < 0x5b)
         armor = 0x5b;
     else if (armor > 0x7a)
         armor = 0x7a;
-    
-    _ioChar.armor = armor;
+
+    _char.armor = armor;
 }
 
-void Character::setWeapon(unsigned char weapon) {
+void Character::setWeapon(u8 weapon) {
     if (checkIfWeaponOK(weapon))
-        _ioChar.weapon = weapon;
+        _char.weapon = weapon;
 }
 
-void Character::setRelic(unsigned char relic) {
+void Character::setRelic(u8 relic) {
     if (relic < 0x95)
         relic = 0x95;
     else if (relic > 0xbb)
         relic = 0xbb;
-    
-    _ioChar.relic = relic;
+
+    _char.relic = relic;
 }
 
-bool Character::checkIfWeaponOK(unsigned char wpn) {
-    switch (_ioChar.who) {
+bool Character::checkIfWeaponOK(u8 wpn) {
+    switch (_char.id) {
         case CRONO:
             if ((wpn >= 0x01 && wpn <= 0x10) || wpn == 0x4f || (wpn >= 0x53 && wpn <= 0x55))
                 return true;

@@ -1,61 +1,139 @@
+/***************************************************************************
+ * Copyright (C) 2010 Lemay, Mathieu                                       *
+ *                                                                         *
+ * This program is free software; you can redistribute it and/or modify    *
+ * it under the terms of the GNU General Public License as published by    *
+ * the Free Software Foundation; either version 2 of the License, or       *
+ * (at your option) any later version.                                     *
+ *                                                                         *
+ * This program is distributed in the hope that it will be useful,         *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of          *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the            *
+ * GNU General Public License for more details.                            *
+ *                                                                         *
+ * You should have received a copy of the GNU General Public License along *
+ * with this program; if not, write to the Free Software Foundation, Inc., *
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.             *
+ *                                                                         *
+ * You can contact the original author at acidrain1@gmail.com              *
+ ***************************************************************************/
+
 #ifndef __STRUCT_H__
 #define __STRUCT_H__
 
-enum {CRONO, MARLE, LUCCA, ROBO, FROG, AYLA, MAGUS};
+#include <stdint.h>
 
-struct s_ioCharacter {
-    unsigned char   useless0; //Pour commencer a lire le fichier 1 octet + tot, fonctionne pas sans
-    unsigned char   who;
-    unsigned char   useless1[2];
-    unsigned short  currentHP;
-    unsigned short  maxHP;
-    unsigned short  currentMP;
-    unsigned short  maxMP;
-    unsigned char   power;
-    unsigned char   stamina;
-    unsigned char   speed;
-    unsigned char   magic;
-    unsigned char   hit;
-    unsigned char   evade;
-    unsigned char   magicDef;
-    unsigned char   level;
-    unsigned int    exp; //TODO: S'assurer que l'exp est bien 4 bytes
-    unsigned char   useless2[16]; // +2 bytes si l'exp est 2 bytes
-    unsigned char   helmet;
-    unsigned char   armor;
-    unsigned char   weapon;
-    unsigned char   relic;
-    unsigned short  xpForLevelUp;
-    unsigned short  spForNextTech;
-    unsigned char   useless3[32];
-};
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-struct s_items {
-    unsigned char item[256];
-    unsigned char count[256];
+typedef uint8_t  u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+typedef int8_t   s8;
+typedef int16_t  s16;
+typedef int32_t  s32;
+
+static const int CHARACTER_SIZE = 0x0050;
+static const int NAME_SIZE = 0x0006;
+static const int GAME_SIZE = 0x0A00;
+static const int SRAM_SIZE = 0x2000;
+static const int CHECKSUM_OFFSET = 0x1FF0;
+
+struct character_s {
+    u8  id;
+    u8  charId;
+    u8  unk1;
+    u16 currentHP;
+    u16 maxHP;
+    u16 currentMP;
+    u16 maxMP;
+    u8  basePower;
+    u8  baseStamina;
+    u8  baseSpeed;
+    u8  baseMagic;
+    u8  baseHit;
+    u8  baseEvade;
+    u8  baseMagicDef;
+    u8  level;
+    u32 exp;
+    u8  unk2[16];
+    u8  helmet;
+    u8  armor;
+    u8  weapon;
+    u8  relic;
+    u16 xpForLevelUp;
+    u16 spForNextTech;
+    u8  unk3[7];
+    u8  currentPower;
+    u8  currentStamina;
+    u8  currentSpeed;
+    u8  currentMagic;
+    u8  currentHit;
+    u8  currentEvade;
+    u8  currentMagicDef;
+    u8  currentDefense;
+    u16 currentMaxHP;
+    u8  unk4[16];
+} __attribute__((packed));
+typedef struct character_s character_t;
+
+struct items_s {
+    uint8_t item[256];
+    uint8_t count[256];
 };
+typedef struct items_s items_t;
+
+struct game_s {
+    items_t     items;
+    character_t characters[7];
+    u8  maybe_tech_related[7];
+    u8  techs[7];
+    u8  unk1[322];
+    u8  partyMember1;
+    u8  partyMember2;
+    u8  partyMember3;
+    u8  unk2[25];
+    u8  saveCount;
+    u8  unk3[19];
+    u8  names[7][6];
+    u8  epoch_name[6];
+    u16 gold1; // gold & 0x00ffff
+    u8  gold2; // gold & 0xff0000
+    u8  unk4;
+    u8  fill[1052];
+};// __attribute__((packed));
+typedef struct game_s game_t;
+
+struct sram_s {
+    game_t games[3];
+    u8 unk1[496];
+    u16 crc[3];
+    u8 unk2[10];
+};
+typedef struct sram_s sram_t;
 
 struct s_time {
-    unsigned char min2; //2eme chiffre des minutes
-    unsigned char min1; //1er chiffre des minutes
-    unsigned char hour2; //2eme chiffre des heures
-    unsigned char hour1; //1er chiffre des heures
+    uint8_t min2; //2eme chiffre des minutes
+    uint8_t min1; //1er chiffre des minutes
+    uint8_t hour2; //2eme chiffre des heures
+    uint8_t hour1; //1er chiffre des heures
 };
 
 static const char *itemList[] = {
     "Empty",
     "Wood Sword",
     "Iron Blade",
-    "SteelSaber",
+    "Steel Saber",
     "Lode Sword",
     "Red Katana",
     "Flint Edge",
     "Dark Saber",
     "Aeon Blade",
     "Demon Edge",
-    "AlloyBlade",
+    "Alloy Blade",
     "Star Sword",
-    "VedicBlade",
+    "Vedic Blade",
     "Kali Blade",
     "Shiva Edge",
     "Bolt Sword",
@@ -66,8 +144,8 @@ static const char *itemList[] = {
     "Robin Bow",
     "Sage Bow",
     "Dream Bow",
-    "CometArrow",
-    "SonicArrow",
+    "Comet Arrow",
+    "Sonic Arrow",
     "Valkerye",
     "Siren",
     "",
@@ -77,7 +155,7 @@ static const char *itemList[] = {
     "Air Gun",
     "Dart Gun",
     "Auto Gun",
-    "PicoMagnum",
+    "Pico Magnum",
     "Plasma Gun",
     "Ruby Gun",
     "Dream Gun",
@@ -93,22 +171,22 @@ static const char *itemList[] = {
     "Hammer Arm",
     "Mirage Hand",
     "Stone Arm",
-    "DoomFinger",
+    "Doom Finger",
     "Magma Hand",
-    "MegatonArm",
+    "Megaton Arm",
     "Big Hand",
     "Kaiser Arm",
     "Giga Arm",
     "Terra Arm",
     "Crisis Arm",
     "",
-    "BronzeEdge",
+    "Bronze Edge",
     "Iron Sword",
     "Masamune (I)",
-    "FlashBlade",
+    "Flash Blade",
     "Pearl Edge",
     "Rune Blade",
-    "BraveSword",
+    "Brave Sword",
     "Masamune (II)",
     "Demon Hit",
     "Fist (I)",
@@ -118,17 +196,17 @@ static const char *itemList[] = {
     "Bronze Fist",
     "",
     "",
-    "DarkScythe",
+    "Dark Scythe",
     "Hurricane",
-    "StarScythe",
-    "DoomSickle",
+    "Star Scythe",
+    "Doom Sickle",
     "Mop",
     "Bent Sword",
     "Bent Hilt",
     "Masamune (0)",
     "Swallow",
     "Slasher 2",
-    "Rainbow",
+    "Rainbow Sword",
     "",
     "",
     "",
@@ -136,8 +214,8 @@ static const char *itemList[] = {
     "",
     "Hide Tunic",
     "Karate Gi",
-    "BronzeMail",
-    "MaidenSuit",
+    "Bronze Mail",
+    "Maiden Suit",
     "Iron Suit",
     "Titan Vest",
     "Gold Suit",
@@ -149,12 +227,12 @@ static const char *itemList[] = {
     "Flash Mail",
     "Lode Vest",
     "Aeon Suit",
-    "ZodiacCape",
+    "Zodiac Cape",
     "Nova Armor",
-    "PrismDress",
+    "Prism Dress",
     "Moon Armor",
     "Ruby Armor",
-    "RavenArmor",
+    "Raven Armor",
     "Gloom Cape",
     "White Mail",
     "Black Mail",
@@ -168,12 +246,12 @@ static const char *itemList[] = {
     "Taban Suit",
     "",
     "Hide Cap",
-    "BronzeHelm",
+    "Bronze Helm",
     "Iron Helm",
     "Beret",
     "Gold Helm",
     "Rock Helm",
-    "CeraTopper",
+    "Cera Topper",
     "Glow Helm",
     "Lode Helm",
     "Aeon Helm",
@@ -187,50 +265,50 @@ static const char *itemList[] = {
     "Memory Cap",
     "Time Hat",
     "Vigil Hat",
-    "OzziePants",
+    "Ozzie Pants",
     "Haste Helm",
-    "R'bow Helm",
-    "MermaidCap",
+    "Rainbow Helm",
+    "Mermaid Cap",
     "",
     "Bandana",
     "Ribbon",
-    "PowerGlove",
+    "Power Glove",
     "Defender",
-    "MagicScarf",
+    "Magic Scarf",
     "Amulet",
     "Dash Ring",
     "Hit Ring",
     "Power Ring",
     "Magic Ring",
     "Wall Ring",
-    "SilverErng",
-    "Gold Erng",
-    "SilverStud",
+    "Silver Earring",
+    "Gold Earring",
+    "Silver Stud",
     "Gold Stud",
-    "SightScope",
+    "Sight Scope",
     "Charm Top",
     "Rage Band",
-    "FrenzyBand",
+    "Frenzy Band",
     "Third Eye",
     "Wallet",
-    "GreenDream",
+    "Green Dream",
     "Berserker",
-    "PowerScarf",
+    "Power Scarf",
     "Speed Belt",
     "Black Rock",
     "Blue Rock",
-    "SilverRock",
+    "Silver Rock",
     "White Rock",
     "Gold Rock",
     "Hero Medal",
-    "MuscleRing",
+    "Muscle Ring",
     "Flea Vest",
     "Magic Seal",
     "Power Seal",
     "Relic",
-    "SeraphSong",
+    "Seraph Song",
     "Sun Shades",
-    "PrismSpecs",
+    "Prism Specs",
     "",
     "Tonic",
     "Mid Tonic",
@@ -239,8 +317,8 @@ static const char *itemList[] = {
     "Mid Ether",
     "Full Ether",
     "Elixir",
-    "HyperEther",
-    "MegaElixir",
+    "Hyper Ether",
+    "Mega Elixir",
     "Heal",
     "Revive",
     "Shelter",
@@ -259,11 +337,11 @@ static const char *itemList[] = {
     "Bike Key",
     "Pendant",
     "Gate Key",
-    "PrsimShard",
-    "C. Trigger",
+    "Prsim Shard",
+    "Chrono Trigger",
     "Tools",
     "Jerky",
-    "DreamStone",
+    "Dream Stone",
     "Race Log",
     "Moon Stone",
     "Sun Stone",
@@ -276,5 +354,19 @@ static const char *itemList[] = {
     "2 Horns",
     "2 Feathers"
 };
+
+/*static const char *techniquesList[7][8] = {
+    {"Cyclone", "Slash", "Lightning", "Spincut", "Lightning 2", "Life", "Confuse", "Luminaire"},
+    {"Aura", "Provoke", "Ice", "Cure", "Haste", "Ice 2", "Cure 2", "Life 2"},
+    {"Flame Toss", "Hypno Wave", "Fire", "Napalm", "Protect", "Fire 2", "Mega Bomb", "Flare"},
+    {"Slurp", "Slurp Cut", "Water", "Heal", "Leap Slash", "Water 2", "Cure 2", "Frog Squash"},
+    {"Rocket Punch", "Cure Beam", "Laser Spin", "Robo Tackle", "Heal Beam", "Uzzi Punch", "Area Bomb", "Shock"},
+    {"Kiss", "Rollo Kick", "Cat Attack", "Rock Throw", "Charm", "Tail Spin", "Dino Tail", "Triple Kick"},
+    {"Lightning 2", "Ice 2", "Fire 2", "Dark Bomb", "Magic Wall", "Dark Mist", "Black Hole", "Dark Matter"}
+};*/
+
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif
 
 #endif //__STRUCT_H__

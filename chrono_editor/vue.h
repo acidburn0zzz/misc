@@ -1,7 +1,29 @@
+/***************************************************************************
+ * Copyright (C) 2010 Lemay, Mathieu                                       *
+ *                                                                         *
+ * This program is free software; you can redistribute it and/or modify    *
+ * it under the terms of the GNU General Public License as published by    *
+ * the Free Software Foundation; either version 2 of the License, or       *
+ * (at your option) any later version.                                     *
+ *                                                                         *
+ * This program is distributed in the hope that it will be useful,         *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of          *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the            *
+ * GNU General Public License for more details.                            *
+ *                                                                         *
+ * You should have received a copy of the GNU General Public License along *
+ * with this program; if not, write to the Free Software Foundation, Inc., *
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.             *
+ *                                                                         *
+ * You can contact the original author at acidrain1@gmail.com              *
+ ***************************************************************************/
+
 #ifndef __VUE_H__
 #define __VUE_H_
 
 #include <QMainWindow>
+
+//#include "game.h"
 
 class QAction;
 class QComboBox;
@@ -16,21 +38,22 @@ class QTabWidget;
 class QVBoxLayout;
 class QWidget;
 
-class State;
+class SRAMFile;
+class Game;
 
 class Vue : public QMainWindow {
     Q_OBJECT
 
 public:
     Vue(QWidget *parent = 0);
-    Vue(const char *file, QWidget *parent = 0);
+    Vue(const char *fn, QWidget *parent = 0);
     ~Vue();
 
-    QString selectionFichier();
-
 private slots:
-    void ouvrirFichier();
-    void enregistrerFichier();
+    void open(QString fn = "");
+    void save();
+    QString selectFile();
+    void selectGame(int n);
 
 private:
     QString _name, _imageFile;
@@ -46,7 +69,7 @@ private:
     QMenu   *mnuAide;
     QAction *actAbout;
     QAction *actAboutQt;
-    
+
     QVBoxLayout *centralLayout;
     QHBoxLayout *hlayPerso;
     QGridLayout *gridStatsBase;
@@ -89,14 +112,16 @@ private:
     QComboBox *cmbArmor;
     QComboBox *cmbWeapon;
     QComboBox *cmbRelic;
-    
-    State *_state;
-    
+
+    SRAMFile *_sramFile;
+    Game *_game;
+
     void init();
     void creerMenus();
-    void fillSpecificPerso(char perso);
-    void selectItems(char perso);
+    void fillSpecificPerso(int perso);
+    void selectItems(int perso);
     void afficherInformations();
+    void updateGame();
 };
 
 #endif //__VUE_H__

@@ -3,12 +3,12 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET = ctse
 DEPENDPATH += .
 INCLUDEPATH += .
 
 CONFIG += qt debug
-QT += 
+QT += widgets
 
 LIBS=-lz
 
@@ -17,6 +17,6 @@ MOC_DIR = ./moc
 OBJECTS_DIR = ./obj
 
 # Input
-HEADERS += character.h state.h struct.h vue.h
-SOURCES += character.cpp main.cpp state.cpp vue.cpp
+HEADERS += character.h game.h sramfile.h struct.h vue.h
+SOURCES += character.cpp game.cpp main.cpp sramfile.cpp vue.cpp
 TRANSLATIONS += chrono_editor_en.ts

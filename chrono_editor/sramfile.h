@@ -18,51 +18,30 @@
  * You can contact the original author at acidrain1@gmail.com              *
  ***************************************************************************/
 
-#ifndef __STATE_H__
-#define __STATE_H__
+#ifndef __SRAMFILE_H__
+#define __SRAMFILE_H__
 
-#include <fstream>
+#include <iostream>
 
-#include "character.h"
 #include "struct.h"
 
-enum type {ZSNES, SNES9X};
-
-class State {
-private:
-    //Valeurs de la partie
-    Character *_chars;
-    s_items _items;
-    unsigned int _gold;
-    s_time _time;
-
-    //Informations sur le fichier
-    unsigned char *_buffer;
-    char *_fileName;
-    unsigned int _fileSize;
-    std::fstream _file;
-    char _savetype;
-    int _offset;
-
+class SRAMFile {
 public:
-    State(const char *file);
-    ~State();
+    SRAMFile(const std::string fn) throw(std::exception);
 
-    Character *getChars();
-    s_items getItems();
-    void setItems(s_items items);
-    unsigned int getGold();
-    void setGold(unsigned int gold);
-    unsigned int getTime(); //Retourne le temps en minutes
-    void setTime(unsigned int time); //Param : temps en minutes
-    //void setChars(Character *chars);
+    void read() throw(std::exception);
+    void write() throw(std::exception);
 
-    int readFile();
-    int writeFile();
+    Game *getGame(int gameNo);
+    void setGame(Game *game, int gameNo);
 
-    int getFileSize();
+    void foo(int gameNo);
 
-    int uncompressGzSave();
+private:
+    std::string _fn;
+    sram_t sram;
+
+    void computeChecksums();
 };
 
-#endif //__STATE_H__
+#endif //__SRAMFILE_H__
