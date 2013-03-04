@@ -32,7 +32,7 @@
 using namespace std;
 
 SRAMFile::SRAMFile(const std::string fn) throw(exception) {
-    this->fn = fn;
+    _fn = fn;
 }
 
 void SRAMFile::read() throw(exception) {
@@ -42,9 +42,9 @@ void SRAMFile::read() throw(exception) {
     file.exceptions(ifstream::eofbit | ifstream::failbit | ifstream::badbit);
 
     try {
-        file.open(fn.c_str(), ios_base::in | ios_base::binary);
+        file.open(_fn.c_str(), ios_base::in | ios_base::binary);
     } catch (exception e) {
-        cerr << "Unable to open file: " << fn << endl;
+        cerr << "Unable to open file: " << _fn << endl;
         throw e;
     }
 
@@ -52,7 +52,7 @@ void SRAMFile::read() throw(exception) {
     s = file.tellg();
 
     if (s != 0x2000) {
-        cerr << "Invalid SRAM file: " << fn << endl;
+        cerr << "Invalid SRAM file: " << _fn << endl;
         file.close();
         throw runtime_error("Invalid SRAM file");
     }
@@ -67,9 +67,9 @@ void SRAMFile::write() throw(exception) {
     file.exceptions(ifstream::eofbit | ifstream::failbit | ifstream::badbit);
 
     try {
-        file.open(fn.c_str(), ios_base::out | ios_base::binary);
+        file.open(_fn.c_str(), ios_base::out | ios_base::binary);
     } catch (fstream::failure e) {
-        cerr << "Unable to open file: " << fn << endl;
+        cerr << "Unable to open file: " << _fn << endl;
         throw e;
     }
 
@@ -81,31 +81,29 @@ void SRAMFile::write() throw(exception) {
 
 void SRAMFile::computeChecksums() {
     u32 checksum;
-    u16 *tmp, *offset, over;
-    u8 *pSram;
-    int g, i;
+    u8 *pSram, *slot;
+    int carry;
 
     pSram = (u8 *)&sram;
 
-    for (g=0; g<3; g++) {
+    for (int s=0; s<3; s++) {
+        slot = (pSram + s * GAME_SIZE);
         checksum = 0x00000000;
-        over = 0;
-        offset = (u16 *)(pSram + CHECKSUM_OFFSET + 2 * g);
+        carry = 0;
 
-        for (i=0; i<GAME_SIZE; i+=2) {
-            tmp = (u16 *)(pSram + i + g * GAME_SIZE);
-            checksum += *tmp;
-            checksum += over;
+        for (int i=0; i<GAME_SIZE; i+=2) {
+            checksum += *((u16 *)(slot + i));
+            checksum += carry;
 
-            over = 0;
+            carry = 0;
 
             if (checksum > 0xffff) {
-                over = 1;
+                carry = 1;
                 checksum &= 0xffff;
             }
         }
 
-        *offset = (u16) checksum;
+        *((u16 *)(pSram + CHECKSUM_OFFSET + 2 * s)) = checksum;
     }
 }
 

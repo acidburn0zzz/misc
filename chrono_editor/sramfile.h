@@ -38,7 +38,7 @@ public:
     void foo(int gameNo);
 
 private:
-    std::string fn;
+    std::string _fn;
     sram_t sram;
 
     void computeChecksums();

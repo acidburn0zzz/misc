@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-Wall -W -O2 -pedantic -ansi
+CFLAGS=-pedantic -ansi -Wall -Wshadow -Wpointer-arith -Wcast-qual
 CXXFLAGS=$(CFLAGS)
 INCLUDES=
 LDFLAGS=
