@@ -108,7 +108,7 @@ void SRAMFile::computeChecksums() {
 }
 
 Game *SRAMFile::getGame(int gameNo) {
-    return new Game(sram.games[gameNo]);
+    return new Game(sram.games[gameNo], gameNo);
 }
 
 void SRAMFile::setGame(Game *game, int gameNo) {

@@ -364,10 +364,11 @@ void Vue::open(QString fn) {
         return;
 
     if (_sramFile) delete _sramFile;
+    if (_game) delete _game;
     _sramFile = new SRAMFile(fn.toStdString());
     _sramFile->read();
 
-    selectGame(0);
+    _game = _sramFile->getGame(0);
 
     afficherInformations();
 }
@@ -420,19 +421,23 @@ void Vue::updateGame() {
         return;
 
     for (int i=0; i<7; i++) {
-        _game->getCharacter(i).setLevel(sbLevel[i].value());
-        _game->getCharacter(i).setExp(sbExp[i].value());
-        _game->getCharacter(i).setCurrentHP(sbCurrentHP[i].value());
-        _game->getCharacter(i).setMaxHP(sbMaxHP[i].value());
-        _game->getCharacter(i).setCurrentMP(sbCurrentMP[i].value());
-        _game->getCharacter(i).setMaxMP(sbMaxMP[i].value());
-        _game->getCharacter(i).setBasePower(sbPower[i].value());
-        _game->getCharacter(i).setBaseStamina(sbStamina[i].value());
-        _game->getCharacter(i).setBaseSpeed(sbSpeed[i].value());
-        _game->getCharacter(i).setBaseMagic(sbMagic[i].value());
-        _game->getCharacter(i).setBaseHit(sbHit[i].value());
-        _game->getCharacter(i).setBaseEvade(sbEvade[i].value());
-        _game->getCharacter(i).setBaseMagicDef(sbMagicDef[i].value());
+        Character c = _game->getCharacter(i);
+
+        c.setLevel(sbLevel[i].value());
+        c.setExp(sbExp[i].value());
+        c.setCurrentHP(sbCurrentHP[i].value());
+        c.setMaxHP(sbMaxHP[i].value());
+        c.setCurrentMP(sbCurrentMP[i].value());
+        c.setMaxMP(sbMaxMP[i].value());
+        c.setBasePower(sbPower[i].value());
+        c.setBaseStamina(sbStamina[i].value());
+        c.setBaseSpeed(sbSpeed[i].value());
+        c.setBaseMagic(sbMagic[i].value());
+        c.setBaseHit(sbHit[i].value());
+        c.setBaseEvade(sbEvade[i].value());
+        c.setBaseMagicDef(sbMagicDef[i].value());
+
+        _game->setCharacter(c, i);
     }
 
     _sramFile->setGame(_game, _game->getSlot());

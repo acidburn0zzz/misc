@@ -24,8 +24,9 @@
 
 using namespace std;
 
-Game::Game(game_t game) {
+Game::Game(game_t game, int slot) {
     _game = game;
+    _slot = slot;
 }
 
 game_t Game::getGameStruct() {

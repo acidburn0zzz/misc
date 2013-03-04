@@ -26,7 +26,7 @@
 
 class Game {
 public:
-    Game(game_t game);
+    Game(game_t game, int slot);
 
     u8 getSlot();
     void setSlot(u8 slot);
