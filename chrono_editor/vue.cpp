@@ -210,12 +210,12 @@ void Vue::init() {
         gridStats[i].addWidget(&sbMagicDef[i], 7, 0, Qt::AlignTop);
 
         //Partie de gauche (Items)
-        gridItems[i].addWidget(&lblHelmet[i], 0, 0, Qt::AlignBottom);
-        gridItems[i].addWidget(&cmbHelmet[i], 1, 0, Qt::AlignTop);
+        gridItems[i].addWidget(&lblWeapon[i], 0, 0, Qt::AlignBottom);
+        gridItems[i].addWidget(&cmbWeapon[i], 1, 0, Qt::AlignTop);
         gridItems[i].addWidget(&lblArmor[i], 2, 0, Qt::AlignBottom);
         gridItems[i].addWidget(&cmbArmor[i], 3, 0, Qt::AlignTop);
-        gridItems[i].addWidget(&lblWeapon[i], 4, 0, Qt::AlignBottom);
-        gridItems[i].addWidget(&cmbWeapon[i], 5, 0, Qt::AlignTop);
+        gridItems[i].addWidget(&lblHelmet[i], 4, 0, Qt::AlignBottom);
+        gridItems[i].addWidget(&cmbHelmet[i], 5, 0, Qt::AlignTop);
         gridItems[i].addWidget(&lblRelic[i], 6, 0, Qt::AlignBottom);
         gridItems[i].addWidget(&cmbRelic[i], 7, 0, Qt::AlignTop);
 
