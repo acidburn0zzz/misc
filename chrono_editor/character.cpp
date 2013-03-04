@@ -61,7 +61,7 @@ u16 Character::getMaxHP() {
 }
 
 void Character::setMaxHP(u16 maxHP) {
-    _char.maxHP = maxHP > 99 ? 99 : maxHP;
+    _char.maxHP = maxHP > 999 ? 999 : maxHP;
 }
 
 u16 Character::getCurrentMP() {
@@ -200,7 +200,8 @@ void Character::setExp(u32 exp) {
     if (exp > 9999999)
         exp = 9999999;
 
-    _char.exp = exp;
+    //  Keep the high byte, exp is only 24bit
+    _char.exp = (_char.exp & 0xff000000) | exp;
 }
 
 void Character::setHelmet(u8 helmet) {
