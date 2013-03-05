@@ -82,7 +82,7 @@ void SRAMFile::write() throw(exception) {
 void SRAMFile::computeChecksums() {
     u32 checksum;
     u8 *pSram, *slot;
-    int carry;
+    int carry, nbCarry;
 
     pSram = (u8 *)&sram;
 
@@ -91,7 +91,7 @@ void SRAMFile::computeChecksums() {
         checksum = 0x00000000;
         carry = 0;
 
-        for (int i=0; i<GAME_SIZE; i+=2) {
+        for (int i=GAME_SIZE-2; i>=0; i-=2) {
             checksum += *((u16 *)(slot + i));
             checksum += carry;
 
@@ -102,8 +102,6 @@ void SRAMFile::computeChecksums() {
                 checksum &= 0xffff;
             }
         }
-
-        checksum += carry;
 
         *((u16 *)(pSram + CHECKSUM_OFFSET + 2 * s)) = checksum;
     }

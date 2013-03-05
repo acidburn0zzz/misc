@@ -36,7 +36,7 @@ static void fix_game(unsigned char *sram, int g) {
     checksum = 0x00000000;
     offset = (uint16_t *)(sram + 0x1ff0 + 2 * g);
 
-    for (i=0; i<0x0A00; i+=2) {
+    for (i=0x09FE; i>=0; i-=2) {
         tmp = (uint16_t *)(sram + i + g * 0x0A00);
         checksum += *tmp;
         checksum += over;
@@ -48,8 +48,6 @@ static void fix_game(unsigned char *sram, int g) {
             checksum &= 0xffff;
         }
     }
-
-    checksum += over;
 
     *offset = (uint16_t)checksum;
 
