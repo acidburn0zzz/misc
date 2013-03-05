@@ -103,6 +103,8 @@ void SRAMFile::computeChecksums() {
             }
         }
 
+        checksum += carry;
+
         *((u16 *)(pSram + CHECKSUM_OFFSET + 2 * s)) = checksum;
     }
 }

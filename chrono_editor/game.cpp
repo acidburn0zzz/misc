@@ -71,12 +71,13 @@ void Game::setName(u8* name, u8 charId) {
 }
 
 u32 Game::getGold() {
-    return ((u32)_game.gold1 | (u32)_game.gold2 << 16);
+    return _game.gold & 0xffffff;
 }
 
 void Game::setGold(u32 gold) {
-    _game.gold1 = gold & 0xffff;
-    _game.gold2 = (gold & 0xff0000) >> 16;
+    if (gold > 9999999)
+        gold = 9999999;
+    _game.gold = (_game.gold & 0xff000000) | gold;
 }
 
 void Game::decodeName(u8 charId) {

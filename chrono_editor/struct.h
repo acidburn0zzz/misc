@@ -56,7 +56,7 @@ struct character_s {
     u8  baseEvade;
     u8  baseMagicDef;
     u8  level;
-    u32 exp;
+    u32 exp;    //  Exp uses only 24bit
     u8  unk2[16];
     u8  helmet;
     u8  armor;
@@ -98,9 +98,7 @@ struct game_s {
     u8  unk3[19];
     u8  names[7][6];
     u8  epoch_name[6];
-    u16 gold1; // gold & 0x00ffff
-    u8  gold2; // gold & 0xff0000
-    u8  unk4;
+    u32 gold;   //  Gold uses only 24bit
     u8  fill[1052];
 };// __attribute__((packed));
 typedef struct game_s game_t;

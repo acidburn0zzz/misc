@@ -49,6 +49,8 @@ static void fix_game(unsigned char *sram, int g) {
         }
     }
 
+    checksum += over;
+
     *offset = (uint16_t)checksum;
 
     printf("fixed checksum for game %d: %.4x\n", (g + 1), (uint16_t)checksum);
