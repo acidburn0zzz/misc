@@ -37,8 +37,8 @@ public:
     Character getCharacter(u8 charId);
     void setCharacter(Character c, u8 charId);
 
-    u8*  getName(u8 charId);
-    void setName(u8* name, u8 charId);
+    char* getName(u8 charId);
+    void setName(char* name, u8 charId);
 
     u16  getSaveCount();
     void setSaveCount(u16 count);
@@ -50,7 +50,7 @@ public:
 private:
     u8 _slot;
     game_t _game;
-    u8 _namesDec[8][6];
+    char _names[8][6];
 
     void decodeName(u8 charId);
 };

@@ -54,13 +54,25 @@ void Game::setCharacter(Character c, u8 charId) {
     _game.characters[charId] = c.getCharStruct();
 }
 
-u8* Game::getName(u8 charId) {
-    decodeName(charId);
-    return _namesDec[charId];
+char* Game::getName(u8 charId) {
+    for (int i=0; i<5; i++) {
+        if (_game.names[charId][i] >= 0xa0 && _game.names[charId][i] <= 0xb9)
+            _names[charId][i] = _game.names[charId][i] - 95;
+        else if (_game.names[charId][i] >= 0xba && _game.names[charId][i] <= 0xd3)
+            _names[charId][i] = _game.names[charId][i] - 89;
+        else
+            _names[charId][i] = _game.names[charId][i];
+        _names[charId][5] = '\0';
+    }
+
+    return _names[charId];
 }
 
-void Game::setName(u8* name, u8 charId) {
-    for (int i=0; i<5; i++) {
+void Game::setName(char* name, u8 charId) {
+    int len = strlen(name);
+    int i;
+
+    for (i=0; i<5 || i < len; i++) {
         if (name[i] >= 'A' && name[i] <= 'Z')
             _game.names[charId][i] = name[i] + 95;
         else if (name[i] >= 'a' && name[i] <= 'z')
@@ -68,7 +80,7 @@ void Game::setName(u8* name, u8 charId) {
         else
             _game.names[charId][i] = name[i];
     }
-    _game.names[charId][5] = '\0';
+    _game.names[charId][i] = '\0';
 }
 
 u16 Game::getSaveCount() {
@@ -113,16 +125,4 @@ void Game::setTime(u32 time) {
     _game.hour2 = hour % 10;
     _game.min1 = min / 10;
     _game.min2 = min % 10;
-}
-
-void Game::decodeName(u8 charId) {
-    for (int i=0; i<5; i++) {
-        if (_game.names[charId][i] >= 0xa0 && _game.names[charId][i] <= 0xb9)
-            _namesDec[charId][i] = _game.names[charId][i] - 95;
-        else if (_game.names[charId][i] >= 0xba && _game.names[charId][i] <= 0xd3)
-            _namesDec[charId][i] = _game.names[charId][i] - 89;
-        else
-            _namesDec[charId][i] = _game.names[charId][i];
-        _namesDec[charId][5] = '\0';
-    }
 }
