@@ -35,6 +35,12 @@ public:
     Game *getGame(int gameNo);
     void setGame(Game *game, int gameNo);
 
+    u8   getLastGame();
+    void setLastGame(u8 slot);
+    bool getNewGamePlus();
+    void setNewGamePlus(bool ngPlus);
+    void clearGame(u8 gameNo);
+
     void foo(int gameNo);
 
 private:

@@ -112,9 +112,15 @@ typedef struct game_s game_t;
 
 struct sram_s {
     game_t games[3];
-    u8 unk1[496];
-    u16 crc[3];
-    u8 unk2[10];
+    u8     unk1[480];
+    u8     lastGame;
+    u8     unk2;
+    u8     ngPlus;
+    u8     unk3[13];
+    u16    crc[3];
+    u16    unk4;
+    u16    isUsed[3]; // 0xE41B if slot used
+    u16    unk5;
 };
 typedef struct sram_s sram_t;
 

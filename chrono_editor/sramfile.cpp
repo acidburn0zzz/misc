@@ -113,6 +113,34 @@ Game *SRAMFile::getGame(int gameNo) {
 
 void SRAMFile::setGame(Game *game, int gameNo) {
     sram.games[gameNo] = game->getGameStruct();
+    sram.isUsed[gameNo] = 0xe41b;
+}
+
+u8 SRAMFile::getLastGame() {
+    return sram.lastGame;
+}
+
+void SRAMFile::setLastGame(u8 slot) {
+    if (slot > 2)
+        slot = 2;
+
+    sram.lastGame = slot;
+}
+
+bool SRAMFile::getNewGamePlus() {
+    return sram.ngPlus == 0 ? false : true;
+}
+
+void SRAMFile::setNewGamePlus(bool ngPlus) {
+    sram.ngPlus = ngPlus ? 1 : 0;
+}
+
+void SRAMFile::clearGame(u8 slot) {
+    if (slot > 2)
+        return;
+
+    memset((void *)&sram.games[slot], 0xff, GAME_SIZE);
+    sram.isUsed[slot] = 0xffff;
 }
 
 void decryptName(u8 *name) {
@@ -133,22 +161,11 @@ void SRAMFile::foo(int gameNo) {
     g = getGame(gameNo);
     gst = g->getGameStruct();
 
-    for (int i=0; i<8; i++) {
-        character_t c = gst.characters[i];
-        decryptName(gst.names[i]);
-        printf("Char %d\n", i);
-        printf("\tName: %s\n", gst.names[i]);
-        printf("\tLevel: %d\n", c.level);
-        printf("\tExp: %d\n", c.exp & 0x00ffffff);
-        printf("\tHP: %d\n", c.currentHP);
-        printf("\tMP: %d\n", c.currentMP);
-        printf("\tWeapon: %s\n", itemList[c.weapon]);
-        printf("\tArmor: %s\n", itemList[c.armor]);
-        printf("\tHelmet: %s\n", itemList[c.helmet]);
-        printf("\tRelic: %s\n", itemList[c.relic]);
-    }
+    setGame(g, 2);
 
-    printf("Gold: %d\n", g->getGold());
+    clearGame(1);
+    setNewGamePlus(true);
+    setLastGame(2);
 
     delete g;
 
