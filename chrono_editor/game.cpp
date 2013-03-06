@@ -45,6 +45,7 @@ void Game::setSlot(u8 slot) {
     _slot = slot;
 }
 
+//TODO: Use enum for charId
 Character Game::getCharacter(u8 charId) {
     return Character(_game.characters[charId]);
 }
@@ -70,14 +71,48 @@ void Game::setName(u8* name, u8 charId) {
     _game.names[charId][5] = '\0';
 }
 
+u16 Game::getSaveCount() {
+    return _game.saveCount;
+}
+
+void Game::setSaveCount(u16 count) {
+    if (count > 999)
+        count = 999;
+
+    _game.saveCount = count;
+}
+
 u32 Game::getGold() {
-    return _game.gold & 0xffffff;
+    return (_game.gold3 << 16 & 0xff0000)
+         | (_game.gold2 <<  8 & 0x00ff00)
+         | (_game.gold1       & 0x0000ff);
 }
 
 void Game::setGold(u32 gold) {
     if (gold > 9999999)
         gold = 9999999;
-    _game.gold = (_game.gold & 0xff000000) | gold;
+
+    _game.gold3 = gold >> 16 & 0x0000ff;
+    _game.gold2 = gold >>  8 & 0x0000ff;
+    _game.gold1 = gold       & 0x0000ff;
+}
+
+u32 Game::getTime() {
+    return (_game.min1*10 + _game.min2) + (_game.hour1*10 + _game.hour2)*60;
+}
+
+void Game::setTime(u32 time) {
+    int min, hour;
+    if (time > 99*60 + 59)
+        time = 99*60 + 59;
+
+    min = time % 60;
+    hour = time / 60;
+
+    _game.hour1 = hour / 10;
+    _game.hour2 = hour % 10;
+    _game.min1 = min / 10;
+    _game.min2 = min % 10;
 }
 
 void Game::decodeName(u8 charId) {

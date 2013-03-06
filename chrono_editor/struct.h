@@ -40,6 +40,7 @@ static const int GAME_SIZE = 0x0A00;
 static const int SRAM_SIZE = 0x2000;
 static const int CHECKSUM_OFFSET = 0x1FF0;
 
+// Size: 80
 struct character_s {
     u8  id;
     u8  charId;
@@ -78,28 +79,34 @@ struct character_s {
 } __attribute__((packed));
 typedef struct character_s character_t;
 
+// Size: 512
 struct items_s {
     uint8_t item[256];
     uint8_t count[256];
 };
 typedef struct items_s items_t;
 
+// Size: 2560
 struct game_s {
     items_t     items;
-    character_t characters[7];
-    u8  maybe_tech_related[7];
-    u8  techs[7];
-    u8  unk1[322];
+    character_t characters[8];
+    u8  unk1[256];
     u8  partyMember1;
     u8  partyMember2;
     u8  partyMember3;
     u8  unk2[25];
-    u8  saveCount;
-    u8  unk3[19];
-    u8  names[7][6];
-    u8  epoch_name[6];
-    u32 gold;   //  Gold uses only 24bit
-    u8  fill[1052];
+    u16 saveCount;
+    u8  unk3[18];
+    u8  names[8][6];
+    u8  gold1;
+    u8  gold2;
+    u8  gold3;
+    u8  unk4[2];
+    u8  min2;
+    u8  min1;
+    u8  hour2;
+    u8  hour1;
+    u8  fill[1047];
 };// __attribute__((packed));
 typedef struct game_s game_t;
 

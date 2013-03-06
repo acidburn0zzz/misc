@@ -40,8 +40,12 @@ public:
     u8*  getName(u8 charId);
     void setName(u8* name, u8 charId);
 
-    u32 getGold();
+    u16  getSaveCount();
+    void setSaveCount(u16 count);
+    u32  getGold();
     void setGold(u32 gold);
+    u32  getTime(); // Get time in minutes
+    void setTime(u32 nbMinutes);
 
 private:
     u8 _slot;

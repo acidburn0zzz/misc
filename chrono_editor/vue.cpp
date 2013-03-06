@@ -436,6 +436,10 @@ void Vue::updateGame() {
         c.setBaseHit(sbHit[i].value());
         c.setBaseEvade(sbEvade[i].value());
         c.setBaseMagicDef(sbMagicDef[i].value());
+        c.setWeapon((u8) cmbWeapon[i].itemData(cmbWeapon[i].currentIndex()).toInt());
+        c.setArmor((u8) cmbArmor[i].itemData(cmbArmor[i].currentIndex()).toInt());
+        c.setHelmet((u8) cmbHelmet[i].itemData(cmbHelmet[i].currentIndex()).toInt());
+        c.setRelic((u8) cmbRelic[i].itemData(cmbRelic[i].currentIndex()).toInt());
 
         _game->setCharacter(c, i);
     }
