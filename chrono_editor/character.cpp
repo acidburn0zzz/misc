@@ -236,6 +236,14 @@ void Character::setRelic(u8 relic) {
     _char.relic = relic;
 }
 
+void Character::setXpForLevelUp(u16 xp) {
+    _char.xpForLevelUp = xp;
+}
+
+void Character::setSpForNextTech(u16 sp) {
+    _char.spForNextTech = sp;
+}
+
 bool Character::checkIfWeaponOK(u8 wpn) {
     switch (_char.id) {
         case CRONO:

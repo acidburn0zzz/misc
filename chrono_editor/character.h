@@ -73,6 +73,8 @@ public:
     void setArmor(u8 armor);
     void setWeapon(u8 weapon);
     void setRelic(u8 relic);
+    void setXpForLevelUp(u16 xp);
+    void setSpForNextTech(u16 sp);
 
     bool checkIfWeaponOK(u8 wpn);
 private:
