@@ -21,7 +21,10 @@ Save Slot Structure (0xA00 = 2560 bytes)
 	340 | 80  | Frog
 	390 | 80  | Ayla
 	3E0 | 80  | Magus
-	430 | 80  | Epoch
+	430 | 7   | ????
+	437 | 7   | Tech Learned (7 x 1)
+	43E | 66  | ????
+	480 | 256 | Unused?  (All 0x00)
 	580 | 3   | Party Members
 	59C | 1   | Save Count
 	5B0 | 48  | Names (8 slots, 6 byte C-style strings) (A=0xa0, Z=0xb9, a=0xba, z=0xd3)
@@ -36,6 +39,7 @@ Character Structure (0x50 = 80 bytes)
 	___|____|____________
 	00 | 1  | Name ID
 	01 | 1  | Character ID
+	02 | 1  | ????
 	03 | 2  | Current HP
 	05 | 2  | Max Hp
 	07 | 2  | Current MP
@@ -49,8 +53,11 @@ Character Structure (0x50 = 80 bytes)
 	11 | 1  | Base Magic Defence
 	12 | 1  | Level
 	13 | 3  | Experience
+	16 | 17 | ????
 	27 | 4  | Equip x 4
 	2B | 2  | Exp To Level
+	2D | 2  | SP To Tech
+	2F | 7  | ????
 	36 | 1  | Current Power
 	37 | 1  | Current Stamina
 	38 | 1  | Current Speed
@@ -61,3 +68,4 @@ Character Structure (0x50 = 80 bytes)
 	3D | 1  | Current Attack
 	3E | 1  | Current Defence
 	3F | 2  | Current Max HP
+	41 | 16 | ????
