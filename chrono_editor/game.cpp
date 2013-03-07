@@ -45,7 +45,6 @@ void Game::setSlot(u8 slot) {
     _slot = slot;
 }
 
-//TODO: Use enum for charId
 Character Game::getCharacter(u8 charId) {
     return Character(_game.characters[charId]);
 }
@@ -81,6 +80,36 @@ void Game::setName(char* name, u8 charId) {
             _game.names[charId][i] = name[i];
     }
     _game.names[charId][i] = '\0';
+}
+
+u8 Game::getPartyMember(int membNo) {
+    switch (membNo) {
+        case 0:
+            return _game.partyMember1;
+        case 1:
+            return _game.partyMember2;
+        case 2:
+            return _game.partyMember3;
+        default:
+            return -1;
+    }
+}
+
+void Game::setPartyMember(u8 charId, int membNo) {
+    if (charId > EPOCH)
+        charId = 0x80;  // nobody
+
+    switch (membNo) {
+        case 0:
+            _game.partyMember1 = charId;
+            break;
+        case 1:
+            _game.partyMember2 = charId;
+            break;
+        case 2:
+            _game.partyMember3 = charId;
+            break;
+    }
 }
 
 u16 Game::getSaveCount() {

@@ -82,7 +82,7 @@ void SRAMFile::write() throw(exception) {
 void SRAMFile::computeChecksums() {
     u32 checksum;
     u8 *pSram, *slot;
-    int carry, nbCarry;
+    int carry;
 
     pSram = (u8 *)&sram;
 
@@ -141,17 +141,6 @@ void SRAMFile::clearGame(u8 slot) {
 
     memset((void *)&sram.games[slot], 0xff, GAME_SIZE);
     sram.isUsed[slot] = 0xffff;
-}
-
-void decryptName(u8 *name) {
-    for (int i=0; i<5; i++) {
-        if (name[i] >= 0xa0 && name[i] <= 0xb9)
-            name[i] = name[i] - 95;
-        else if (name[i] >= 0xba && name[i] <= 0xd3)
-            name[i] = name[i] - 89;
-        else
-            name[i] = name[i];
-    }
 }
 
 void SRAMFile::foo(int gameNo) {

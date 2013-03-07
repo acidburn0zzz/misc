@@ -39,6 +39,8 @@ public:
 
     char* getName(u8 charId);
     void setName(char* name, u8 charId);
+    u8   getPartyMember(int membNo);
+    void setPartyMember(u8 charId, int membNo);
 
     u16  getSaveCount();
     void setSaveCount(u16 count);
@@ -51,8 +53,6 @@ private:
     u8 _slot;
     game_t _game;
     char _names[8][6];
-
-    void decodeName(u8 charId);
 };
 
 #endif //__GAME_H__
