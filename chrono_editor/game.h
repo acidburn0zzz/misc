@@ -39,6 +39,8 @@ public:
 
     char* getName(u8 charId);
     void setName(char* name, u8 charId);
+    u8   getTechLevel(u8 charId);
+    void setTechLevel(u8 level, u8 charId);
     u8   getPartyMember(int membNo);
     void setPartyMember(u8 charId, int membNo);
 

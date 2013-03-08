@@ -19,10 +19,10 @@
  ***************************************************************************/
 
 #include <cstring>
-
 #include "game.h"
 
-using namespace std;
+enum { TECH_0 = 0x00, TECH_1 = 0x80, TECH_2 = 0xc0, TECH_3 = 0xe0, TECH_4 = 0xf0,
+       TECH_5 = 0xf8, TECH_6 = 0xfc, TECH_7 = 0xfe, TECH_8 = 0xff };
 
 Game::Game(game_t game, int slot) {
     _game = game;
@@ -82,6 +82,72 @@ void Game::setName(char* name, u8 charId) {
     _game.names[charId][i] = '\0';
 }
 
+u8 Game::getTechLevel(u8 charId) {
+    if (charId > MAGUS)
+        return 0;
+
+    switch (_game.techLevel[charId]) {
+        case TECH_0:
+            return 0;
+        case TECH_1:
+            return 1;
+        case TECH_2:
+            return 2;
+        case TECH_3:
+            return 3;
+        case TECH_4:
+            return 4;
+        case TECH_5:
+            return 5;
+        case TECH_6:
+            return 6;
+        case TECH_7:
+            return 7;
+        case TECH_8:
+            return 8;
+        default:
+            return 0;
+    }
+}
+
+void Game::setTechLevel(u8 level, u8 charId) {
+    if (charId > MAGUS)
+        return;
+
+    switch (level) {
+        case 0:
+            _game.techLevel[charId] = TECH_0;
+            break;
+        case 1:
+            _game.techLevel[charId] = TECH_1;
+            break;
+        case 2:
+            _game.techLevel[charId] = TECH_2;
+            break;
+        case 3:
+            _game.techLevel[charId] = TECH_3;
+            break;
+        case 4:
+            _game.techLevel[charId] = TECH_4;
+            break;
+        case 5:
+            _game.techLevel[charId] = TECH_5;
+            break;
+        case 6:
+            _game.techLevel[charId] = TECH_6;
+            break;
+        case 7:
+            _game.techLevel[charId] = TECH_7;
+            break;
+        case 8:
+            _game.techLevel[charId] = TECH_8;
+            break;
+        default:
+            _game.techLevel[charId] = TECH_0;
+            break;
+    }
+}
+
 u8 Game::getPartyMember(int membNo) {
     switch (membNo) {
         case 0:
@@ -96,7 +162,7 @@ u8 Game::getPartyMember(int membNo) {
 }
 
 void Game::setPartyMember(u8 charId, int membNo) {
-    if (charId > EPOCH)
+    if (charId > MAGUS)
         charId = 0x80;  // nobody
 
     switch (membNo) {

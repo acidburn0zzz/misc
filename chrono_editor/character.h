@@ -23,7 +23,7 @@
 
 #include "struct.h"
 
-enum {CRONO, MARLE, LUCCA, ROBO, FROG, AYLA, MAGUS, EPOCH};
+enum {CRONO, MARLE, LUCCA, ROBO, FROG, AYLA, MAGUS};
 
 class Character {
 public:

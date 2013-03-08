@@ -23,8 +23,6 @@
 
 #include <QMainWindow>
 
-//#include "game.h"
-
 class QAction;
 class QComboBox;
 class QFileDialog;
