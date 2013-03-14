@@ -35,14 +35,6 @@ int main(int, char **) {
         sf.read();
 
         Game *g = sf.getGame(0);
-        Character c = g->getCharacter(0);
-        cout << g->getName(0) << endl;
-        character_t cs = c.getCharStruct();
-        cout << cs.maxHP << endl;
-        //sf.setGame(g, 1);
-        //sf.write();
-        sf.foo(0);
-
         delete g;
     } catch (std::exception e) {
         std::cerr << e.what() << std::endl;

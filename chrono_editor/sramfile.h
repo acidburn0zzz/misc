@@ -41,8 +41,6 @@ public:
     void setNewGamePlus(bool ngPlus);
     void clearGame(u8 gameNo);
 
-    void foo(int gameNo);
-
 private:
     std::string _fn;
     sram_t sram;

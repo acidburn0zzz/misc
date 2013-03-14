@@ -137,7 +137,3 @@ void SRAMFile::clearGame(u8 slot) {
     memset((void *)&sram.games[slot], 0xff, GAME_SIZE);
     sram.isUsed[slot] = 0xffff;
 }
-
-void SRAMFile::foo(int gameNo) {
-    hexdump(&sram.games[gameNo], 0, GAME_SIZE);
-}
