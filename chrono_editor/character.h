@@ -23,14 +23,11 @@
 
 #include "struct.h"
 
-enum {CRONO, MARLE, LUCCA, ROBO, FROG, AYLA, MAGUS};
+enum {CRONO, MARLE, LUCCA, ROBO, FROG, AYLA, MAGUS, EPOCH};
 
 class Character {
 public:
-    Character(character_t character);
-
-    character_t getCharStruct();
-    void setCharStruct(character_t character);
+    Character(character_t *character);
 
     u8   getId();
     u8   getCharId();
@@ -78,7 +75,7 @@ public:
 
     bool checkIfWeaponOK(u8 wpn);
 private:
-    character_t _char;
+    character_t *_char;
 };
 
 #endif //__CHARACTER_H__

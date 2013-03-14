@@ -26,16 +26,9 @@
 
 class Game {
 public:
-    Game(game_t game, int slot);
-
-    u8 getSlot();
-    void setSlot(u8 slot);
-
-    game_t getGameStruct();
-    void setGameStruct(game_t);
+    Game(game_t *game);
 
     Character getCharacter(u8 charId);
-    void setCharacter(Character c, u8 charId);
 
     char* getName(u8 charId);
     void setName(char* name, u8 charId);
@@ -52,8 +45,7 @@ public:
     void setTime(u32 nbMinutes);
 
 private:
-    u8 _slot;
-    game_t _game;
+    game_t *_game;
     char _names[8][6];
 };
 

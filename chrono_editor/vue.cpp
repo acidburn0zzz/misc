@@ -441,9 +441,5 @@ void Vue::updateGame() {
         c.setArmor((u8) cmbArmor[i].itemData(cmbArmor[i].currentIndex()).toInt());
         c.setHelmet((u8) cmbHelmet[i].itemData(cmbHelmet[i].currentIndex()).toInt());
         c.setRelic((u8) cmbRelic[i].itemData(cmbRelic[i].currentIndex()).toInt());
-
-        _game->setCharacter(c, i);
     }
-
-    _sramFile->setGame(_game, _game->getSlot());
 }

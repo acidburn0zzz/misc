@@ -108,12 +108,7 @@ void SRAMFile::computeChecksums() {
 }
 
 Game *SRAMFile::getGame(int gameNo) {
-    return new Game(sram.games[gameNo], gameNo);
-}
-
-void SRAMFile::setGame(Game *game, int gameNo) {
-    sram.games[gameNo] = game->getGameStruct();
-    sram.isUsed[gameNo] = 0xe41b;
+    return new Game(&sram.games[gameNo]);
 }
 
 u8 SRAMFile::getLastGame() {
@@ -144,19 +139,5 @@ void SRAMFile::clearGame(u8 slot) {
 }
 
 void SRAMFile::foo(int gameNo) {
-    Game *g;
-    game_t gst;
-
-    g = getGame(gameNo);
-    gst = g->getGameStruct();
-
-    setGame(g, 2);
-
-    clearGame(1);
-    setNewGamePlus(true);
-    setLastGame(2);
-
-    delete g;
-
-    write();
+    hexdump(&sram.games[gameNo], 0, GAME_SIZE);
 }

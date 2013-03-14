@@ -20,180 +20,172 @@
 
 #include "character.h"
 
-Character::Character(character_t character) {
-    _char = character;
-}
-
-character_t Character::getCharStruct() {
-    return _char;
-}
-
-void Character::setCharStruct(character_t character) {
+Character::Character(character_t *character) {
     _char = character;
 }
 
 u8 Character::getId() {
-    return _char.id;
+    return _char->id;
 }
 
 void Character::setId(u8 id) {
-    _char.id = id;
+    _char->id = id;
 }
 
 u8 Character::getCharId() {
-    return _char.charId;
+    return _char->charId;
 }
 
 void Character::setCharId(u8 charId) {
-    _char.charId = charId;
+    _char->charId = charId;
 }
 
 u16 Character::getCurrentHP() {
-    return _char.currentHP;
+    return _char->currentHP;
 }
 
 void Character::setCurrentHP(u16 currentHP) {
-    _char.currentHP = currentHP > 999 ? 999 : currentHP;
+    _char->currentHP = currentHP > 999 ? 999 : currentHP;
 }
 
 u16 Character::getMaxHP() {
-    return _char.maxHP;
+    return _char->maxHP;
 }
 
 void Character::setMaxHP(u16 maxHP) {
-    _char.maxHP = maxHP > 999 ? 999 : maxHP;
+    _char->maxHP = maxHP > 999 ? 999 : maxHP;
 }
 
 u16 Character::getCurrentMP() {
-    return _char.currentMP;
+    return _char->currentMP;
 }
 
 void Character::setCurrentMP(u16 currentMP) {
-    _char.currentMP = currentMP > 999 ? 999 : currentMP;
+    _char->currentMP = currentMP > 999 ? 999 : currentMP;
 }
 
 u16 Character::getMaxMP() {
-    return _char.maxMP;
+    return _char->maxMP;
 }
 
 void Character::setMaxMP(u16 maxMP) {
-    _char.maxMP = maxMP > 99 ? 99 : maxMP;
+    _char->maxMP = maxMP > 99 ? 99 : maxMP;
 }
 
 u8 Character::getBasePower() {
-    return _char.basePower;
+    return _char->basePower;
 }
 
 u8 Character::getBaseStamina() {
-    return _char.baseStamina;
+    return _char->baseStamina;
 }
 
 u8 Character::getBaseSpeed() {
-    return _char.baseSpeed;
+    return _char->baseSpeed;
 }
 
 u8 Character::getBaseMagic() {
-    return _char.baseMagic;
+    return _char->baseMagic;
 }
 
 u8 Character::getBaseHit() {
-    return _char.baseHit;
+    return _char->baseHit;
 }
 
 u8 Character::getBaseEvade() {
-    return _char.baseEvade;
+    return _char->baseEvade;
 }
 
 u8 Character::getBaseMagicDef() {
-    return _char.baseMagicDef;
+    return _char->baseMagicDef;
 }
 
 u8 Character::getLevel() {
-    return _char.level;
+    return _char->level;
 }
 
 u32 Character::getExp() {
-    return _char.exp & 0x00ffffff;
+    return _char->exp & 0x00ffffff;
 }
 
 u8 Character::getHelmet() {
-    return _char.helmet;
+    return _char->helmet;
 }
 
 u8 Character::getArmor() {
-    return _char.armor;
+    return _char->armor;
 }
 
 u8 Character::getWeapon() {
-    return _char.weapon;
+    return _char->weapon;
 }
 
 u8 Character::getRelic() {
-    return _char.relic;
+    return _char->relic;
 }
 
 u16 Character::getXpForLevelUp() {
-    return _char.xpForLevelUp;
+    return _char->xpForLevelUp;
 }
 
 u16 Character::getSpForNextTech() {
-    return _char.spForNextTech;
+    return _char->spForNextTech;
 }
 
 void Character::setBasePower(u8 basePower) {
     if (basePower > 99)
         basePower = 99;
 
-    _char.basePower = basePower;
+    _char->basePower = basePower;
 }
 
 void Character::setBaseStamina(u8 baseStamina) {
     if (baseStamina > 99)
         baseStamina = 99;
 
-    _char.baseStamina = baseStamina;
+    _char->baseStamina = baseStamina;
 }
 
 void Character::setBaseSpeed(u8 baseSpeed) {
     if (baseSpeed > 16)
         baseSpeed = 16;
 
-    _char.baseSpeed = baseSpeed;
+    _char->baseSpeed = baseSpeed;
 }
 
 void Character::setBaseMagic(u8 baseMagic) {
     if (baseMagic > 99)
         baseMagic = 99;
 
-    _char.baseMagic = baseMagic;
+    _char->baseMagic = baseMagic;
 }
 
 void Character::setBaseHit(u8 baseHit) {
     if (baseHit > 99)
         baseHit = 99;
 
-    _char.baseHit = baseHit;
+    _char->baseHit = baseHit;
 }
 
 void Character::setBaseEvade(u8 baseEvade) {
     if (baseEvade > 99)
         baseEvade = 99;
 
-    _char.baseEvade = baseEvade;
+    _char->baseEvade = baseEvade;
 }
 
 void Character::setBaseMagicDef(u8 baseMagicDef) {
     if (baseMagicDef > 99)
         baseMagicDef = 99;
 
-    _char.baseMagicDef = baseMagicDef;
+    _char->baseMagicDef = baseMagicDef;
 }
 
 void Character::setLevel(u8 level) {
     if (level > 99)
         level = 99;
 
-    _char.level = level;
+    _char->level = level;
 }
 
 void Character::setExp(u32 exp) {
@@ -201,7 +193,7 @@ void Character::setExp(u32 exp) {
         exp = 9999999;
 
     //  Keep the high byte, exp is only 24bit
-    _char.exp = (_char.exp & 0xff000000) | exp;
+    _char->exp = (_char->exp & 0xff000000) | exp;
 }
 
 void Character::setHelmet(u8 helmet) {
@@ -210,7 +202,7 @@ void Character::setHelmet(u8 helmet) {
     else if (helmet > 0x93)
         helmet = 0x93;
 
-    _char.helmet = helmet;
+    _char->helmet = helmet;
 }
 
 void Character::setArmor(u8 armor) {
@@ -219,12 +211,12 @@ void Character::setArmor(u8 armor) {
     else if (armor > 0x7a)
         armor = 0x7a;
 
-    _char.armor = armor;
+    _char->armor = armor;
 }
 
 void Character::setWeapon(u8 weapon) {
     if (checkIfWeaponOK(weapon))
-        _char.weapon = weapon;
+        _char->weapon = weapon;
 }
 
 void Character::setRelic(u8 relic) {
@@ -233,19 +225,19 @@ void Character::setRelic(u8 relic) {
     else if (relic > 0xbb)
         relic = 0xbb;
 
-    _char.relic = relic;
+    _char->relic = relic;
 }
 
 void Character::setXpForLevelUp(u16 xp) {
-    _char.xpForLevelUp = xp;
+    _char->xpForLevelUp = xp;
 }
 
 void Character::setSpForNextTech(u16 sp) {
-    _char.spForNextTech = sp;
+    _char->spForNextTech = sp;
 }
 
 bool Character::checkIfWeaponOK(u8 wpn) {
-    switch (_char.id) {
+    switch (_char->id) {
         case CRONO:
             if ((wpn >= 0x01 && wpn <= 0x10) || wpn == 0x4f || (wpn >= 0x53 && wpn <= 0x55))
                 return true;
