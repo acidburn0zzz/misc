@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
-#include <termios.h>
-#include <unistd.h>
 
 #include "hexdump.h"
 
@@ -16,7 +14,6 @@
 /* Should be at least 0x7530 (30 000) */
 #define ARRAY_SIZE 0x8000
 
-typedef int bool;
 #define TRUE 1
 #define FALSE 0
 
@@ -209,8 +206,8 @@ int main(int argc, char *argv[]) {
     buf_size = ftell(file);
     fseek(file, 0, SEEK_SET);
 
-    ptr = _ptr = calloc(1, ARRAY_SIZE);
-    buf = _buf = malloc(buf_size);
+    ptr = _ptr = (unsigned char*)calloc(1, ARRAY_SIZE);
+    buf = _buf = (unsigned char*)malloc(buf_size);
 
     if (fread(buf, buf_size, sizeof(char), file) != sizeof(char)) {
         fprintf(stderr, "Error: Unable to read from file: %s\n", argv[1]);
