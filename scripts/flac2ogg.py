@@ -1,4 +1,4 @@
-#! /usr/bin/env python2
+#! /usr/bin/env python
 #-*- coding: utf-8 -*-
 import sys
 import os
@@ -8,7 +8,7 @@ oggenc_opts = '-q 10'
 win32 = False
 
 def usage(prog):
-    print '%s flac_files' % prog
+    print('%s flac_files' % (prog))
 
 def check_exe(name):
     exe = None
@@ -27,7 +27,7 @@ def check_exe(name):
                 break
 
     if exe == None:
-        print 'Error: %s not found' % name
+        print('Error: %s not found' % (name))
         exit(-1)
 
 def get_tag(tag, file):
@@ -38,9 +38,14 @@ def get_tag(tag, file):
         return ''
 
 def convert_file(flac_file):
+    if not os.path.isfile(flac_file):
+        print('%s: file not found' % (flac_file))
+        return
+
     #Est-ce un .flac
     if flac_file[len(flac_file)-5:] != '.flac':
-        print flac_file + ': Not a .flac'
+        print('%s: not a flac' % (flac_file))
+        return
 
     wav_file = flac_file[:-5] + '.wav'
     ogg_file = flac_file[:-5] + '.ogg'
