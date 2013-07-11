@@ -1,0 +1,282 @@
+Set Name	Byte Offset	Bits	Bytes	Description	Modified
+Accessory	00	01	1	Has effect on Gil	2003.05.20
+Accessory	00	1E	1	???	2007.01.11
+Accessory	00	20	1	Has effect on MP	2003.05.20
+Accessory	00	40	1	Has effect on Counter%	2003.05.20
+Accessory	00	80	1	???	2003.05.20
+Accessory	01	0F	1	???	2003.05.20
+Accessory	01	10	1	Has effect on HP	2003.05.20
+Accessory	01	20	1	???	2003.05.20
+Accessory	01	40	1	Has effect on stats	2003.05.20
+Accessory	01	80	1	Has effect in battle	2003.05.20
+Accessory	02	FF	1	Type of effect	2003.05.20
+Accessory	03	FF	1	Value of effect (differs depending on area)	2003.05.20
+Armor	00	FF	1	Defense	2003.05.20
+Armor	01	FF	1	Inflicted Status	2003.05.20
+Armor	02	FF	1	Does item inflict status?	2003.05.20
+Character	00	FF	1	Subscreen portrait	2003.05.20
+Character	01	FF	1	???	2003.05.21
+Character	02	01	1	Critical Status	2008.02.14
+Character	02	FE	1	Unknown	2008.02.14
+Character	03	FF	2	HP	2003.05.20
+Character	05	FF	2	Max HP	2003.05.20
+Character	07	FF	2	MP	2003.05.20
+Character	09	FF	2	Max MP	2003.05.20
+Character	0B	FF	1	Power	2003.05.20
+Character	0C	FF	1	Stamina	2003.05.20
+Character	0D	FF	1	Speed - 1	2003.05.20
+Character	0E	FF	1	Magic	2003.05.20
+Character	0F	FF	1	Hit	2003.05.20
+Character	10	FF	1	Evade	2003.05.20
+Character	11	FF	1	Magic Defense	2003.05.20
+Character	12	FF	1	Level	2003.05.20
+Character	13	FF	3	XP	2003.05.20
+Character	16	FF	2	???	2003.05.21
+Character	18	FF	5	"???, Always 0"	2008.02.14
+Character	1D	7F	1	Unknown	2008.02.14
+Character	1D	80	1	Swoon Status	2008.02.14
+Character	1E	01	1	Blind	2008.02.14
+Character	1E	02	1	Sleep	2008.02.14
+Character	1E	04	1	Confused	2008.02.14
+Character	1E	08	1	Lock	2008.02.14
+Character	1E	10	1	Seizure (Lose HP gradually)	2008.02.14
+Character	1E	20	1	Slow	2008.02.14
+Character	1E	40	1	Poison	2008.02.14
+Character	1E	80	1	Stop	2008.02.14
+Character	1F	FF	1	"Unknown, likely battle status effects"	2008.02.14
+Character	20	7F	1	Unknown	2008.02.14
+Character	20	80	1	Haste	2008.02.14
+Character	21	03	1	Unknown	2008.02.14
+Character	21	04	1	Protect	2008.02.14
+Character	21	18	1	Unknown	2008.02.14
+Character	21	20	1	MP Regen	2008.02.14
+Character	21	40	1	Shell	2008.02.14
+Character	21	80	1	Beserk	2008.02.14
+Character	22	7F	1	Unknown	2008.02.14
+Character	22	80	1	Auto-Revive	2008.02.14
+Character	23	03	1	Unknown	2008.02.14
+Character	23	04	1	Beserker accessory equipped ('Auto attack / Hit & Def. up' Status?)	2008.02.14
+Character	23	F8	1	Unknown	2008.02.14
+Character	24	FF	3	Unknown	2008.02.14
+Character	27	FF	1	Helmet	2003.05.20
+Character	28	FF	1	Armor	2003.05.20
+Character	29	FF	1	Weapon	2003.05.20
+Character	2A	FF	1	Accessory	2003.05.20
+Character	2B	FF	2	XP to next level	2003.05.20
+Character	2D	FF	2	TP to next Tech	2003.05.20
+Character	2F	FF	2	???	2003.05.21
+Character	31	FF	1	"???, Always 0"	2003.05.21
+Character	32	FF	4	???	2003.05.21
+Enemy	00	FF	2	HP	2003.07.18
+Enemy	02	FF	1	Level	2003.07.18
+Enemy	03	FF	6	???	2003.07.18
+Enemy	09	FF	1	Speed	2003.07.14
+Enemy	0A	FF	1	Magic	2003.07.14
+Enemy	0B	FF	3	???	2003.07.14
+Enemy	0E	FF	1	Offense	2003.05.20
+Enemy	0F	FF	1	Defense	2003.05.20
+Enemy	10	FF	1	Lightning Defense	2003.05.20
+Enemy	11	FF	1	Shadow Defense	2003.05.20
+Enemy	12	FF	1	Water Defense	2003.05.20
+Enemy	13	FF	1	Fire Defense	2003.05.20
+Enemy	14	FF	1	Evade	2003.07.18
+Enemy	15	01	1	Use boss death animation	2006.12.21
+Enemy	15	02	1	HP not visible with SightScope or Relic equipped	2006.12.21
+Enemy	15	FC	2	???	2006.12.21
+Enemy Rewards	00	FF	2	XP	2003.05.20
+Enemy Rewards	02	FF	2	Gil	2003.05.12
+Enemy Rewards	04	FF	1	Drop	2003.05.12
+Enemy Rewards	05	FF	1	Charm	2003.05.12
+Enemy Rewards	06	FF	1	Tech Points	2003.05.12
+Enemy Special Settings	0	FF	2	Enemy index	2008.07.11
+Enemy Special Settings	2	FF	2	"0003 - Tech and Item disabled ($5F Rubble, $80 Turret, $43 Side Kick) . 0004 - Unknown, not used? . FFF8 - Unknown"	2008.07.11
+Enemy Target	0	01	1	Enemy name display off	2006.12.21
+Events	00	FF	1	Number of events contained in file (each event has 32 bytes of pointers)	2004.03.30
+Events	01	FF	2	Startup pointer for event . offset from byte 1 (arbitrary number of pointers in multiples of 32 bytes)	2004.03.30
+Events	03	FF	1E	"???, more pointers into event commands, but unknown purpose, many point to Command 00"	2007.06.29
+Events	21	FF	0	Event commands	2004.01.12
+Item Secondary	00	01	1	???	2003.11.12
+Item Secondary	00	02	1	Useable in Menu	2003.11.12
+Item Secondary	00	04	1	No Sell	2003.11.12
+Item Secondary	00	08	1	Key Item	2003.11.12
+Item Secondary	00	10	1	Not carried over	2003.11.12
+Item Secondary	00	60	1	???	2003.11.12
+Item Secondary	00	80	1	Useable in battle	2003.11.12
+Item Secondary	01	FF	2	Price	2003.05.20
+Item Secondary	03	01	1	Ignored	2003.11.12
+Item Secondary	03	02	1	Equippable by Magus	2003.11.12
+Item Secondary	03	04	1	Equippable by Ayla	2003.11.12
+Item Secondary	03	08	1	Equippable by Frog	2003.11.12
+Item Secondary	03	10	1	Equippable by Robo	2003.11.12
+Item Secondary	03	20	1	Equippable by Lucca	2003.11.12
+Item Secondary	03	40	1	Equippable by Marle	2003.11.12
+Item Secondary	03	80	1	Equippable by Crono	2003.11.12
+Item Secondary	04	FF	1	Stat increase	2003.05.20
+Item Secondary	05	0F	1	Special protective ability quantity	2005.02.01
+Item Secondary	05	10	1	Protects vs fire	2005.02.01
+Item Secondary	05	20	1	Protects vs water	2005.02.01
+Item Secondary	05	40	1	Protects vs shadow	2005.02.01
+Item Secondary	05	80	1	Protects vs lightning	2005.02.01
+Location Data	00	FF	1	Music played at location	2003.07.10
+Location Data	01	FF	1	Tileset Layer 1 & 2	2003.11.13
+Location Data	02	FF	1	Tile Chunks for Layer 3	2003.11.13
+Location Data	03	FF	1	PaletteSet ((PS * 0xD2) + 0x3624C0)	2004.06.21
+Location Data	04	FF	2	Loaded map	2003.07.10
+Location Data	06	FF	2	Ignored	2003.07.10
+Location Data	08	FF	2	Location Events	2003.07.10
+Location Data	0A	FF	1	Left	2003.07.10
+Location Data	0B	FF	1	Top	2003.07.10
+Location Data	0C	FF	1	Right	2003.07.10
+Location Data	0D	FF	1	Bottom	2003.07.10
+Location Exit	00	FF	1	X coord	2004.04.21
+Location Exit	01	FF	1	Y coord	2004.04.21
+Location Exit	02	7F	1	Width - 1	2004.04.22
+Location Exit	02	80	1	Vertical flag	2004.04.22
+Location Exit	03	01FF	2	Destination Location	2004.04.30
+Location Exit	04	06	1	Destination Facing	2004.04.21
+Location Exit	04	08	1	Half tile to the left of Dest exit	2004.04.22
+Location Exit	04	10	1	Half tile above Dest exit	2004.04.22
+Location Exit	04	E0	1	Not used	2004.04.22
+Location Exit	05	FF	1	Destination X coord	2004.04.21
+Location Exit	06	FF	1	Destination Y coord	2004.04.21
+Location Map	00	03	1	"Layer 1 width (/16, -1)"	2003.11.12
+Location Map	00	0C	1	"Layer 1 height (/16, -1)"	2003.11.12
+Location Map	00	30	1	"Layer 2 width (/16, -1)"	2003.11.12
+Location Map	00	C0	1	"Layer 2 height (/16, -1)"	2003.11.12
+Location Map	01	03	1	"Layer 3 width (/16, -1)"	2003.11.12
+Location Map	01	0C	1	"Layer 3 height (/16, -1)"	2003.11.12
+Location Map	01	70	1	???	2003.11.12
+Location Map	01	80	1	Draw Layer 3	2003.11.12
+Location Map	02	FF	1	???	2003.07.10
+Location Map	03	FF	1	???	2003.07.10
+Location Map	04	01	1	Use Layer 1 as mainscreen	2004.12.03
+Location Map	04	02	1	Use Layer 2 as mainscreen	2004.12.03
+Location Map	04	04	1	Use Layer 3 as mainscreen	2004.12.03
+Location Map	04	08	1	Use Sprites as mainscreen	2004.12.03
+Location Map	04	10	1	Use Layer 1 as subscreen	2004.12.03
+Location Map	04	20	1	Use Layer 2 as subscreen	2004.12.03
+Location Map	04	40	1	Use Layer 3 as subscreen	2004.12.03
+Location Map	04	80	1	Use Sprites as subscreen	2004.12.03
+Location Map	05	01	1	Enable Layer 1 subscreen add/sub	2004.12.03
+Location Map	05	02	1	Enable Layer 2 subscreen add/sub	2004.12.03
+Location Map	05	04	1	Enable Layer 3 subscreen add/sub	2004.12.03
+Location Map	05	08	1	???	2004.12.03
+Location Map	05	10	1	Enable Sprite subscreen add/sub	2004.12.03
+Location Map	05	20	1	Enable default color subscreen add/sub?	2004.12.03
+Location Map	05	40	1	Half color	2004.12.03
+Location Map	05	80	1	"on = subscreen subtraction, off = subscreen addition"	2004.12.03
+Location Map Tile Props	00	01	1	Layer 1 tile uses second tileset graphic	2005.04.21
+Location Map Tile Props	00	02	1	Layer 2 tile uses second tileset graphic	2005.04.21
+Location Map Tile Props	00	FC	1	Tile solidity	2005.04.21
+Location Map Tile Props	01	03	1	"direction to move PC (conveyor, wind, water)"	2005.04.21
+Location Map Tile Props	01	0C	1	speed to move PC	2005.04.21
+Location Map Tile Props	01	10	1	Door	2006.12.21
+Location Map Tile Props	01	20	1	"???, probably unused"	2006.12.21
+Location Map Tile Props	01	40	1	Layer 1 cannot be drawn over sprite (for primary ZPlane)	2005.04.21
+Location Map Tile Props	01	80	1	Battle solidity	2006.12.21
+Location Map Tile Props	02	03	1	Primary Z-plane . 00 - transitional (solid) . 01 - plane 1 . 02 - plane 2 . 03 - transitional (walkable)	2005.04.21
+Location Map Tile Props	02	04	1	Ignore solidity for non-primary ZPlane	2005.04.21
+Location Map Tile Props	02	18	1	Solidity modifier	2005.04.21
+Location Map Tile Props	02	20	1	Z-plane neutral (allows pass over / under tiles)	2005.04.21
+Location Map Tile Props	02	40	1	Layer 2 cannot be drawn over sprite (for primary ZPlane)	2005.04.21
+Location Map Tile Props	02	80	1	NPC solidity	2006.12.21
+Location Tile Assembly	00	03FF	2	Northwest chunk	2004.04.30
+Location Tile Assembly	01	1C	1	Palette	2003.11.12
+Location Tile Assembly	01	20	1	Chunk has priority if set	2003.11.12
+Location Tile Assembly	01	40	1	Flip horizontally	2003.11.12
+Location Tile Assembly	01	80	1	Flip vertically	2003.11.12
+Location Tile Assembly	02	FF	2	Northeast chunk	2003.11.12
+Location Tile Assembly	04	FF	2	Southwest chunk	2003.11.12
+Location Tile Assembly	06	FF	2	Southeast chunk	2003.11.12
+Location Tilesets	00	FF	6	Regular Tiles	2003.11.13
+Location Tilesets	06	FF	2	Animated Tiles	2003.11.13
+Overworld Data	00	7F	7	Tilesets 1-7 (Layers 1/2)	2004.04.26
+Overworld Data	00	80	7	Tileset not used flag	2004.04.26
+Overworld Data	07	7F	1	Tileset 8 (loaded in different subroutine)	2004.04.26
+Overworld Data	07	80	1	"Tileset not used flag, all maps have this set for Tileset 8"	2004.04.26
+Overworld Data	08	7F	1	Layer 3 Tileset	2004.04.26
+Overworld Data	08	80	1	Tileset not used flag	2004.04.26
+Overworld Data	09	FF	1	Ignored	2004.04.26
+Overworld Data	0A	FF	1	Layer 1/2 Palette	2004.04.26
+Overworld Data	0B	FF	1	Ocean Palette (cycles colors)	2004.04.26
+Overworld Data	0C	7F	4	Sprites	2004.04.26
+Overworld Data	0C	80	4	Sprite not used flag	2004.04.26
+Overworld Data	10	FF	1	Tile Assembly (Layer 1/2)	2004.04.26
+Overworld Data	11	FF	1	Map	2004.04.26
+Overworld Data	12	FF	1	Tile Properties	2004.04.26
+Overworld Data	13	FF	1	Music Transition	2005.04.22
+Overworld Data	14	FF	1	Tile Assembly (Layer 3)	2004.04.26
+Overworld Data	15	FF	1	Location entrances	2004.04.26
+Overworld Data	16	7F	1	Events	2004.04.27
+Overworld Data	16	80	1	Events not used flag	2004.04.27
+Overworld Exits	00	7F	1	X coord	2004.04.30
+Overworld Exits	00	80	1	Exit available	2004.08.16
+Overworld Exits	01	3F	1	Y coord	2004.04.30
+Overworld Exits	01	C0	1	"???, only used for Denadoro Mtns in 600AD"	2004.05.03
+Overworld Exits	02	FF	1	Location Name	2004.04.30
+Overworld Exits	03	01FF	2	Location	2004.04.30
+Overworld Exits	04	06	1	Destination facing	2004.04.30
+Overworld Exits	04	08	1	Half tile to left of destination exit	2004.04.30
+Overworld Exits	04	10	1	Half tile above destination exit	2004.04.30
+Overworld Exits	04	E0	1	Ignored	2004.04.30
+Overworld Exits	05	FF	1	Dest X coord	2004.04.30
+Overworld Exits	06	FF	1	Dest Y coord	2004.04.30
+Overworld Exits Packet	00	FF	1	Number of exits	2004.04.30
+Overworld Exits Packet	01	FF	7	Exit data (7 bytes each)	2004.04.30
+Overworld Exits Packet	08	FF	1	Number of Out Exits to follow	2004.05.13
+Overworld Exits Packet	09	FF	1	Out Exit X Coord	2005.05.03
+Overworld Exits Packet	0A	FF	1	Out Exit Y Coord	2005.05.03
+Overworld Exits Packet	0B	FF	1	Out Exit Overworld Command pointer index	2005.05.03
+Overworld Exits Packet	0C	FF	1	"Number of 3 byte records to follow, always 1"	2004.05.03
+Overworld Exits Packet	0D	FF	3	"???, always 00 00 01"	2004.05.03
+Overworld Exits Packet	10	FF	1	Number of Overworld Command pointers to follow	2004.05.13
+Overworld Exits Packet	11	FF	2	Overworld Command pointers	2004.05.13
+Overworld Out Exits	00	FF	1	X coord	2004.05.13
+Overworld Out Exits	01	FF	1	Y coord	2004.05.13
+Overworld Out Exits	02	FF	1	Overworld Command pointer index	2004.05.13
+Overworld Tile Props	00	0F	1	NE quadrant properties . 0 - ethereal . 1 - solid to chars . 2 - solid to hovercraft . 3 - solid to dactyls . 4 - exits	2004.12.02
+Overworld Tile Props	00	F0	1	NW quadrant properties	2004.12.02
+Overworld Tile Props	01	0F	1	SE quadrant properties	2004.12.02
+Overworld Tile Props	01	F0	1	SW quadrant properties	2004.12.02
+Sprite Properties	00	FF	1	Graphics packet index	2008.02.06
+Sprite Properties	01	FF	1	Sprite Assembly	2008.02.06
+Sprite Properties	02	FF	1	Palette	2008.02.06
+Sprite Properties	03	FF	1	Animation	2008.02.06
+Sprite Properties	04	FF	1	Size	2008.02.06
+Sprite Properties	05	FF	5	"Unknown, only on enemies and only loaded at start of battle"	2008.02.06
+SRAM	0000	FF	05B0	"Save 1: 7E2400-7E29AF Inventory, PC stats, party status, misc., and ???"	2007.07.02
+SRAM	05B0	FF	33	"Save 1: 7E2C23-7E2C55 PC names, Epoch name, gold"	2007.07.02
+SRAM	05E3	FF	10	"Save 1: 7E0400-7E040F Time played clock, and controller settings"	2007.07.02
+SRAM	05F3	FF	10	"Save 1: 7E0100-7E010F Current and past locations visited, and ???"	2007.07.02
+SRAM	0603	FF	0200	"Save 1: 7F0000-7F01FF Storyline counter, treasure flags, storyline and overworld flags"	2007.07.02
+SRAM	0803	FF	02	"Save 1: 7E027E-7E027F Overworld PC status flags (walking, or flying Epoch/Dactyl) ???"	2007.07.02
+SRAM	0805	FF	11	"Save 1: 7E0290-7E02A0 Epoch status, Dactyl status, and ???"	2007.07.02
+SRAM	0816	FF	1E	Save 1: 7E2C7C-7E2C99 ???	2007.07.02
+SRAM	0834	FF	01CC	All $FF - Unused SRAM space?	2007.07.02
+SRAM	0A00	FF	0A00	Save 2: same format at Save 1	2007.07.02
+SRAM	1400	FF	0A00	Save 3: same format as Save 1	2007.07.02
+SRAM	1E00	FF	01E0	All $FF - Unused SRAM space?	2007.07.02
+SRAM	1FE0	FF	01	"Last slot saved to: $00 = Save 1, $01 = Save 2, $02 = Save 3"	2007.07.02
+SRAM	1FE1	FF	01	"Unknown, total times a new game has been started?"	2007.07.02
+SRAM	1FE2	FF	01	New Game+ available if $01	2007.07.02
+SRAM	1FE3	FF	0D	All $FF - Unused SRAM space?	2007.07.02
+SRAM	1FF0	FF	02	Save Game 1 checksum	2007.07.02
+SRAM	1FF2	FF	02	Save Game 2 checksum	2007.07.02
+SRAM	1FF4	FF	02	Save Game 3 checksum	2007.07.02
+SRAM	1FF6	FF	02	All $FF - Unused SRAM space?	2007.07.02
+SRAM	1FF8	FF	02	Save exists in Slot 1 if $E41B	2007.07.02
+SRAM	1FFA	FF	02	Save exists in Slot 2 if $E41B	2007.07.02
+SRAM	1FFC	FF	02	Save exists in Slot 3 if $E41B	2007.07.02
+Tech Properties	00	FF	1	Unknown	2008.02.06
+Tech Properties	01	FF	1	Success Chance (0xFF == 100%)	2008.02.06
+Tech Properties	02	FF	A	Unknown	2008.02.06
+Treasure Chest	00	FF	1	X coord	2007.01.11
+Treasure Chest	01	FF	1	"Y coord (if X and Y are 00, load next 2 bytes as a location index)"	2007.01.11
+Treasure Chest	02	3FFF	2	Chest contents: Item or Gold (x2)	2007.01.11
+Treasure Chest	02	40	1	"Empty flag (if Gold flag set, ignored and used with Gold value)"	2007.01.11
+Treasure Chest	02	80	1	Gold flag	2007.01.11
+Weapon	00	FF	1	Attack	2003.05.20
+Weapon	01	FF	1	"???, Always 0"	2003.05.20
+Weapon	02	FF	1	Critical Hit %	2003.05.20
+Weapon	03	FF	1	Inflicted Status	2003.05.20
+Weapon	04	FF	1	Does item inflict status?	2003.05.20

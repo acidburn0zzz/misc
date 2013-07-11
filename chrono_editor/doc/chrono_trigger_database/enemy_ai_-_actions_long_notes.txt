@@ -1,0 +1,30 @@
+Action 01 attack mode, Action 02 tech mode
+
+The third byte is a target type:
+05 - random PC
+06 - nearest PC
+08 - PC, using unknown PC HP conditions
+
+
+Action 10 revive support enemies:
+
+Only used by 4 enemies:
+Giga Gaia ($D1) and Lavos attack mode ($E7)
+Guardian ($D4) and Lavos attack mode ($C2)
+
+Unknown value vv
+Guardian uses $00, Giga Gaia $01
+The value is stored to 7E000E, and later checked by routines at $019EE8 for $01, $02, $03
+
+
+Action 13
+
+Appears to be a 3 byte command that is unused.
+
+13 mm vv
+
+if bit 0x80 in mm is set, the byte at 7EAED8 is copied to 7EAECC. The jump to additional routines described below is skipped.
+
+if bit 0x80 in mm is not set, mm is x2 and used as an index for the AI related routines pointer table starting at $01B8BB
+
+vv is used for an unknown purpose.  It is stored to 7E000E, then bit 0x80 is removed, and the result stored to 7E002C.

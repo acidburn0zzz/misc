@@ -1,0 +1,19 @@
+7E0A00 index of menu to load
+
+00 Load save menu
+01 Main menu
+02 Shop
+03 Name menu
+04 Nothing? (exits back to current screen)
+05 Exchange menu
+06 Save menu (from save point)
+
+
+
+Observations
+
+Related routines tend to use the same memory locations
+
+7E01xx - Bank $00, locations
+7E02xx - Bank $02, text and overworlds
+7E03xx - Bank $03, compression and Mode 7

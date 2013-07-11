@@ -1,0 +1,13 @@
+Location Event Commands:
+
+. 2A, 2B, 32 - 7E0154 bit settings related to L3 and ASCII text
+. 2C, 2F - ASCII text related unknown parameters
+. 2E, 88 - Multi-mode memory copy unknown modes
+. 47 - Animation Limiter parameter.  Possibly a % of frames to drop, or frame rate to maintain.
+. 7B - NPC Jump unknown parameters.  Some may be destination coords.
+. 83 - LoadEnemy last parameter bit settings.  One possible effect is which enemy name is listed first in battle.
+. DC,DD,DE,DF,E0 - WarpParty command differences.  Wait for screen fade, wait for music end, wait for sprite movement/animation stop, and wait for scroll command to stop could be possible differences.  Also there's an unknown bit in the parameters.
+. E4, E5 - CopyTiles unknown bit(s)
+. E6 - Scroll Layers unknown parameters
+. EC - AllPurposeSound unknown command 83
+. FE - DrawGeometry unknown parameters

@@ -1,0 +1,238 @@
+Storyline points
+The Millenial Fair
+00 . New Game
+03 . Crono gets out of bed
+06 . Marle has lost her pendant
+08 . Marle has joined Crono at the fair
+0A . Visited Lucca's Telepod exhibit
+
+The Queen Returns
+0C . Marle disappeared into portal
+0F . Met Marle masquerading as Queen Leene
+
+The Queen is Gone
+10 . Marle disappears beyond the boundaries of time
+12 . Lucca arrives in past
+15 . Seen through the guise of the nuns at the Cathedral
+1B . Rescued Queen Leene
+1C . Frog leaves Guardia throneroom in disgrace
+21 . Marle rematerializes in the Queen's chambers
+24 . Lucca opens the gate back to the present
+
+We're Back!
+27 . Arrived back in the present
+2A . Detained for trial
+
+The Trial
+2D . Trial ends
+2E . Lucca comes to break Crono out of prison
+30 . Escape Guardia Castle
+
+Beyond the Ruins
+33 . Escape through Guardia Forest Portal
+34 . Met the people of Arris Dome
+35 . Exploring the lower levels of Arris Dome
+36 . Discovered visual record of Day of Lavos
+37 . Given seeds to people of Arris Dome
+
+The Factory Ruins
+3C . Setting out for the Factory Ruins
+3F . Security system goes haywire
+40 . Robo got creamed
+42 . Defeated R Series
+45 . Decided to leave via the Proto Dome portal
+48 . Arrived at the End of Time
+
+The End of Time
+49 . Spoken to Gaspar
+4A . Gaspar calls when trying to leave the first time
+4B . Gaspar says to take a look in the room behind him
+4C . Spekkio
+4D . Learned magic
+
+The Village of Magic
+4E . Arrive in Medina
+51 . Defeated Heckran
+
+The Hero Appears
+54 . Arrive in 600 AD to search for Magus
+57 . Ozzie launches an attack on Zenan Bridge
+5A . Ozzie summons Zombor
+
+Tata and the Frog
+5D . Met Tata on Denadoro Mts.
+60 . Received Bent Sword
+66 . Received Hero's Medal
+69 . Received Bent Hilt
+
+The Rare Red Rock
+6C . Showed Melchior the broken Masamune
+6F . Met Ayla
+72 . Win soup race
+75 . Awaken without Gate Key
+
+Footsteps! Follow!
+78 . Setting out to find Gate Key
+7B . Find Kino in Forest Maze
+7C . Defeated Nizbel
+7D . Leaving Chief's Hut to return to the portal
+
+The Masamune!
+7E . Leaving Prehistoric times with Dreamstone
+81 . Melchior reforges the Masamune
+84 . Frog decides to face Magus
+87 . Opened the Magic Cave
+
+Magus' Castle
+88 . Arrived at Castle Magus
+89 . Ozzie Defeated
+8A . Magus Defeated
+
+Forward to the Past
+8D . Arrive in Prehistoric times from Castle Magus Inner Sanctum
+8E . Arrive at Laruba
+90 . Meet Ayla at Dactyl Nest Summit
+
+Unnatural Selection?
+93 . Setting out for Tyrano Lair
+96 . Defeated Reptite guards outside of Kino's cell
+97 . Kino freed
+98 . Kino opens fossil head
+99 . Lavos falls to Earth
+
+The Magic Kingdom
+9F . Traveled to 12000 BC for first time
+A2 . Watched Schala open door to Zeal throneroom
+A5 . Charged pendant
+A8 . Captured by Dalton
+
+Break the Seal!
+AB . Locked out of 12000 BC
+AE . Acquired Epoch
+
+The Guru on Mt.Woe
+B1 . (Does not appear to be used, but marks the start of this chapter)
+B4 . Fight the Mud Imp and his beasts
+B7 . Mt Woe falls
+
+What Lies Beyond?
+BA . Dalton kidnaps Schala
+BB . Melchior gives Crono the Ruby Knife
+
+Lavos Beckons
+BD . Defeated Dalton in Zeal throneroom
+C3 . Queen demands Schala to raise power of Mammon Machine
+C6 . Queen anticipates immortality nearing
+C9 . Defeated GolemTwins
+CB . Crono gets whacked
+CC . Tidal Wave washes over land
+CD . Awaken in Last Village
+
+The New King
+CF . Dalton attacks Last Village
+D2 . Blackbird crashes
+
+The Time Egg
+D3 . Met Magus at North Cape
+D4 . Black Omen rises
+
+The Fated Hour
+D5 . Received the Time Egg
+
+The Final Battle
+D6 . Destroyed the Black Omen
+
+
+
+Endings Data
+
+Using the following codes, one should be able to view any ending to the game at any time they have access to Crono's front door. Excepting the "Bad" ending, of course.
+
+Crono's Front Door Exits To:
+E5041402
+E504130B
+
+Storyline Counter:
+7F0000xx
+
+D4 . Beyond Time / Reunion
+A2 . A Slide Show?
+99 . What the Prophet Seeks...
+98 . Dino Age
+84 . The Oath
+75 . People of the Times
+66 . The Unknown Past
+54 . The Legendary Hero
+2D . Goodnight
+27 . The Successor of Guardia
+00 . The Dream Project
+
+Memory address 7F006E result byte:
+
+7F006E 01 Crono alive, Epoch destroyed (Beyond Time / Reunion ending)
+7F006E 02 Crono dead, Epoch destroyed (Beyond Time / Reunion ending)
+7F006E 03 Crono alive, have Epoch (Beyond Time / Reunion ending)
+7F006E 04 Crono dead, have Epoch (Beyond Time / Reunion ending)
+7F006E 05 The Successor of Guardia ending
+
+
+
+The Trial:
+
+Here are the conditions for each Juror, taken straight from the game's event data. Note that these Jurors are in the order presented in the event data, and may not be the same order as they come in.
+
+Juror 1
+- If you were "Just a bit" tempted, guilty.
+- If you tried to sell Marle's pendant, guilty.
+- Innocent.
+
+
+Juror 2
+- If you talked to the girl who lost her cat before bringing it back to her, guilty.
+- If you brought the girl her cat back, innocent.
+- If did not participate at all, 50% random chance, innocent.
+- Guilty.
+
+(Juror 2 is obviously bugged. It really ought to check for condition 2 first.)
+(Juror 2's 50% random choice is not truly 50%.  The random number is the current frame displayed when entering the courtroom. It is refreshed if the game jumps to a cutscene of Crono's actions at the Millennial Fair.  The possible frame range is 00:3B, and the random number LEC adds 1, for a random number pool of 00FE01:00FE3C.  In this pool, there are 28 bytes of value 80 or below (Guilty), and 32 bytes of value 81 or above (Innocent)  The final result is a 53.3% chance of Not Guilty and 46.7% chance Guilty.)
+
+
+Juror 3
+- If Marle yells about being kidnapped, guilty.
+- Innocent.
+
+
+Juror 4
+- If you were tempted by Marle's fortune, guilty.
+- If you picked up the pendant before talking to Marle, guilty.
+- Innocent.
+
+
+Juror 5
+- If you were tempted by Marle's fortune, guilty.
+- If you refused to give Marle her pendant back, guilty.
+- Innocent.
+
+
+Juror 6
+- If you ate the old man's lunch, guilty.
+- Innocent.
+
+
+Juror 7
+- If you said "Marle started it" or "Never stole anything", guilty.
+- Innocent.
+
+
+
+
+Ayla's Fist Upgrades:
+
+Formula:
+(Ayla's current level / 24) + hex value at $01FDBD
+
+Level 18 to 23 - $44 Fist
+Level 24 to 47 - $45 Fist
+Level 48 to 71 - $46 Fist
+Level 72 to 95 - $47 Iron Fist
+Level 96 to ** - $48 BronzeFist

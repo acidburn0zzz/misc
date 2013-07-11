@@ -1,0 +1,35 @@
+Command 38
+
+Appears to be a multipurpose sprite command.
+Mask
+01 . unknown
+06 . facing
+F8 . unknown
+
+Facing values
+00 - up
+01 - down
+02 - left
+03 - right
+
+Interpretation reads as:
+SpriteCommand38(unk01, facing, unkF8)
+
+
+Process Memory byte 0F
+
+01 . unknown
+0E . Palette
+F0 . unknown . used by Command 31
+
+
+Address 7E027C - Overworld action
+
+00 - PC movement off
+01 - Normal, movement on
+03 - Use entrance
+05 - Enter menu
+06 - Zoom out map
+07 - Used for Black Omen exit and Epoch $D2 storyline cutscene
+08 - Epoch time gauge
+09 - Party exchange menu

@@ -1,0 +1,2676 @@
+FirstByte	LastByte	Type	Compressed	Description	Modified
+000000	000065	CODE	N	Unknown routines	2008.02.20
+000066	000087	CODE	N	Routines determine whether to load a Location or Overworld	2008.02.20
+000088	000B85	CODE	N	Unknown routines	2008.02.20
+000B86	000C4F	CODE	N	Location memory initialization	2008.02.20
+000C50	000C5B	CODE	N	"Location memory initialization - standard battle music, treasure chest and door sounds"	2008.02.20
+000C5C	000C75	CODE	N	Location memory intialization	2008.02.20
+000C76	000D51	CODE	N	Unknown routines	2008.02.20
+000D52	000D58	CODE	N	Door? tiles check - unknown	2008.02.20
+000D59	000D5F	CODE	N	Door tiles check - Residence left	2008.02.20
+000D60	000D66	CODE	N	Door tiles check - Residence right	2008.02.20
+000D67	000D6D	CODE	N	Door tiles check - Cathedral/Factory/Dome/Ruins/Blackbird left	2008.02.20
+000D6E	000D74	CODE	N	Door tiles check - Cathedral/Factory/Dome/Ruins/Blackbird right	2008.02.20
+000D75	000D77	CODE	N	Routines used when no door tiles to copy	2008.02.20
+000D78	000D94	CODE	N	CopyTiles - door tiles? unknown	2008.02.20
+000D95	000E5E	CODE	N	Unknown routines	2008.02.20
+000E5F	000E91	CODE	N	CopyTiles - door tiles Residence left	2008.02.20
+000E92	001013	CODE	N	Unknown routines	2008.02.20
+001014	001042	CODE	N	CopyTiles - door tiles Residence right	2008.02.20
+001043	0011C8	CODE	N	Unknown routines	2008.02.20
+0011C9	001214	CODE	N	CopyTiles - door tiles Factory/Cathedral/Dome/Ruins/Blackbird left	2008.02.20
+001215	001453	CODE	N	Unknown routines	2008.02.20
+001454	00149F	CODE	N	CopyTiles - door tiles Factory/Cathedral/Dome/Ruins/Blackbird right	2008.02.20
+0014A0	001993	CODE	N	Unknown routines	2008.02.20
+001994	001994	DATA	N	Storyline value for location party exchange menu	2008.02.20
+001995	001CAD	CODE	N	Unknown routines	2008.02.20
+001CAE	001CAE	DATA	N	"Song to play when defeated in battle ($26, The Day The World Revived)"	2008.02.20
+001CAF	00278E	CODE	N	Unknown routines	2008.02.20
+00278F	0027B4	CODE	N	"Unknown routines, ASCII text related?"	2008.02.20
+0027B5	0027C9	CODE	N	"Load ASCII text character and check for end string ($80 or above), line break ($2F), period ($2E), space ($20)"	2008.02.20
+0027CA	0027CD	CODE	N	ASCII text character 20 space	2008.02.20
+0027CE	0027D1	CODE	N	ASCII text character 2E period	2008.02.20
+0027D2	0027D4	CODE	N	Process $40-7F ASCII text character	2008.02.20
+0027D5	0027DF	CODE	N	Store ASCII text result to 7ED800 range in RAM	2008.02.20
+0027E0	0027EA	CODE	N	ASCII text character $80 end string	2008.02.20
+0027EB	002823	CODE	N	"ASCII text character $2F line break, also used as a subroutine by $80 end string"	2008.02.20
+002824	002E1D	CODE	N	Unknown routines	2008.02.20
+002DC8	002DF0	CODE	N	"DMA to VRAM, called from 13 places in bank $C0"	2008.02.20
+002DF1					2008.02.20
+002E1E	002E66	CODE	N	Color crash (ends in infinite loop)	2008.02.20
+002E67	002E99	CODE	N	"Event Commands AA, AE, B4 (and probably B3)"	2008.02.20
+002E9A	002F00	CODE	N	Event Command AB	2008.02.20
+002F01	002F70	CODE	N	Event Command B7	2008.02.20
+002F71	002F95	CODE	N	Event Command AC	2008.02.20
+002F96	002FC5	CODE	N	Event Command AD	2008.02.20
+002FC6	002FFC	CODE	N	"Event Commands B9, BA, BC, BD"	2008.02.20
+002FFD	00305B	CODE	N	"Event Command AF, B0"	2008.02.20
+00305E	00326B	CODE	N	Unknown routines	2008.02.20
+00326C	003459	CODE	N	Event Command D9	2008.02.20
+00345A	00353E	CODE	N	Event Command DA	2008.02.20
+00353F	003542	CODE	N	Unknown routines	2008.02.20
+003543	003545	CODE	N	Event Command B2	2008.02.20
+003546	00354E	CODE	N	Event Command B5	2008.02.20
+00354F	003556	CODE	N	Event Command B6	2008.02.20
+003557	00356F	CODE	N	Event Command B8	2008.02.20
+003570	0035B4	CODE	N	Event Command BB	2008.02.20
+0035B5	0035FB	CODE	N	Event Command C1	2008.02.20
+0035FC	003642	CODE	N	Event Command C2	2008.02.20
+003643	003710	CODE	N	"Event Commands C0, C3, C4"	2008.02.20
+003711	003756	CODE	N	Event Command 33	2008.02.20
+003757	00377F	CODE	N	Event Command C8	2008.02.20
+003780	0037B0	CODE	N	Event Command C9	2008.02.20
+0037B1	0037E2	CODE	N	"Event Commands C7, CA"	2008.02.20
+0037E3	0037F8	CODE	N	Event Command CB	2008.02.20
+0037F9	003826	CODE	N	Event Command D7	2008.02.20
+003827	00385A	CODE	N	Event Command CC	2008.02.20
+00385B	003873	CODE	N	Event Command CD	2008.02.20
+003874	00388C	CODE	N	Event Command CE	2008.02.20
+00388D	0038BD	CODE	N	Event Command CF	2008.02.20
+0038BE	0038D2	CODE	N	Event Command D0	2008.02.20
+0038D3	0038E7	CODE	N	Event Command D1	2008.02.20
+0038E8	003918	CODE	N	Event Command D2	2008.02.20
+003919	00394D	CODE	N	Event Command D3	2008.02.20
+00394E	003A06	CODE	N	Event Command D4	2008.02.20
+003A07	003A67	CODE	N	Event Command D6	2008.02.20
+003A68	003A82	CODE	N	Event Command D5	2008.02.20
+003A83	003AAC	CODE	N	Event Command D8	2008.02.20
+003AAD	003AB6	CODE	N	Unknown routines	2008.02.20
+003AB7	003AF0	CODE	N	Event Command E0	2008.02.20
+003AF1	003B1A	CODE	N	Event Command DC	2008.02.20
+003B1B	003B4A	CODE	N	"Event Commands DD, DE"	2008.02.20
+003B4B	003B9D	CODE	N	"Event Commands DF, E1"	2008.02.20
+003B9E	003C04	CODE	N	Event Command E2	2008.02.20
+003C05	003C10	CODE	N	Event Command E3	2008.02.20
+003C11	003C2E	CODE	N	Event Command E8	2008.02.20
+003C2F	003C4B	CODE	N	Event Command EA	2008.02.20
+003C4C	003C97	CODE	N	Event Command EB	2008.02.20
+003C98	003CBB	CODE	N	Event Command EC	2008.02.20
+003CBC	003CC4	CODE	N	Event Command ED	2008.02.20
+003CC5	003CCF	CODE	N	Event Command EE	2008.02.20
+003CD0	003CFC	CODE	N	Event Command F0	2008.02.20
+003CFD	003D06	CODE	N	Event Command F2	2008.02.20
+003D07	003D79	CODE	N	Event Command F1	2008.02.20
+003D7A	003D83	CODE	N	Event Command F3	2008.02.20
+003D84	003D96	CODE	N	Event Command F4	2008.02.20
+003D97	003DC4	CODE	N	Event Command E4	2008.02.20
+003DC5	003DF3	CODE	N	Event Command E5	2008.02.20
+003DF4	003E2F	CODE	N	Event Command E6	2008.02.20
+003E30	003E5B	CODE	N	Event Command E7	2008.02.20
+003E5C	003E7B	CODE	N	"Event Command F8, F9, FA"	2008.02.20
+003E7C	003E83	CODE	N	Unknown routines	2008.02.20
+003E84	003ED5	CODE	N	Event Command 29	2008.02.20
+003ED6	003EE5	CODE	N	"Event Commands 2A, 2B, 32"	2008.02.20
+003EE6	003F11	CODE	N	Event Command 2C	2008.02.20
+003F12	003F25	CODE	N	Event Command 2F	2008.02.20
+003F26	003FAE	CODE	N	Event Command FE	2008.02.20
+003FAF	00400D	CODE	N	Event Command FF	2008.02.20
+00400E	004035	PTR	N	Pointers to Event Command FF subroutines	2008.02.20
+004036	0041E3	CODE	N	Subroutines for Event Command FF	2008.02.20
+0041E4	004475	CODE	N	"Event Commands 57, 5C, 62, 68, 6A, 6C, 6D, 80"	2008.02.20
+004476	004556	CODE	N	Event Command 81	2008.02.20
+004557	0046DE	CODE	N	Event Command 82 (partial overlap with 83)	2008.02.20
+0046DF	00477A	CODE	N	Event Command 83	2008.02.20
+00477B	00477B	DATA	N	Starting enemy index that uses uncompressed graphics ($F8)	2008.02.20
+00477C	0047EB	CODE	N	Event Command 83	2008.02.20
+0047EC	0047EF	CODE	N	Check static enemy setting	2008.02.20
+0047F0	0047F6	CODE	N	Routines used for static enemy	2008.02.20
+0047F7	004866	CODE	N	Event Command 83	2008.02.20
+004867	004875	CODE	N	Event Command 84	2008.02.20
+004876	004891	CODE	N	Event Command 87	2008.02.20
+004892	004A4D	CODE	N	Event Command 88	2008.02.20
+004A4E	004B48	CODE	N	Event Command 2E	2008.02.20
+004B49	004B57	CODE	N	Event Command 89	2008.02.20
+004B58	004B73	CODE	N	Event Command 8A	2008.02.20
+004B74	004BC2	CODE	N	Event Command 8B	2008.02.20
+004BC3	004C26	CODE	N	Event Command 8C	2008.02.20
+004C27	004C73	CODE	N	Event Command 8D	2008.02.20
+004C74	004CD4	CODE	N	Event Command 8E	2008.02.20
+004CD5	004D05	CODE	N	"Event Commands 7C, 7D, 7E, 90, 91"	2008.02.20
+004D06	004E24	CODE	N	Event Command 7A	2008.02.20
+004E25	004E72	CODE	N	Event Command 7B	2008.02.20
+004E73	004EC6	CODE	N	Event Command 92	2008.02.20
+004EC7	004F09	CODE	N	Event Command 9C	2008.02.20
+004F0A	004F60	CODE	N	Event Command 9D	2008.02.20
+004F61	004FE9	CODE	N	Event Command 96	2008.02.20
+004FEA	005083	CODE	N	Event Command 9A	2008.02.20
+005084	005128	CODE	N	Event Command 97	2008.02.20
+005129	005190	CODE	N	Event Command A0	2008.02.20
+005191	005214	CODE	N	Event Command A1	2008.02.20
+005215	0052BF	CODE	N	Event Command 94	2008.02.20
+0052C0	005349	CODE	N	Event Command 9E	2008.02.20
+00534A	00540F	CODE	N	Event Command 98	2008.02.20
+005410	005428	CODE	N	Event Command 95 (overlaps 94)	2008.02.20
+005429	0054F4	CODE	N	Event Command 8F	2008.02.20
+0054F5	00550D	CODE	N	Event Command 9F (overlaps 9E)	2008.02.20
+00550E	005534	CODE	N	Event Command 99 (overlaps 98)	2008.02.20
+005535	00559F	CODE	N	"Event Commands 0F, 17, 1B, 1D, 1E, 1F, 25, 26, A6, A7"	2008.02.20
+0055A0	005613	CODE	N	"Event Commands A8, A9"	2008.02.20
+005614	0058FF	CODE	N	Unknown routines	2008.02.20
+005900	005913	CODE	N	Event Command startup access processing routine	2008.02.20
+005914	005AA2	CODE	N	Unknown routines	2008.02.20
+005AA3	005AB8	CODE	N	Event Command arbitrary access processing routine	2008.02.20
+005AB9	005C8F	CODE	N	Unknown routines	2008.02.20
+005C90	005CC1	CODE	N	"Subroutine called by Event Commands 82, 83 . Checks for loaded sprite graphics."	2008.02.20
+005CC2	005CC6	CODE	N	Unknown routines	2008.02.20
+005CC7	005CDC	CODE	N	Routines check for old BETA $0D0A location event format	2008.02.20
+005CDD	005CEB	CODE	N	Routines check decompressed location event size	2008.02.20
+005CEC	005D36	CODE	N	Unknown routines	2008.02.20
+005D37	005D6D	???	N	Unknown data	2008.02.20
+005D6E	005F6D	PTR	N	Pointers to Event Command routines (local)	2008.02.20
+005F6E	005F73	CODE	N	Event Command 01 and others (crash = light yellow)	2008.02.20
+005F74	005FB5	CODE	N	Event Command 00	2008.02.20
+005FB6	00607D	CODE	N	Event Command 02	2008.02.20
+00607E	006108	CODE	N	Event Command 03	2008.02.20
+006109	0061E8	CODE	N	Event Command 04	2008.02.20
+0061E9	0061FD	CODE	N	"Event Command 05, overlaps 02"	2008.02.20
+0061FE	00623F	CODE	N	"Event Commands 06, 07, overlaps 04"	2008.02.20
+006240	006253	CODE	N	"Event Commands 08, 09"	2008.02.20
+006254	006268	CODE	N	Event Command 0A	2008.02.20
+006269	006294	CODE	N	"Event Commands 0B, 0C"	2008.02.20
+006295	0062B4	CODE	N	"Event Commands 0D, 0E"	2008.02.20
+0062B5	0062DD	CODE	N	"Event Commands 10, 11"	2008.02.20
+0062DE	006441	CODE	N	"Event Commands 12, 13, 14, 15, 16"	2008.02.20
+006442	006466	CODE	N	Event Command 18	2008.02.20
+006467	006486	PTR	N	Pointers to Event Command 16 Operator routines (local)	2008.02.20
+006487	00653A	CODE	N	Event Command 16 Operator routines	2008.02.20
+00653B	006567	CODE	N	"Event Command 19, 1C"	2008.02.20
+006568	00658E	CODE	N	Event Command 1A	2008.02.20
+00658F	0065A9	CODE	N	Event Command 20	2008.02.20
+0065AA	0065F7	CODE	N	"Event Commands 21, 22"	2008.02.20
+0065F8	00662B	CODE	N	"Event Commands 23, 24"	2008.02.20
+00662C	006654	CODE	N	Event Command 27	2008.02.20
+006655	0066A4	CODE	N	Event Command 28	2008.02.20
+0066A5	006787	CODE	N	"Event Commands 2D, 30, 31, 34, 35, 36, 37, 38, 39, 3F, 40, 41, 42, 43, 44 (and probably 3B, 3C)"	2008.02.20
+006788	006791	CODE	N	Event Command 47	2008.02.20
+006792	0067D6	CODE	N	"Event Commands 48, 49"	2008.02.20
+0067D7	00680B	CODE	N	"Event Commands 4A, 4B"	2008.02.20
+00680C	006828	CODE	N	Event Command 4C	2008.02.20
+006829	006845	CODE	N	Event Command 4D	2008.02.20
+006846	0068A4	CODE	N	Event Command 4E	2008.02.20
+0068A5	0068C5	CODE	N	Event Command 4F	2008.02.20
+0068C6	0068E8	CODE	N	Event Command 50	2008.02.20
+0068E9	006912	CODE	N	Event Command 51	2008.02.20
+006913	00693C	CODE	N	Event Command 52	2008.02.20
+00693D	006963	CODE	N	Event Command 53	2008.02.20
+006964	00698A	CODE	N	Event Command 54	2008.02.20
+00698B	0069A5	CODE	N	Event Command 55	2008.02.20
+0069A6	0069C3	CODE	N	Event Command 56	2008.02.20
+0069C4	0069EA	CODE	N	Event Command 58	2008.02.20
+0069EB	006A11	CODE	N	Event Command 59	2008.02.20
+006A12	006A1E	CODE	N	Event Command 5A	2008.02.20
+006A1F	006A44	CODE	N	Event Command 5B	2008.02.20
+006A45	006A73	CODE	N	Event Command 5D	2009.01.27
+006A74	006AA2	CODE	N	Event Command 5E	2008.02.20
+006AA3	006AC8	CODE	N	Event Command 5F	2008.02.20
+006AC9	006AF0	CODE	N	Event Command 60	2008.02.20
+006AF1	006B1F	CODE	N	Event Command 61	2008.02.20
+006B20	006B4A	CODE	N	Event Command 63	2008.02.20
+006B4B	006B75	CODE	N	Unknown routines	2008.02.20
+006B76	006BA3	CODE	N	Event Command 65	2008.02.20
+006BA4	006BD1	CODE	N	Event Command 66	2008.02.20
+006BD2	006BF6	CODE	N	Event Command 67	2008.02.20
+006BF7	006C1B	CODE	N	Event Command 69	2008.02.20
+006C1C	006C40	CODE	N	Event Command 6B	2008.02.20
+006C41	006C68	CODE	N	Event Command 6F	2008.02.20
+006C69	006C84	CODE	N	Event Command 71	2008.02.20
+006C85	006CA0	CODE	N	Event Command 72	2008.02.20
+006CA1	006CBC	CODE	N	Event Command 73	2008.02.20
+006CBD	006CD5	CODE	N	Event Command 75	2008.02.20
+006CD6	006CEF	CODE	N	Event Command 76	2008.02.20
+006CF0	006D08	CODE	N	Event Command 77	2008.02.20
+006D09	006D2E	CODE	N	Event Command 7F	2008.02.20
+006D2F	006E26	CODE	N	Unknown routines	2008.02.20
+006E27	006E40	CODE	N	"Subroutine called by Event Command 29, load source and destination address to decompress ASCII credits text font"	2008.02.20
+006E41	006E5B	CODE	N	"Subroutine called by Event Command 29, DMA info for ASCII credits text font"	2008.02.20
+006E5C	006E9F	CODE	N	Unknown routines	2008.02.20
+006EA0	006EAF	DATA	N	"Window background type data, 2 bytes per window (8 total"	2008.02.20
+006EB0	00759F	CODE	N	Unknown routines	2008.02.20
+0075A0	0075E8	CODE	N	"Unknown routines used by Event Command 29, and ???"	2008.02.20
+0075E9	009AA0	CODE	N	Unknown routines	2008.02.20
+009AA1	009AC7	CODE	N	Load Tile Properties	2008.02.20
+009AC8	009AD2	CODE	N	Unknown routines	2008.02.20
+009AD3	009B61	CODE	N	Check Tile Properties	2008.02.20
+009B61	009BF4	CODE	N	Unknown routines	2008.02.20
+009BF5	009C0A	DATA	N	data related to tile solidity	2008.02.20
+009C0B	009C20	DATA	N	data related to tile solidity	2008.02.20
+009C21	009C36	DATA	N	data related to tile solidity	2008.02.20
+009C36	009FF6	CODE	N	Unknown routines	2008.02.20
+009FF7	00A078	PTR	N	"Pointers to unknown routines, used indirectly by Event Command B0, mostly aliases (first at 009FF2)"	2008.02.20
+00A079	00A6AE	CODE	N	Unknown routines	2008.02.20
+00A6AF	00A70D	CODE	N	Create Location exit map	2008.02.20
+00A70E	00C5C1	CODE	N	Unknown routines	2008.02.20
+00C5C2			N		2008.02.20
+00C98A	00EC76	CODE	N	Unknown routines	2008.02.20
+00EC77	00ECA2	CODE	N	ASCII text related DMA to VRAM	2008.02.20
+00ECA3	00F1A5	CODE	N	Unknown routines	2008.02.20
+00F1A6			N		2008.02.20
+00F2F0	00F2FF	---	N	UNUSED SPACE (16 bytes)	2008.02.20
+00F300			N		2008.02.20
+00F700	00F7FF	DATA	N	"Unknown data, related to sprite movement (North, South, East, West)?"	2008.02.20
+00F800	00F8FF	DATA	N	Unknown data related to PC2 and PC3 following on Dactyl	2008.02.20
+00F900					2008.02.20
+00FD00	00FDFF	DATA	N	Random number data sorted by column(?)	2008.02.20
+00FE00	00FEFF	DATA	N	Random numbers (1 byte each) used by Event Command 7F	2008.02.20
+00FF00	00FF06	CODE	N	Entry point in SMC (finish w/ jump to 3DC000)	2008.02.20
+00FF07			N		2008.02.20
+00FF10	00FF13	CODE	N	Jumps to 7E0500 in memory	2008.02.20
+00FF14					2008.02.20
+00FF20	00FF27	DATA	N	Values used to set a bit by event code	2008.02.20
+00FF28	00FF2F	DATA	N	Values used to reset a bit by event code	2008.02.20
+00FF30			N		2008.02.20
+00FFB2	00FFB5	TXT	N	Game ID (ACTJ)	2007.06.28
+00FFB6					2007.06.28
+011A7C	011A80	CODE	N	Routines check result of SightScope/Relic equip status	2007.06.28
+011A81	011A89	CODE	N	Routines used if SightScope/Relic check passes (equipped)	2007.06.28
+011A8A	011A93	CODE	N	Routines check enemy name in target window byte	2007.06.28
+011A94	011A97	CODE	N	Routines used if enemy name in target window byte check $01	2007.06.28
+011A98	011A9A	CODE	N	Routines used if enemy name in target window byte check $00	2007.06.28
+011A9B	011A9E	CODE	N	Routines used for enemy name in target window	2007.06.28
+011A9F	011AA0	CODE	N	Branch after performing enemy name/HP display routines	2007.06.28
+011AA1	011ABD	CODE	N	Routines copy enemy current and max HP for dialog display	2007.06.28
+011ABE	011AC4	CODE	N	Routines check enemy name in target window byte	2007.06.28
+011AC5	011AC8	CODE	N	Routines used if enemy name in target window byte check $01	2007.06.28
+011AC9	011ACF	CODE	N	Routines used if enemy name in target window byte check $00	2007.06.28
+011AD0					2007.06.28
+017A26	017AE7	PTR	N	"Pointers to unknown battle routines, 97 total"	2007.06.28
+017AE8					2007.06.28
+022545	022555	CODE	N	Routines determine exchange/reg. menu to load on overworld	2007.06.28
+022556					2007.06.28
+0226D6	0226EF	CODE	N	Routines copy overworld storyline counter and flags	2007.06.28
+0226F0					2007.06.28
+02274D	022767	CODE	N	Routines determine overworld and store data pointer to mem.	2007.06.28
+022768					2007.06.28
+022D91	022D95	CODE	N	Routines for checking if Black Omen should be loaded	2007.06.28
+022D96	022D96	DATA	N	Storyline value for Black Omen on overworld map	2007.06.28
+022D97	022DB0	CODE	N	Routines for checking if Black Omen should be loaded	2007.06.28
+022DB1	022DCC	CODE	N	Black Omen on map 1F0 1000 AD Present	2007.06.28
+022DCD	022DF2	CODE	N	Black Omen on map 1F1 600 AD Middle Ages	2007.06.28
+022DF3	022E0E	CODE	N	Black Omen on map 1F2 2300 AD Future	2007.06.28
+022E0F	022E22	CODE	N	Black Omen on map 1F6 12000 BC Last Village	2007.06.28
+022E23					2007.06.28
+0230EF	0230F3	CODE	N	Routines check if Epoch has been obtained	2007.06.28
+0230F4	023100	CODE	N	Routines check if Epoch is on current overworld map	2007.06.28
+023101	023102	CODE	N	Routines determine if Epoch is on current overworld map	2007.06.28
+023103	02310C	CODE	N	Routines copy Epoch X and Y coordinates within memory	2007.06.28
+02310D	02311E	CODE	N	Unknown routines	2007.06.28
+02311F	023121	CODE	N	Routines load overworld storyline counter	2007.06.28
+023122	023122	CODE	N	Routines compare storyline counter value for Epoch cutscene	2007.06.28
+023123	023123	DATA	N	Storyline value for Epoch on ground cutscene ($D2)	2007.06.28
+023124	023125	CODE	N	Routines determine whether to play Epoch cutscene	2007.06.28
+023126	023149	CODE	N	Unknown Epoch routines	2007.06.28
+02314A	023158	CODE	N	Routines used for Epoch $D2 storyline cutscene	2007.06.28
+023159	02315D	CODE	N	Routines check if Dactyls have been obtained	2007.06.28
+023164	023165	DATA	N	Map Dactyls can be used on (01F3 65000000 BC Prehistoric)	2007.06.28
+023166	023167	CODE	N	Routines check if this map can have Dactyls	2007.06.28
+023168	023171	CODE	N	Routines copy Dactyl X and Y coordinates within memory	2007.06.28
+023172	023183	CODE	N	Unknown routines	2007.06.28
+023184	0231A7	CODE	N	"Unknown routines, used when boarding Dactyls"	2007.06.28
+0231A8					2007.06.28
+0231F2	0231F9	PTR	N	Pointers to unknown overworld routines	2007.06.28
+0231FA					2007.06.28
+023224	02322B	PTR	N	Pointers to unknown overworld routines	2007.06.28
+02322C					2007.06.28
+02346D	02347A	CODE	N	Routines copy Epoch coordinates within memory	2007.06.28
+02347B					2007.06.28
+023493	02349A	PTR	N	Pointers to unknown overworld routines	2007.06.28
+02349B					2007.06.28
+0234A3	0234AA	PTR	N	Pointers to unknown overworld routines	2007.06.28
+0234AB					2007.06.28
+02351E	023163	CODE	N	Routines check if current map is 01F3	2007.06.28
+02357C	023583	CODE	N	Routines check if menu button pressed on land	2007.06.28
+023584	023588	CODE	N	Routines check if character exchange button pressed on land	2007.06.28
+023589	023592	CODE	N	Routines check if Select button pressed on land	2007.06.28
+023593					2007.06.28
+02360C	02360C	DATA	N	Storyline value for overworld party exchange menu ($49)	2007.06.28
+02360D					2007.06.28
+0236B4	0236B5	CODE	N	Routines determine if tile properties don't allow walking?	2007.06.28
+0236B6					2007.06.28
+0237CA	0237D1	PTR	N	Pointers to unknown overworld routines	2007.06.28
+0237D2					2007.06.28
+0239C3	0239D4	CODE	N	Routines check tile properties for PC walking?	2007.06.28
+0239D5					2007.06.28
+023ABA	023AC1	PTR	N	Pointers to unknown overworld routines	2007.06.28
+023AC2					2007.06.28
+023B74	023B7B	PTR	N	Pointers to unknown overworld routines	2007.06.28
+023B7C					2007.06.28
+023B84	023B8B	PTR	N	Pointers to unknown overworld routines	2007.06.28
+023B8C					2007.06.28
+0243D7	0243DB	CODE	N	Routines set Epoch flying bit 40 in 7E0294	2007.06.28
+0243DC	0243DD	CODE	N	Unknown Epoch routines	2007.06.28
+0243DE	0243E4	CODE	N	Routines check Epoch status	2007.06.28
+0243E5	0243FE	CODE	N	Routines used for standard Epoch (enter time gauge menu)	2007.06.28
+0243FF	024406	CODE	N	Routines used for upgraded Epoch	2007.06.28
+024407					2007.06.28
+0244D1	0244D5	CODE	N	Routines check if time gauge button pressed while on Epoch	2007.06.28
+0244D6	0244D8	CODE	N	Time gauge button pressed	2007.06.28
+0244D9	0244DD	CODE	N	Routines check if menu button pressed while flying Epoch	2007.06.28
+0244DE	0244E0	CODE	N	Menu button pressed	2007.06.28
+0244E1	0244E5	CODE	N	Routines check if Select button pressed while flying Epoch	2007.06.28
+0244E6	0244E8	CODE	N	Select button pressed	2007.06.28
+0244E9					2007.06.28
+024510	024518	CODE	N	Routines check if Epoch can activate Black Omen exit	2007.06.28
+024519	02451C	CODE	N	Routines check bit 04 in 7E0294 (unknown purpose)	2007.06.28
+02451D	02452E	CODE	N	Routines used for boarding Black Omen from flying Epoch	2007.06.28
+02452F					2007.06.28
+0245B3	0245BC	CODE	N	Routines ready 7E027C overworld action (06) while on Epoch	2007.06.28
+0245BD	0245C6	CODE	N	Routines ready 7E027C overworld action (05) while on Epoch	2007.06.28
+0245C7	0245E2	CODE	N	Routines ready 7E027C overworld action (08) while on Epoch	2007.06.28
+0245E3					2007.06.28
+024A06	024A09	CODE	N	Routines determine if Epoch is on Black omen exit	2007.06.28
+024A0A	024A0E	CODE	N	Routines used for setting Black Omen exit bit 08 at 7E0294	2007.06.28
+024A0F	024A0F	CODE	N	Routines used for loading Black Omen exit string index	2007.06.28
+024A10	024A10	DATA	N	String index for Black Omen exit ($4C Black Omen)	2007.06.28
+024A11	024A13	CODE	N	Routines used for storing Black Omen exit string index	2007.06.28
+024A14	024A1A	CODE	N	Unknown routines used Epoch is flying over Black Omen exit	2007.06.28
+024A1B	024A29	CODE	N	Routines used when Epoch is not on Black Omen exit	2007.06.28
+024A2A	024A3B	CODE	N	"Unknown Epoch routines, used twice when boarding"	2007.06.28
+024A3C	024A42	CODE	N	Routines determine what music to play using Epoch status	2007.06.28
+024A43	024A43	CODE	N	Routines load song to use while flying Epoch	2007.06.28
+024A44	024A44	DATA	N	Song used for hovercraft Epoch ($13 Wings that Cross Time)	2007.06.28
+024A45	024A46	CODE	N	Routines for song to use while flying Epoch	2007.06.28
+024A47	024A47	CODE	N	Routines load song to use while flying Epoch	2007.06.28
+024A48	024A48	DATA	N	Song used for upgraded Epoch ($13 Wings that Cross Time)	2007.06.28
+024A49	024A4B	CODE	N	Routines for storing song index	2007.06.28
+024A4C					2007.06.28
+024A51	024A57	CODE	N	Routines copy currently playing song within memory	2007.06.28
+024A58					2007.06.28
+024DE8	024DEF	CODE	N	Routines check if menu button pressed while riding Dactyl	2007.06.28
+024DF0	024DF2	CODE	N	Menu button pressed	2007.06.28
+024DF3	024DF7	CODE	N	Routines check if Select button pressed while riding Dactyl	2007.06.28
+024DF8	024DFA	CODE	N	Select button pressed	2007.06.28
+024DFB					2007.06.28
+024E64	024E64	DATA	N	Dactyl NLZ (right X coord)	2007.06.28
+024E65					2007.06.28
+024E6A	024E6A	DATA	N	Dactyl NLZ (bottom Y coord)	2007.06.28
+024E6B					2007.06.28
+024E71	024E74	CODE	N	Routines determine if Dactyl is in NLZ	2007.06.28
+024E75	024E77	CODE	N	"Dactyl in NLZ, can't land"	2007.06.28
+024E78					2007.06.28
+024EBE	024EC7	CODE	N	Routines ready 7E027C overworld action (05) while on Dactyl	2007.06.28
+024EC8	024ED1	CODE	N	Routines ready 7E027C overworld action (06) while on Dactyl	2007.06.28
+024ED2					2007.06.28
+02590C	02594D	PTR	N	Pointers to 00-20 text character routines	2008.02.06
+025B0F	025B2F	CODE	N	Text character 1A CronoNick	2008.02.06
+025D09	025D19	CODE	N	"Subroutine used for displaying PC, Epoch, CronoNick name"	2008.02.06
+025DE2	025DE5	CODE	N	Load main font width value and increment text character counter	2008.07.16
+025DE6	025DE6	DATA	N	Default character width	2008.07.16
+025DE7	025DEE	CODE	N	Load main font width value and increment text character counter	2008.07.16
+026233	026234	CODE	N	Routines load current tile properties	2007.06.28
+026235					2007.06.28
+0273B8	0273B8	DATA	N	Storyline value for Epoch time gauge 1F4->1F6 overworld map change (Check 1)	2008.02.06
+0273D8	0273D8	DATA	N	Storyline value for Epoch time gauge 1F4->1F6 overworld map change (Check 2)	2008.02.06
+027D38	027FFF	---	N	UNUSED SPACE (712 bytes)	2007.06.28
+028000					2007.06.28
+029571	0295B7	CODE	N	"New Game, sets default values in RAM for inventory, etc."	2007.06.28
+0295B8	0295CF	CODE	N	Routines clear storyline memory	2007.06.28
+0295D0	0295ED	CODE	N	Routines clear 7E0400-7E04FF and 7E2990-7E29AF	2007.06.29
+0295EE	029607	CODE	N	"Routines copy data from C2FD85, controller related"	2007.06.29
+029608					2007.06.28
+02CB64	02CB64	DATA	N	NPC to load on party exchange menu ($48 Gaspar)	2007.06.28
+02CB65					2007.06.28
+02D460	02D460	CODE	N	Routines load Location Age Name string	2007.06.28
+02D461	02D463	PTR	N	Pointer to Location Age Name string data block	2007.06.28
+02D464					2007.06.28
+02EBF8	02EBF8	DATA	N	Sound to use in menus when moving cursor ($00)	2007.06.28
+02EBF9					2007.06.28
+02EC02	02EC02	DATA	N	Sound to use in menus for invalid cursor selection ($01)	2007.06.28
+02EC03					2007.06.28
+02FD85	02FD87	DATA	N	"Default config settings (copied to 7E2990-7E2992, included in save data)"	2007.06.29
+02FD88	02FD90	DATA	N	"Default controller settings (copied to 7E0408-7E0410, 7E2993-7E299B, included in save data)"	2007.06.29
+02FD91			N		2008.07.10
+02FED0	02FEE8	CODE	N	Shop Menu transactions - checks and sets max gold limit $98967F	2008.07.10
+02FEE9	02FEEA	PTR	N	"Pointer used by unknown routines, exit menu?"	2008.07.10
+02FEEB	02FEEC	JUNK	N	Pointer for routines	2008.07.10
+02FEED	02FEFA	CODE	N	"Unknown routines, not valid?"	2008.07.10
+02FEFB	02FF25	CODE	N	"Unknown routines, not valid?"	2008.07.10
+02FF26	02FF34	CODE	N	"Unknown routines, not valid?"	2008.07.10
+02FF35	02FF4E	CODE	N	"Unknown routines, not valid?"	2008.07.10
+02FF4F	02FF86	CODE	N	"Unknown routines, not valid?"	2008.07.10
+02FF87	02FFA3	CODE	N	"Unknown subroutine used by 02FF35-02FF4E, not valid?"	2008.07.10
+02FFA4	02FFA7	CODE	N	"Suspected JUNK, opcode missing, duplicate 02FFA0-02FFA3"	2008.07.10
+02FFA8	02FFDD	CODE	N	"Suspected JUNK, duplicate 02FF6E-02FFA3"	2008.07.10
+02FFDE	02FFDF	CODE	N	"Suspected JUNK, duplicate 02FFDC-02FFDD"	2008.07.10
+02FFE0	02FFED	CODE	N	"Suspected JUNK, duplicate 02FFD0-02FFDD"	2008.07.10
+02FFEE	02FFFF	CODE	N	"Suspected JUNK, opcode cut off, duplicate 02FF8C-02FF9D"	2008.07.10
+030000			N		2008.07.10
+030077	0300B7	TXT	N	ASCII credits text	2007.06.28
+0300B8					2007.06.28
+030E78	030F3A	TXT	N	ASCII credits text - Jet Bike Race	2007.06.28
+030F3B					2007.06.28
+031101	03110B	TXT	N	Text notes end of routines	2007.06.28
+03110C	0311FF	---	N	UNUSED SPACE (244 bytes)	2007.06.28
+031200	031312	GFX	Y	Mode 7 - partial font (4 bitplane)	2007.06.28
+031313	03794F	DATA	Y	Mode 7 compressed data - event data and routines?	2007.06.28
+037950	037FFF	---	N	UNUSED SPACE (1712 bytes)	2007.06.28
+038000	038B73	GFX	Y	Epoch time gauge menu graphics	2007.06.28
+038B74	0397DE	EVENT	Y	(00) Overworld Event - 1F0 1000 AD Present	2007.06.28
+0397DF	039F48	EVENT	Y	(01) Overworld Event - 1F1 600 AD Middle Ages	2007.06.28
+039F49	03A60D	EVENT	Y	(02) Overworld Event - 1F2 2300 AD Future	2007.06.28
+03A60E	03AC44	EVENT	Y	(03) Overworld Event - 1F3 65000000 BC Prehistoric	2007.06.28
+03AC45	03BA1A	EVENT	Y	(04) Overworld Event - 1F4 12000 BC Dark Ages	2007.06.28
+03BA1B	03BF81	EVENT	Y	(05) Overworld Event - 1F5 12000 BC Zeal	2007.06.28
+03BF82	03C809	EVENT	Y	(06) Overworld Event - 1F6 12000 BC Last Village	2007.06.28
+03C80A	03CE48	EVENT	Y	(07) Overworld Event - 1F7 1999 AD Apocalypse	2007.06.28
+03CE49	03CEDE	PAL	Y	(00) Overworld Palettes	2007.06.28
+03CEDF	03CF70	PAL	Y	(01) Overworld Palettes	2007.06.28
+03CF71	03CFF9	PAL	Y	(02) Overworld Palettes	2007.06.28
+03CFFA	03D020	PAL	Y	(03) Overworld Palettes	2007.06.28
+03D021	03D1F0	PAL	Y	(04) Overworld Palettes	2007.06.28
+03D1F1	03D363	PAL	Y	(05) Overworld Palettes	2007.06.28
+03D364	03D4DC	PAL	Y	(06) Overworld Palettes	2007.06.28
+03D4DD	03D649	PAL	Y	(07) Overworld Palettes	2007.06.28
+03D64A	03D7C7	PAL	Y	(08) Overworld Palettes	2007.06.28
+03D7C8	03D93C	PAL	Y	(09) Overworld Palettes	2007.06.28
+03D93D	03DAF6	PAL	Y	(0A) Overworld Palettes	2007.06.28
+03DAF7	03DB9D	PAL	Y	(0B) Overworld Palettes	2007.06.28
+03DB9E	03DC49	PAL	Y	(0C) Overworld Palettes	2007.06.28
+03DC4A	03DCC2	PAL	Y	(0D) Overworld Palettes	2007.06.28
+03DCC3	03DD17	PAL	Y	(0E) Overworld Palettes	2007.06.28
+03DD18	03DD89	PAL	Y	(0F) Overworld Palettes	2007.06.28
+03DD8A	03DEB6	PAL	Y	(10) Overworld Palettes	2007.06.28
+03DEB7	03DF42	PAL	Y	(11) Overworld Palettes	2007.06.28
+03DF43	03DFE5	PAL	Y	(12) Overworld Palettes	2007.06.28
+03DFE6	03DFFF	---	N	UNUSED SPACE (26 bytes)	2007.06.28
+03E000					2007.06.28
+040000	040EB7	GFX	Y	(00) Overworld Tiles - 1F0 1F1 1F2 1F4 1F6 1F7	2007.06.28
+040EB8	041D39	GFX	Y	(01) Overworld Tiles - 1F0 1F1 1F2 1F4 1F6 1F7	2007.06.28
+041D3A	042C31	GFX	Y	(02) Overworld Tiles - 1F0 1F1 1F4 1F6	2007.06.28
+042C32	043A9F	GFX	Y	(03) Overworld Tiles - 1F0 1F1 1F4 1F6	2007.06.28
+043AA0	044838	GFX	Y	(04) Overworld Tiles - 1F0 1F1	2007.06.28
+044839	0455D6	GFX	Y	(05) Overworld Tiles - 1F0 1F1	2007.06.28
+0455D7	046422	GFX	Y	(06) Overworld Tiles - 1F0 1F1 1F7	2007.06.28
+046423	0472C1	GFX	Y	(07) Overworld Tiles - 1F7	2007.06.28
+0472C2	04804E	GFX	Y	(08) Overworld Tiles - 1F7	2007.06.28
+04804F	048C46	GFX	Y	(09) Overworld Tiles - 1F7	2007.06.28
+048C47	048E32	GFX	Y	(0A) Overworld Tiles - 1F7	2007.06.28
+048E33	049E44	GFX	Y	(0B) Overworld Tiles - 1F2	2007.06.28
+049E45	04AD55	GFX	Y	(0C) Overworld Tiles - 1F2	2007.06.28
+04AD56	04BD48	GFX	Y	(0D) Overworld Tiles - 1F2	2007.06.28
+04BD49	04C703	GFX	Y	(0E) Overworld Tiles - 1F2	2007.06.28
+04C704	04D3FE	GFX	Y	(0F) Overworld Tiles - 1F4 1F6	2007.06.28
+04D3FF	04D944	GFX	Y	(10) Overworld Tiles - 1F4 1F6	2007.06.28
+04D945	04DB30	GFX	Y	(11) Overworld Tiles - 1F4 1F6	2007.06.28
+04DB31	04E881	GFX	Y	(12) Overworld Tiles - 1F5	2007.06.28
+04E882	04F7AE	GFX	Y	(13) Overworld Tiles - 1F5	2007.06.28
+04F7AF	04FD71	GFX	Y	(14) Overworld Tiles - 1F0 1F1 1F3 1F6	2007.06.28
+04FD72	04FFC1	GFX	Y	(15) Overworld Tiles - 1F4	2007.06.28
+04FFC2	04FFFF	---	N	UNUSED SPACE (62 bytes)	2007.06.28
+050000	050EE7	GFX	Y	(16) Overworld Tiles - 1F5	2007.06.28
+050EE8	051E25	GFX	Y	(17) Overworld Tiles - 1F5	2007.06.28
+051E26	052E1B	GFX	Y	(18) Overworld Tiles - 1F5	2007.06.28
+052E1C	053CC8	GFX	Y	(19) Overworld Tiles - 1F5	2007.06.28
+053CC9	054A9A	GFX	Y	(1A) Overworld Tiles - 1F5	2007.06.28
+054A9B	055A47	GFX	Y	(1B) Overworld Tiles - 1F3	2007.06.28
+055A48	0565A4	GFX	Y	(1C) Overworld Tiles - 1F3	2007.06.28
+0565A5	057150	GFX	Y	(1D) Overworld Tiles - 1F3	2007.06.28
+057151	057FFF	GFX	Y	(1E) Overworld Tiles - 1F3	2007.06.28
+058000	058B01	GFX	Y	(1F) Overworld Tiles - 1F3	2007.06.28
+058B02	058F59	GFX	Y	(20) Overworld Tiles - 1F3	2007.06.28
+058F5A	0597F6	GFX	Y	(21) Overworld Tiles - 1F3	2007.06.28
+0597F7	059847	GFX	Y	(22) Overworld Tiles - 1F7	2007.06.28
+059848	0598AB	GFX	Y	(23) Overworld Tiles - 1F2	2007.06.28
+0598AC	059A55	GFX	Y	(24) Overworld Tiles ???	2007.06.28
+059A56	05B113	GFX	Y	(00) Overworld Sprites - Player characters	2007.06.28
+05B114	05B797	GFX	Y	(01) Overworld Sprites - Epoch	2007.06.28
+05B798	05C6EC	GFX	Y	(02) Overworld Sprites - Lavos	2007.06.28
+05C6ED	05CD20	GFX	Y	(03) Overworld Sprites - Black Omen	2007.06.28
+05CD21	05D596	GFX	Y	"(04) Overworld Sprites - Boat, vortex, balloon, misc."	2007.06.28
+05D597	05D80A	GFX	Y	"(05) Overworld Sprites - 1000 AD, smoke trail?"	2007.06.28
+05D80B	05DA10	GFX	Y	(06) Overworld Sprites - Placeholder graphics	2007.06.28
+05DA11	05E05C	GFX	Y	"(07) Overworld Sprites - Bird, Epoch, years, misc."	2007.06.28
+05E05D	05EA14	GFX	Y	"(08) Overworld Sprites - Top of Magus Castle, misc."	2007.06.28
+05EA15	05EC79	GFX	Y	"(09) Overworld Sprites - 600 AD, Magic Cave boulder?"	2007.06.28
+05EC7A	05F2CA	GFX	Y	(0A) Overworld Sprites - Dactyl	2007.06.28
+05F2CB	05FFFF	---	N	UNUSED SPACE (3381 bytes)	2007.06.28
+060000	0607B5	GFX	Y	(0B) Overworld Sprites - Mt. Woe top	2007.06.28
+0607B6	060E99	GFX	Y	"(0C) Overworld Sprites - Mt. Woe bottom, Blackbird, misc."	2007.06.28
+060E9A	061E70	GFX	Y	(0D) Overworld Sprites - Deteriorating Zeal	2007.06.28
+061E71	061FFF	---	N	UNUSED SPACE (399 bytes)	2007.06.28
+062000	062410	DATA	Y	Compressed packet used by Epoch time gauge menu	2007.06.28
+062411	0625DE	DATA	Y	(00) Overworld Exit Data - 1F0 1000 AD Present	2007.06.28
+0625DF	062798	DATA	Y	(00) Overworld Exit Data - 1F1 600 AD Middle Ages	2007.06.28
+062799	062833	DATA	Y	(00) Overworld Exit Data - 1F2 2300 AD Future	2007.06.28
+062834	0628E3	DATA	Y	(00) Overworld Exit Data - 1F3 65000000 BC Prehistoric	2007.06.28
+0628E4	062921	DATA	Y	(00) Overworld Exit Data - 1F4 12000 BC Dark Ages	2007.06.28
+062922	062990	DATA	Y	(00) Overworld Exit Data - 1F5 12000 BC Zeal	2007.06.28
+062991	0629D9	DATA	Y	(00) Overworld Exit Data - 1F6 12000 BC Last Village	2007.06.28
+0629DA	0629EB	DATA	Y	(00) Overworld Exit Data - 1F7 1999 AD Apocalypse	2007.06.28
+0629EC	063725	TASM	Y	(00) Overworld Tile Assembly L12 - 1F0 1F1	2007.06.28
+063726	064111	TASM	Y	(01) Overworld Tile Assembly L12 - 1F7	2007.06.28
+064112	064B7C	TASM	Y	(02) Overworld Tile Assembly L12 - 1F2	2007.06.28
+064B7D	065666	TASM	Y	(03) Overworld Tile Assembly L12 - 1F3	2007.06.28
+065667	0660BC	TASM	Y	(04) Overworld Tile Assembly L12 - 1F4 1F6	2007.06.28
+0660BD	066A38	TASM	Y	(05) Overworld Tile Assembly L12 - 1F5	2007.06.28
+066A39	06793E	MAP	Y	(00) Overworld Map - 1F0 1000 AD Present	2007.06.28
+06793F	0688FD	MAP	Y	(01) Overworld Map - 1F1 600 AD Middle Ages	2007.06.28
+0688FE	0690D6	MAP	Y	(02) Overworld Map - 1F7 1999 AD Apocalypse	2007.06.28
+0690D7	069A88	MAP	Y	(03) Overworld Map - 1F2 2300 AD Future	2007.06.28
+069A89	06AB74	MAP	Y	(04) Overworld Map - 1F3 65000000 BC Prehistoric	2007.06.28
+06AB75	06BAC4	MAP	Y	(05) Overworld Map - 1F4 12000 BC Dark Ages	2007.06.28
+06BAC5	06C356	MAP	Y	(06) Overworld Map - 1F6 12000 BC Last Village	2007.06.28
+06C357	06C7F6	MAP	Y	(07) Overworld Map - 1F5 12000 BC Zeal	2007.06.28
+06C7F7	06C993	TASM	Y	(00) Overworld Tile Assembly L3 - 1F0 1F3 1F5 1F6	2007.06.28
+06C994	06CC0A	TASM	Y	(01) Overworld Tile Assembly L3 - 1F1	2007.06.28
+06CC0B	06CD1E	TASM	Y	(02) Overworld Tile Assembly L3 - 1F7	2007.06.28
+06CD1F	06CF71	TASM	Y	(03) Overworld Tile Assembly L3 - 1F2	2007.06.28
+06CF72	06D2BF	TASM	Y	(04) Overworld Tile Assembly L3 - 1F4	2007.06.28
+06D2C0	06D40F	TASM	Y	(05) Overworld Tile Assembly L3 ???	2007.06.28
+06D410	06D53C	DATA	Y	(00) Overworld Tile Properties - 1F0	2007.06.28
+06D53D	06D663	DATA	Y	(01) Overworld Tile Properties - 1F1	2007.06.28
+06D664	06D725	DATA	Y	(02) Overworld Tile Properties - 1F2 1F7	2007.06.28
+06D726	06D802	DATA	Y	(03) Overworld Tile Properties - 1F3	2007.06.28
+06D803	06D8BD	DATA	Y	(04) Overworld Tile Properties - 1F4	2007.06.28
+06D8BE	06D97B	DATA	Y	(05) Overworld Tile Properties - 1F6	2007.06.28
+06D97C	06DA75	DATA	Y	(06) Overworld Tile Properties - 1F5	2007.06.28
+06DA76	06DB72	DATA	Y	(00) Overworld Music Data - 1F0	2007.06.28
+06DB73	06DC3B	DATA	Y	(01) Overworld Music Data - 1F1	2007.06.28
+06DC3C	06DD04	DATA	Y	(02) Overworld Music Data - 1F2 1F3 1F4 1F5 1F6 1F7	2007.06.28
+06DD05	06DFFF	---	N	UNUSED SPACE (763 bytes)	2007.06.28
+06E000					2007.06.28
+06E7BA	06E7C9	PTR	N	"Pointers to Overworld NLZ code (local, first at 06E7CA)"	2007.06.28
+06E7CA	06E7E9	CODE	N	Overworld No Landing Zone code	2007.06.28
+06E7EA					2007.06.28
+06EE43	06EFFF	---	N	UNUSED SPACE (445 bytes)	2007.06.28
+06F000	06F2D0	TXT	N	Location Names (09=End string)	2007.06.28
+06F2D1	06F316	TXT	N	Years Text (09=End string)	2007.06.28
+06F317	06F3FF	---	N	UNUSED SPACE (233 bytes)	2007.06.28
+06F400	06F4D3	PTR	N	Pointers to Location Names (106 strings)	2007.06.28
+06F4D4	06F4DF	PTR	N	Pointers to Years Text (6 strings)	2007.06.28
+06F4E0					2007.06.28
+06F700	06FAFF	DATA	N	Data used for Epoch time gauge menu	2007.06.28
+06FB00	06FC50	DATA	Y	Compressed packet used by Epoch time gauge menu	2007.06.28
+06FC51	06FCFF	---	N	UNUSED SPACE (175 bytes)	2007.06.28
+06FD00	06FD0F	PTR	N	"Pointers to Overworld Data (local, first at 06FD10)"	2007.06.28
+06FD10	06FDEF	DATA	N	Overworld Data (23 bytes each)	2007.06.28
+06FDF0	06FE1F	PTR	N	Pointers to Overworld Sprites (first at 059A56)	2007.06.28
+06FE20	06FE9F	PTR	N	Pointers to Overworld Tiles (first at 040000)	2007.06.28
+06FEA0	06FEFF	PTR	N	Pointers to Overworld Palettes (first at 03CE49)	2007.06.28
+06FF00	06FF1F	PTR	N	Pointers to Overworld Tile Assembly L12 (first at 0629EC)	2007.06.28
+06FF20	06FF3F	PTR	N	Pointers to Overworld Maps (first at 066A39)	2007.06.28
+06FF40	06FF7F	PTR	N	Pointers to Overworld Tile Assembly L3 (first at 06C7F7)	2007.06.28
+06FF80	06FF9F	PTR	N	Pointers to Overworld Tile Properties (first at 06D410)	2007.06.28
+06FFA0	06FFBF	PTR	N	Pointers to Overworld Music Data (first at 06DA76)	2007.06.28
+06FFC0	06FFDF	PTR	N	Pointers to Overworld Exit Data (first at 062411)	2007.06.28
+06FFE0	06FFFF	PTR	N	Pointers to Overworld Events (first at 038B74)	2007.06.28
+070000					2007.06.28
+070AE9	070AE9	DATA	N	Total number of songs ($51)	2007.06.28
+070AEA	070BA3	PTR	N	Pointers to BRR (62 addresses)	2007.06.28
+070BA4					2007.06.28
+070D18	070E0A	PTR	N	Pointers to SPC Data	2007.06.28
+070E0B	07182A	DATA	N	"Instrument Table, 32 bytes each"	2007.06.28
+07182B					2007.06.28
+072431	072432	DATA	N	Length of packet to follow	2007.06.28
+072433	074021	DATA	N	"Unknown packet, contains SPC-700 routines"	2007.06.28
+074022	074023	DATA	N	Length of packet to follow	2007.06.28
+074024	074224	DATA	N	Unknown packet	2007.06.28
+074225	074226	DATA	N	Length of packet to follow	2007.06.28
+074227	07424A	DATA	N	Unknown packet	2007.06.28
+07424B	07424C	DATA	N	Length of packet to follow	2007.06.28
+07424D	074260	DATA	N	Unknown packet	2007.06.28
+074261	074262	DATA	N	Length of packet to follow	2007.06.28
+074263	074276	DATA	N	Unknown packet	2007.06.28
+074277	074278	DATA	N	Length of Sound Effect packet to follow	2007.06.28
+074279	074678	PTR	N	"Pointers (ARAM) to Sound Effects, 2 pointers each"	2007.06.28
+074679	075A78	DATA	N	Sound Effects	2007.06.28
+075A79	075A7A	DATA	N	Length of Sound Effect packet to follow	2007.06.28
+075A7B	075E7A	PTR	N	"Pointers (ARAM) to Battle Sound Effects, 2 pointers each"	2007.06.28
+075E7B	07727A	DATA	N	Battle Sound Effects	2007.06.28
+07727B	07811C	BRR	N	(00)	2007.06.28
+07811D	0788BF	BRR	N	(01)	2007.06.28
+0788C0	078AEF	BRR	N	(02)	2007.06.28
+078AF0	079AD5	BRR	N	(03)	2007.06.28
+079AD6	07A281	BRR	N	(04)	2007.06.28
+07A282	07B417	BRR	N	(05)	2007.06.28
+07B418	07BE15	BRR	N	(06)	2007.06.28
+07BE16	07CB46	BRR	N	(07)	2007.06.28
+07CB47	07DF01	BRR	N	(08)	2007.06.28
+07DF02	07E317	BRR	N	(09)	2007.06.28
+07E318	07F4AD	BRR	N	(0A)	2007.06.28
+07F4AE	08033D	BRR	N	(0B)	2007.06.28
+08033E	080A98	BRR	N	(0C)	2007.06.28
+080A99	08130A	BRR	N	(0D)	2007.06.28
+08130B	081C54	BRR	N	(0E)	2007.06.28
+081C55	082DA2	BRR	N	(0F)	2007.06.28
+082DA3	08376A	BRR	N	(10)	2007.06.28
+08376B	0845E8	BRR	N	(11)	2007.06.28
+0845E9	0855E9	BRR	N	(12)	2007.06.28
+0855EA	0859D2	BRR	N	(13)	2007.06.28
+0859D3	086D2A	BRR	N	(14)	2007.06.28
+086D2B	087CD1	BRR	N	(15)	2007.06.28
+087CD2	0888C7	BRR	N	(16)	2007.06.28
+0888C8	088E72	BRR	N	(17)	2007.06.28
+088E73	089603	BRR	N	(18)	2007.06.28
+089604	08A226	BRR	N	(19)	2007.06.28
+08A227	08B185	BRR	N	(1A)	2007.06.28
+08B186	08C5B5	BRR	N	(1B)	2007.06.28
+08C5B6	08D421	BRR	N	(1C)	2007.06.28
+08D422	08E12E	BRR	N	(1D)	2007.06.28
+08E12F	08EC28	BRR	N	(1E)	2007.06.28
+08EC29	08FB1B	BRR	N	(1F)	2007.06.28
+08FB1C	090DA4	BRR	N	(20)	2007.06.28
+090DA5	091AA8	BRR	N	(21)	2007.06.28
+091AA9	093925	BRR	N	(22)	2007.06.28
+093926	093FE7	BRR	N	(23)	2007.06.28
+093FE8	094E2F	BRR	N	(24)	2007.06.28
+094E30	0958C6	BRR	N	(25)	2007.06.28
+0958C7	096972	BRR	N	(26)	2007.06.28
+096973	097718	BRR	N	(27)	2007.06.28
+097719	09A54C	BRR	N	(28)	2007.06.28
+09A54D	09B1C0	BRR	N	(29)	2007.06.28
+09B1C1	09BB64	BRR	N	(2A)	2007.06.28
+09BB65	09D88B	BRR	N	(2B)	2007.06.28
+09D88C	09E403	BRR	N	(2C)	2007.06.28
+09E404	09ECCF	BRR	N	(2D)	2007.06.28
+09ECD0	09F7A5	BRR	N	(2E)	2007.06.28
+09F7A6	0A0704	BRR	N	(2F)	2007.06.28
+0A0705	0A1663	BRR	N	(30)	2007.06.28
+0A1664	0A2142	BRR	N	(31)	2007.06.28
+0A2143	0A2963	BRR	N	(32)	2007.06.28
+0A2964	0A2F7A	BRR	N	(33)	2007.06.28
+0A2F7B	0A3CAB	BRR	N	(34)	2007.06.28
+0A3CAC	0A4229	BRR	N	(35)	2007.06.28
+0A422A	0A47D4	BRR	N	(36)	2007.06.28
+0A47D5	0A522C	BRR	N	(37)	2007.06.28
+0A522D	0A608F	BRR	N	(38)	2007.06.28
+0A6090	0A7C06	BRR	N	(39)	2007.06.28
+0A7C07	0A7F44	BRR	N	(3A)	2007.06.28
+0A7F45	0A828B	BRR	N	(3B)	2007.06.28
+0A828C	0A85D2	BRR	N	(3C)	2007.06.28
+0A85D3	0A8A39	BRR	N	(3D)	2007.06.28
+0A8A3A	0A8A5F	SPC	N	(00) Silence	2007.06.28
+0A8A60	0A8F20	SPC	N	(01) 1.05 - Memories of Green	2007.06.28
+0A8F21	0A93BB	SPC	N	(02) 1.09 - Wind Scene	2007.06.28
+0A93BC	0A9A26	SPC	N	(03) 3.04 - Corridors of Time	2007.06.28
+0A9A27	0A9CF2	SPC	N	"(04) 2.20 - Rhythm of Wind, Sky, and Earth"	2007.06.28
+0A9CF3	0A9E30	SPC	N	(05) 2.01 - Ruined World	2007.06.28
+0A9E31	0AAA17	SPC	N	(06) 1.06 - Guardia Millenial Fair	2007.06.28
+0AAA18	0AAB61	SPC	N	(07) 3.09 - Far Off Promise	2007.06.28
+0AAB62	0AB11F	SPC	N	(08) 1.11 - Secret of the Forest	2007.06.28
+0AB120	0AB48F	SPC	N	(09) 3.05 - Zeal Palace	2007.06.28
+0AB490	0AB8BA	SPC	N	(0A) 2.10 - Remains of Factory	2007.06.28
+0AB8BB	0ABBA1	SPC	N	(0B) 2.19 - Ayla's Theme	2007.06.28
+0ABBA2	0AC0BB	SPC	N	(0C) 1.13 - Courage and Pride	2007.06.28
+0AC0BC	0AC5E7	SPC	N	(0D) 2.05 - Lavos' Theme	2007.06.28
+0AC5E8	0AC82D	SPC	N	(0F) 1.03 - Morning Sunlight	2007.06.28
+0AC82E	0AD059	SPC	N	(0E) 2.09 - Robo's Theme	2007.06.28
+0AD05A	0AD180	SPC	N	(10) 1.15 - Manoria Cathedral	2007.06.28
+0AD181	0AD2C2	SPC	N	(11) Sounds of the Ocean	2007.06.28
+0AD2C3	0AD31B	SPC	N	(12) Leene's Bell	2007.06.28
+0AD31C	0ADCEE	SPC	N	(13) 3.10 - Wings that Cross Time	2007.06.28
+0ADCEF	0AE061	SPC	N	(14) 3.06 - Schala's Theme	2007.06.28
+0AE062	0AE64A	SPC	N	(15) 2.14 - Delightful Spekkio	2007.06.28
+0AE64B	0AECC1	SPC	N	(16) 1.23 - A Shot of Crisis	2007.06.28
+0AECC2	0AF56A	SPC	N	(17) 1.21 - Kingdom Trial	2007.06.28
+0AF56B	0B0079	SPC	N	(18) 1.02 - Chrono Trigger	2007.06.28
+0B007A	0B0101	SPC	N	(19) Blackbird Interior	2007.06.28
+0B0102	0B018E	SPC	N	(1A) Blackbird Exterior	2007.06.28
+0B018F	0B0550	SPC	N	(1B) 1.20 - Fanfare 1	2007.06.28
+0B0551	0B06F5	SPC	N	(1C) 2.12 - Fanfare 2	2007.06.28
+0B06F6	0B0A9F	SPC	N	(1D) 3.03 - At the Bottom of the Night	2007.06.28
+0B0AA0	0B1061	SPC	N	(1E) 1.04 - Peaceful Day	2007.06.28
+0B1062	0B135F	SPC	N	(1F) 1.08 - A Strange Happening	2007.06.28
+0B1360	0B13C3	SPC	N	(20) Dungeon Dripping Noise	2007.06.28
+0B13C4	0B1443	SPC	N	(21) Running Water	2007.06.28
+0B1444	0B14D9	SPC	N	(22) Wind	2007.06.28
+0B14DA	0B199E	SPC	N	(23) 1.22 - The Hidden Truth	2007.06.28
+0B199F	0B1A5F	SPC	N	(24) 1.16 - A Prayer to the Road that Leads	2007.06.28
+0B1A60	0B1B83	SPC	N	(25) 1.14 - Huh?	2007.06.28
+0B1B84	0B1CC6	SPC	N	(26) 2.06 - The Day the World Revived	2007.06.28
+0B1CC7	0B224E	SPC	N	(27) 2.07 - Robo Gang Johnny	2007.06.28
+0B224F	0B2B73	SPC	N	(28) 2.24 - Battle with Magus	2007.06.28
+0B2B74	0B337C	SPC	N	(29) 1.18 - Boss Battle 1	2007.06.28
+0B337D	0B39A5	SPC	N	(2A) 1.19 - Frog's Theme	2007.06.28
+0B39A6	0B9A78	SPC	N	(2B) 1.10 - Goodnight	2007.06.28
+0B3D94	0B41E2	SPC	N	(2D) 2.04 - People who Threw Away the Will to Live	2007.06.28
+0B41E3	0B427B	SPC	N	(2E) 2.02 - Mystery of the Past	2007.06.28
+0B427C	0B4703	SPC	N	(2F) 2.16 - Underground Sewer	2007.06.28
+0B4704	0B4990	SPC	N	(30) 1.01 - Presentiment	2007.06.28
+0B4991	0B4E7B	SPC	N	(31) 3.08 - Undersea Palace	2007.06.28
+0B4E7C	0B59D7	SPC	N	(32) 3.14 - Last Battle	2007.06.28
+0B59D8	0B601E	SPC	N	(33) 2.03 - Lab 16's Ruins	2007.06.28
+0B601F	0B60AC	SPC	N	(34) Inside the Shell	2007.06.28
+0B60AD	0B6168	SPC	N	(35) Quake	2007.06.28
+0B6169	0B64F7	SPC	N	(36) 2.21 - Burn!  Bobonga!	2007.06.28
+0B64F8	0B6594	SPC	N	(37) Wormhole	2007.06.28
+0B6595	0B6E93	SPC	N	(38) 2.18 - Primitive Mountain	2007.06.28
+0B6E94	0B7BBD	SPC	N	(39) 3.13 - World Revolution	2007.06.28
+0B7BBE	0B7CC4	SPC	N	(3A) Lavos Scream	2007.06.28
+0B7CC5	0B836E	SPC	N	(3B) 3.07 - Sealed Door	2007.06.28
+0B836F	0B8ABD	SPC	N	(3C) 1.17 - Silent Light	2007.06.28
+0B8ABE	0B8BCE	SPC	N	(3D) 2.15 - Fanfare 3	2007.06.28
+0B8BCF	0B8FD1	SPC	N	(3E) 2.13 - The Brink of Time	2007.06.28
+0B8FD2	0BA2A5	SPC	N	(3F) 3.17 - To Far Away Times	2007.06.28
+0B9A79	0B3D93	SPC	N	(2C) 2.08 - Bike Chase	2007.06.28
+0BA2A6	0BA3C1	SPC	N	(40) 2.23 - Confusing Melody	2007.06.28
+0BA3C2	0BA4D8	SPC	N	(41) Hail Magus	2007.06.28
+0BA4D9	0BA63A	SPC	N	(42) 1.07 - Gonzales' Song	2007.06.28
+0BA63B	0BA696	SPC	N	(43) Heckran Cave Water	2007.06.28
+0BA697	0BAF10	SPC	N	(44) 3.11 - Black Dream	2007.06.28
+0BAF11	0BB572	SPC	N	(45) 1.12 - Battle 1	2007.06.28
+0BB573	0BBF43	SPC	N	(46) 3.02 - Tyran Castle	2007.06.28
+0BBF44	0BC0F3	SPC	N	(47) Tsunami	2007.06.28
+0BC0F4	0BC266	SPC	N	(48) 2.22 - Magus' Castle	2007.06.28
+0BC267	0BCBC0	SPC	N	(49) 3.15 - First Festival of Stars	2007.06.28
+0BCBC1	0BCCB9	SPC	N	(4A) The Destruction of Zeal	2007.06.28
+0BCCBA	0BCD2A	SPC	N	(4B) Ocean Tide	2007.06.28
+0BCD2B	0BCDA0	SPC	N	(4C) Lavos' Breath	2007.06.28
+0BCDA1	0BD282	SPC	N	(4D) 3.16 - Epilogue - To Good Friends	2007.06.28
+0BD283	0BDFAD	SPC	N	(4E) 2.17 - Boss Battle 2	2007.06.28
+0BDFAE	0BE0AB	SPC	N	(4F) ?.?? - Fanfare 4	2007.06.28
+0BE0AC	0BE7FC	SPC	N	(50) 3.12 - Determination	2007.06.28
+0BE7FD	0BE8DB	JUNK	N	Overwritten (50) 3.12 - Determination	2007.06.28
+0BE8DC	0BEB75	JUNK	N	Overwritten (50) 3.12 - Determination	2007.06.28
+0BEB76	0BEE44	JUNK	N	(Unk) ?.?? - Fanfare 5 ???	2007.06.28
+0BEE45	0BEF51	JUNK	N	Overwritten (Unk) ?.?? - Fanfare 5 ???	2007.06.28
+0BEF52	0BEFE4	JUNK	N	Overwritten (50) 3.12 - Determination	2007.06.28
+0BEFE5	0BF2B3	JUNK	N	(Unk) ?.?? - Fanfare 5 ???	2007.06.28
+0BF2B4	0BF72F	JUNK	N	Overwritten (50) 3.12 - Determination	2007.06.28
+0BF730	0BF98E	JUNK	N	Overwritten (50) 3.12 - Determination	2007.06.28
+0BF98F	0BFF90	JUNK	N	Overwritten (50) 3.12 - Determination	2007.06.28
+0BFF91	0BFFFF	---	N	UNUSED SPACE (111 bytes)	2007.06.28
+0C0000	0C004F	DATA	N	Crono stats	2007.06.28
+0C0050	0C009F	DATA	N	Marle stats	2007.06.28
+0C00A0	0C00EF	DATA	N	Lucca stats	2007.06.28
+0C00F0	0C013F	DATA	N	Robo stats	2007.06.28
+0C0140	0C018F	DATA	N	Frog stats	2007.06.28
+0C0190	0C01DF	DATA	N	Ayla stats	2007.06.28
+0C01E0	0C022F	DATA	N	Magus stats	2007.06.28
+0C0230	0C0236	DATA	N	"Tech to learn next (1 byte ea., copied to 7E2830-7E2836)"	2007.06.28
+0C0237	0C023D	DATA	N	"Single Techs learned (1 byte ea., copied to 7E2837-7E283D)"	2007.06.28
+0C023E	0C024C	DATA	N	"Double Techs learned (1 byte ea., copied to 7E283E-7E284C)"	2007.06.28
+0C024D	0C0256	DATA	N	"Triple Techs learned (1 byte ea., copied to 7E284D-7E2856)"	2007.06.28
+0C0257	0C025B	DATA	N	"Triple Techs w/rocks (1 byte ea., copied to 7E2857-7E285B)"	2007.06.28
+0C025C	0C0261	DATA	N	"All $FF, 6 bytes total, unused? (copied to 7E285C-7E2861)"	2007.06.28
+0C0262					2007.06.28
+0C0B5E	0C13DF	TXT	N	"Item Names (9 bytes each, 242 strings)"	2007.06.28
+0C13E0	0C1787	TXT	N	"Tech Names (8 bytes each, 117 strings)"	2007.06.28
+0C1788					2007.06.28
+0C2E3F	0C3022	PTR	N	Pointers to Item Descriptions (242 pointers)	2007.06.28
+0C3023	0C364D	TXT	N	Item Descriptions	2007.06.28
+0C364E	0C37FF	---	N	UNUSED SPACE (434 bytes)	2007.06.28
+0C3800	0C38F1	PTR	N	Pointers to Tech Descriptions	2007.06.28
+0C38F2	0C3903	---	N	Unused pointer space ($FF values)	2007.06.28
+0C3904	0C41D0	TXT	N	Tech Descriptions	2007.06.28
+0C41D1	0C47FF	---	N	UNUSED SPACE (1583 bytes)	2007.06.28
+0C4800					2007.06.28
+0C6700	0C6EFF	TXT	N	"Enemy Names (8 bytes each, 256 strings, last 5 blank)"	2007.06.28
+0C6F00					2007.06.28
+0CD000	0CD1FF	PTR	N	Pointers to Battle Enemy Messages (256 strings)	2007.06.28
+0CD200	0CDFF6	TXT	N	Battle Enemy Messages	2007.06.28
+0CDFF7	0CDFFF	---	N	UNUSED SPACE (9 bytes)	2007.06.28
+0CE000					2007.06.28
+0CF049	0CF04C	CODE	N	Routines check if PC1 has SightScope or Relic equipped	2007.06.28
+0CF04D	0CF04D	DATA	N	Item used to show enemy HP ($A4 SightScope)	2007.06.28
+0CF04E	0CF050	CODE	N	Routines check if PC1 has SightScope or Relic equipped	2007.06.28
+0CF051	0CF051	DATA	N	Item used to show enemy HP ($B8 Relic)	2007.06.28
+0CF052	0CF053	CODE	N	Routines check if PC1 has SightScope or Relic equipped	2007.06.28
+0CF054	0CF057	CODE	N	Routines check if PC2 has SightScope or Relic equipped	2007.06.28
+0CF058	0CF058	DATA	N	Item used to show enemy HP ($A4 SightScope)	2007.06.28
+0CF059	0CF05B	CODE	N	Routines check if PC2 has SightScope or Relic equipped	2007.06.28
+0CF05C	0CF05C	DATA	N	Item used to show enemy HP ($B8 Relic)	2007.06.28
+0CF05D	0CF05E	CODE	N	Routines check if PC2 has SightScope or Relic equipped	2007.06.28
+0CF05F	0CF062	CODE	N	Routines check if PC3 has SightScope or Relic equipped	2007.06.28
+0CF063	0CF063	DATA	N	Item used to show enemy HP ($A4 SightScope)	2007.06.28
+0CF064	0CF066	CODE	N	Routines check if PC3 has SightScope or Relic equipped	2007.06.28
+0CF067	0CF067	DATA	N	Item used to show enemy HP ($B8 Relic)	2007.06.28
+0CF068	0CF069	CODE	N	Routines check if PC3 has SightScope or Relic equipped	2007.06.28
+0CF06A	0CF06C	CODE	N	Routines used if any PC has SightScope or Relic equipped	2007.06.28
+0CF06D					2007.06.28
+0D008F	0D008F	DATA	N	Graphic effect to use when a boss is killed ($38)	2007.06.28
+0D0090					2007.06.28
+0D009C	0D009C	DATA	N	Sound effect to use when a regular enemy is defeated ($95)	2007.06.28
+0D009D					2007.06.28
+0EEF11	0EEF2C	PTR	N	Pointers to Battle Party Messages (14 strings)	2007.06.28
+0EEF2D	0EEFA4	TXT	N	Battle Party Messages	2007.06.28
+0EEFA5					2007.06.28
+110000	1100FF	PTR	N	Pointers to unknown compressed battle attack data	2007.06.28
+110100	110636	DATA	Y	Unknown compressed battle attack data	2007.06.28
+110637					2007.06.28
+115100	1157FF	TXT	N	"ASCII text, mostly credits information"	2007.06.28
+115800					2007.06.28
+120000	1272BF	GFX	N	"(06) PC, NPC and Enemy Graphics - Magus"	2007.06.28
+1272C0	12EE7F	GFX	N	"(00) PC, NPC and Enemy Graphics - Crono"	2007.06.28
+12EE80	12F85D	GFX	Y	"(EC) PC, NPC and Enemy Graphics"	2007.06.28
+12F85E	12FF93	GFX	Y	"(E3) PC, NPC and Enemy Graphics"	2007.06.28
+12FF94	12FFFF	---	N	UNUSED SPACE (108 bytes)	2007.06.28
+130000	136B3F	GFX	N	"(04) PC, NPC and Enemy Graphics - Frog"	2007.06.28
+136B40	13E27F	GFX	N	"(02) PC, NPC and Enemy Graphics - Lucca"	2007.06.28
+13E280	13E745	GFX	Y	"(BD) PC, NPC and Enemy Graphics"	2007.06.28
+13E746	13E8A8	GFX	Y	"(BE) PC, NPC and Enemy Graphics"	2007.06.28
+13E8A9	13EA5A	GFX	Y	"(BF) PC, NPC and Enemy Graphics"	2007.06.28
+13EA5B	13EE13	GFX	Y	"(C2) PC, NPC and Enemy Graphics"	2007.06.28
+13EE14	13EEAF	GFX	Y	"(C3) PC, NPC and Enemy Graphics"	2007.06.28
+13EEB0	13F049	GFX	Y	"(C4) PC, NPC and Enemy Graphics"	2007.06.28
+13F04A	13F0AB	GFX	Y	"(C6) PC, NPC and Enemy Graphics"	2007.06.28
+13F0AC	13F19C	GFX	Y	"(C7) PC, NPC and Enemy Graphics"	2007.06.28
+13F19D	13F2A6	GFX	Y	"(C8) PC, NPC and Enemy Graphics"	2007.06.28
+13F2A7	13F3CB	GFX	Y	"(C9) PC, NPC and Enemy Graphics"	2007.06.28
+13F3CC	13F5BC	GFX	Y	"(CA) PC, NPC and Enemy Graphics"	2007.06.28
+13F5BD	13F638	GFX	Y	"(CC) PC, NPC and Enemy Graphics"	2007.06.28
+13F639	13F670	GFX	Y	"(D7) PC, NPC and Enemy Graphics"	2007.06.28
+13F671	13F70A	GFX	Y	"(DA) PC, NPC and Enemy Graphics"	2007.06.28
+13F70B	13F7A6	GFX	Y	"(DD) PC, NPC and Enemy Graphics"	2007.06.28
+13F7A7	13F995	GFX	Y	"(DE) PC, NPC and Enemy Graphics"	2007.06.28
+13F996	13FB9D	GFX	Y	"(D2) PC, NPC and Enemy Graphics"	2007.06.28
+13FB9E	13FC55	GFX	Y	"(D4) PC, NPC and Enemy Graphics"	2007.06.28
+13FC56	13FDBA	GFX	Y	"(2F) PC, NPC and Enemy Graphics"	2007.06.28
+13FDBB	13FE36	GFX	Y	"(F0) PC, NPC and Enemy Graphics"	2007.06.28
+13FE37	13FEC8	GFX	Y	"(EF) PC, NPC and Enemy Graphics"	2007.06.28
+13FEC9	13FFD7	GFX	Y	"(F1) PC, NPC and Enemy Graphics"	2007.06.28
+13FFD8	13FFFF	---	N	UNUSED SPACE (40 bytes)	2007.06.28
+140000	147C3F	GFX	N	"(01) PC, NPC and Enemy Graphics - Marle"	2007.06.28
+147C40	14FAFF	GFX	N	"(03) PC, NPC and Enemy Graphics - Robo, R series"	2007.06.28
+14FB00	14FCFA	GFX	Y	"(B3) PC, NPC and Enemy Graphics"	2007.06.28
+14FCFB	14FDAF	GFX	Y	"(B4) PC, NPC and Enemy Graphics"	2007.06.28
+14FDB0	14FF72	GFX	Y	"(BB) PC, NPC and Enemy Graphics"	2007.06.28
+14FF73	14FFFF	---	N	UNUSED SPACE (173 bytes)	2007.06.28
+150000	158BFF	GFX	N	"(05) PC, NPC and Enemy Graphics - Ayla"	2007.06.28
+158C00	15A03F	GFX	Y	"(9B) PC, NPC and Enemy Graphics"	2007.06.28
+15A040	15B298	GFX	Y	"(A4) PC, NPC and Enemy Graphics"	2007.06.28
+15B299	15E177	GFX	Y	"(A5) PC, NPC and Enemy Graphics"	2007.06.28
+15E178	15E1B4	GFX	Y	"(A7) PC, NPC and Enemy Graphics"	2007.06.28
+15E1B5	15F8F6	GFX	Y	"(59) PC, NPC and Enemy Graphics"	2007.06.28
+15F8F7	15FFF9	GFX	Y	"(69) PC, NPC and Enemy Graphics"	2007.06.28
+15FFFA	15FFFF	---	N	UNUSED SPACE (6 bytes)	2007.06.28
+160000	1614EE	GFX	Y	"(5A) PC, NPC and Enemy Graphics"	2007.06.28
+1614EF	152961	GFX	Y	"(5E) PC, NPC and Enemy Graphics"	2007.06.28
+162962	1645F2	GFX	Y	"(72) PC, NPC and Enemy Graphics"	2007.06.28
+1645F3	164CB9	GFX	Y	"(51) PC, NPC and Enemy Graphics"	2007.06.28
+164CBA	16601D	GFX	Y	"(61) PC, NPC and Enemy Graphics"	2007.06.28
+16601E	166A11	GFX	Y	"(62) PC, NPC and Enemy Graphics"	2007.06.28
+166A12	167FB5	GFX	Y	"(63) PC, NPC and Enemy Graphics"	2007.06.28
+167FB6	168BA2	GFX	Y	"(64) PC, NPC and Enemy Graphics"	2007.06.28
+168BA3	169789	GFX	Y	"(65) PC, NPC and Enemy Graphics"	2007.06.28
+16978A	16A28C	GFX	Y	"(66) PC, NPC and Enemy Graphics"	2007.06.28
+16A28D	16A939	GFX	Y	"(6A) PC, NPC and Enemy Graphics"	2007.06.28
+16A93A	16B7D8	GFX	Y	"(6C) PC, NPC and Enemy Graphics"	2007.06.28
+16B7D9	16C77D	GFX	Y	"(AD) PC, NPC and Enemy Graphics"	2007.06.28
+16C77E	16EE09	GFX	Y	"(57) PC, NPC and Enemy Graphics"	2007.06.28
+16EE0A	16F3DD	GFX	Y	"(68) PC, NPC and Enemy Graphics"	2007.06.28
+16F3DE	16F9F7	GFX	Y	"(5D) PC, NPC and Enemy Graphics"	2007.06.28
+16F9F8	16FFFF	---	N	UNUSED SPACE (1544 bytes)	2007.06.28
+170000	170500	GFX	Y	"(67) PC, NPC and Enemy Graphics"	2007.06.28
+170501	170D17	GFX	Y	"(6E) PC, NPC and Enemy Graphics"	2007.06.28
+170D18	172AD7	GFX	Y	"(6F) PC, NPC and Enemy Graphics"	2007.06.28
+172AD8	1734F5	GFX	Y	"(70) PC, NPC and Enemy Graphics"	2007.06.28
+1734F6	174EEE	GFX	Y	"(71) PC, NPC and Enemy Graphics"	2007.06.28
+174EEF	175410	GFX	Y	"(60) PC, NPC and Enemy Graphics"	2007.06.28
+175411	1759BB	GFX	Y	"(5F) PC, NPC and Enemy Graphics"	2007.06.28
+1759BC	177EFF	GFX	Y	"(73) PC, NPC and Enemy Graphics"	2007.06.28
+177F00	178813	GFX	Y	"(5B) PC, NPC and Enemy Graphics"	2007.06.28
+178814	17934E	GFX	Y	"(5C) PC, NPC and Enemy Graphics"	2007.06.28
+17934F	179E72	GFX	Y	"(6B) PC, NPC and Enemy Graphics"	2007.06.28
+179E73	17BBB5	GFX	Y	"(53) PC, NPC and Enemy Graphics"	2007.06.28
+17BBB6	17BD32	GFX	Y	"(CD) PC, NPC and Enemy Graphics"	2007.06.28
+17BD33	17C92F	GFX	Y	"(CE) PC, NPC and Enemy Graphics"	2007.06.28
+17C930	17D52C	GFX	Y	"(CF) PC, NPC and Enemy Graphics"	2007.06.28
+17D52D	17E896	GFX	Y	"(6D) PC, NPC and Enemy Graphics"	2007.06.28
+17E897	17FEED	GFX	Y	"(4E) PC, NPC and Enemy Graphics"	2007.06.28
+17FEEE	17FFFF	---	N	UNUSED SPACE (274 bytes)	2007.06.28
+180000	181807	GFX	Y	"(56) PC, NPC and Enemy Graphics"	2007.06.28
+181808	183485	GFX	Y	"(58) PC, NPC and Enemy Graphics"	2007.06.28
+183486	184147	GFX	Y	"(4F) PC, NPC and Enemy Graphics"	2007.06.28
+184148	186E82	GFX	Y	"(50) PC, NPC and Enemy Graphics"	2007.06.28
+186E83	188BD2	GFX	Y	"(52) PC, NPC and Enemy Graphics"	2007.06.28
+188BD3	18A951	GFX	Y	"(54) PC, NPC and Enemy Graphics"	2007.06.28
+18A952	18B80E	GFX	Y	"(55) PC, NPC and Enemy Graphics"	2007.06.28
+18B80F	18C2E9	GFX	Y	"(F2) PC, NPC and Enemy Graphics"	2007.06.28
+18C2EA	18C628	GFX	Y	"(F3) PC, NPC and Enemy Graphics"	2007.06.28
+18C629	18C895	GFX	Y	"(F4) PC, NPC and Enemy Graphics"	2007.06.28
+18C896	18CB1C	GFX	Y	"(F5) PC, NPC and Enemy Graphics"	2007.06.28
+18CB1D	18CDDB	GFX	Y	"(F6) PC, NPC and Enemy Graphics"	2007.06.28
+18CDDC	18CF67	GFX	Y	"(F7) PC, NPC and Enemy Graphics"	2007.06.28
+18CF68	18CFFF	---	N	UNUSED SPACE (152 bytes)	2007.06.28
+18D000	18DD58	EVENT	Y	(000) Location Event Data - Guardia Throneroom	2007.06.28
+18DD59	18E039	EVENT	Y	(001) Location Event Data - Bangor Dome	2007.06.28
+18E03A	18E089	EVENT	Y	(002) Location Event Data	2007.06.28
+18E08A	18E2FB	EVENT	Y	(003) Location Event Data	2007.06.28
+18E2FC	18E8EF	EVENT	Y	(004) Location Event Data	2007.06.28
+18E8F0	18EA7C	EVENT	Y	(005) Location Event Data	2007.06.28
+18EA7D	18EB85	EVENT	Y	(006) Location Event Data	2007.06.28
+18EB86	18EFE8	EVENT	Y	(007) Location Event Data	2007.06.28
+18EFE9	18EFFF	---	N	UNUSED SPACE (23 bytes)	2007.06.28
+18F000	18F0A1	PTR	N	"Pointers to Dialogue (81 strings, $51)"	2007.06.28
+18F0A2	18FFAB	TXT	N	Dialogue	2007.06.28
+18FFAC	18FFFF	---	N	UNUSED SPACE (84 bytes)	2007.06.28
+190000	190726	GFX	Y	"(07) PC, NPC and Enemy Graphics"	2007.06.28
+190727	190DE5	GFX	Y	"(08) PC, NPC and Enemy Graphics"	2007.06.28
+190DE6	191330	GFX	Y	"(09) PC, NPC and Enemy Graphics"	2007.06.28
+191331	19181D	GFX	Y	"(0A) PC, NPC and Enemy Graphics"	2007.06.28
+19181E	191DE1	GFX	Y	"(0B) PC, NPC and Enemy Graphics"	2007.06.28
+191DE2	192391	GFX	Y	"(0C) PC, NPC and Enemy Graphics"	2007.06.28
+192392	192979	GFX	Y	"(0D) PC, NPC and Enemy Graphics"	2007.06.28
+19297A	1930E6	GFX	Y	"(0E) PC, NPC and Enemy Graphics"	2007.06.28
+1930E7	1936B0	GFX	Y	"(0F) PC, NPC and Enemy Graphics"	2007.06.28
+1936B1	193D13	GFX	Y	"(10) PC, NPC and Enemy Graphics"	2007.06.28
+193D14	194384	GFX	Y	"(11) PC, NPC and Enemy Graphics"	2007.06.28
+194385	194A57	GFX	Y	"(12) PC, NPC and Enemy Graphics"	2007.06.28
+194A58	1951FF	GFX	Y	"(13) PC, NPC and Enemy Graphics"	2007.06.28
+195200	195A9B	GFX	Y	"(7D) PC, NPC and Enemy Graphics"	2007.06.28
+195A9C	1961D2	GFX	Y	"(7E) PC, NPC and Enemy Graphics"	2007.06.28
+1961D3	196921	GFX	Y	"(8A) PC, NPC and Enemy Graphics"	2007.06.28
+196922	196D62	GFX	Y	"(14) PC, NPC and Enemy Graphics"	2007.06.28
+196D63	197161	GFX	Y	"(15) PC, NPC and Enemy Graphics"	2007.06.28
+197162	197512	GFX	Y	"(16) PC, NPC and Enemy Graphics"	2007.06.28
+197513	197946	GFX	Y	"(17) PC, NPC and Enemy Graphics"	2007.06.28
+197947	198207	GFX	Y	"(18) PC, NPC and Enemy Graphics"	2007.06.28
+198208	198B62	GFX	Y	"(19) PC, NPC and Enemy Graphics"	2007.06.28
+198B63	198DE2	GFX	Y	"(E6) PC, NPC and Enemy Graphics"	2007.06.28
+198DE3	1999DE	GFX	Y	"(1B) PC, NPC and Enemy Graphics"	2007.06.28
+1999DF	19A29F	GFX	Y	"(1C) PC, NPC and Enemy Graphics"	2007.06.28
+19A2A0	19B007	GFX	Y	"(1D) PC, NPC and Enemy Graphics"	2007.06.28
+19B008	19B88D	GFX	Y	"(1E) PC, NPC and Enemy Graphics"	2007.06.28
+19B88E	19C114	GFX	Y	"(27) PC, NPC and Enemy Graphics"	2007.06.28
+19C115	19C7C9	GFX	Y	"(7F) PC, NPC and Enemy Graphics"	2007.06.28
+19C7CA	19D2BB	GFX	Y	"(23) PC, NPC and Enemy Graphics"	2007.06.28
+19D2BC	19DB65	GFX	Y	"(24) PC, NPC and Enemy Graphics"	2007.06.28
+19DB66	19E2CD	GFX	Y	"(1A) PC, NPC and Enemy Graphics"	2007.06.28
+19E2CE	19EC5C	GFX	Y	"(26) PC, NPC and Enemy Graphics"	2007.06.28
+19EC5D	19FC5A	GFX	Y	"(EE) PC, NPC and Enemy Graphics"	2007.06.28
+19FC5B	19FFFF	---	N	UNUSED SPACE (933 bytes)	2007.06.28
+1A0000	1A0BB8	GFX	Y	"(21) PC, NPC and Enemy Graphics"	2007.06.28
+1A0BB9	1A158C	GFX	Y	"(20) PC, NPC and Enemy Graphics"	2007.06.28
+1A158D	1A1837	GFX	Y	"(2B) PC, NPC and Enemy Graphics"	2007.06.28
+1A1838	1A1921	GFX	Y	"(4D) PC, NPC and Enemy Graphics"	2007.06.28
+1A1922	1A1988	GFX	Y	"(74) PC, NPC and Enemy Graphics"	2007.06.28
+1A1989	1A1C15	GFX	Y	"(75) PC, NPC and Enemy Graphics"	2007.06.28
+1A1C16	1A1CA4	GFX	Y	"(76) PC, NPC and Enemy Graphics"	2007.06.28
+1A1CA5	1A1D5C	GFX	Y	"(77) PC, NPC and Enemy Graphics"	2007.06.28
+1A1D5D	1A21B3	GFX	Y	"(78) PC, NPC and Enemy Graphics"	2007.06.28
+1A21B4	1A2337	GFX	Y	"(79) PC, NPC and Enemy Graphics"	2007.06.28
+1A2338	1A23EC	GFX	Y	"(7A) PC, NPC and Enemy Graphics"	2007.06.28
+1A23ED	1A24A4	GFX	Y	"(30) PC, NPC and Enemy Graphics"	2007.06.28
+1A24A5	1A24E8	GFX	Y	"(31) PC, NPC and Enemy Graphics"	2007.06.28
+1A24E9	1A2603	GFX	Y	"(32) PC, NPC and Enemy Graphics"	2007.06.28
+1A2604	1A2670	GFX	Y	"(33) PC, NPC and Enemy Graphics"	2007.06.28
+1A2671	1A27F9	GFX	Y	"(34) PC, NPC and Enemy Graphics"	2007.06.28
+1A27FA	1A2AD1	GFX	Y	"(35) PC, NPC and Enemy Graphics"	2007.06.28
+1A2AD2	1A2B4A	GFX	Y	"(36) PC, NPC and Enemy Graphics"	2007.06.28
+1A2B4B	1A2C91	GFX	Y	"(37) PC, NPC and Enemy Graphics"	2007.06.28
+1A2C92	1A2D63	GFX	Y	"(38) PC, NPC and Enemy Graphics"	2007.06.28
+1A2D64	1A2F72	GFX	Y	"(39) PC, NPC and Enemy Graphics"	2007.06.28
+1A2F73	1A3207	GFX	Y	"(E4) PC, NPC and Enemy Graphics"	2007.06.28
+1A3208	1A350A	GFX	Y	"(3A) PC, NPC and Enemy Graphics"	2007.06.28
+1A350B	1A35D1	GFX	Y	"(3B) PC, NPC and Enemy Graphics"	2007.06.28
+1A35D2	1A39C3	GFX	Y	"(3C) PC, NPC and Enemy Graphics"	2007.06.28
+1A39C4	1A3C81	GFX	Y	"(3D) PC, NPC and Enemy Graphics"	2007.06.28
+1A3C82	1A3D50	GFX	Y	"(3E) PC, NPC and Enemy Graphics"	2007.06.28
+1A3D51	1A3DF7	GFX	Y	"(3F) PC, NPC and Enemy Graphics"	2007.06.28
+1A3DF8	1A3E2A	GFX	Y	"(40) PC, NPC and Enemy Graphics"	2007.06.28
+1A3E2B	1A3EB1	GFX	Y	"(41) PC, NPC and Enemy Graphics"	2007.06.28
+1A3EB2	1A3F33	GFX	Y	"(42) PC, NPC and Enemy Graphics"	2007.06.28
+1A3F34	1A3F79	GFX	Y	"(43) PC, NPC and Enemy Graphics"	2007.06.28
+1A3F7A	1A3FD2	GFX	Y	"(44) PC, NPC and Enemy Graphics"	2007.06.28
+1A3FD3	1A405F	GFX	Y	"(45) PC, NPC and Enemy Graphics"	2007.06.28
+1A4060	1A40ED	GFX	Y	"(46) PC, NPC and Enemy Graphics"	2007.06.28
+1A40EE	1A4174	GFX	Y	"(47) PC, NPC and Enemy Graphics"	2007.06.28
+1A4175	1A41D8	GFX	Y	"(48) PC, NPC and Enemy Graphics"	2007.06.28
+1A41D9	1A42C1	GFX	Y	"(49) PC, NPC and Enemy Graphics"	2007.06.28
+1A42C2	1A434F	GFX	Y	"(4A) PC, NPC and Enemy Graphics"	2007.06.28
+1A4350	1A43D0	GFX	Y	"(4B) PC, NPC and Enemy Graphics"	2007.06.28
+1A43D1	1A4452	GFX	Y	"(4C) PC, NPC and Enemy Graphics"	2007.06.28
+1A4453	1A47F9	GFX	Y	"(2C) PC, NPC and Enemy Graphics"	2007.06.28
+1A47FA	1A4AED	GFX	Y	"(2D) PC, NPC and Enemy Graphics"	2007.06.28
+1A4AEE	1A50CF	GFX	Y	"(1F) PC, NPC and Enemy Graphics"	2007.06.28
+1A50D0	1A58A3	GFX	Y	"(80) PC, NPC and Enemy Graphics"	2007.06.28
+1A58A4	1A617F	GFX	Y	"(28) PC, NPC and Enemy Graphics"	2007.06.28
+1A6180	1A66C3	GFX	Y	"(29) PC, NPC and Enemy Graphics"	2007.06.28
+1A66C4	1A68A0	GFX	Y	"(81) PC, NPC and Enemy Graphics"	2007.06.28
+1A68A1	1A6932	GFX	Y	"(2E) PC, NPC and Enemy Graphics"	2007.06.28
+1A6933	1A6DD6	GFX	Y	"(2A) PC, NPC and Enemy Graphics"	2007.06.28
+1A6DD7	1A7654	GFX	Y	"(82) PC, NPC and Enemy Graphics"	2007.06.28
+1A7655	1A7D2E	GFX	Y	"(83) PC, NPC and Enemy Graphics"	2007.06.28
+1A7D2F	1A8063	GFX	Y	"(84) PC, NPC and Enemy Graphics"	2007.06.28
+1A8064	1A8455	GFX	Y	"(86) PC, NPC and Enemy Graphics"	2007.06.28
+1A8456	1A8A9F	GFX	Y	"(88) PC, NPC and Enemy Graphics"	2007.06.28
+1A8AA0	1A9255	GFX	Y	"(87) PC, NPC and Enemy Graphics"	2007.06.28
+1A9256	1AA107	GFX	Y	"(25) PC, NPC and Enemy Graphics - Johnny"	2007.06.28
+1AA108	1AA5D2	GFX	Y	"(89) PC, NPC and Enemy Graphics"	2007.06.28
+1AA5D3	1AA97E	GFX	Y	"(93) PC, NPC and Enemy Graphics"	2007.06.28
+1AA97F	1ABA14	GFX	Y	"(94) PC, NPC and Enemy Graphics"	2007.06.28
+1ABA15	1ABAAC	GFX	Y	"(95) PC, NPC and Enemy Graphics"	2007.06.28
+1ABAAD	1ABE52	GFX	Y	"(96) PC, NPC and Enemy Graphics"	2007.06.28
+1ABE53	1ABF4F	GFX	Y	"(97) PC, NPC and Enemy Graphics"	2007.06.28
+1ABF50	1ABFF0	GFX	Y	"(98) PC, NPC and Enemy Graphics"	2007.06.28
+1ABFF1	1AC1BD	GFX	Y	"(9D) PC, NPC and Enemy Graphics"	2007.06.28
+1AC1BE	1AC266	GFX	Y	"(99) PC, NPC and Enemy Graphics"	2007.06.28
+1AC267	1AC322	GFX	Y	"(9C) PC, NPC and Enemy Graphics"	2007.06.28
+1AC323	1ACF28	GFX	Y	"(9E) PC, NPC and Enemy Graphics"	2007.06.28
+1ACF29	1AD037	GFX	Y	"(9F) PC, NPC and Enemy Graphics"	2007.06.28
+1AD038	1AD0C2	GFX	Y	"(A0) PC, NPC and Enemy Graphics"	2007.06.28
+1AD0C3	1AD28B	GFX	Y	"(A8) PC, NPC and Enemy Graphics"	2007.06.28
+1AD28C	1AD2B2	GFX	Y	"(AE) PC, NPC and Enemy Graphics"	2007.06.28
+1AD2B3	1AD36F	GFX	Y	"(A9) PC, NPC and Enemy Graphics"	2007.06.28
+1AD370	1AD6DD	GFX	Y	"(AF) PC, NPC and Enemy Graphics"	2007.06.28
+1AD6DE	1AD806	GFX	Y	"(B2) PC, NPC and Enemy Graphics"	2007.06.28
+1AD807	1AD859	GFX	Y	"(BA) PC, NPC and Enemy Graphics"	2007.06.28
+1AD85A	1AD8A6	GFX	Y	"(BC) PC, NPC and Enemy Graphics"	2007.06.28
+1AD8A7	1ADC27	GFX	Y	"(D3) PC, NPC and Enemy Graphics"	2007.06.28
+1ADC28	1AE04D	GFX	Y	"(E2) PC, NPC and Enemy Graphics"	2007.06.28
+1AE04E	1AE532	GFX	Y	"(A3) PC, NPC and Enemy Graphics"	2007.06.28
+1AE533	1AE877	GFX	Y	"(E0) PC, NPC and Enemy Graphics"	2007.06.28
+1AE878	1AF75A	GFX	Y	"(E1) PC, NPC and Enemy Graphics"	2007.06.28
+1AF75B	1AF7AA	GFX	Y	"(E7) PC, NPC and Enemy Graphics"	2007.06.28
+1AF7AB	1AF847	GFX	Y	"(E8) PC, NPC and Enemy Graphics"	2007.06.28
+1AF848	1AFA68	GFX	Y	"(EA) PC, NPC and Enemy Graphics"	2007.06.28
+1AFA69	1AFC28	GFX	Y	"(ED) PC, NPC and Enemy Graphics"	2007.06.28
+1AFC29	1AFFFF	---	N	UNUSED SPACE (983 bytes)	2007.06.28
+1B0000	1B00D0	EVENT	Y	(017) Location Event Data	2007.06.28
+1B00D1	1B00F3	EVENT	Y	(018) Location Event Data	2007.06.28
+1B00F4	1B01B1	EVENT	Y	(019) Location Event Data	2007.06.28
+1B01B2	1B05D2	EVENT	Y	(01A) Location Event Data	2007.06.28
+1B05D3	1B0C67	EVENT	Y	(01B) Location Event Data	2007.06.28
+1B0C68	1B1563	EVENT	Y	(01C) Location Event Data	2007.06.28
+1B1564	1B165D	EVENT	Y	(01D) Location Event Data	2007.06.28
+1B165E	1B184F	EVENT	Y	(01E) Location Event Data	2007.06.28
+1B1850	1B1EF1	EVENT	Y	(01F) Location Event Data	2007.06.28
+1B1EF2	1B2191	EVENT	Y	(020) Location Event Data	2007.06.28
+1B2192	1B2490	EVENT	Y	(021) Location Event Data	2007.06.28
+1B2491	1B26EA	EVENT	Y	(022) Location Event Data	2007.06.28
+1B26EB	1B295D	EVENT	Y	(023) Location Event Data	2007.06.28
+1B295E	1B2A1C	EVENT	Y	(024) Location Event Data	2007.06.28
+1B2A1D	1B2EFF	EVENT	Y	(025) Location Event Data	2007.06.28
+1B2F00	1B31DD	EVENT	Y	(026) Location Event Data	2007.06.28
+1B31DE	1B3460	EVENT	Y	(027) Location Event Data	2007.06.28
+1B3461	1B3697	EVENT	Y	(028) Location Event Data	2007.06.28
+1B3698	1B3E2C	EVENT	Y	(029) Location Event Data	2007.06.28
+1B3E2D	1B426E	EVENT	Y	(02A) Location Event Data	2007.06.28
+1B426F	1B435E	EVENT	Y	(02B) Location Event Data	2007.06.28
+1B435F	1B4465	EVENT	Y	(02C) Location Event Data	2007.06.28
+1B4466	1B44EB	EVENT	Y	(02D) Location Event Data	2007.06.28
+1B44EC	1B45EE	EVENT	Y	(02E) Location Event Data	2007.06.28
+1B45EF	1B47B9	EVENT	Y	(02F) Location Event Data	2007.06.28
+1B47BA	1B4931	EVENT	Y	(030) Location Event Data	2007.06.28
+1B4932	1B49FD	EVENT	Y	(031) Location Event Data	2007.06.28
+1B49FE	1B4BA8	EVENT	Y	(032) Location Event Data	2007.06.28
+1B4BA9	1B4F50	EVENT	Y	(033) Location Event Data	2007.06.28
+1B4F51	1B510E	EVENT	Y	(034) Location Event Data	2007.06.28
+1B510F	1B523A	EVENT	Y	(035) Location Event Data	2007.06.28
+1B523B	1B53E4	EVENT	Y	(036) Location Event Data	2007.06.28
+1B53E5	1B5495	EVENT	Y	(037) Location Event Data	2007.06.28
+1B5496	1B562B	EVENT	Y	(038) Location Event Data	2007.06.28
+1B562C	1B5A7B	EVENT	Y	(039) Location Event Data	2007.06.28
+1B5A7C	1B5DFD	EVENT	Y	(03A) Location Event Data	2007.06.28
+1B5DFE	1B5EB5	EVENT	Y	(03B) Location Event Data	2007.06.28
+1B5EB6	1B601F	EVENT	Y	(03C) Location Event Data	2007.06.28
+1B6020	1B6107	EVENT	Y	(03D) Location Event Data	2007.06.28
+1B6108	1B63B7	EVENT	Y	(03E) Location Event Data	2007.06.28
+1B63B8	1B646F	EVENT	Y	(03F) Location Event Data	2007.06.28
+1B6470	1B6527	EVENT	Y	(040) Location Event Data	2007.06.28
+1B6528	1B6692	EVENT	Y	(041) Location Event Data	2007.06.28
+1B6693	1B67FD	EVENT	Y	(042) Location Event Data	2007.06.28
+1B67FE	1B6A8C	EVENT	Y	(043) Location Event Data	2007.06.28
+1B6A8D	1B6CF3	EVENT	Y	(044) Location Event Data	2007.06.28
+1B6CF4	1B6E19	EVENT	Y	(045:046) Location Event Data	2007.06.28
+1B6E1A	1B75F2	EVENT	Y	(047) Location Event Data	2007.06.28
+1B75F3	1B7794	EVENT	Y	(048) Location Event Data	2007.06.28
+1B7795	1B788A	EVENT	Y	(049) Location Event Data	2007.06.28
+1B788B	1B7FEC	EVENT	Y	(04A) Location Event Data	2007.06.28
+1B7FED	1B7FED	JUNK	N	(04B:051) Location Event Data - NO DATA	2007.06.28
+1B7FEE	1BFFFF	---	N	UNUSED SPACE (32786 bytes)	2007.06.28
+1C0000	1C27AF	SASM	N	(06) Sprite Assembly - Magus	2007.06.28
+1C27B0	1C4E6F	SASM	N	(00) Sprite Assembly - Crono	2007.06.28
+1C4E70	1C748F	SASM	N	(02) Sprite Assembly - Lucca	2007.06.28
+1C7490	1C9AD7	SASM	N	(04) Sprite Assembly - Frog	2007.06.28
+1C9AD8	1CC07F	SASM	N	(01) Sprite Assembly - Marle	2007.06.28
+1CC080	1CDF97	SASM	N	"(03) Sprite Assembly - Robo, R Series"	2007.06.28
+1CDF98	1CFFFF	---	N	UNUSED SPACE (8296 bytes)	2007.06.28
+1D0000	1D040F	SASM	N	(21) Sprite Assembly	2007.06.28
+1D0410	1D0757	SASM	N	(22) Sprite Assembly	2007.06.28
+1D0758	1D0FC7	SASM	N	(23) Sprite Assembly	2007.06.28
+1D0FC8	1D121F	SASM	N	(24) Sprite Assembly	2007.06.28
+1D1220	1D1517	SASM	N	(2C) Sprite Assembly	2007.06.28
+1D1518	1D17BF	SASM	N	(2E) Sprite Assembly	2007.06.28
+1D17C0	1D1F8F	SASM	N	(2D) Sprite Assembly	2007.06.28
+1D1F90	1D23EF	SASM	N	(2F) Sprite Assembly	2007.06.28
+1D23F0	1D2557	SASM	N	(30) Sprite Assembly	2007.06.28
+1D2558	1D29DF	SASM	N	(31) Sprite Assembly	2007.06.28
+1D29E0	1D2ACF	SASM	N	(33) Sprite Assembly	2007.06.28
+1D2AD0	1D2DEF	SASM	N	(34) Sprite Assembly	2007.06.28
+1D2DF0	1D3457	SASM	N	(35) Sprite Assembly	2007.06.28
+1D3458	1D360F	SASM	N	(36) Sprite Assembly	2007.06.28
+1D3610	1D3777	SASM	N	(37) Sprite Assembly	2007.06.28
+1D3778	1D3B5F	SASM	N	(38) Sprite Assembly	2007.06.28
+1D3B60	1D3F6F	SASM	N	(39) Sprite Assembly	2007.06.28
+1D3F70	1D432F	SASM	N	(3A) Sprite Assembly	2007.06.28
+1D4330	1D4627	SASM	N	(3B) Sprite Assembly	2007.06.28
+1D4628	1D4A0F	SASM	N	(3C) Sprite Assembly	2007.06.28
+1D4A10	1D4C3F	SASM	N	(3D) Sprite Assembly	2007.06.28
+1D4C40	1D4FAF	SASM	N	(3E) Sprite Assembly	2007.06.28
+1D4FB0	1D53BF	SASM	N	(3F) Sprite Assembly	2007.06.28
+1D53C0	1D55C7	SASM	N	(40) Sprite Assembly	2007.06.28
+1D55C8	1D5ED7	SASM	N	(41) Sprite Assembly	2007.06.28
+1D5ED8	1D6017	SASM	N	(42) Sprite Assembly	2007.06.28
+1D6018	1D612F	SASM	N	(43) Sprite Assembly	2007.06.28
+1D6130	1D6337	SASM	N	(44) Sprite Assembly	2007.06.28
+1D6338	1D66CF	SASM	N	(45) Sprite Assembly	2007.06.28
+1D66D0	1D6ADF	SASM	N	(46) Sprite Assembly	2007.06.28
+1D6AE0	1D6E9F	SASM	N	(47) Sprite Assembly	2007.06.28
+1D6EA0	1D748F	SASM	N	(48) Sprite Assembly	2007.06.28
+1D7490	1D784F	SASM	N	(49) Sprite Assembly	2007.06.28
+1D7850	1D7C37	SASM	N	(4A) Sprite Assembly	2007.06.28
+1D7C38	1D7E67	SASM	N	(4B) Sprite Assembly	2007.06.28
+1D7E68	1D84CF	SASM	N	(4C) Sprite Assembly	2007.06.28
+1D84D0	1D860F	SASM	N	(4D) Sprite Assembly	2007.06.28
+1D8610	1D874F	SASM	N	(4E) Sprite Assembly	2007.06.28
+1D8750	1D888F	SASM	N	(4F) Sprite Assembly	2007.06.28
+1D8890	1D90FF	SASM	N	(50) Sprite Assembly	2007.06.28
+1D9100	1D9677	SASM	N	(51) Sprite Assembly	2007.06.28
+1D9678	1D9A87	SASM	N	(52) Sprite Assembly	2007.06.28
+1D9A88	1D9E97	SASM	N	(53) Sprite Assembly	2007.06.28
+1D9E98	1DA6B7	SASM	N	(54) Sprite Assembly	2007.06.28
+1DA6B8	1DAF27	SASM	N	(55) Sprite Assembly	2007.06.28
+1DAF28	1DB607	SASM	N	(56) Sprite Assembly	2007.06.28
+1DB608	1DB8FF	SASM	N	(07) Sprite Assembly	2007.06.28
+1DB900	1DBB7F	SASM	N	(08) Sprite Assembly	2007.06.28
+1DBB80	1DBDFF	SASM	N	(09) Sprite Assembly	2007.06.28
+1DBE00	1DC02F	SASM	N	(0A) Sprite Assembly	2007.06.28
+1DC030	1DC287	SASM	N	(0B) Sprite Assembly	2007.06.28
+1DC288	1DC61F	SASM	N	(0C) Sprite Assembly	2007.06.28
+1DC620	1DC9B7	SASM	N	(0D) Sprite Assembly	2007.06.28
+1DC9B8	1DCC5F	SASM	N	(79) Sprite Assembly	2007.06.28
+1DCC60	1DCFA7	SASM	N	(7A) Sprite Assembly	2007.06.28
+1DCFA8	1DD1FF	SASM	N	(0E) Sprite Assembly	2007.06.28
+1DD200	1DD24F	SASM	N	(DB) Sprite Assembly	2007.06.28
+1DD250	1DD597	SASM	N	(10) Sprite Assembly	2007.06.28
+1DD598	1DD867	SASM	N	(11) Sprite Assembly	2007.06.28
+1DD868	1DDAE7	SASM	N	(12) Sprite Assembly	2007.06.28
+1DDAE8	1DDEA7	SASM	N	(13) Sprite Assembly	2007.06.28
+1DDEA8	1DE14F	SASM	N	(14) Sprite Assembly	2007.06.28
+1DE150	1DE537	SASM	N	(15) Sprite Assembly	2007.06.28
+1DE538	1DE8CF	SASM	N	(16) Sprite Assembly	2007.06.28
+1DE8D0	1DEDA7	SASM	N	(18) Sprite Assembly	2007.06.28
+1DEDA8	1DF0EF	SASM	N	(19) Sprite Assembly	2007.06.28
+1DF0F0	1DF3BF	SASM	N	(0F) Sprite Assembly	2007.06.28
+1DF3C0	1DF40F	SASM	N	(CB) Sprite Assembly	2007.06.28
+1DF410	1DF617	SASM	N	(CC) Sprite Assembly	2007.06.28
+1DF618	1DF667	SASM	N	(CD) Sprite Assembly	2007.06.28
+1DF668	1DFA27	SASM	N	(D1) Sprite Assembly	2007.06.28
+1DFA28	1DFC07	SASM	N	(D2) Sprite Assembly	2007.06.28
+1DFC08	1DFD47	SASM	N	"(D3) Sprite Assembly - Boss Orb, Son of Sun"	2007.06.28
+1DFD48	1DFFFF	---	N	UNUSED SPACE (696 bytes)	2007.06.28
+1E0000	1E27D7	SASM	N	(05) Sprite Assembly - Ayla	2007.06.28
+1E27D8	1E2B47	SASM	N	(20) Sprite Assembly	2007.06.28
+1E2B48	1E2EDF	SASM	N	(1B) Sprite Assembly - Schala	2007.06.28
+1E2EE0	1E3137	SASM	N	(1C) Sprite Assembly	2007.06.28
+1E3138	1E3457	SASM	N	(1D) Sprite Assembly	2007.06.28
+1E3458	1E3637	SASM	N	(1E) Sprite Assembly	2007.06.28
+1E3638	1E3777	SASM	N	(1F) Sprite Assembly	2007.06.28
+1E3778	1E3817	SASM	N	(7B) Sprite Assembly	2007.06.28
+1E3818	1E388F	SASM	N	(57) Sprite Assembly	2007.06.28
+1E3890	1E3907	SASM	N	(58) Sprite Assembly	2007.06.28
+1E3908	1E39A7	SASM	N	(59) Sprite Assembly	2007.06.28
+1E39A8	1E2A1F	SASM	N	(5A) Sprite Assembly	2007.06.28
+1E3A20	1E3A97	SASM	N	(5B) Sprite Assembly	2007.06.28
+1E3A98	1E3B5F	SASM	N	(5C) Sprite Assembly	2007.06.28
+1E3B60	1E3BD7	SASM	N	(5D) Sprite Assembly	2007.06.28
+1E3BD8	1E3C27	SASM	N	(5E) Sprite Assembly	2007.06.28
+1E3C28	1E3C77	SASM	N	(5F) Sprite Assembly	2007.06.28
+1E3C78	1E3CC7	SASM	N	(60) Sprite Assembly	2007.06.28
+1E3CC8	1E3D8F	SASM	N	(61) Sprite Assembly	2007.06.28
+1E3D90	1E3E2F	SASM	N	(62) Sprite Assembly	2007.06.28
+1E3E30	1E3EA7	SASM	N	(63) Sprite Assembly	2007.06.28
+1E3EA8	1E3F1F	SASM	N	(AC) Sprite Assembly	2007.06.28
+1E3F20	1E3F97	SASM	N	(64) Sprite Assembly	2007.06.28
+1E3F98	1E400F	SASM	N	(65) Sprite Assembly	2007.06.28
+1E4010	1E40D7	SASM	N	(66) Sprite Assembly	2007.06.28
+1E40D8	1E414F	SASM	N	(67) Sprite Assembly	2007.06.28
+1E4150	1E41C7	SASM	N	(68) Sprite Assembly	2007.06.28
+1E41C8	1E423F	SASM	N	(69) Sprite Assembly	2007.06.28
+1E4240	1E4307	SASM	N	(6A) Sprite Assembly	2007.06.28
+1E4308	1E43F7	SASM	N	(6B) Sprite Assembly	2007.06.28
+1E43F8	1E4497	SASM	N	(6C) Sprite Assembly	2007.06.28
+1E4498	1E4627	SASM	N	(29) Sprite Assembly	2007.06.28
+1E4628	1E4677	SASM	N	(6E) Sprite Assembly	2007.06.28
+1E4678	1E47B7	SASM	N	(6F) Sprite Assembly	2007.06.28
+1E47B8	1E482F	SASM	N	(70) Sprite Assembly	2007.06.28
+1E4830	1E487F	SASM	N	(71) Sprite Assembly	2007.06.28
+1E4880	1E48CF	SASM	N	(72) Sprite Assembly	2007.06.28
+1E48D0	1E4947	SASM	N	(73) Sprite Assembly	2007.06.28
+1E4948	1E4A5F	SASM	N	(74) Sprite Assembly	2007.06.28
+1E4A60	1E4AFF	SASM	N	(75) Sprite Assembly	2007.06.28
+1E4B00	1E4DF7	SASM	N	(78) Sprite Assembly	2007.06.28
+1E4DF8	1E5077	SASM	N	(2A) Sprite Assembly	2007.06.28
+1E5078	1E54D7	SASM	N	(2B) Sprite Assembly	2007.06.28
+1E54D8	1E5B67	SASM	N	(27) Sprite Assembly	2007.06.28
+1E5B68	1E5D47	SASM	N	(28) Sprite Assembly	2007.06.28
+1E5D48	1E630F	SASM	N	(26) Sprite Assembly	2007.06.28
+1E6310	1E685F	SASM	N	(7C) Sprite Assembly	2007.06.28
+1E6860	1E70CF	SASM	N	(25) Sprite Assembly	2007.06.28
+1E70D0	1E711F	SASM	N	(6D) Sprite Assembly	2007.06.28
+1E7120	1E7417	SASM	N	(7D) Sprite Assembly	2007.06.28
+1E7418	1E7557	SASM	N	(7E) Sprite Assembly	2007.06.28
+1E7558	1E842F	SASM	N	(81) Sprite Assembly	2007.06.28
+1E8430	1E85BF	SASM	N	(83) Sprite Assembly	2007.06.28
+1E85C0	1E8817	SASM	N	(82) Sprite Assembly	2007.06.28
+1E8818	1E8BFF	SASM	N	(1A) Sprite Assembly	2007.06.28
+1E8C00	1E8D3F	SASM	N	(8E) Sprite Assembly	2007.06.28
+1E8D40	1E900F	SASM	N	(8F) Sprite Assembly	2007.06.28
+1E9010	1E90FF	SASM	N	(90) Sprite Assembly	2007.06.28
+1E9100	1E9177	SASM	N	(91) Sprite Assembly	2007.06.28
+1E9178	1E91C7	SASM	N	(92) Sprite Assembly	2007.06.28
+1E91C8	1E923F	SASM	N	(95) Sprite Assembly	2007.06.28
+1E9240	1E928F	SASM	N	(96) Sprite Assembly	2007.06.28
+1E9290	1E969F	SASM	N	(97) Sprite Assembly	2007.06.28
+1E96A0	1E987F	SASM	N	(98) Sprite Assembly	2007.06.28
+1E9880	1E9AD7	SASM	N	(A0) Sprite Assembly	2007.06.28
+1E9AD8	1E9C17	SASM	N	(A1) Sprite Assembly	2007.06.28
+1E9C18	1E9C8F	SASM	N	(A2) Sprite Assembly	2007.06.28
+1E9C90	1E9CDF	SASM	N	(A8) Sprite Assembly	2007.06.28
+1E9CE0	1E9DCF	SASM	N	(A9) Sprite Assembly	2007.06.28
+1E9DD0	1E9E1F	SASM	N	(AE) Sprite Assembly	2007.06.28
+1E9E20	1E9F5F	SASM	N	(AF) Sprite Assembly	2007.06.28
+1E9F60	1EA09F	SASM	N	(B0) Sprite Assembly	2007.06.28
+1EA0A0	1EA1DF	SASM	N	(B7) Sprite Assembly	2007.06.28
+1EA1E0	1EA3E7	SASM	N	(B8) Sprite Assembly	2007.06.28
+1EA3E8	1EA4D7	SASM	N	(B9) Sprite Assembly	2007.06.28
+1EA4D8	1EA527	SASM	N	(BA) Sprite Assembly	2007.06.28
+1EA528	1EA667	SASM	N	(BB) Sprite Assembly	2007.06.28
+1EA668	1EA987	SASM	N	(BC) Sprite Assembly	2007.06.28
+1EA988	1EAA27	SASM	N	(BD) Sprite Assembly	2007.06.28
+1EAA28	1EAB17	SASM	N	(BE) Sprite Assembly	2007.06.28
+1EAB18	1EAE5F	SASM	N	(BF) Sprite Assembly	2007.06.28
+1EAE60	1EAED7	SASM	N	(C0) Sprite Assembly	2007.06.28
+1EAED8	1EAF27	SASM	N	(C1) Sprite Assembly	2007.06.28
+1EAF28	1EAF77	SASM	N	(C2) Sprite Assembly	2007.06.28
+1EAF78	1EAFC7	SASM	N	(C3) Sprite Assembly	2007.06.28
+1EAFC8	1EB067	SASM	N	(C4) Sprite Assembly	2007.06.28
+1EB068	1EB0B7	SASM	N	(C5) Sprite Assembly	2007.06.28
+1EB0B8	1EB107	SASM	N	(D5) Sprite Assembly	2007.06.28
+1EB108	1EB21F	SASM	N	(D6) Sprite Assembly	2007.06.28
+1EB220	1EB35F	SASM	N	(D4) Sprite Assembly	2007.06.28
+1EB360	1EB3FF	SASM	N	(DA) Sprite Assembly	2007.06.28
+1EB400	1EB4EF	SASM	N	(DD) Sprite Assembly	2007.06.28
+1EB4F0	1EB99F	SASM	N	(DE) Sprite Assembly	2007.06.28
+1EB9A0	1EBA17	SASM	N	(E1) Sprite Assembly	2007.06.28
+1EBA18	1EBA67	SASM	N	(E2) Sprite Assembly	2007.06.28
+1EBA68	1EBDD7	SASM	N	(E3) Sprite Assembly	2007.06.28
+1EBDD8	1EBE4F	SASM	N	(E4) Sprite Assembly	2007.06.28
+1EBE50	1EBF3F	SASM	N	(E5) Sprite Assembly	2007.06.28
+1EBF40	1EBF8F	SASM	N	(E6) Sprite Assembly	2007.06.28
+1EBF90	1EBFFF	---	N	UNUSED SPACE (112 bytes)	2007.06.28
+1EC000	1EC162	EVENT	Y	(008:009) Location Event Data	2007.06.28
+1EC163	1EC28A	EVENT	Y	(00A) Location Event Data	2007.06.28
+1EC28B	1EC494	EVENT	Y	(00B) Location Event Data	2007.06.28
+1EC495	1EC6AA	EVENT	Y	(00C) Location Event Data	2007.06.28
+1EC6AB	1EC7B5	EVENT	Y	(00D) Location Event Data	2007.06.28
+1EC7B6	1EC8A7	EVENT	Y	(00E) Location Event Data	2007.06.28
+1EC8A8	1EC97B	EVENT	Y	(00F) Location Event Data	2007.06.28
+1EC97C	1ECA9B	EVENT	Y	(010) Location Event Data	2007.06.28
+1ECA9C	1ECBA5	EVENT	Y	(011) Location Event Data	2007.06.28
+1ECBA6	1ECCB4	EVENT	Y	(012) Location Event Data	2007.06.28
+1ECCB5	1ECF29	EVENT	Y	(013) Location Event Data	2007.06.28
+1ECF2A	1ECFE8	EVENT	Y	(014) Location Event Data	2007.06.28
+1ECFE9	1ECFFF	---	N	UNUSED SPACE (23 bytes)	2007.06.28
+1ED000	1ED09B	PTR	N	"Pointers to Dialogue (78 strings, $4E)"	2007.06.28
+1ED09C	1EDAF0	TXT	N	Dialogue	2007.06.28
+1EDAF1	1EDFFF	---	N	UNUSED SPACE (1295 bytes)	2007.06.28
+1EE000	1EE262	EVENT	Y	(015) Location Event Data	2007.06.28
+1EE263	1EE650	EVENT	Y	(016) Location Event Data	2007.06.28
+1EE651	1EE6FF	---	N	UNUSED SPACE (175 bytes)	2007.06.28
+1EE700	1EE74D	PTR	N	"Pointers to Dialogue (39 strings, $27)"	2007.06.28
+1EE74E	1EEDD2	TXT	N	Dialogue	2007.06.28
+1EEDD3	1EEDFF	---	N	UNUSED SPACE (45 bytes)	2007.06.28
+1EEE00	1EEF21	PTR	N	"Pointers to Dialogue (145 strings, $91)"	2007.06.28
+1EEF22	1EFFF8	TXT	N	Dialogue	2007.06.28
+1EFFF9	1EFFFF	---	N	UNUSED SPACE (7 bytes)	2007.06.28
+1F0000	1F2032	GFX	Y	"(7B) PC, NPC and Enemy Graphics"	2007.06.28
+1F2033	1F2922	GFX	Y	"(7C) PC, NPC and Enemy Graphics"	2007.06.28
+1F2923	1F4463	GFX	Y	"(85) PC, NPC and Enemy Graphics"	2007.06.28
+1F4464	1F6612	GFX	Y	"(8B) PC, NPC and Enemy Graphics"	2007.06.28
+1F6613	1F853A	GFX	Y	"(8C) PC, NPC and Enemy Graphics"	2007.06.28
+1F853B	1F9670	GFX	Y	"(8D) PC, NPC and Enemy Graphics"	2007.06.28
+1F9671	1FA7FF	GFX	Y	"(8E) PC, NPC and Enemy Graphics"	2007.06.28
+1FA800	1FBE58	GFX	Y	"(8F) PC, NPC and Enemy Graphics"	2007.06.28
+1FBE59	1FBFF5	GFX	Y	"(90) PC, NPC and Enemy Graphics"	2007.06.28
+1FBFF6	1FC2C9	GFX	Y	"(91) PC, NPC and Enemy Graphics"	2007.06.28
+1FC2CA	1FCE52	GFX	Y	"(92) PC, NPC and Enemy Graphics"	2007.06.28
+1FCE53	1FEA2C	GFX	Y	"(9A) PC, NPC and Enemy Graphics"	2007.06.28
+1FEA2D	1FF75C	GFX	Y	"(B6) PC, NPC and Enemy Graphics"	2007.06.28
+1FF75D	1FF912	GFX	Y	"(B0) PC, NPC and Enemy Graphics"	2007.06.28
+1FF913	1FFB30	GFX	Y	"(DF) PC, NPC and Enemy Graphics"	2007.06.28
+1FFB31	1FFF74	GFX	Y	"(B7) PC, NPC and Enemy Graphics"	2007.06.28
+1FFF75	1FFFFF	---	N	UNUSED SPACE (139 bytes)	2007.06.28
+200000	200EBC	GFX	Y	"(AA) PC, NPC and Enemy Graphics"	2007.06.28
+200EBD	201E2D	GFX	Y	"(AB) PC, NPC and Enemy Graphics"	2007.06.28
+201E2E	202187	GFX	Y	"(AC) PC, NPC and Enemy Graphics"	2007.06.28
+202188	202564	GFX	Y	"(A1) PC, NPC and Enemy Graphics"	2007.06.28
+202565	20332B	GFX	Y	"(A2) PC, NPC and Enemy Graphics"	2007.06.28
+20332C	2034E1	JUNK	Y	Duplicate 1FF75D-1FF912 (B0)	2007.06.28
+2034E2	203E6E	GFX	Y	"(B1) PC, NPC and Enemy Graphics"	2007.06.28
+203E6F	2060EC	GFX	Y	"(B5) PC, NPC and Enemy Graphics"	2007.06.28
+2060ED	20847D	GFX	Y	"(A6) PC, NPC and Enemy Graphics"	2007.06.28
+20847E	208D73	GFX	Y	"(B8) PC, NPC and Enemy Graphics"	2007.06.28
+208D74	20A3FC	GFX	Y	"(B9) PC, NPC and Enemy Graphics"	2007.06.28
+20A3FD	20CECB	GFX	Y	"(C0) PC, NPC and Enemy Graphics"	2007.06.28
+20CECC	20D084	GFX	Y	"(C5) PC, NPC and Enemy Graphics"	2007.06.28
+20D085	20F359	GFX	Y	"(CB) PC, NPC and Enemy Graphics"	2007.06.28
+20F35A	20FD92	GFX	Y	"(D8) PC, NPC and Enemy Graphics"	2007.06.28
+20FD93	20FF4B	JUNK	Y	Duplicate 20CECC-20D084 (C5)	2007.06.28
+20FF4C	20FFFF	---	N	UNUSED SPACE (180 bytes)	2007.06.28
+210000	2100A9	GFX	Y	"(E5) PC, NPC and Enemy Graphics"	2007.06.28
+2100AA	2125D7	GFX	Y	"(D0) PC, NPC and Enemy Graphics"	2007.06.28
+2125D8	214AF6	GFX	Y	"(D1) PC, NPC and Enemy Graphics"	2007.06.28
+214AF7	219318	GFX	Y	"(D6) PC, NPC and Enemy Graphics"	2007.06.28
+219319	219994	GFX	Y	"(C1) PC, NPC and Enemy Graphics"	2007.06.28
+219995	21B7AB	GFX	Y	"(22) PC, NPC and Enemy Graphics"	2007.06.28
+21B7AC	21BF3D	GFX	Y	"(D5) PC, NPC and Enemy Graphics"	2007.06.28
+21BF3E	21C12E	GFX	Y	"(D9) PC, NPC and Enemy Graphics"	2007.06.28
+21C12F	21C4D8	GFX	Y	"(DB) PC, NPC and Enemy Graphics"	2007.06.28
+21C4D9	21C711	GFX	Y	"(DC) PC, NPC and Enemy Graphics"	2007.06.28
+21C712	21D320	GFX	Y	"(E9) PC, NPC and Enemy Graphics"	2007.06.28
+21D321	21DDB1	GFX	Y	"(EB) PC, NPC and Enemy Graphics"	2007.06.28
+21DDB2	21DDFF	---	N	UNUSED SPACE (78 bytes)	2007.06.28
+21DE00	21DE6B	DATA	N	"Enemy special death data, 4 bytes each, 26 enemies"	2007.06.28
+21DE6C	21DE7F	---	N	UNUSED SPACE (20 bytes)	2007.06.28
+21DE80	21DF7F	DATA	N	"Enemy name in target window on/off, 1 byte each, $01 = off"	2007.06.28
+21DF80	21DFFF	---	N	UNUSED SPACE (128 bytes)	2007.06.28
+21E000	21F517	SASM	N	(D0) Sprite Assembly - Lavos Core	2007.06.28
+21F518	21FFFF	---	N	UNUSED SPACE (2792 bytes)	2007.06.28
+220000	220C1D	GFX	Y	(B5) Location Tiles	2007.06.28
+220C1E	2217E9	GFX	Y	(B6) Location Tiles	2007.06.28
+2217EA	222581	GFX	Y	(B7) Location Tiles	2007.06.28
+222582	223403	GFX	Y	(B8) Location Tiles	2007.06.28
+223404	224078	GFX	Y	(B9) Location Tiles	2007.06.28
+224079	224B98	GFX	Y	(BA) Location Tiles	2007.06.28
+224B99	225844	GFX	Y	(BB) Location Tiles	2007.06.28
+225845	2266E0	GFX	Y	(BC) Location Tiles	2007.06.28
+2266E1	2274B0	GFX	Y	(BD) Location Tiles	2007.06.28
+2274B1	2284DE	GFX	Y	(BE) Location Tiles	2007.06.28
+2284DF	2292C6	GFX	Y	(BF) Location Tiles	2007.06.28
+2292C7	22A1D9	GFX	Y	(C0) Location Tiles	2007.06.28
+22A1DA	22B003	GFX	Y	(C1) Location Tiles	2007.06.28
+22B004	22BDD8	GFX	Y	(C2) Location Tiles	2007.06.28
+22BDD9	22CB39	GFX	Y	(C3) Location Tiles	2007.06.28
+22CB3A	22D737	GFX	Y	(C4) Location Tiles	2007.06.28
+22D738	22E753	GFX	Y	(C5) Location Tiles	2007.06.28
+22E754	22F261	GFX	Y	(C6) Location Tiles	2007.06.28
+22F262	22FE45	GFX	Y	(C7) Location Tiles	2007.06.28
+22FE46	22FFFF	---	N	UNUSED SPACE (442 bytes)	2007.06.28
+230000	231067	SASM	N	(76) Sprite Assembly	2007.06.28
+231068	231247	SASM	N	(77) Sprite Assembly	2007.06.28
+231248	231BF7	SASM	N	(7F) Sprite Assembly	2007.06.28
+231BF8	232007	SASM	N	(85) Sprite Assembly	2007.06.28
+232008	232D27	SASM	N	(84) Sprite Assembly	2007.06.28
+232D28	233597	SASM	N	(86) Sprite Assembly	2007.06.28
+233598	2338B7	SASM	N	(87) Sprite Assembly	2007.06.28
+2338B8	233D67	SASM	N	(88) Sprite Assembly	2007.06.28
+233D68	2341C7	SASM	N	(89) Sprite Assembly	2007.06.28
+2341C8	234217	SASM	N	(8A) Sprite Assembly	2007.06.28
+234218	2342DF	SASM	N	(8B) Sprite Assembly	2007.06.28
+2342E0	23469F	SASM	N	(8C) Sprite Assembly	2007.06.28
+2346A0	234A5F	SASM	N	(8D) Sprite Assembly	2007.06.28
+234A60	23545F	SASM	N	(93) Sprite Assembly	2007.06.28
+235460	235DBF	SASM	N	(94) Sprite Assembly	2007.06.28
+235DC0	236387	SASM	N	(9C) Sprite Assembly	2007.06.28
+236388	236CE7	SASM	N	(9D) Sprite Assembly	2007.06.28
+236CE8	2387C7	SASM	N	(9E) Sprite Assembly	2007.06.28
+2387C8	238817	SASM	N	(9F) Sprite Assembly	2007.06.28
+238818	238CC7	SASM	N	(A3) Sprite Assembly	2007.06.28
+238CC8	239357	SASM	N	(A4) Sprite Assembly	2007.06.28
+239358	239447	SASM	N	(99) Sprite Assembly	2007.06.28
+239448	239A87	SASM	N	(9A) Sprite Assembly	2007.06.28
+239A88	239CB7	SASM	N	(9B) Sprite Assembly	2007.06.28
+239CB8	239D07	SASM	N	(AB) Sprite Assembly	2007.06.28
+239D08	239EE7	SASM	N	(AD) Sprite Assembly	2007.06.28
+239EE8	239F5F	SASM	N	(B1) Sprite Assembly	2007.06.28
+239F60	23A937	SASM	N	(B2) Sprite Assembly	2007.06.28
+23A938	23AE37	SASM	N	(B3) Sprite Assembly	2007.06.28
+23AE38	23AF77	SASM	N	(B4) Sprite Assembly	2007.06.28
+23AF78	23B2E7	SASM	N	(B5) Sprite Assembly	2007.06.28
+23B2E8	23BF8F	SASM	N	(B6) Sprite Assembly	2007.06.28
+23BF90	23C8EF	SASM	N	(A6) Sprite Assembly	2007.06.28
+23C8F0	23CACF	SASM	N	(A7) Sprite Assembly	2007.06.28
+23CAD0	23CB97	SASM	N	(A5) Sprite Assembly	2007.06.28
+23CB98	23CC0F	SASM	N	(C6) Sprite Assembly	2007.06.28
+23CC10	23CD4F	SASM	N	(C7) Sprite Assembly	2007.06.28
+23CD50	23CE8F	SASM	N	(C8) Sprite Assembly	2007.06.28
+23CE90	23D42F	SASM	N	(C9) Sprite Assembly	2007.06.28
+23D430	23D9CF	SASM	N	(CA) Sprite Assembly	2007.06.28
+23D9D0	23DD8F	SASM	N	(17) Sprite Assembly	2007.06.28
+23DD90	23DE7F	SASM	N	(CE) Sprite Assembly	2007.06.28
+23DE80	23FD1F	SASM	N	(CF) Sprite Assembly	2007.06.28
+23DF20	23DF97	SASM	N	(D7) Sprite Assembly	2007.06.28
+23DF98	23E127	SASM	N	(80) Sprite Assembly	2007.06.28
+23E128	23E857	SASM	N	(AA) Sprite Assembly	2007.06.28
+23E858	23E8A7	SASM	N	(D8) Sprite Assembly	2007.06.28
+23E8A8	23EB27	SASM	N	(D9) Sprite Assembly	2007.06.28
+23EB28	23ED07	SASM	N	(DC) Sprite Assembly	2007.06.28
+23ED08	23ED7F	SASM	N	(DF) Sprite Assembly	2007.06.28
+23ED80	23F13F	SASM	N	(E0) Sprite Assembly	2007.06.28
+23F140	23F8BF	SASM	N	(32) Sprite Assembly - Octorider	2007.06.28
+23F8C0	23FFFF	---	N	UNUSED SPACE (1856 bytes)	2007.06.28
+240000	2417B7	PAL	N	"PC, NPC and Enemy Palettes (24 colors/$18 bytes each)"	2007.06.28
+2417B8	241FFF	---	N	UNUSED SPACE (2120 bytes)	2007.06.28
+242000	2422E7	PTR	N	"Pointers to PC, NPC and Enemy Graphics"	2007.06.28
+2422E8	2422FF	---	N	UNUSED SPACE (24 bytes)	2007.06.28
+242300	2425B4	PTR	N	"Pointers to PC, NPC and Enemy Sprite Assembly"	2007.06.28
+2425B5	2425FF	---	N	UNUSED SPACE (75 bytes)	2007.06.28
+242600					2007.06.28
+242A00	242BF9	PTR	N	"Pointers to PC, NPC and Enemy Palettes"	2007.06.28
+242BFA	242FFF	---	N	UNUSED SPACE (1030 bytes)	2007.06.28
+243000					2007.06.28
+24F000	24F022	DATA	N	PC sprite data (5 bytes each)	2007.06.28
+24F023	24F522	DATA	N	NPC sprite data (5 bytes each)	2007.06.28
+24F523	24F5FF	---	N	UNUSED SPACE (221 bytes)	2007.06.28
+24F600	24FFFF	DATA	N	Enemy sprite data (10 bytes each)	2007.06.28
+250000	250401	PTR	N	Pointers to Location Exits (last 17 invalid)	2007.06.28
+250402	251A43	DATA	N	Location Exits	2007.06.28
+251A44	251FFF	---	N	UNUSED SPACE (1468 bytes)	2007.06.28
+252000	252361	GFX	Y	(00) Location Tiles	2007.06.28
+252362	2526B8	GFX	Y	(01) Location Tiles	2007.06.28
+2526B9	252A1A	GFX	Y	(02) Location Tiles	2007.06.28
+252A1B	252D12	GFX	Y	(03) Location Tiles	2007.06.28
+252D13	253226	GFX	Y	(04) Location Tiles	2007.06.28
+253227	2536BC	GFX	Y	(05) Location Tiles	2007.06.28
+2536BD	253C20	GFX	Y	(06) Location Tiles	2007.06.28
+253C21	25452E	GFX	Y	(07) Location Tiles	2007.06.28
+25452F	2549DB	GFX	Y	(08) Location Tiles	2007.06.28
+2549DC	254D0D	GFX	Y	(09) Location Tiles	2007.06.28
+254D0E	254F45	GFX	Y	(0A) Location Tiles	2007.06.28
+254F46	255272	GFX	Y	(0B) Location Tiles	2007.06.28
+255273	255A3B	GFX	Y	(0C) Location Tiles	2007.06.28
+255A3C	256103	GFX	Y	(0D) Location Tiles	2007.06.28
+256104	256155	GFX	Y	(0E) Location Tiles	2007.06.28
+256156	2566EB	GFX	Y	(0F) Location Tiles	2007.06.28
+2566EC	2569BF	GFX	Y	(10) Location Tiles	2007.06.28
+2569C0	256F48	GFX	Y	(11) Location Tiles	2007.06.28
+256F49	257CBE	GFX	Y	(12) Location Tiles	2007.06.28
+257CBF	259596	GFX	Y	(13) Location Tiles	2007.06.28
+259597	259935	GFX	Y	(14) Location Tiles	2007.06.28
+259936	25AB41	GFX	Y	(15) Location Tiles	2007.06.28
+25AB42	25B8D6	GFX	Y	(16) Location Tiles	2007.06.28
+25B8D7	25CC22	GFX	Y	(17) Location Tiles	2007.06.28
+25CC23	25D3A7	GFX	Y	(18) Location Tiles	2007.06.28
+25D3A8	25DE38	GFX	Y	(19) Location Tiles	2007.06.28
+25DE39	25EB9B	GFX	Y	(1A) Location Tiles	2007.06.28
+25EB9C	25F9B3	GFX	Y	(1B) Location Tiles	2007.06.28
+25F9B4	25FB9F	GFX	Y	(1C) Location Tiles	2007.06.28
+25FBA0	25FFFF	---	N	UNUSED SPACE (1120 bytes)	2007.06.28
+260000	260C85	GFX	Y	(1D) Location Tiles	2007.06.28
+260C86	261501	GFX	Y	(1E) Location Tiles	2007.06.28
+261502	262081	GFX	Y	(1F) Location Tiles	2007.06.28
+262082	2629C8	GFX	Y	(20) Location Tiles	2007.06.28
+2629C9	26360E	GFX	Y	(21) Location Tiles	2007.06.28
+26360F	2645A2	GFX	Y	(22) Location Tiles	2007.06.28
+2645A3	26553A	GFX	Y	(23) Location Tiles	2007.06.28
+26553B	2662CE	GFX	Y	(24) Location Tiles	2007.06.28
+2662CF	266B76	GFX	Y	(25) Location Tiles	2007.06.28
+266B77	2677F1	GFX	Y	(26) Location Tiles	2007.06.28
+2677F2	2686D3	GFX	Y	(27) Location Tiles	2007.06.28
+2686D4	269340	GFX	Y	(28) Location Tiles	2007.06.28
+269341	26A257	GFX	Y	(29) Location Tiles	2007.06.28
+26A258	26AF6A	GFX	Y	(2A) Location Tiles	2007.06.28
+26AF6B	26BE35	GFX	Y	(2B) Location Tiles	2007.06.28
+26BE36	26CBA7	GFX	Y	(2C) Location Tiles	2007.06.28
+26CBA8	26DAF9	GFX	Y	(2D) Location Tiles	2007.06.28
+26DAFA	26EA90	GFX	Y	(2E) Location Tiles	2007.06.28
+26EA91	26F7C5	GFX	Y	(2F) Location Tiles	2007.06.28
+26F7C6	26FEF8	GFX	Y	(30) Location Tiles	2007.06.28
+26FEF9	26FFFF	---	N	UNUSED SPACE (263 bytes)	2007.06.28
+270000	270C76	GFX	Y	(31) Location Tiles	2007.06.28
+270C77	271911	GFX	Y	(32) Location Tiles	2007.06.28
+271912	27241D	GFX	Y	(33) Location Tiles	2007.06.28
+27241E	272F65	GFX	Y	(34) Location Tiles	2007.06.28
+272F66	273D01	GFX	Y	(35) Location Tiles	2007.06.28
+273D02	274ACA	GFX	Y	(36) Location Tiles	2007.06.28
+274ACB	275628	GFX	Y	(37) Location Tiles	2007.06.28
+275629	276184	GFX	Y	(38) Location Tiles	2007.06.28
+276185	276E05	GFX	Y	(39) Location Tiles	2007.06.28
+276E06	277AC8	GFX	Y	(3A) Location Tiles	2007.06.28
+277AC9	2788AF	GFX	Y	(3B) Location Tiles	2007.06.28
+2788B0	2796C7	GFX	Y	(3C) Location Tiles	2007.06.28
+2796C8	27A5B0	GFX	Y	(3D) Location Tiles	2007.06.28
+27A5B1	27B4A8	GFX	Y	(3E) Location Tiles	2007.06.28
+27B4A9	27C45D	GFX	Y	(3F) Location Tiles	2007.06.28
+27C45E	27D32C	GFX	Y	(40) Location Tiles	2007.06.28
+27D32D	27E12B	GFX	Y	(41) Location Tiles	2007.06.28
+27E12C	27F1B0	GFX	Y	(42) Location Tiles	2007.06.28
+27F1B1	27FF08	GFX	Y	(43) Location Tiles	2007.06.28
+27FF09	27FFFF	---	N	UNUSED SPACE (247 bytes)	2007.06.28
+280000	281016	GFX	Y	(44) Location Tiles	2007.06.28
+281017	281B9D	GFX	Y	(45) Location Tiles	2007.06.28
+281B9E	28298F	GFX	Y	(46) Location Tiles	2007.06.28
+282990	283745	GFX	Y	(47) Location Tiles	2007.06.28
+283746	2841A4	GFX	Y	(48) Location Tiles	2007.06.28
+2841A5	284DDA	GFX	Y	(49) Location Tiles	2007.06.28
+284DDB	285D76	GFX	Y	(4A) Location Tiles	2007.06.28
+285D77	286D28	GFX	Y	(4B) Location Tiles	2007.06.28
+286D29	287C54	GFX	Y	(4C) Location Tiles	2007.06.28
+287C55	288B92	GFX	Y	(4D) Location Tiles	2007.06.28
+288B93	289A7F	GFX	Y	(4E) Location Tiles	2007.06.28
+289A80	28A711	GFX	Y	(4F) Location Tiles	2007.06.28
+28A712	28B304	GFX	Y	(50) Location Tiles	2007.06.28
+28B305	28BEEB	GFX	Y	(51) Location Tiles	2007.06.28
+28BEEC	28CB32	GFX	Y	(52) Location Tiles	2007.06.28
+28CB33	28D897	GFX	Y	(53) Location Tiles	2007.06.28
+28D898	28E7D7	GFX	Y	(54) Location Tiles	2007.06.28
+28E7D8	28F6BD	GFX	Y	(55) Location Tiles	2007.06.28
+28F6BE	28FF02	GFX	Y	(56) Location Tiles	2007.06.28
+28FF03	28FFFF	---	N	UNUSED SPACE (253 bytes)	2007.06.28
+290000	290B57	GFX	Y	(57) Location Tiles	2007.06.28
+290B58	291847	GFX	Y	(58) Location Tiles	2007.06.28
+291848	292765	GFX	Y	(59) Location Tiles	2007.06.28
+292766	293216	GFX	Y	(5A) Location Tiles	2007.06.28
+293217	29405F	GFX	Y	(5B) Location Tiles	2007.06.28
+294060	294CC7	GFX	Y	(5C) Location Tiles	2007.06.28
+294CC8	295A86	GFX	Y	(5D) Location Tiles	2007.06.28
+295A87	2968E9	GFX	Y	(5E) Location Tiles	2007.06.28
+2968EA	29756E	GFX	Y	(5F) Location Tiles	2007.06.28
+29756F	29814E	GFX	Y	(60) Location Tiles	2007.06.28
+29814F	298A2A	GFX	Y	(61) Location Tiles	2007.06.28
+298A2B	2994C9	GFX	Y	(62) Location Tiles	2007.06.28
+2994CA	299EE1	GFX	Y	(63) Location Tiles	2007.06.28
+299EE2	29A9CC	GFX	Y	(64) Location Tiles	2007.06.28
+29A9CD	29B892	GFX	Y	(65) Location Tiles	2007.06.28
+29B893	29C55F	GFX	Y	(66) Location Tiles	2007.06.28
+29C560	29CFD3	GFX	Y	(67) Location Tiles	2007.06.28
+29CFD4	29D9F3	GFX	Y	(68) Location Tiles	2007.06.28
+29D9F4	29E5AE	GFX	Y	(69) Location Tiles	2007.06.28
+29E5AF	29F1B3	GFX	Y	(6A) Location Tiles	2007.06.28
+29F1B4	29FFD2	GFX	Y	(6B) Location Tiles	2007.06.28
+29FFD3	29FFFF	---	N	UNUSED SPACE (45 bytes)	2007.06.28
+2A0000	2A0CD3	GFX	Y	(6C) Location Tiles	2007.06.28
+2A0CD4	2A1A3E	GFX	Y	(6D) Location Tiles	2007.06.28
+2A1A3F	2A270B	GFX	Y	(6E) Location Tiles	2007.06.28
+2A270C	2A33F9	GFX	Y	(6F) Location Tiles	2007.06.28
+2A33FA	2A411D	GFX	Y	(70) Location Tiles	2007.06.28
+2A411E	2A4D82	GFX	Y	(71) Location Tiles	2007.06.28
+2A4D83	2A5A78	GFX	Y	(72) Location Tiles	2007.06.28
+2A5A79	2A6B8B	GFX	Y	(73) Location Tiles	2007.06.28
+2A6B8C	2A7884	GFX	Y	(74) Location Tiles	2007.06.28
+2A7885	2A82C6	GFX	Y	(75) Location Tiles	2007.06.28
+2A82C7	2A911B	GFX	Y	(76) Location Tiles	2007.06.28
+2A911C	2A9FC1	GFX	Y	(77) Location Tiles	2007.06.28
+2A9FC2	2AAD48	GFX	Y	(78) Location Tiles	2007.06.28
+2AAD49	2AB679	GFX	Y	(79) Location Tiles	2007.06.28
+2AB67A	2AC010	GFX	Y	(7A) Location Tiles	2007.06.28
+2AC011	2ACA0C	GFX	Y	(7B) Location Tiles	2007.06.28
+2ACA0D	2AD93E	GFX	Y	(7C) Location Tiles	2007.06.28
+2AD93F	2AE171	GFX	Y	(7D) Location Tiles	2007.06.28
+2AE172	2AED9F	GFX	Y	(7E) Location Tiles	2007.06.28
+2AEDA0	2AEF8B	GFX	Y	(7F) Location Tiles	2007.06.28
+2AEF8C	2AF419	GFX	Y	(80) Location Tiles	2007.06.28
+2AF41A	2AFF49	GFX	Y	(81) Location Tiles	2007.06.28
+2AFF4A	2AFFFF	---	N	UNUSED SPACE (182 bytes)	2007.06.28
+2B0000	2B0C54	GFX	Y	(82) Location Tiles	2007.06.28
+2B0C55	2B19F4	GFX	Y	(83) Location Tiles	2007.06.28
+2B19F5	2B27C1	GFX	Y	(84) Location Tiles	2007.06.28
+2B27C2	2B34BB	GFX	Y	(85) Location Tiles	2007.06.28
+2B34BC	2B43A6	GFX	Y	(86) Location Tiles	2007.06.28
+2B43A7	2B4FF9	GFX	Y	(87) Location Tiles	2007.06.28
+2B4FFA	2B5C52	GFX	Y	(88) Location Tiles	2007.06.28
+2B5C53	2B67C6	GFX	Y	(89) Location Tiles	2007.06.28
+2B67C7	2B733D	GFX	Y	(8A) Location Tiles	2007.06.28
+2B733E	2B7F1E	GFX	Y	(8B) Location Tiles	2007.06.28
+2B7F1F	2B8E6D	GFX	Y	(8C) Location Tiles	2007.06.28
+2B8E6E	2B9D77	GFX	Y	(8D) Location Tiles	2007.06.28
+2B9D78	2BABAE	GFX	Y	(8E) Location Tiles	2007.06.28
+2BABAF	2BB8F6	GFX	Y	(8F) Location Tiles	2007.06.28
+2BB8F7	2BC65C	GFX	Y	(90) Location Tiles	2007.06.28
+2BC65D	2BD3C9	GFX	Y	(91) Location Tiles	2007.06.28
+2BD3CA	2BE152	GFX	Y	(92) Location Tiles	2007.06.28
+2BE153	2BED00	GFX	Y	(93) Location Tiles	2007.06.28
+2BED01	2BFA11	GFX	Y	(94) Location Tiles	2007.06.28
+2BFA12	2BFEF3	GFX	Y	(95) Location Tiles	2007.06.28
+2BFEF4	2BFFFF	---	N	UNUSED SPACE (268 bytes)	2007.06.28
+2C0000	2C0E5C	GFX	Y	(96) Location Tiles	2007.06.28
+2C0E5D	2C1B71	GFX	Y	(97) Location Tiles	2007.06.28
+2C1B72	2C2785	GFX	Y	(98) Location Tiles	2007.06.28
+2C2786	2C36D5	GFX	Y	(99) Location Tiles	2007.06.28
+2C36D6	2C462D	GFX	Y	(9A) Location Tiles	2007.06.28
+2C462E	2C51AD	GFX	Y	(9B) Location Tiles	2007.06.28
+2C51AE	2C5F9D	GFX	Y	(9C) Location Tiles	2007.06.28
+2C5F9E	2C6E56	GFX	Y	(9D) Location Tiles	2007.06.28
+2C6E57	2C79C1	GFX	Y	(9E) Location Tiles	2007.06.28
+2C79C2	2C85F7	GFX	Y	(9F) Location Tiles	2007.06.28
+2C85F8	2C9116	GFX	Y	(A0) Location Tiles	2007.06.28
+2C9117	2C9C7E	GFX	Y	(A1) Location Tiles	2007.06.28
+2C9C7F	2CA8B3	GFX	Y	(A2) Location Tiles	2007.06.28
+2CA8B4	2CB4F8	GFX	Y	(A3) Location Tiles	2007.06.28
+2CB4F9	2CC045	GFX	Y	(A4) Location Tiles	2007.06.28
+2CC046	2CCDA7	GFX	Y	(A5) Location Tiles	2007.06.28
+2CCDA8	2CDA4F	GFX	Y	(A6) Location Tiles	2007.06.28
+2CDA50	2CE3F7	GFX	Y	(A7) Location Tiles	2007.06.28
+2CE3F8	2CEC66	GFX	Y	(A8) Location Tiles	2007.06.28
+2CEC67	2CF61C	GFX	Y	(A9) Location Tiles	2007.06.28
+2CF61D	2CFEB0	GFX	Y	(AA) Location Tiles	2007.06.28
+2CFEB1	2CFFFF	---	N	UNUSED SPACE (335 bytes)	2007.06.28
+2D0000	2D0DB5	TASM	Y	(00) Location Tile Assembly L12	2007.06.28
+2D0DB6	2D13C5	TASM	Y	(01) Location Tile Assembly L12	2007.06.28
+2D13C6	2D2148	TASM	Y	(02) Location Tile Assembly L12	2007.06.28
+2D2149	2D2DC7	TASM	Y	(03) Location Tile Assembly L12	2007.06.28
+2D2DC8	2D3C38	TASM	Y	(04) Location Tile Assembly L12	2007.06.28
+2D3C39	2D4765	TASM	Y	(05) Location Tile Assembly L12	2007.06.28
+2D4766	2D537D	TASM	Y	(06) Location Tile Assembly L12	2007.06.28
+2D537E	2D6011	TASM	Y	(07) Location Tile Assembly L12	2007.06.28
+2D6012	2D6B6E	TASM	Y	(08) Location Tile Assembly L12	2007.06.28
+2D6B6F	2D79B7	TASM	Y	(09) Location Tile Assembly L12	2007.06.28
+2D79B8	2D837F	TASM	Y	(0A) Location Tile Assembly L12	2007.06.28
+2D8380	2D8F2F	TASM	Y	(0B) Location Tile Assembly L12	2007.06.28
+2D8F30	2D9E44	TASM	Y	(0C) Location Tile Assembly L12	2007.06.28
+2D9E45	2DAABF	TASM	Y	(0D) Location Tile Assembly L12	2007.06.28
+2DAAC0	2DB8FB	TASM	Y	(0E) Location Tile Assembly L12	2007.06.28
+2DB8FC	2DC310	TASM	Y	(0F) Location Tile Assembly L12	2007.06.28
+2DC311	2DC318	TASM	Y	"(10) Location Tile Assembly L12 (empty, 1 $00 byte)"	2007.06.28
+2DC319	2DD2AC	TASM	Y	(11) Location Tile Assembly L12	2007.06.28
+2DD2AD	2DE141	TASM	Y	(12) Location Tile Assembly L12	2007.06.28
+2DE142	2DEFBE	TASM	Y	(13) Location Tile Assembly L12	2007.06.28
+2DEFBF	2DFF4B	TASM	Y	(14) Location Tile Assembly L12	2007.06.28
+2DFF4C	2DFFFF	---	N	UNUSED SPACE (180 bytes)	2007.06.28
+2E0000	2E0DEC	TASM	Y	(15) Location Tile Assembly L12	2007.06.28
+2E0DED	2E1AA0	TASM	Y	(16) Location Tile Assembly L12	2007.06.28
+2E1AA1	2E280E	TASM	Y	(17) Location Tile Assembly L12	2007.06.28
+2E280F	2E3656	TASM	Y	(18) Location Tile Assembly L12	2007.06.28
+2E3657	2E42E4	TASM	Y	(19) Location Tile Assembly L12	2007.06.28
+2E42E5	2E4F6D	TASM	Y	(1A) Location Tile Assembly L12	2007.06.28
+2E4F6E	2E57DE	TASM	Y	(1B) Location Tile Assembly L12	2007.06.28
+2E57DF	2E6450	TASM	Y	(1C) Location Tile Assembly L12	2007.06.28
+2E6451	2E7394	TASM	Y	(1D) Location Tile Assembly L12	2007.06.28
+2E7395	2E80CD	TASM	Y	(1E) Location Tile Assembly L12	2007.06.28
+2E80CE	2E8946	TASM	Y	(1F) Location Tile Assembly L12	2007.06.28
+2E8947	2E92BA	TASM	Y	(20) Location Tile Assembly L12	2007.06.28
+2E92BB	2EA14F	TASM	Y	(21) Location Tile Assembly L12	2007.06.28
+2EA150	2EADCF	TASM	Y	(22) Location Tile Assembly L12	2007.06.28
+2EADD0	2EB8FB	TASM	Y	(23) Location Tile Assembly L12	2007.06.28
+2EB8FC	2EBED8	TASM	Y	(24) Location Tile Assembly L12	2007.06.28
+2EBED9	2EC55D	TASM	Y	(25) Location Tile Assembly L12	2007.06.28
+2EC55E	2ED257	TASM	Y	(26) Location Tile Assembly L12	2007.06.28
+2ED258	2EDDA1	TASM	Y	(27) Location Tile Assembly L12	2007.06.28
+2EDDA2	2EE42E	TASM	Y	(28) Location Tile Assembly L12	2007.06.28
+2EE42F	2EF328	TASM	Y	(29) Location Tile Assembly L12	2007.06.28
+2EF329	2EF8D5	TASM	Y	(2A) Location Tile Assembly L12	2007.06.28
+2EF8D6	2EFF8B	TASM	Y	(2B) Location Tile Assembly L12	2007.06.28
+2EFF8C	2EFFFF	---	N	UNUSED SPACE (116 bytes)	2007.06.28
+2F0000	2F0CE1	TASM	Y	(2C) Location Tile Assembly L12	2007.06.28
+2F0CE2	2F1ACD	TASM	Y	(2D) Location Tile Assembly L12	2007.06.28
+2F1ACE	2F266C	TASM	Y	(2E) Location Tile Assembly L12	2007.06.28
+2F266D	2F33CF	TASM	Y	(2F) Location Tile Assembly L12	2007.06.28
+2F33D0	2F3E9E	TASM	Y	(30) Location Tile Assembly L12	2007.06.28
+2F3E9F	2F4BBD	TASM	Y	(31) Location Tile Assembly L12	2007.06.28
+2F4BBE	2F58F2	TASM	Y	(32) Location Tile Assembly L12	2007.06.28
+2F58F3	2F64A6	TASM	Y	(33) Location Tile Assembly L12	2007.06.28
+2F64A7	2F723A	TASM	Y	(34) Location Tile Assembly L12	2007.06.28
+2F723B	2F7AB4	TASM	Y	(35) Location Tile Assembly L12	2007.06.28
+2F7AB5	2F7EF8	TASM	Y	(36) Location Tile Assembly L12	2007.06.28
+2F7EF9	2F7F00	TASM	Y	"(37) Location Tile Assembly L12 (empty, 1 $00 byte)"	2007.06.28
+2F7F01	2F7F08	TASM	Y	"(38) Location Tile Assembly L12 (empty, 1 $00 byte)"	2007.06.28
+2F7F09	2F7F10	TASM	Y	"(39) Location Tile Assembly L12 (empty, 1 $00 byte)"	2007.06.28
+2F7F11	2F7F18	TASM	Y	"(3A) Location Tile Assembly L12 (empty, 1 $00 byte)"	2007.06.28
+2F7F19	2F7F20	TASM	Y	"(3B) Location Tile Assembly L12 (empty, 1 $00 byte)"	2007.06.28
+2F7F21	2F7F28	TASM	Y	"(3C) Location Tile Assembly L12 (empty, 1 $00 byte)"	2007.06.28
+2F7F29	2F7F30	TASM	Y	"(3D) Location Tile Assembly L12 (empty, 1 $00 byte)"	2007.06.28
+2F7F31	2F7F38	TASM	Y	"(3E) Location Tile Assembly L12 (empty, 1 $00 byte)"	2007.06.28
+2F7F39	2F7F40	TASM	Y	"(3F) Location Tile Assembly L12 (empty, 1 $00 byte)"	2007.06.28
+2F7F41	2F8459	TASM	Y	(00) Location Tile Assembly L3	2007.06.28
+2F845A	2F85BD	TASM	Y	(01) Location Tile Assembly L3	2007.06.28
+2F85BE	2F8721	TASM	Y	(02) Location Tile Assembly L3	2007.06.28
+2F8722	2F8894	TASM	Y	(03) Location Tile Assembly L3	2007.06.28
+2F8895	2F8A86	TASM	Y	(04) Location Tile Assembly L3	2007.06.28
+2F8A87	2F8C4B	TASM	Y	(05) Location Tile Assembly L3	2007.06.28
+2F8C4C	2F8F47	TASM	Y	(06) Location Tile Assembly L3	2007.06.28
+2F8F48	2F9571	TASM	Y	(07) Location Tile Assembly L3	2007.06.28
+2F9572	2F972A	TASM	Y	(08) Location Tile Assembly L3	2007.06.28
+2F972B	2F9952	TASM	Y	(09) Location Tile Assembly L3	2007.06.28
+2F9953	2F9A15	TASM	Y	(0A) Location Tile Assembly L3	2007.06.28
+2F9A16	2F9B7C	TASM	Y	(0B) Location Tile Assembly L3	2007.06.28
+2F9B7D	2FA0A2	TASM	Y	(0C) Location Tile Assembly L3	2007.06.28
+2FA0A3	2FA56A	TASM	Y	(0D) Location Tile Assembly L3	2007.06.28
+2FA56B	2FA6E4	TASM	Y	(0E) Location Tile Assembly L3	2007.06.28
+2FA6E5	2FA96B	TASM	Y	(0F) Location Tile Assembly L3	2007.06.28
+2FA96C	2FAA6C	TASM	Y	(10) Location Tile Assembly L3	2007.06.28
+2FAA6D	2FAC90	TASM	Y	(11) Location Tile Assembly L3	2007.06.28
+2FAC91	2FB167	TASM	Y	(12) Location Tile Assembly L3	2007.06.28
+2FB168					2007.06.28
+2FC000	2FC1D2	GFX	Y	(AB) Location Tiles	2007.06.28
+2FC1D3	2FC805	GFX	Y	(AC) Location Tiles	2007.06.28
+2FC806	2FCDC2	GFX	Y	(AD) Location Tiles	2007.06.28
+2FCDC3	2FD02C	GFX	Y	(AE) Location Tiles	2007.06.28
+2FD02D	2FD2AC	GFX	Y	(AF) Location Tiles	2007.06.28
+2FD2AD	2FD91C	GFX	Y	(B0) Location Tiles	2007.06.28
+2FD91D	2FE5AA	GFX	Y	(B1) Location Tiles	2007.06.28
+2FE5AB	2FE80B	GFX	Y	(B2) Location Tiles	2007.06.28
+2FE80C	2FF2E0	GFX	Y	(B3) Location Tiles	2007.06.28
+2FF2E1	2FFF17	GFX	Y	(B4) Location Tiles	2007.06.28
+2FFF18	2FFFFF	---	N	UNUSED SPACE (232 bytes)	2007.06.28
+300000	30004F	MAP	Y	(00) Location Map - (default map)	2007.06.28
+300050	300183	MAP	Y	(01) Location Map - Lavos - final battle	2007.06.28
+300184	3003B3	MAP	Y	(02) Location Map - Black Omen - entrance	2007.06.28
+3003B4	30073A	MAP	Y	(03) Location Map - Black Omen	2007.06.28
+30073B	300B61	MAP	Y	(04) Location Map - Black Omen	2007.06.28
+300B62	300FED	MAP	Y	(05) Location Map - Black Omen	2007.06.28
+300FEE	3013DE	MAP	Y	(06) Location Map - Black Omen	2007.06.28
+3013DF	301808	MAP	Y	(07) Location Map - Black Omen	2007.06.28
+301809	3023F7	MAP	Y	(08) Location Map - Black Omen	2007.06.28
+3023F8	303C26	MAP	Y	(09) Location Map - Black Omen	2007.06.28
+303C27	3042C4	MAP	Y	(0A) Location Map - Black Omen (unused)	2007.06.28
+3042C5	304C18	MAP	Y	(0B) Location Map - Black Omen	2007.06.28
+304C19	304FE6	MAP	Y	(0C) Location Map - Black Omen - teleporters	2007.06.28
+304FE7	3055F7	MAP	Y	(0D) Location Map - Black Omen	2007.06.28
+3055F8	305AEA	MAP	Y	(0E) Location Map - Black Omen	2007.06.28
+305AEB	305DF2	MAP	Y	(0F) Location Map - Black Omen	2007.06.28
+305DF3	3060D1	MAP	Y	(10) Location Map - Black Omen	2007.06.28
+3060D2	306651	MAP	Y	(11) Location Map - Black Omen - Queen Zeal	2007.06.28
+306652	306DED	MAP	Y	(12) Location Map - Lavos - caves	2007.06.28
+306DEE	306FEE	MAP	Y	(13) Location Map - Lavos - Giga Gaia battle	2007.06.28
+306FEF	3072D0	MAP	Y	(14) Location Map - Lavos - Guardian battle	2007.06.28
+3072D1	30756B	MAP	Y	(15) Location Map - Lavos - Magus battle	2007.06.28
+30756C	307E0B	MAP	Y	(16) Location Map - Sunken Desert	2007.06.28
+307E0C	308034	MAP	Y	(17) Location Map - Programmer's Ending - house	2007.06.28
+308035	308319	MAP	Y	(18) Location Map - Programmer's Ending - jungle	2007.06.28
+30831A	308519	MAP	Y	(19) Location Map - Programmer's Ending - Ocean Palace	2007.06.28
+30851A	30883C	MAP	Y	(1A) Location Map - Programmer's Ending - jail	2007.06.28
+30883D	308AA3	MAP	Y	(1B) Location Map - Programmer's Ending - Algetty	2007.06.28
+308AA4	308C7C	MAP	Y	(1C) Location Map - Programmer's Ending - castle	2007.06.28
+308C7D	308D9A	MAP	Y	(1D) Location Map - Programmer's Ending - factory	2007.06.28
+308D9B	308E5E	MAP	Y	(1E) Location Map - Ending artwork (unused in USA version)	2007.06.28
+308E5F	308E8F	MAP	Y	(1F) Location Map - (blank map)	2007.06.28
+308E90	309011	MAP	Y	(20) Location Map - Lavos Core	2007.06.28
+309012	30930A	MAP	Y	(21) Location Map - Lavos - ground	2007.06.28
+30930B	30953D	MAP	Y	(22) Location Map - Lavos	2007.06.28
+30953E	309815	MAP	Y	(23) Location Map - Fiona's Forest	2007.06.28
+309816	309B12	MAP	Y	(24) Location Map - Fiona's Forest - dead end	2007.06.28
+309B13	30A694	MAP	Y	(25) Location Map - Ozzie's Fort	2007.06.28
+30A695	30BAEE	MAP	Y	(26) Location Map - Northern Ruins	2007.06.28
+30BAEF	30C8EE	MAP	Y	(27) Location Map - Giant's Claw	2007.06.28
+30C8EF	30D376	MAP	Y	(28) Location Map - Giant's Claw	2007.06.28
+30D377	30D9F3	MAP	Y	(29) Location Map - Giant's Claw	2007.06.28
+30D9F4	30E80D	MAP	Y	(2A) Location Map - Kajar	2007.06.28
+30E80E	30EF76	MAP	Y	(2B) Location Map - Sunken Desert	2007.06.28
+30EF77	30F10C	MAP	Y	(2C) Location Map - Black Omen - celestial gate	2007.06.28
+30F10D	30F393	MAP	Y	(2D) Location Map - Blackbird - water	2007.06.28
+30F394	30F5E6	MAP	Y	(2E) Location Map - Medina Square	2007.06.28
+30F5E7	30FFFF	---	N	UNUSED SPACE (2585 bytes)	2008.02.06
+310000	310139	MAP	Y	(2F) Location Map - Mammon Machine	2007.06.28
+31013A	3102A5	MAP	Y	(30) Location Map - Zeal - destruction	2007.06.28
+3102A6	31058F	MAP	Y	(31) Location Map - End of Time - Spekkio	2007.06.28
+310590	310759	MAP	Y	(32) Location Map - Blackbird - scaffolding	2007.06.28
+31075A	31087F	MAP	Y	(33) Location Map - Epoch - water	2007.06.28
+310880	3109D9	MAP	Y	(34) Location Map - Epoch - ground	2007.06.28
+3109DA	310B18	MAP	Y	(35) Location Map - Epoch - End of Time	2007.06.28
+310B19	3114BF	MAP	Y	(36) Location Map - Lavos - tunnel	2007.06.28
+3114C0	31163F	MAP	Y	(37) Location Map - Truce Dome	2007.06.28
+311640	312928	MAP	Y	(38) Location Map - Heckran Cave	2007.06.28
+312929	312C99	MAP	Y	(39) Location Map - Land Bridge	2007.06.28
+312C9A	312F89	MAP	Y	(3A) Location Map - Skyway	2007.06.28
+312F8A	31325A	MAP	Y	(3B) Location Map - Fiona's Shrine	2007.06.28
+31325B	314951	MAP	Y	"(3C) Location Map - Truce, Medina, Porre, Choras (Present)"	2007.06.28
+314952	315E2F	MAP	Y	"(3D) Location Map - Medina, Porre, Choras (Present)"	2007.06.28
+315E30	3163C4	MAP	Y	(3E) Location Map - Choras (Present)	2007.06.28
+3163C5	316624	MAP	Y	(3F) Location Map - Medina - portal house (Present)	2007.06.28
+316625	3168D0	MAP	Y	(40) Location Map - Guardia Castle - jail catwalks	2007.06.28
+3168D1	316CB4	MAP	Y	(41) Location Map - Guardia Caslte - courtroom	2007.06.28
+316CB5	31790E	MAP	Y	(42) Location Map - Guardia Castle - throneroom	2007.06.28
+31790F	3187C1	MAP	Y	(43) Location Map - Guardia Castle	2007.06.28
+3187C2	31945B	MAP	Y	(44) Location Map - Guardia Castle	2007.06.28
+31945C	319733	MAP	Y	(45) Location Map - Guardia Castle - courtroom lobby	2007.06.28
+319734	319B99	MAP	Y	(46) Location Map - Guardia Castle - kitchen (Present)	2007.06.28
+319B9A	319E8A	MAP	Y	(47) Location Map - Millennial Fair - telepod exhibit	2007.06.28
+319E8B	31A264	MAP	Y	(48) Location Map - Guardia Castle - supervisor's office	2007.06.28
+31A265	31A361	MAP	Y	(49) Location Map - Guardia Castle - jail storage room	2007.06.28
+31A362	31AD05	MAP	Y	(4A) Location Map - Guardia Castle - jail cells	2007.06.28
+31AD06	31B794	MAP	Y	(4B) Location Map - Guardia Castle - jail stairwells	2007.06.28
+31B795	31B91A	MAP	Y	(4C) Location Map - Guardia Castle - jail walls	2007.06.28
+31B91B	31CA71	MAP	Y	(4D) Location Map - Millennial Fair	2007.06.28
+31CA72	31D85D	MAP	Y	(4E) Location Map - Millennial Fair - Leene Square	2007.06.28
+31D85E	31DB05	MAP	Y	(4F) Location Map - Millennial Fair - Gato's exhibit	2007.06.28
+31DB06	31DDC5	MAP	Y	(50) Location Map - Millennial Fair - prehistoric exhibit	2007.06.28
+31DDC6	31EF20	MAP	Y	(51) Location Map - Guardia Forest	2007.06.28
+31EF21	31F216	MAP	Y	(52) Location Map - Guardia Forest - dead end	2007.06.28
+31F217	31F6CB	MAP	Y	(53) Location Map - Lucca's House	2007.06.28
+31F6CC	31FE29	MAP	Y	(54) Location Map - Lucca's House	2007.06.28
+31FE2A	31FFFF	---	N	UNUSED SPACE (470 bytes)	2007.06.28
+320000	32071E	MAP	Y	(55) Location Map - End of Time	2007.06.28
+32071F	320AA6	MAP	Y	(56) Location Map - Commons	2007.06.28
+320AA7	320CB3	MAP	Y	(57) Location Map - Bekkler's tent	2007.06.28
+320CB4	321249	MAP	Y	(58) Location Map - Forest Ruins	2007.06.28
+32124A	32201D	MAP	Y	(59) Location Map - Heckran Cave	2007.06.28
+32201E	3223D8	MAP	Y	(5A) Location Map - Magus Castle - exterior	2007.06.28
+3223D9	323727	MAP	Y	(5B) Location Map - Magus Castle	2007.06.28
+323728	323937	MAP	Y	(5C) Location Map - Magus Castle	2007.06.28
+323938	323BAB	MAP	Y	(5D) Location Map - Magus Castle	2007.06.28
+323BAC	3248FE	MAP	Y	(5E) Location Map - Magus Castle	2007.06.28
+3248FF	324B33	MAP	Y	(5F) Location Map - Magus Castle - dungeon	2007.06.28
+324B34	324F9A	MAP	Y	(60) Location Map - Magus Castle - tower 1	2007.06.28
+324F9B	3253E7	MAP	Y	(61) Location Map - Magus Castle - tower 2	2007.06.28
+3253E8	32570E	MAP	Y	(62) Location Map - Magus Castle - stairway	2007.06.28
+32570F	326169	MAP	Y	(63) Location Map - Truce Canyon	2007.06.28
+32616A	3264CA	MAP	Y	(64) Location Map - Truce Canyon - portal	2007.06.28
+3264CB	327482	MAP	Y	(65) Location Map - Cathedral	2007.06.28
+327483	32821C	MAP	Y	(66) Location Map - Cathedral - second section	2007.06.28
+32821D	328B66	MAP	Y	(67) Location Map - Cathedral	2007.06.28
+328B67	329ECE	MAP	Y	"(68) Location Map - Truce, Dorino, Porre, Choras (M. Ages)"	2007.06.28
+329ECF	32A8B8	MAP	Y	"(69) Location Map - Dorino, Porre, Choras (Middle Ages)"	2007.06.28
+32A8B9	32B9A3	MAP	Y	(6A) Location Map - Denadoro Mts	2007.06.28
+32B9A4	32DF1A	MAP	Y	(6B) Location Map - Denadoro Mts	2007.06.28
+32DF1B	32E944	MAP	Y	(6C) Location Map - Denadoro Mts	2007.06.28
+32E945	32F2D3	MAP	Y	(6D) Location Map - Denadoro Mts - entrance	2007.06.28
+32F2D4	32F8A9	MAP	Y	(6E) Location Map - Denadoro Mts	2007.06.28
+32F8AA	32FC10	MAP	Y	(6F) Location Map - Denadoro Mts - Masamune cave	2007.06.28
+32FC11	32FE63	MAP	Y	(70) Location Map - Sunken Desert - entrance	2007.06.28
+32FE64	32FFFF	---	N	UNUSED SPACE (412 bytes)	2007.06.28
+330000	3303C9	MAP	Y	(71) Location Map - Sun Keep	2007.06.28
+3303CA	330AC2	MAP	Y	(72) Location Map - Cursed Woods	2007.06.28
+330AC3	330DE6	MAP	Y	(73) Location Map - Cursed Woods - Frog's burrow	2007.06.28
+330DE7	331585	MAP	Y	(74) Location Map - Magic Cave - interior	2007.06.28
+331586	332CA7	MAP	Y	(75) Location Map - Arris Dome	2007.06.28
+332CA8	333B76	MAP	Y	(76) Location Map - Arris Dome	2007.06.28
+333B77	3340BA	MAP	Y	(77) Location Map - Arris Dome - rafters	2007.06.28
+3340BB	335346	MAP	Y	"(78) Location Map - Bangor, Trann, Proto, Keeper's Domes"	2007.06.28
+335347	335681	MAP	Y	(79) Location Map - Keeper's Dome - Epoch hanger	2007.06.28
+335682	335AF5	MAP	Y	"(7A) Location Map - Bangor Dome, Proto Dome"	2007.06.28
+335AF6	335D97	MAP	Y	(7B) Location Map - Arris Dome - Guardian battle	2007.06.28
+335D98	336DB9	MAP	Y	(7C) Location Map - Factory Ruins	2007.06.28
+336DBA	337CA2	MAP	Y	(7D) Location Map - Factory Ruins	2007.06.28
+337CA3	33A06A	MAP	Y	"(7E) Location Map - Lab 16, Lab 32"	2007.06.28
+33A06B	33A9FF	MAP	Y	(7F) Location Map - Lab 32	2007.06.28
+33AA00	33B3EC	MAP	Y	(80) Location Map - Sewer Access - B1	2007.06.28
+33B3ED	33B7CA	MAP	Y	(81) Location Map - Sewer Access - B2	2007.06.28
+33B7CB	33D562	MAP	Y	(82) Location Map - Death Peak	2007.06.28
+33D563	33DA84	MAP	Y	(83) Location Map - Death Peak	2007.06.28
+33DA85	33E00D	MAP	Y	(84) Location Map - Death Peak - caves	2007.06.28
+33E00E	33F0D8	MAP	Y	(85) Location Map - Geno Dome	2007.06.28
+33F0D9	33FB81	MAP	Y	(86) Location Map - Geno Dome	2007.06.28
+33FB82	33FC3B	MAP	Y	(87) Location Map - Geno Dome - conveyor	2007.06.28
+33FC3C	33FD04	MAP	Y	(88) Location Map - Geno Dome - elevator	2007.06.28
+33FD05	33FDFA	MAP	Y	(89) Location Map - Geno Dome - long corridor	2007.06.28
+33FDFB	33FFFF	---	N	UNUSED SPACE (517 bytes)	2007.06.28
+340000	340237	MAP	Y	(8A) Location Map - Lair Ruins	2007.06.28
+340238	3403C4	MAP	Y	(8B) Location Map - Unknown map	2007.06.28
+3403C5	340A37	MAP	Y	(8C) Location Map - Zenan Bridge	2007.06.28
+340A38	340C93	MAP	Y	(8D) Location Map - Giant's Claw (unused)	2007.06.28
+340C94	340E6C	MAP	Y	(8E) Location Map - Magic Cave - exterior	2007.06.28
+340E6D	341617	MAP	Y	(8F) Location Map - Sun Palace	2007.06.28
+341618	341909	MAP	Y	(90) Location Map - Death Peak - summit	2007.06.28
+34190A	341B56	MAP	Y	(91) Location Map - Epoch - warping	2007.06.28
+341B57	341C8C	MAP	Y	(92) Location Map - Epoch - clouds	2007.06.28
+341C8D	341F3E	MAP	Y	(93) Location Map - Mystic Mtn. - portal	2007.06.28
+341F3F	3423AC	MAP	Y	(94) Location Map - Mystic Mtn. - base	2007.06.28
+3423AD	342D85	MAP	Y	(95) Location Map - Mystic Mtn. - gulch	2007.06.28
+342D86	3443C4	MAP	Y	(96) Location Map - Reptite Lair	2007.06.28
+3443C5	34542F	MAP	Y	(97) Location Map - Reptite Lair	2007.06.28
+345430	3461D5	MAP	Y	(98) Location Map - Ioka Meeting Site	2007.06.28
+3461D6	34671A	MAP	Y	(99) Location Map - Laruba Ruins	2007.06.28
+34671B	34727E	MAP	Y	(9A) Location Map - Tyrano Lair - exterior	2007.06.28
+34727F	347FA0	MAP	Y	(9B) Location Map - Tyrano Lair	2007.06.28
+347FA1	349066	MAP	Y	(9C) Location Map - Tyrano Lair/Giant's Claw	2007.06.28
+349067	349315	MAP	Y	(9D) Location Map - Tyrano Lair - Nizbel's room	2007.06.28
+349316	349699	MAP	Y	(9E) Location Map - Tyrano Lair - Tyrano	2007.06.28
+34969A	34B1DB	MAP	Y	(9F) Location Map - Hunting Range	2007.06.28
+34B1DC	34B561	MAP	Y	(A0) Location Map - Forest Maze - entrance	2007.06.28
+34B562	34D82F	MAP	Y	(A1) Location Map - Forest Maze	2007.06.28
+34D830	34E3B0	MAP	Y	(A2) Location Map - Ioka and Last Village - huts	2007.06.28
+34E3B1	34FA07	MAP	Y	(A3) Location Map - Dactyl Nest	2007.06.28
+34FA08	34FDED	MAP	Y	(A4) Location Map - Dactyl Nest - summit	2007.06.28
+34FDEE	34FFFF	---	N	UNUSED SPACE (530 bytes)	2007.06.28
+350000	35029F	MAP	Y	(A5) Location Map - Blackbird - overhead	2007.06.28
+3502A0	3504D8	MAP	Y	(A6) Location Map - Cave - portal (Dark Ages)	2007.06.28
+3504D9	350F19	MAP	Y	(A7) Location Map - Blackbird	2007.06.28
+350F1A	351980	MAP	Y	(A8) Location Map - Blackbird	2007.06.28
+351981	35239B	MAP	Y	(A9) Location Map - Blackbird - air ducts	2007.06.28
+35239C	352638	MAP	Y	(AA) Location Map - Blackbird - Epoch hanger	2007.06.28
+352639	352AEE	MAP	Y	(AB) Location Map - Blackbird - left wing	2007.06.28
+352AEF	352ECB	MAP	Y	(AC) Location Map - Blackbird - left wing (unused)	2007.06.28
+352ECC	353C66	MAP	Y	(AD) Location Map - Ocean Palace	2007.06.28
+353C67	35411C	MAP	Y	(AE) Location Map - Ocean Palace	2007.06.28
+35411D	354565	MAP	Y	(AF) Location Map - Ocean Palace	2007.06.28
+354566	355006	MAP	Y	(B0) Location Map - Ocean Palace	2007.06.28
+355007	3557C4	MAP	Y	(B1) Location Map - Ocean Palace	2007.06.28
+3557C5	355C3C	MAP	Y	(B2) Location Map - Ocean Palace	2007.06.28
+355C3D	356069	MAP	Y	(B3) Location Map - Ocean Palace - entrance	2007.06.28
+35606A	3562A6	MAP	Y	(B4) Location Map - Black Omen and Ocean Palace	2007.06.28
+3562A7	356564	MAP	Y	(B5) Location Map - Black Omen and Ocean Palace	2007.06.28
+356565	3568F1	MAP	Y	(B6) Location Map - Ocean Palace	2007.06.28
+3568F2	356E05	MAP	Y	(B7) Location Map - Ocean Palace	2007.06.28
+356E06	357042	MAP	Y	(B8) Location Map - Black Omen - elevator	2007.06.28
+357043	3573B7	MAP	Y	(B9) Location Map - West Cape and North Cape	2007.06.28
+3573B8	358993	MAP	Y	(BA) Location Map - Mt. Woe	2007.06.28
+358994	35A07F	MAP	Y	(BB) Location Map - Mt. Woe	2007.06.28
+35A080	35A346	MAP	Y	(BC) Location Map - Mt. Woe - summit	2007.06.28
+35A347	35B0E3	MAP	Y	(BD) Location Map - Algetty	2007.06.28
+35B0E4	35B939	MAP	Y	(BE) Location Map - Algetty - Beast's nest	2007.06.28
+35B93A	35C4DD	MAP	Y	(BF) Location Map - Algetty and Caves	2007.06.28
+35C4DE	35D422	MAP	Y	(C0) Location Map - Zeal Palace	2007.06.28
+35D423	35D825	MAP	Y	(C1) Location Map - Zeal Palace - hallways	2007.06.28
+35D826	35DDA9	MAP	Y	(C2) Location Map - Zeal Palace	2007.06.28
+35DDAA	35DEF9	MAP	Y	(C3) Location Map - Blackbird	2007.06.28
+35DEFA	35E5CC	MAP	Y	(C4) Location Map - Enhasa	2007.06.28
+35E5CD	35E792	MAP	Y	(C5) Location Map - Tsunami	2007.06.28
+35E793	35EA0C	MAP	Y	(C6) Location Map - Leene Square (Future)	2007.06.28
+35EA0D	35EC7B	MAP	Y	(C7) Location Map - Programmer's Ending - Ioka hut	2007.06.28
+35EC7C	35EE01	MAP	Y	(C8) Location Map - Programmer's Ending - Magus Castle	2007.06.28
+35EE02	35EFFF	JUNK	Y	Overwritten [BETA] (6A) Location Map - Geno Dome	2007.06.28
+35F000	35F401	PTR	N	Pointers to Treasure Chest Data (513 addresses)	2007.06.28
+35F402	35F7E5	DATA	N	"Treasure Chest Data (4 bytes each, 249 treasure chests)"	2007.06.28
+35F7E6	35FE03	JUNK	Y	Overwritten [BETA] (6A) Location Map - Geno Dome	2007.06.28
+35FE04	35FFFF	---	N	UNUSED SPACE (508 bytes)	2007.06.28
+360000	361BFF	DATA	N	Location Data (14 bytes each)	2007.06.28
+361C00	361DFF	DATA	N	Location Tileset Packet Data (8 bytes each)	2007.06.28
+361E00	3620FF	PTR	N	"Pointers to Location Maps (last invalid, 54 unused)"	2007.06.28
+362100	3621BF	PTR	N	Pointers to Location Tile Assembly L12	2007.06.28
+3621C0	36221F	PTR	N	Pointers to Location Tile Assembly L3 (last 4 invalid)	2007.06.28
+362220	3624BF	PTR	N	"Pointers to Location Tiles (224 pointers, last 5 unused)"	2007.06.28
+3624C0	366DC1	PAL	N	"Location Palette Sets (89 sets, $D2 bytes each)"	2007.06.28
+366DC2	36737F	---	N	UNUSED SPACE (1470 bytes)	2007.06.28
+367380					2007.06.28
+368000	368BC2	GFX	Y	(D3) Location Tiles	2007.06.28
+368BC3	3696B3	GFX	Y	(D4) Location Tiles	2007.06.28
+3696B4	369FFF	JUNK	Y	"Overwritten (Unk) Location Tiles, has a compressed structure, not recoverable?"	2008.02.06
+36A000	36A60F	PTR	N	"Pointers to Location Events (517, last 4 bad, 1 junk byte)"	2007.06.28
+36A610	36A64D	PTR	N	Pointers to Substrings (31 Substrings)	2007.06.28
+36A64E	36A7BD	PTR	N	"Pointers to 12xx Substrings (184 Substrings, 1208-12BF)"	2007.06.28
+36A7BE	36A83F	TXT	N	Substrings (1st byte=# of symbols to follow)	2008.02.06
+36A840	36ABF1	TXT	N	12xx Substrings (1st byte=# of symbols to follow)	2008.02.06
+36ABF2	36AC0F	---	N	UNUSED SPACE (30 bytes)	2007.06.28
+36AC10	36AC19	PTR	N	"Pointers to Treasure Chest Text (5 strings, last 2 unused)"	2007.06.28
+36AC1A	36AC2E	TXT	N	Treasure Chest Text	2007.06.28
+36AC2F	36AD0F	---	N	UNUSED SPACE (225 bytes)	2007.06.28
+36AD10	36AE85	PTR	N	"Pointers to Dialogue (187 strings, $BB)"	2007.06.28
+36AE86	36C75B	TXT	N	Dialogue	2007.06.28
+36C75C	36C79E	JUNK	N	Unpointed Dialogue	2007.06.28
+36C79F	36C7FF	???	?	Unpointed Dialogue ???	2007.06.28
+36C800	36CA24	EVENT	Y	(052) Location Event Data	2007.06.28
+36CA25	36CE2F	EVENT	Y	(053) Location Event Data	2007.06.28
+36CE30	36D45E	EVENT	Y	(054) Location Event Data	2007.06.28
+36D45F	36DC1E	EVENT	Y	(055) Location Event Data	2007.06.28
+36DC1F	36DDE4	EVENT	Y	(056) Location Event Data	2007.06.28
+36DDE5	36E845	EVENT	Y	(057) Location Event Data	2007.06.28
+36E846	36EADB	EVENT	Y	(058) Location Event Data	2007.06.28
+36EADC	36ECC2	EVENT	Y	(059) Location Event Data	2007.06.28
+36ECC3	36ED01	EVENT	Y	(05A) Location Event Data	2007.06.28
+36ED02	36EDCE	EVENT	Y	(05B:05D) Location Event Data	2007.06.28
+36EDCF	36EEC7	EVENT	Y	(05E) Location Event Data	2007.06.28
+36EEC8	36EF41	EVENT	Y	(05F) Location Event Data	2007.06.28
+36EF42	36F532	EVENT	Y	(060) Location Event Data	2007.06.28
+36F533	36F969	EVENT	Y	(061) Location Event Data	2007.06.28
+36F96A	36FB8B	EVENT	Y	(062) Location Event Data	2007.06.28
+36FB8C	36FC47	EVENT	Y	(063) Location Event Data	2007.06.28
+36FC48	36FDB1	EVENT	Y	(064) Location Event Data	2007.06.28
+36FDB2	36FFC9	EVENT	Y	(065) Location Event Data	2007.06.28
+36FFCA	36FFFF	JUNK	Y	Overwritten (065) Location Event Data - (066:06E)	2007.06.28
+370000	3701B1	PTR	N	"Pointers to Dialogue (217 strings, $D9)"	2007.06.28
+3701B2	37028F	PTR	N	"Pointers to Dialogue (111 strings, $6F)"	2007.06.28
+370290	370493	PTR	N	"Pointers to Dialogue (258 strings, $102)"	2007.06.28
+370494	370607	PTR	N	"Pointers to Dialogue (186 strings, $BA)"	2007.06.28
+370608	370707	PTR	N	"Pointers to Dialogue (256 strings, $100)"	2007.06.28
+370708	3726A6	TXT	N	Dialogue	2007.06.28
+3726A7	3733EC	TXT	N	Dialogue	2007.06.28
+3733ED	374F15	TXT	N	Dialogue	2007.06.28
+374F16	376084	TXT	N	Dialogue	2007.06.28
+376085	376FA0	TXT	N	Dialogue	2007.06.28
+376FA1	376FD9	JUNK	N	Unpointed Dialogue	2007.06.28
+376FDA	376FFF	---	N	UNUSED SPACE (38 bytes)	2007.06.28
+377000	3771DF	PTR	N	"Pointers to Dialogue (240 strings, $F0)"	2007.06.28
+3771E0	377343	PTR	N	"Pointers to Dialogue (178 strings, $B2)"	2007.06.28
+377344	3774A9	PTR	N	"Pointers to Dialogue (179 strings, $B3)"	2007.06.28
+3774AA	37761F	PTR	N	"Pointers to Dialogue (187 strings, $BB)"	2007.06.28
+377620	377807	PTR	N	"Pointers to Dialogue (244 strings, $F4)"	2007.06.28
+377808	377965	PTR	N	"Pointers to Dialogue (175 strings, $AF)"	2007.06.28
+377966	379787	TXT	N	Dialogue	2007.06.28
+379788	37A997	TXT	N	Dialogue	2007.06.28
+37A998	37B939	TXT	N	Dialogue	2007.06.28
+37B93A	37C5E6	TXT	N	Dialogue	2007.06.28
+37C5E7	37E0F6	TXT	N	Dialogue	2007.06.28
+37E0F7	37F2C7	TXT	N	Dialogue	2007.06.28
+37F2C8	37F2F2	JUNK	N	Unpointed Dialogue	2007.06.28
+37F2F3	37FFFF	---	N	UNUSED SPACE (3341 bytes)	2007.06.28
+380000	380000	EVENT	Y	(06F) Location Event Data	2007.06.28
+38012A	380129	EVENT	Y	(070) Location Event Data	2007.06.28
+380294	380293	EVENT	Y	(071) Location Event Data	2007.06.28
+380753	380752	EVENT	Y	(072) Location Event Data	2007.06.28
+380B8C	380B8B	EVENT	Y	(073) Location Event Data	2007.06.28
+380CE6	380CE5	EVENT	Y	(074) Location Event Data	2007.06.28
+3813E2	3813E1	EVENT	Y	(075) Location Event Data	2007.06.28
+3817D5	3817D4	EVENT	Y	(076) Location Event Data	2007.06.28
+3819C2	3819C1	EVENT	Y	(077) Location Event Data	2007.06.28
+381AB6	381AB5	EVENT	Y	(078) Location Event Data	2007.06.28
+381B4D	381B4C	EVENT	Y	(079) Location Event Data	2007.06.28
+381BCE	381BCD	EVENT	Y	(07A) Location Event Data	2007.06.28
+381D0F	381E16	EVENT	Y	(07B) Location Event Data	2007.06.28
+381E17	381F15	EVENT	Y	(07C) Location Event Data	2007.06.28
+381F16	381FA0	EVENT	Y	(07D) Location Event Data	2007.06.28
+381FA1	382187	EVENT	Y	(07E) Location Event Data	2007.06.28
+382188	3822B7	EVENT	Y	(07F) Location Event Data	2007.06.28
+3822B8	3823B7	EVENT	Y	(080) Location Event Data	2007.06.28
+3823B8	38254B	EVENT	Y	(081) Location Event Data	2007.06.28
+38254C	3826B9	EVENT	Y	(082) Location Event Data	2007.06.28
+3826BA	3828EA	EVENT	Y	(083) Location Event Data	2007.06.28
+3828EB	382A66	EVENT	Y	(084) Location Event Data	2007.06.28
+382A67	382D68	EVENT	Y	(085) Location Event Data	2007.06.28
+382D69	382F59	EVENT	Y	(086) Location Event Data	2007.06.28
+382F5A	38327E	EVENT	Y	(087) Location Event Data	2007.06.28
+38327F	3836AA	EVENT	Y	(088) Location Event Data	2007.06.28
+3836AB	3836FF	EVENT	Y	(089) Location Event Data	2007.06.28
+383700	383C8D	EVENT	Y	(08A) Location Event Data	2007.06.28
+383C8E	383FF0	EVENT	Y	(08B) Location Event Data	2007.06.28
+383FF1	384278	EVENT	Y	(08C) Location Event Data	2007.06.28
+384279	384539	EVENT	Y	(08D) Location Event Data	2007.06.28
+38453A	38458E	EVENT	Y	(08E) Location Event Data	2007.06.28
+38458F	3845E3	EVENT	Y	(08F) Location Event Data	2007.06.28
+3845E4	384638	EVENT	Y	(090) Location Event Data	2007.06.28
+384639	384FFF	---	N	UNUSED SPACE (2503 bytes)	2007.06.28
+385000	3851FF	PTR	N	"Pointers to Dialogue (256 strings, $100)"	2007.06.28
+385200	3843FF	PTR	N	"Pointers to Dialogue (256 strings, $100)"	2007.06.28
+385400	3855FF	PTR	N	"Pointers to Dialogue (256 strings, $100)"	2007.06.28
+385600	3872F6	TXT	N	Dialogue	2007.06.28
+3872F7	3887E0	TXT	N	Dialogue	2007.06.28
+3887E1	389FE7	TXT	N	Dialogue	2007.06.28
+389FE8	389FFF	---	N	UNUSED SPACE (24 bytes)	2007.06.28
+38A000	38A2FD	EVENT	Y	(091) Location Event Data	2007.06.28
+38A2FE	38A459	EVENT	Y	(092) Location Event Data	2007.06.28
+38A45A	38A5C7	EVENT	Y	(093) Location Event Data	2007.06.28
+38A5C8	38A7FF	EVENT	Y	(094) Location Event Data	2007.06.28
+38A800	38A99C	EVENT	Y	(095) Location Event Data	2007.06.28
+38A99D	38AA5E	EVENT	Y	(096) Location Event Data	2007.06.28
+38AA5F	38AB71	EVENT	Y	(097) Location Event Data	2007.06.28
+38AB72	38AD82	EVENT	Y	(098) Location Event Data	2007.06.28
+38AD83	38AF6E	EVENT	Y	(099) Location Event Data	2007.06.28
+38AF6F	38B226	EVENT	Y	(09A) Location Event Data	2007.06.28
+38B227	38B2B6	EVENT	Y	(09B) Location Event Data	2007.06.28
+38B2B7	38B444	EVENT	Y	(09C) Location Event Data	2007.06.28
+38B445	38B985	EVENT	Y	(09D) Location Event Data	2007.06.28
+38B986	38BC06	EVENT	Y	(09E) Location Event Data	2007.06.28
+38BC07	38BF52	EVENT	Y	(09F) Location Event Data	2007.06.28
+38BF53	38C441	EVENT	Y	(0A0) Location Event Data	2007.06.28
+38C442	38C62B	EVENT	Y	(0A1) Location Event Data	2007.06.28
+38C62C	38C92D	EVENT	Y	(0A2) Location Event Data	2007.06.28
+38C92E	38CE06	EVENT	Y	(0A3) Location Event Data	2007.06.28
+38CE07	38D40A	EVENT	Y	(0A4) Location Event Data	2007.06.28
+38D40B	38D535	EVENT	Y	(0A5) Location Event Data	2007.06.28
+38D536	38DA03	EVENT	Y	(0A6) Location Event Data	2007.06.28
+38DA04	38DDA8	EVENT	Y	(0A7) Location Event Data	2007.06.28
+38DDA9	38DEE1	EVENT	Y	(0A8) Location Event Data	2007.06.28
+38DEE2	38E096	EVENT	Y	(0A9) Location Event Data	2007.06.28
+38E097	38E109	EVENT	Y	(0AA) Location Event Data	2007.06.28
+38E10A	38E2F3	EVENT	Y	(0AB) Location Event Data	2007.06.28
+38E2F4	38E585	EVENT	Y	(0AC) Location Event Data	2007.06.28
+38E586	38E897	EVENT	Y	(0AD) Location Event Data	2007.06.28
+38E898	38EA6D	EVENT	Y	(0AE) Location Event Data	2007.06.28
+38EA6E	38ED27	EVENT	Y	(0AF) Location Event Data	2007.06.28
+38ED28	38EE83	EVENT	Y	(0B0) Location Event Data	2007.06.28
+38EE84	38EFFF	---	N	UNUSED SPACE (380 bytes)	2007.06.28
+38F000	38F0D3	PTR	N	"Pointers to Dialogue (106 strings, $6A)"	2007.06.28
+38F0D4	38FF5C	TXT	N	Dialogue	2007.06.28
+38FF5D	38FF5F	JUNK	N	Unpointed Dialogue	2007.06.28
+38FF60	38FFFF	---	N	UNUSED SPACE (160 bytes)	2007.06.28
+390000	390616	EVENT	Y	(0B1) Location Event Data	2007.06.28
+390617	390C61	EVENT	Y	(0B2) Location Event Data	2007.06.28
+390C62	39168F	EVENT	Y	(0B3) Location Event Data	2007.06.28
+391690	391A1B	EVENT	Y	(0B4) Location Event Data	2007.06.28
+391A1C	391BFC	EVENT	Y	(0B5) Location Event Data	2007.06.28
+391BFD	391E82	EVENT	Y	(0B6) Location Event Data	2007.06.28
+391E83	39244F	EVENT	Y	(0B7) Location Event Data	2007.06.28
+392450	392571	EVENT	Y	(0B8) Location Event Data	2007.06.28
+392572	392B3C	EVENT	Y	(0B9) Location Event Data	2007.06.28
+392B3D	3931C6	EVENT	Y	(0BA) Location Event Data	2007.06.28
+3931C7	3938DC	EVENT	Y	(0BB) Location Event Data	2007.06.28
+3938DD	394086	EVENT	Y	(0BC) Location Event Data	2007.06.28
+394087	39442C	EVENT	Y	(0BD) Location Event Data	2007.06.28
+39442D	394917	EVENT	Y	(0BE) Location Event Data	2007.06.28
+394918	394A19	EVENT	Y	(0BF) Location Event Data	2007.06.28
+394A1A	394BF8	EVENT	Y	(0C0) Location Event Data	2007.06.28
+394BF9	394D53	EVENT	Y	(0C1) Location Event Data	2007.06.28
+394D54	394E83	EVENT	Y	(0C2) Location Event Data	2007.06.28
+394E84	395169	EVENT	Y	(0C3) Location Event Data	2007.06.28
+39516A	395503	EVENT	Y	(0C4) Location Event Data	2007.06.28
+395504	395806	EVENT	Y	(0C5) Location Event Data	2007.06.28
+395807	395B36	EVENT	Y	(0C6) Location Event Data	2007.06.28
+395B37	395D36	EVENT	Y	(0C7:0C8) Location Event Data	2007.06.28
+395D37	3960A6	EVENT	Y	(0C9) Location Event Data	2007.06.28
+3960A7	3961A8	EVENT	Y	(0CA) Location Event Data	2007.06.28
+3961A9	3963C3	EVENT	Y	(0CB) Location Event Data	2007.06.28
+3963C4	3966B3	EVENT	Y	(0CC) Location Event Data	2007.06.28
+3966B4	3969CE	EVENT	Y	(0CD) Location Event Data	2007.06.28
+3969CF	396D7C	EVENT	Y	(0CE) Location Event Data	2007.06.28
+396D7D	3973C5	EVENT	Y	(0CF:0D0) Location Event Data	2007.06.28
+3973C6	3977B5	EVENT	Y	(0D1) Location Event Data	2007.06.28
+3977B6	397895	EVENT	Y	(0D2) Location Event Data	2007.06.28
+397896	397942	EVENT	Y	(0D3) Location Event Data	2007.06.28
+397943	397B5B	EVENT	Y	(0D4) Location Event Data	2007.06.28
+397B5C	397D27	EVENT	Y	(0D5) Location Event Data	2007.06.28
+397D28	397F41	EVENT	Y	(0D6) Location Event Data	2007.06.28
+397F42	398179	EVENT	Y	(0D7) Location Event Data	2007.06.28
+39817A	3982DA	EVENT	Y	(0D8) Location Event Data	2007.06.28
+3982DB	39873E	EVENT	Y	(0D9) Location Event Data	2007.06.28
+39873F	398933	EVENT	Y	(0DA) Location Event Data	2007.06.28
+398934	3989A8	EVENT	Y	(0DB) Location Event Data	2007.06.28
+3989A9	398C6A	EVENT	Y	(0DC) Location Event Data	2007.06.28
+398C6B	398E44	EVENT	Y	(0DD) Location Event Data	2007.06.28
+398E45	39920C	EVENT	Y	(0DE) Location Event Data	2007.06.28
+39920D	399C28	EVENT	Y	(0DF) Location Event Data	2007.06.28
+399C29	39A034	EVENT	Y	(0E0) Location Event Data	2007.06.28
+39A035	39A127	EVENT	Y	(0E1) Location Event Data	2007.06.28
+39A128	39A23E	EVENT	Y	(0E2) Location Event Data	2007.06.28
+39A23F	39AFE9	EVENT	Y	(0E3:0E6) Location Event Data	2007.06.28
+39AFEA	39AFFF	JUNK	N	"Unpointed Dialogue, (0E7:0EB) Loc. Event PTRs go here"	2007.06.28
+39B000	39B189	PTR	N	"Pointers to Dialogue (197 strings, $C5)"	2007.06.28
+39B18A	39B233	PTR	N	"Pointers to Dialogue (85 strings, $55)"	2007.06.28
+39B234	39B421	PTR	N	"Pointers to Dialogue (247 strings, $F7)"	2007.06.28
+39B422	39CF5C	TXT	N	Dialogue	2007.06.28
+39CF5D	39DF26	TXT	N	Dialogue	2007.06.28
+39DF27	39FF24	TXT	N	Dialogue	2007.06.28
+39FF25	39FF7C	JUNK	N	Unpointed Dialogue	2007.06.28
+39FF7D	39FF9C	JUNK	N	Unpointed Dialogue	2007.06.28
+39FF9D	39FFFF	JUNK	N	Unpointed Dialogue (non-terminating)	2007.06.28
+3A0000	3A020A	EVENT	Y	(0EC) Location Event Data	2007.06.28
+3A020B	3A032E	EVENT	Y	(0ED) Location Event Data	2007.06.28
+3A032F	3A065E	EVENT	Y	(0EE) Location Event Data	2007.06.28
+3A065F	3A086A	EVENT	Y	(0EF) Location Event Data	2007.06.28
+3A086B	3A12A6	EVENT	Y	(0F0) Location Event Data	2007.06.28
+3A12A7	3A1448	EVENT	Y	(0F1) Location Event Data	2007.06.28
+3A1449	3A1AB8	EVENT	Y	(0F2) Location Event Data	2007.06.28
+3A1AB9	3A20C7	EVENT	Y	(0F3) Location Event Data	2007.06.28
+3A20C8	3A23DB	EVENT	Y	(0F4) Location Event Data	2007.06.28
+3A23DC	3A27C0	EVENT	Y	(0F5) Location Event Data	2007.06.28
+3A27C1	3A2C67	EVENT	Y	(0F6) Location Event Data	2007.06.28
+3A2C68	3A2FF2	EVENT	Y	(0F7) Location Event Data	2007.06.28
+3A2FF3	3A355B	EVENT	Y	(0F8) Location Event Data	2007.06.28
+3A355C	3A380A	EVENT	Y	(0F9) Location Event Data	2007.06.28
+3A380B	3A3C35	EVENT	Y	(0FA) Location Event Data	2007.06.28
+3A3C36	3A4083	EVENT	Y	(0FB) Location Event Data	2007.06.28
+3A4084	3A42B0	EVENT	Y	(0FC) Location Event Data	2007.06.28
+3A42B1	3A488A	EVENT	Y	(0FD) Location Event Data	2007.06.28
+3A488B	3A4C67	EVENT	Y	(0FE) Location Event Data	2007.06.28
+3A4C68	3A509C	EVENT	Y	(0FF) Location Event Data	2007.06.28
+3A509D	3A54FE	EVENT	Y	(100) Location Event Data	2007.06.28
+3A54FF	3A5777	EVENT	Y	(101) Location Event Data	2007.06.28
+3A5778	3A57FF	EVENT	Y	(102) Location Event Data	2007.06.28
+3A5800	3A5B02	EVENT	Y	(103) Location Event Data	2007.06.28
+3A5B03	3A5BE0	EVENT	Y	(104) Location Event Data	2007.06.28
+3A5BE1	3A640D	EVENT	Y	(105) Location Event Data	2007.06.28
+3A640E	3A652A	EVENT	Y	(106) Location Event Data	2007.06.28
+3A652B	3A656E	EVENT	Y	(107) Location Event Data	2007.06.28
+3A656F	3A660E	EVENT	Y	(108) Location Event Data	2007.06.28
+3A660F	3A6850	EVENT	Y	(109) Location Event Data	2007.06.28
+3A6851	3A6DA6	EVENT	Y	(10A) Location Event Data	2007.06.28
+3A6DA7	3A7224	EVENT	Y	(10B) Location Event Data	2007.06.28
+3A7225	3A7384	EVENT	Y	(10C) Location Event Data	2007.06.28
+3A7385	3A7B79	EVENT	Y	(10D) Location Event Data	2007.06.28
+3A7B7A	3A7D27	EVENT	Y	(10E) Location Event Data	2007.06.28
+3A7D28	3A7F77	EVENT	Y	(10F) Location Event Data	2007.06.28
+3A7F78	3A812E	EVENT	Y	(110) Location Event Data	2007.06.28
+3A812F	3A82A5	EVENT	Y	(111) Location Event Data	2007.06.28
+3A82A6	3A87FE	EVENT	Y	(112) Location Event Data	2007.06.28
+3A87FF	3A8F47	EVENT	Y	(113) Location Event Data	2007.06.28
+3A8F48	3A9748	EVENT	Y	(114) Location Event Data	2007.06.28
+3A9749	3A9824	EVENT	Y	(115) Location Event Data	2007.06.28
+3A9825	3A9A2D	EVENT	Y	(116) Location Event Data	2007.06.28
+3A9A2E	3A9C97	EVENT	Y	(117) Location Event Data	2007.06.28
+3A9C98	3A9D1B	EVENT	Y	(118) Location Event Data	2007.06.28
+3A9D1C	3A9F6F	EVENT	Y	(119) Location Event Data	2007.06.28
+3A9F70	3AA33A	EVENT	Y	(11A) Location Event Data	2007.06.28
+3AA33B	3AB190	EVENT	Y	(11B) Location Event Data	2007.06.28
+3AB191	3AB906	EVENT	Y	(11C) Location Event Data	2007.06.28
+3AB907	3ABFDB	EVENT	Y	(11D) Location Event Data	2007.06.28
+3ABFDC	3AC827	EVENT	Y	(11E) Location Event Data	2007.06.28
+3AC828	3AC881	EVENT	Y	(11F) Location Event Data	2007.06.28
+3AC882	3ACBDC	EVENT	Y	(120) Location Event Data	2007.06.28
+3ACBDD	3ACE6C	EVENT	Y	(121) Location Event Data	2007.06.28
+3ACE6D	3AD2C9	EVENT	Y	(122) Location Event Data	2007.06.28
+3AD2CA	3AD84F	EVENT	Y	(123) Location Event Data	2007.06.28
+3AD850	3ADCBA	EVENT	Y	(124) Location Event Data	2007.06.28
+3ADCBB	3AE1F4	EVENT	Y	(125) Location Event Data	2007.06.28
+3AE1F5	3AE68B	EVENT	Y	(126) Location Event Data	2007.06.28
+3AE68C	3AE81D	EVENT	Y	(127) Location Event Data	2007.06.28
+3AE81E	3AEAC1	EVENT	Y	(128) Location Event Data	2007.06.28
+3AEAC2	3AEB0A	EVENT	Y	(129) Location Event Data	2007.06.28
+3AEB0B	3AEC93	EVENT	Y	(12A) Location Event Data	2007.06.28
+3AEC94	3AED4C	EVENT	Y	(12B) Location Event Data	2007.06.28
+3AED4D	3AEDE4	EVENT	Y	(12C) Location Event Data	2007.06.28
+3AEDE5	3AEE26	EVENT	Y	(12D) Location Event Data	2007.06.28
+3AEE27	3AEE60	EVENT	Y	(12E) Location Event Data	2007.06.28
+3AEE61	3AEE9A	EVENT	Y	(12F) Location Event Data	2007.06.28
+3AEE9B	3AEED4	EVENT	Y	(130) Location Event Data	2007.06.28
+3AEED5	3AEF8C	EVENT	Y	(131) Location Event Data	2007.06.28
+3AEF8D	3AEFDC	EVENT	Y	(132) Location Event Data	2007.06.28
+3AEFDD	3AF14A	EVENT	Y	(133) Location Event Data	2007.06.28
+3AF14B	3AF19A	EVENT	Y	(134) Location Event Data	2007.06.28
+3AF19B	3AF356	EVENT	Y	(135) Location Event Data	2007.06.28
+3AF357	3AF3F6	EVENT	Y	(136) Location Event Data	2007.06.28
+3AF3F7	3AF4A4	EVENT	Y	(137) Location Event Data	2007.06.28
+3AF4A5	3AF525	EVENT	Y	(138) Location Event Data	2007.06.28
+3AF526	3AF5C6	EVENT	Y	(139) Location Event Data	2007.06.28
+3AF5C7	3AF644	EVENT	Y	(13A) Location Event Data	2007.06.28
+3AF645	3AF6C4	EVENT	Y	(13B) Location Event Data	2007.06.28
+3AF6C5	3AF75C	EVENT	Y	(13C) Location Event Data	2007.06.28
+3AF75D	3AF80A	EVENT	Y	(13D) Location Event Data	2007.06.28
+3AF80B	3AF8A5	EVENT	Y	(13E) Location Event Data	2007.06.28
+3AF8A6	3AFA92	EVENT	Y	(13F) Location Event Data	2007.06.28
+3AFA93	3AFAAA	JUNK	Y	Old (140) Location Event Data $0D0A BETA format	2007.06.28
+3AFAAB	3AFAC2	JUNK	Y	Old (141) Location Event Data $0D0A BETA format	2007.06.28
+3AFAC3	3AFADA	JUNK	Y	Old (142) Location Event Data $0D0A BETA format	2007.06.28
+3AFADB	3AFB32	JUNK	Y	Overwritten old (133) Location Event Data $0D0A BETA format	2007.06.28
+3AFB33	3AFB8B	JUNK	Y	Old (134) Location Event Data $0D0A BETA format	2007.06.28
+3AFB8C	3AFBA3	JUNK	Y	Old (135) Location Event Data $0D0A BETA format	2007.06.28
+3AFBA4	3AFC41	JUNK	Y	Old (136) Location Event Data $0D0A BETA format	2007.06.28
+3AFC42	3AFCEE	JUNK	Y	Old (137) Location Event Data $0D0A BETA format	2007.06.28
+3AFCEF	3AFD6E	JUNK	Y	Old (138) Location Event Data $0D0A BETA format	2007.06.28
+3AFD6F	3AFE0C	JUNK	Y	Old (139) Location Event Data $0D0A BETA format	2007.06.28
+3AFE0D	3AFE89	JUNK	Y	Old (13A) Location Event Data $0D0A BETA format	2007.06.28
+3AFE8A	3AFF08	JUNK	Y	Old (13B) Location Event Data $0D0A BETA format	2007.06.28
+3AFF09	3AFF9F	JUNK	Y	Old (13C) Location Event Data $0D0A BETA format	2007.06.28
+3AFFA0	3AFFFF	JUNK	Y	Overwritten old (13D) Location Event Data $0D0A BETA format	2007.06.28
+3B0000	3B051A	EVENT	Y	(143) Location Event Data	2007.06.28
+3B051B	3B0BA3	EVENT	Y	(144) Location Event Data	2007.06.28
+3B0BA4	3B1034	EVENT	Y	(145) Location Event Data	2007.06.28
+3B1035	3B1199	EVENT	Y	(146) Location Event Data	2007.06.28
+3B119A	3B12F4	EVENT	Y	(147) Location Event Data	2007.06.28
+3B12F5	3B138E	EVENT	Y	(148) Location Event Data	2007.06.28
+3B138F	3B1433	EVENT	Y	(149) Location Event Data	2007.06.28
+3B1434	3B1653	EVENT	Y	(14A) Location Event Data	2007.06.28
+3B1654	3B17C8	EVENT	Y	(14B) Location Event Data	2007.06.28
+3B17C9	3B197D	EVENT	Y	(14C) Location Event Data	2007.06.28
+3B197E	3B1EC8	EVENT	Y	(14D) Location Event Data	2007.06.28
+3B1EC9	3B25D2	EVENT	Y	(14E) Location Event Data	2007.06.28
+3B25D3	3B269E	EVENT	Y	(14F) Location Event Data	2007.06.28
+3B269F	3B27F8	EVENT	Y	(150) Location Event Data	2007.06.28
+3B27F9	3B2B70	EVENT	Y	(151) Location Event Data	2007.06.28
+3B2B71	3B2DB8	EVENT	Y	(152) Location Event Data	2007.06.28
+3B2DB9	3B2E60	EVENT	Y	(153) Location Event Data	2007.06.28
+3B2E61	3B3062	EVENT	Y	(154) Location Event Data	2007.06.28
+3B3063	3B3176	EVENT	Y	(155) Location Event Data	2007.06.28
+3B3177	3B3229	EVENT	Y	(156) Location Event Data	2007.06.28
+3B322A	3B330B	EVENT	Y	(157) Location Event Data	2007.06.28
+3B330C	3B3464	EVENT	Y	(158) Location Event Data	2007.06.28
+3B3465	3B3AC1	EVENT	Y	(159) Location Event Data	2007.06.28
+3B3AC2	3B3DD2	EVENT	Y	(15A) Location Event Data	2007.06.28
+3B3DD3	3B4A3D	EVENT	Y	(15B) Location Event Data	2007.06.28
+3B4A3E	3B4EF1	EVENT	Y	(15C) Location Event Data	2007.06.28
+3B4EF2	3B5076	EVENT	Y	(15D) Location Event Data	2007.06.28
+3B5077	3B50F4	EVENT	Y	(15E) Location Event Data	2007.06.28
+3B50F5	3B5197	EVENT	Y	(15F) Location Event Data	2007.06.28
+3B5198	3B52E6	EVENT	Y	(160) Location Event Data	2007.06.28
+3B52E7	3B5374	EVENT	Y	(161) Location Event Data	2007.06.28
+3B5375	3B556A	EVENT	Y	(162) Location Event Data	2007.06.28
+3B556B	3B5F67	EVENT	Y	(163) Location Event Data	2007.06.28
+3B5F68	3B5FF7	EVENT	Y	(164) Location Event Data	2007.06.28
+3B5FF8	3B60EF	EVENT	Y	(165) Location Event Data	2007.06.28
+3B60F0	3B6246	EVENT	Y	(166) Location Event Data	2007.06.28
+3B6247	3B6CA3	EVENT	Y	(167) Location Event Data	2007.06.28
+3B6CA4	3B6E9C	EVENT	Y	(168) Location Event Data	2007.06.28
+3B6E9D	3B74BE	EVENT	Y	(169) Location Event Data	2007.06.28
+3B74BF	3B75B0	EVENT	Y	(16A) Location Event Data	2007.06.28
+3B75B1	3B782E	EVENT	Y	(16B) Location Event Data	2007.06.28
+3B782F	3B801B	EVENT	Y	(16C) Location Event Data	2007.06.28
+3B801C	3B8600	EVENT	Y	(16D) Location Event Data	2007.06.28
+3B8601	3B8C9D	EVENT	Y	(16E) Location Event Data	2007.06.28
+3B8C9E	3B8D8F	EVENT	Y	(16F) Location Event Data	2007.06.28
+3B8D90	3B9119	EVENT	Y	(170) Location Event Data	2007.06.28
+3B911A	3B9263	EVENT	Y	(171) Location Event Data	2007.06.28
+3B9264	3B9638	EVENT	Y	(172) Location Event Data	2007.06.28
+3B9639	3B9D73	EVENT	Y	(173) Location Event Data	2007.06.28
+3B9D74	3B9DC4	EVENT	Y	(174) Location Event Data	2007.06.28
+3B9DC5	3BA17C	EVENT	Y	(175) Location Event Data	2007.06.28
+3BA17D	3BA561	EVENT	Y	(176) Location Event Data	2007.06.28
+3BA562	3BA895	EVENT	Y	(177) Location Event Data	2007.06.28
+3BA896	3BAB86	EVENT	Y	(178) Location Event Data	2007.06.28
+3BAB87	3BAEAC	EVENT	Y	(179) Location Event Data	2007.06.28
+3BAEAD	3BB181	EVENT	Y	(17A) Location Event Data	2007.06.28
+3BB182	3BB1D2	EVENT	Y	(17B) Location Event Data	2007.06.28
+3BB1D3	3BB483	EVENT	Y	(17C) Location Event Data	2007.06.28
+3BB484	3BB73A	EVENT	Y	(17D) Location Event Data	2007.06.28
+3BB73B	3BBA93	EVENT	Y	(17E) Location Event Data	2007.06.28
+3BBA94	3BBD8B	EVENT	Y	(17F) Location Event Data	2007.06.28
+3BBD8C	3BBFDC	EVENT	Y	(180) Location Event Data	2007.06.28
+3BBFDD	3BC0C7	EVENT	Y	(181) Location Event Data	2007.06.28
+3BC0C8	3BC33A	EVENT	Y	(182) Location Event Data	2007.06.28
+3BC33B	3BC5DF	EVENT	Y	(183) Location Event Data	2007.06.28
+3BC5E0	3BC871	EVENT	Y	(184) Location Event Data	2007.06.28
+3BC872	3BCB4D	EVENT	Y	(185) Location Event Data	2007.06.28
+3BCB4E	3BCEA6	EVENT	Y	(186) Location Event Data	2007.06.28
+3BCEA7	3BCF35	EVENT	Y	(187) Location Event Data	2007.06.28
+3BCF36	3BD075	EVENT	Y	(188) Location Event Data	2007.06.28
+3BD076	3BD4F3	EVENT	Y	(189) Location Event Data	2007.06.28
+3BD4F4	3BD8D2	EVENT	Y	(18A) Location Event Data	2007.06.28
+3BD8D3	3BDC77	EVENT	Y	(18B) Location Event Data	2007.06.28
+3BDC78	3BDDA5	EVENT	Y	(18C) Location Event Data	2007.06.28
+3BDDA6	3BE338	EVENT	Y	(18D) Location Event Data	2007.06.28
+3BE339	3BE47B	EVENT	Y	(18E) Location Event Data	2007.06.28
+3BE47C	3BE74A	EVENT	Y	(18F) Location Event Data	2007.06.28
+3BE74B	3BE7D1	EVENT	Y	(190) Location Event Data	2007.06.28
+3BE7D2	3BE8AD	EVENT	Y	(191) Location Event Data	2007.06.28
+3BE8AE	3BEE52	EVENT	Y	(192) Location Event Data	2007.06.28
+3BEE53	3BF43D	EVENT	Y	(193) Location Event Data	2007.06.28
+3BF43E	3BF523	EVENT	Y	(194) Location Event Data	2007.06.28
+3BF524	3BF5A8	EVENT	Y	(195) Location Event Data	2007.06.28
+3BF5A9	3BFC96	EVENT	Y	(196) Location Event Data	2007.06.28
+3BFC97	3BFE16	EVENT	Y	(197) Location Event Data	2007.06.28
+3BFE17	3BFFCA	EVENT	Y	(198) Location Event Data	2007.06.28
+3BFFCB	3BFFFD	JUNK	Y	Overwritten (198) Location Event Data	2007.06.28
+3BFFFE	3BFFFF	---	N	UNUSED SPACE (2 bytes)	2007.06.28
+3C0000	3C963C	EVENT	Y	(199) Location Event Data	2007.06.28
+3C063D	3C0A3B	EVENT	Y	(19A) Location Event Data	2007.06.28
+3C0A3D	3C0C67	EVENT	Y	(19B) Location Event Data	2007.06.28
+3C0C68	3C0F28	EVENT	Y	(19C) Location Event Data	2007.06.28
+3C0F29	3C105E	EVENT	Y	(19D) Location Event Data	2007.06.28
+3C105F	3C11CD	EVENT	Y	(19E) Location Event Data	2007.06.28
+3C11CE	3C1292	EVENT	Y	(19F) Location Event Data	2007.06.28
+3C1293	3C1486	EVENT	Y	(1A0) Location Event Data	2007.06.28
+3C1487	3C196F	EVENT	Y	(1A1) Location Event Data	2007.06.28
+3C1970	3C1C49	EVENT	Y	(1A2) Location Event Data	2007.06.28
+3C1C4A	3C1E40	EVENT	Y	(1A3) Location Event Data	2007.06.28
+3C1E41	3C1F75	EVENT	Y	(1A4) Location Event Data	2007.06.28
+3C1F76	3C2302	EVENT	Y	(1A5) Location Event Data	2007.06.28
+3C2303	3C260F	EVENT	Y	(1A6) Location Event Data	2007.06.28
+3C2610	3C2929	EVENT	Y	(1A7) Location Event Data	2007.06.28
+3C292A	3C29B7	EVENT	Y	(1A8) Location Event Data	2007.06.28
+3C29B8	3C2B3F	EVENT	Y	(1A9) Location Event Data	2007.06.28
+3C2B40	3C2C40	EVENT	Y	(1AA) Location Event Data	2007.06.28
+3C2C41	3C2D6C	EVENT	Y	(1AB) Location Event Data	2007.06.28
+3C2D6D	3C31BE	EVENT	Y	(1AC) Location Event Data	2007.06.28
+3C31BF	3C32F6	EVENT	Y	(1AD) Location Event Data	2007.06.28
+3C32F7	3C34E5	EVENT	Y	(1AE) Location Event Data	2007.06.28
+3C34E6	3C3688	EVENT	Y	(1AF) Location Event Data	2007.06.28
+3C3689	3C3771	EVENT	Y	(1B0) Location Event Data	2007.06.28
+3C3772	3C3814	EVENT	Y	(1B1) Location Event Data	2007.06.28
+3C3815	3C3906	EVENT	Y	(1B2) Location Event Data	2007.06.28
+3C3907	3C39EA	EVENT	Y	(1B3) Location Event Data	2007.06.28
+3C39EB	3C3C60	EVENT	Y	(1B4) Location Event Data	2007.06.28
+3C3C61	3C3EBE	EVENT	Y	(1B5) Location Event Data	2007.06.28
+3C3EBF	3C40B1	EVENT	Y	(1B6) Location Event Data	2007.06.28
+3C40B2	3C4259	EVENT	Y	(1B7) Location Event Data	2007.06.28
+3C425A	3C42FA	EVENT	Y	(1B8) Location Event Data	2007.06.28
+3C42FB	3C45CE	EVENT	Y	(1B9) Location Event Data	2007.06.28
+3C45CF	3C46DA	EVENT	Y	(1BA) Location Event Data	2007.06.28
+3C46DB	3C494D	EVENT	Y	(1BB) Location Event Data	2007.06.28
+3C494E	3C5558	EVENT	Y	(1BC) Location Event Data	2007.06.28
+3C5559	3C5B0E	EVENT	Y	(1BD) Location Event Data	2007.06.28
+3C5B0F	3C5EC3	EVENT	Y	(1BE) Location Event Data	2007.06.28
+3C5EC4	3C5EEE	EVENT	Y	(1BF:1C0) Location Event Data	2007.06.28
+3C5EEF	3C60C7	EVENT	Y	(1C1:1C4) Location Event Data	2007.06.28
+3C60C8	3C621F	EVENT	Y	(1C5) Location Event Data	2007.06.28
+3C6220	3C633E	EVENT	Y	(1C6) Location Event Data	2007.06.28
+3C633F	3C6483	EVENT	Y	(1C7) Location Event Data	2007.06.28
+3C6484	3C6619	EVENT	Y	(1C8) Location Event Data	2007.06.28
+3C661A	3C67AB	EVENT	Y	(1C9) Location Event Data	2007.06.28
+3C67AC	3C6BE6	EVENT	Y	(1CA:1CF) Location Event Data	2007.06.28
+3C6BE7	3C6C69	EVENT	Y	(1D0) Location Event Data	2007.06.28
+3C6C6A	3C74B7	EVENT	Y	(1D1:1D2) Location Event Data	2007.06.28
+3C74B8	3C7612	EVENT	Y	(1D3) Location Event Data	2007.06.28
+3C7613	3C7662	EVENT	Y	(1D4) Location Event Data	2007.06.28
+3C7663	3C79C7	EVENT	Y	(1D5) Location Event Data	2007.06.28
+3C79C8	3C7E86	EVENT	Y	(1D6) Location Event Data	2007.06.28
+3C7E87	3C7F5E	EVENT	Y	(1D7:1D8) Location Event Data	2007.06.28
+3C7F5F	3C8175	EVENT	Y	(1D9) Location Event Data	2007.06.28
+3C8176	3C843F	EVENT	Y	(1DA) Location Event Data	2007.06.28
+3C8440	3C8584	EVENT	Y	(1DB) Location Event Data	2007.06.28
+3C8585	3C87F4	EVENT	Y	(1DC) Location Event Data	2007.06.28
+3C87F5	3C8911	EVENT	Y	(1DD:1DE) Location Event Data	2007.06.28
+3C8912	3C8A2E	EVENT	Y	(1DF) Location Event Data	2007.06.28
+3C8A2F	3C8ABF	EVENT	Y	(1E0) Location Event Data	2007.06.28
+3C8AC0	3C8BF3	EVENT	Y	(1E1) Location Event Data	2007.06.28
+3C8BF4	3C8C8F	EVENT	Y	(1E2) Location Event Data	2007.06.28
+3C8C90	3C8E5C	EVENT	Y	(1E3) Location Event Data	2007.06.28
+3C8E5D	3C8F86	EVENT	Y	(1E4) Location Event Data	2007.06.28
+3C8F87	3C8FFD	EVENT	Y	(1E5) Location Event Data	2007.06.28
+3C8FFE	3C904D	EVENT	Y	(1E6:1E9) Location Event Data	2007.06.28
+3C904E	3C9671	EVENT	Y	(1EA) Location Event Data	2007.06.28
+3C9672	3C98F6	EVENT	Y	(1EB) Location Event Data	2007.06.28
+3C98F7	3C9AB8	EVENT	Y	(1EC) Location Event Data	2007.06.28
+3C9AB9	3C9C57	EVENT	Y	(1ED) Location Event Data	2007.06.28
+3C9C58	3C9D56	EVENT	Y	(1EE) Location Event Data	2007.06.28
+3C9D57	3C9EA9	EVENT	Y	(1EF) Location Event Data	2007.06.28
+3C9EAA	3CA013	EVENT	Y	(1F0) Location Event Data	2007.06.28
+3CA014	3CA14A	EVENT	Y	(1F1) Location Event Data	2007.06.28
+3CA14B	3CA27A	EVENT	Y	(1F2) Location Event Data	2007.06.28
+3CA27B	3CA6DF	EVENT	Y	(1F3) Location Event Data	2007.06.28
+3CA6E0	3CA772	EVENT	Y	(1F4) Location Event Data	2007.06.28
+3CA773	3CA813	EVENT	Y	(1F5) Location Event Data	2007.06.28
+3CA814	3CA996	EVENT	Y	(1F6:1F7) Location Event Data	2007.06.28
+3CA997	3CABB3	EVENT	Y	(1F8:1F9) Location Event Data	2007.06.28
+3CABB4	3CAF96	EVENT	Y	(1FA) Location Event Data	2007.06.28
+3CAF97	3CB1E3	EVENT	Y	(1FB) Location Event Data	2007.06.28
+3CB1E4	3CB393	EVENT	Y	(1FC) Location Event Data	2007.06.28
+3CB394	3CB47A	EVENT	Y	(1FD) Location Event Data	2007.06.28
+3CB47B	3CB6EA	EVENT	Y	(1FE:1FF) Location Event Data	2007.06.28
+3CB6EB	3CB9E2	EVENT	Y	(200) Location Event Data	2007.06.28
+3CB9E3	3CBBFF	JUNK	N	Overwritten Pointers to Dialogue	2007.06.28
+3CBC00	3CBD95	PTR	N	"Pointers to Dialogue (203 strings, $CB)"	2007.06.28
+3CBD96	3CBF1B	PTR	N	"Pointers to Dialogue (93 strings, $5D)"	2007.06.28
+3CBF1C	3CC03B	PTR	N	"Pointers to Dialogue (144 strings, $90)"	2007.06.28
+3CC03C	3CD9C6	TXT	N	Dialogue	2007.06.28
+3CD9C7	3CEF7D	TXT	N	Dialogue	2007.06.28
+3CEF7E	3CFFCC	TXT	N	Dialogue	2007.06.28
+3CFFCD	3CFFF1	JUNK	N	Unpointed Dialogue	2007.06.28
+3CFFF2	3CFFFF	---	N	UNUSED SPACE (14 bytes)	2007.06.28
+3D0000	3D0235	GFX	Y	(3A) Mode 7 - Final Ending - alphabet (2 bitplane)	2007.06.28
+3D0236	3D0A5D	???	Y	(3B) Mode 7 - Final Ending	2007.06.28
+3D0A5E	3D0CA7	???	Y	(3C) Mode 7 - Final Ending	2007.06.28
+3D0CA8	3D20F8	GFX	Y	"(3D) Mode 7 - Final Ending - Crono, Marle and balloons"	2007.06.28
+3D20F9	3D212E	???	Y	(3E) Mode 7 - Final Ending	2007.06.28
+3D212F	3D22AA	GFX	Y	(3F) Mode 7 - ??? - sparkling objects - unused?	2007.06.28
+3D22AB	3D2C11	???	Y	(40) Mode 7 - Final Ending	2007.06.28
+3D2C12	3D2CA1	???	Y	(41) Mode 7 - Final Ending	2007.06.28
+3D2CA2	3D2D08	???	Y	(42) Mode 7 - Final Ending	2007.06.28
+3D2D09	3D5137	GFX	Y	(43) Mode 7 - BTFRTC/Final Ending - planet	2007.06.28
+3D5138	3D54C9	???	Y	(44) Mode 7 - Final Ending	2007.06.28
+3D54CA	3D55BA	???	Y	"(45) Mode 7 - ???, probably Final Ending"	2007.06.28
+3D55BB	3D636C	GFX	Y	(46) Mode 7 - Final Ending - Epoch	2007.06.28
+3D636D	3D67FF	---	N	UNUSED SPACE (1171 bytes)	2007.06.28
+3D6800	3D7466	GFX	Y	(C8) Location Tiles	2007.06.28
+3D7467	3D7E5B	GFX	Y	(C9) Location Tiles	2007.06.28
+3D7E5C	3D804E	GFX	Y	(CA) Location Tiles	2007.06.28
+3D804F	3D8E63	GFX	Y	(CB) Location Tiles	2007.06.28
+3D8E64	3D9F58	GFX	Y	(CC) Location Tiles	2007.06.28
+3D9F59	3D9FFF	JUNK	Y	"Overwritten (Unk) Location Tiles, duplicate 3696B4-36975A"	2008.02.06
+3DA000	3DA7D0	TXT	N	"ASCII text, mostly credits information"	2007.06.28
+3DA7D1	3DA7FF	---	N	UNUSED SPACE (47 bytes)	2007.06.28
+3DA800					2007.06.28
+3DA80B	3DA810	PTR	N	Pointers to PC stats used for battle in memory (+7E0000)	2007.06.28
+3DA811	3DA816	PTR	N	Pointers to unknown used for battle in memory (+7E0000)	2007.06.28
+3DA817					2007.06.28
+3DAE52	3DAE5F	CODE	N	Unknown routines	2007.06.28
+3DAE60	3DAE68	CODE	N	Routines load pointers of PC stats to copy for battle	2007.06.28
+3DAE69	3DAE7A	CODE	N	Unknown routines	2007.06.28
+3DAE7B	3DAE8C	CODE	N	Routines copy PC stats within RAM for battles	2007.06.28
+3DAE8D	3DAE98	CODE	N	Unknown routines	2007.06.28
+3DAE99					2007.06.28
+3DB2EB	3DB33E	CODE	N	Load Attract Mode PC stats	2008.02.06
+3DB356	3DB362	CODE	N	Attract Mode (debug) inventory	2008.02.06
+3DB45B	3DB45F	CODE	N	"Unknown routines, stores enemy index to RAM?"	2007.06.28
+3DB460	3DB47F	CODE	N	Routines copy enemy HP and level data into RAM for battle	2007.06.28
+3DB480					2007.06.28
+3DBA61	3DBB60	DATA	N	Random number data (1 byte each) used in battles	2007.06.28
+3DBB61	3DBB66	JUNK	N	Overwritten random number data	2007.06.28
+3DBB67	3DBFFF	---	N	UNUSED SPACE (1177 bytes)	2007.06.28
+3DC000	3DC0D6	CODE	N	SNES initialization routines	2007.06.28
+3DC0D7	3DC123	CODE	N	Unknown routines (used to empty old graphics in mem.?)	2007.06.28
+3DC124	3DC1ED	CODE	N	Unknown routines	2007.06.28
+3DC1EE					2007.06.28
+3E0000	3E0005	PTR	N	Pointers to Mode 7 compressed data (2 addresses)	2007.06.28
+3E0006	3E00DF	PTR	N	Pointers to Mode 7 Scene Data (71 addresses)	2007.06.28
+3E00E0	3E0A4D	GFX	Y	(00) Mode 7 - Jet Bike Race - Crono and Jet Bike	2007.06.28
+3E0A4E	3E0B12	???	Y	(01) Mode 7 - Jet Bike Race	2007.06.28
+3E0B13	3E1184	GFX	Y	(02) Mode 7 - Jet Bike Race - Johnny	2007.06.28
+3E1185	3E1370	???	Y	(03) Mode 7 - Jet Bike Race	2007.06.28
+3E1371	3E1738	GFX	Y	(04) Mode 7 - Jet Bike Race - overlay	2007.06.28
+3E1739	3E2C99	???	Y	(05) Mode 7 - Jet Bike Race	2007.06.28
+3E2C9A	3E326A	???	Y	(06) Mode 7 - Jet Bike Race	2007.06.28
+3E326B	3E3867	???	Y	(07) Mode 7 - Jet Bike Race	2007.06.28
+3E3868	3E38C3	???	Y	(08) Mode 7 - Jet Bike Race	2007.06.28
+3E38C4	3E3A06	???	Y	(09) Mode 7 - Jet Bike Race	2007.06.28
+3E3A07	3E3A47	???	Y	(0A) Mode 7 - Jet Bike Race	2007.06.28
+3E3A48	3E3B05	GFX	Y	(0B) Mode 7 - Jet Bike Race - mountains (2 bitplane?)	2007.06.28
+3E3B06	3E4649	GFX	Y	"(0C) Mode 7 - Jet Bike Race - sky, buildings (4 bitplane)"	2007.06.28
+3E464A	3E4ACB	GFX	Y	"(0D) Mode 7 - Lavos Meteor - meteor? (4 bitplane, linear)"	2007.06.28
+3E4ACC	3E4B1A	???	Y	(0E) Mode 7 - Lavos Meteor	2007.06.28
+3E4B1B	3E4B79	???	Y	(0F) Mode 7 - Lavos Meteor/Final Ending	2007.06.28
+3E4B7A	3E4B99	JUNK	Y	Overwritten [BETA] (13) Mode 7 - Lavos Meteor	2007.06.28
+3E4B9A	3E4BB9	JUNK	Y	Overwritten [BETA] (11) Mode 7 - Lavos Meteor	2007.06.28
+3E4BBA	3E4BD9	JUNK	Y	Overwritten [BETA] (12) Mode 7 - Lavos Meteor	2007.06.28
+3E4BDA					2007.06.28
+3E4C3A	3E5306	???	Y	(14) Mode 7 - Lavos Meteor	2007.06.28
+3E5307	3E6001	???	Y	(15) Mode 7 - Title Screen	2007.06.28
+3E6002	3E6AE4	???	Y	(16) Mode 7 - Title Screen	2007.06.28
+3E6AE5	3E6C02	???	Y	(17) Mode 7 - Title Screen	2007.06.28
+3E6C03	3E6CC9	???	Y	(18) Mode 7 - Title Screen	2007.06.28
+3E6CCA	3E6DC0	???	Y	(19) Mode 7 - Title Screen	2007.06.28
+3E6DC1	3E6FB7	???	Y	(1A) Mode 7 - BTFRTC/Final Ending	2007.06.28
+3E6FB8	3E7196	???	Y	(1B) Mode 7 - BTFRTC/Final Ending	2007.06.28
+3E7197	3E728B	???	Y	(1C) Mode 7 - BTFRTC	2007.06.28
+3E728C	3E73FF	???	Y	(1D) Mode 7 - BTFRTC	2007.06.28
+3E7400	3E746B	???	Y	(1E) Mode 7 - BTFRTC	2007.06.28
+3E746C	3E7494	???	Y	(1F) Mode 7 - BTFRTC	2007.06.28
+3E7495	3E787B	???	Y	(20) Mode 7 - BTFRTC/Final Ending	2007.06.28
+3E787C	3E869D	???	Y	(21) Mode 7 - Epoch	2007.06.28
+3E869E	3E8C8F	???	Y	(22) Mode 7 - Epoch	2007.06.28
+3E8C90	3E8D9A	???	Y	(23) Mode 7 - Epoch	2007.06.28
+3E8D9B					2007.06.28
+3E8DBB	3E9F36	???	Y	(25) Mode 7 - Epoch	2007.06.28
+3E9F37	3E9F7C	???	Y	(26) Mode 7 - Epoch	2007.06.28
+3E9F7D	3EA060	???	Y	(27) Mode 7 - Epoch	2007.06.28
+3EA061	3EA7E1	???	Y	(28) Mode 7 - Epoch	2007.06.28
+3EA7E2	3ECF74	???	Y	(29) Mode 7 - Final Ending	2007.06.28
+3ECF75	3ED809	???	Y	(2A) Mode 7 - Final Ending	2007.06.28
+3ED80A	3EE366	???	Y	(2B) Mode 7 - Final Ending	2007.06.28
+3EE367	3EF29C	???	Y	(2C) Mode 7 - Final Ending	2007.06.28
+3EF29D	3EF2F8	???	Y	(2D) Mode 7 - Final Ending	2007.06.28
+3EF2F9	3EF427	???	Y	(2E) Mode 7 - Final Ending	2007.06.28
+3EF428	3EFAD2	???	Y	(2F) Mode 7 - Final Ending	2007.06.28
+3EFAD3					2007.06.28
+3F0000	3F047F	GFX	N	Crono menu portrait	2007.06.28
+3F0480	3F08FF	GFX	N	Marle menu portrait	2007.06.28
+3F0900	3F0D7F	GFX	N	Lucca menu portrait	2007.06.28
+3F0D80	3F11FF	GFX	N	Robo menu portrait	2007.06.28
+3F1200	3F167F	GFX	N	Frog menu portrait	2007.06.28
+3F1680	3F1AFF	GFX	N	Ayla menu portrait	2007.06.28
+3F1B00	3F1F7F	GFX	N	Magus menu portrait	2007.06.28
+3F1F80	3F1F9F	PAL	N	Magus menu portrait palette	2007.06.28
+3F1FA0	3F1FBF	PAL	N	Robo menu portrait palette	2007.06.28
+3F1FC0	3F1FDF	PAL	N	Frog menu portrait palette	2007.06.28
+3F1FE0	3F1FFF	PAL	N	Crono menu portrait palette	2007.06.28
+3F2000	3F201F	PAL	N	Ayla menu portrait palette	2007.06.28
+3F2020	3F203F	PAL	N	Lucca menu portrait palette	2007.06.28
+3F2040	3F205F	PAL	N	Marle menu portrait palette	2007.06.28
+3F2060	3F8C5F	GFX	N	Main font (large)	2008.02.06
+3F8C5F					2008.02.06
+3F8E60	3F9C5F	GFX	N	Main font (small)	2007.06.28
+3F9C60					2007.06.28
+3F9C68	3F9C6F	PAL?	N	Unknown palette?	2007.06.28
+3F9C70	3F9C77	PAL?	N	Unknown palette?	2007.06.28
+3F9C78	3F9C7F	PAL?	N	Unknown palette?	2007.06.28
+3F9C80	3F9CEF	GFX	N	Window background - unused?	2007.06.28
+3F9CF0	3F9D6F	GFX	N	Menu hand cursor	2007.06.28
+3F9D70	3F9DEF	GFX	N	Menu arrow cursor	2007.06.28
+3F9DF0	3F9E0F	PAL	N	Palette for menu hand cursor and menu arrow cursor?	2007.06.28
+3F9E10	3FB20F	GFX	N	Window backgrounds	2007.06.28
+3FB210	3FB28F	PAL	N	Window background palettes	2007.06.28
+3FB290					2007.06.28
+3FBB80	3FBB97	DATA	N	Coordinates and other data for six main menu icons	2007.06.28
+3FBB98					2007.06.28
+3FC2A0	3FC31F	PTR	N	Pointers to Window Elements (64 addresses)	2007.06.28
+3FC320	3FC895	DATA	N	Window Elements (last set has a different format?)	2007.06.28
+3FC896	3FC995	GFX	N	Partial font	2007.06.28
+3FC996	3FCA35	GFX	N	Font numbers 0123456789	2007.06.28
+3FCA36					2007.06.28
+3FCA46	3FCA4D	PAL?	N	Unknown palette?	2007.06.28
+3FCA4E	3FCA55	PAL?	N	Unknown palette?	2007.06.28
+3FCA56	3FCA5D	PAL?	N	Unknown palette?	2007.06.28
+3FCA5E	3FCA7D	PAL?	N	Unknown palette?	2007.06.28
+3FCA7E	3FCAAD	PAL	N	Options menu box palettes	2007.06.28
+3FCAAE	3FCABD	PAL	N	Main menu inactive boxes palette	2007.06.28
+3FCABE	3FCACD	PAL	N	Main menu profile box palette	2007.06.28
+3FCACE	3FCADD	PAL	N	Main menu item inventory box palette	2007.06.28
+3FCADE	3FCAED	PAL	N	Main menu tech box palette	2007.06.28
+3FCAEE	3FCAFD	PAL	N	Main menu options box palette	2007.06.28
+3FCAFE	3FCB0D	PAL	N	Main menu exchange box palette	2007.06.28
+3FCB0E	3FCB1D	PAL	N	Main menu save icon box palette	2007.06.28
+3FCB1E	3FCB3D	PAL	N	Crono save portrait palette	2007.06.28
+3FCB3E	3FCB5D	PAL	N	Marle save portrait palette	2007.06.28
+3FCB5E	3FCB7D	PAL	N	Lucca save portrait palette	2007.06.28
+3FCB7E	3FCB9D	PAL	N	Robo save portrait palette	2007.06.28
+3FCB9E	3FCBBD	PAL	N	Frog save portrait palette	2007.06.28
+3FCBBE	3FCBDD	PAL	N	Ayla save portrait palette	2007.06.28
+3FCBDE	3FCBFD	PAL	N	Magus save portrait palette	2007.06.28
+3FCBFE	3FCC0D	PAL	N	Magic graphic lightning palette	2007.06.28
+3FCC0E	3FCC1D	PAL	N	Magic graphic shadow palette	2007.06.28
+3FCC1E	3FCC2D	PAL	N	Magic graphic ice/water palette	2007.06.28
+3FCC2E	3FCC3D	PAL	N	Magic graphic fire palette	2007.06.28
+3FCC3E					2007.06.28
+3FCC4E	3FCC5D	PAL?	N	Unknown palette?	2007.06.28
+3FCC5E	3FCC6D	PAL?	N	Unknown palette?	2007.06.28
+3FCC6E					2007.06.28
+3FCC8A	3FCCA9	PAL?	N	Unknown palette?	2007.06.28
+3FCCAA	3FCCC9	PAL	N	Epoch menu portrait palette	2007.06.28
+3FCCCA	3FCCD1	DATA	N	Data (1 byte) related to menu portrait loaded (8 total)	2007.06.28
+3FCCD2	3FCCDF	PTR	N	Pointers to PC menu portrait palettes	2007.06.28
+3FCCE0	3FCCE1	PTR	N	Pointer to Epoch menu portrait palette	2007.06.28
+3FCCE2	3FCCEB	DATA	N	Data (2 byte) related to magic graphic loaded (5 total)	2007.06.28
+3FCCEC	3FCCF3	PTR	N	Pointers to magic graphic palettes	2007.06.28
+3FCCF4	3FCD13	PAL	N	Battle Mode graphic palette	2007.06.28
+3FCD14	3FCD67	DATA	N	Controls number movement when tab/item is used	2007.06.28
+3FCD68	3FCD71	PTR	N	"Pointers to item secondary stat sets, 5 total (+0C0000)"	2007.06.28
+3FCD72	3FCD76	DATA	N	"Lengths of item secondary stat sets, 5 total"	2007.06.28
+3FCD77	3FCD80	PTR	N	"Pointers to item stat sets, 5 total, last unused? (+0C0000)"	2007.06.28
+3FCD81	3FCD85	DATA	N	"Lengths of items stat sets, 5 total, last unused?"	2007.06.28
+3FCD86	3FCD8C	DATA	N	"Unknown data, 1 byte each, 7 total (related to PC stats)"	2007.06.28
+3FCD8D	3FCD93	DATA	N	"Unknown data, 1 byte each, 7 total (related to PC stats)"	2007.06.28
+3FCD94					2007.06.28
+3FCD95	3FCD9C	PTR	N	Pointers to Menu Text (4 strings)	2007.06.28
+3FCD9D	3FCE19	TXT	N	Menu Text	2007.06.28
+3FCE1A	3FCE33	DATA	N	Storyline counter chapter name starting values (1 byte ea.)	2007.06.28
+3FCE34	3FCE67	PTR	N	Pointers to Chapter Titles (26 strings)	2007.06.28
+3FCE68	3FCF8F	TXT	N	Chapter Titles	2007.06.28
+3FCF90	3FD08F	DATA	N	Location Age Name string used (2 locations in each byte)	2007.06.28
+3FD090	3FD0A1	PTR	N	"Pointers to Age Names (8 strings, last pointer invalid)"	2007.06.28
+3FD0A2	3FD0CC	TXT	N	Age Names	2007.06.28
+3FD0CD	3FD131	PTR	N	"Pointers to Settings Text (50 strings, 1 wasted byte)"	2007.06.28
+3FD132	3FD207	TXT	N	Settings Text	2007.06.28
+3FD208	3FD215	DATA	N	Unknown data used for button config in options menu	2007.06.28
+3FD216	3FD229	DATA	N	Unknown data used when navigating options menu	2007.06.28
+3FD22A	3FD22B	DATA	N	Unknown data used when selecting battle gauge speed	2007.06.28
+3FD22C	3FD22D	DATA	N	Unknown data used when selecting battle message speed	2007.06.28
+3FD22E					2007.06.28
+3FD298	3FD2F7	GFX	N	Magic graphic lightning	2007.06.28
+3FD2F8	3FD357	GFX	N	Magic graphic shadow	2007.06.28
+3FD358	3FD3B7	GFX	N	Magic graphic ice/water	2007.06.28
+3FD3B8	3FD417	GFX	N	Magic graphic fire	2007.06.28
+3FD418	3FD8F7	GFX	N	Options menu icons	2007.06.28
+3FD8F8	3FD957	GFX	N	Tech1 icon	2007.06.28
+3FD958	3FD9B7	GFX	N	Tech2 icon	2007.06.28
+3FD9B8	3FDA17	GFX	N	Tech3 icon	2007.06.28
+3FDA18	3FDC57	GFX	N	Main menu six menu icons	2007.06.28
+3FDC58	3FDCB7	GFX	N	Menu background	2007.06.28
+3FDCB8	3FDD8F	GFX	N	Main menu window and background	2007.06.28
+3FDD90	3FDE0F	GFX	N	Crono save portrait	2007.06.28
+3FDE10	3FDE8F	GFX	N	Marle save portrait	2007.06.28
+3FDE90	3FDF0F	GFX	N	Lucca save portrait	2007.06.28
+3FDF10	3FDF8F	GFX	N	Robo save portrait	2007.06.28
+3FDF90	3FE00F	GFX	N	Frog save portrait	2007.06.28
+3FE010	3FE08F	GFX	N	Ayla save portrait	2007.06.28
+3FE090	3FE10F	GFX	N	Magus save portrait	2007.06.28
+3FE110	3FE3BB	GFX	Y	Background fog on character exchange menu	2007.06.28
+3FE3BC	3FE83B	GFX	N	Epoch menu portrait	2007.06.28
+3FE83C	3FECBB	GFX	N	Battle Mode graphic	2007.06.28
+3FECBC	3FED7B	GFX	N	Active Time Battle ver. 2 graphic	2007.06.28
+3FED7C	3FEF25	CODE	N	Unknown routines	2007.06.28
+3FEF26					2007.06.28
+3FF051	3FF051	DATA	N	Storyline value for equip menu scroll bar ($49)	2007.06.28
+3FF052					2007.06.28
+3FF185	3FF18B	DATA	N	"Unknown data, 1 byte ea. (7 total), likely PC magic related"	2007.06.28
+3FF18C	3FF1EE	CODE	N	Unknown routines	2007.06.28
+3FF1EF	3FF1F7	DATA	N	"Unknown data, 1 byte ea. (8 total), bit values for PCs?"	2007.06.28
+3FF1F8	3FF204	CODE	N	Routines that begin save data loading	2007.06.28
+3FF205	3FF216	CODE	N	Routines used for checking if save exists in a slot ($E41B)	2007.06.28
+3FF217	3FF21B	CODE	N	Routines used for checking if save data matches checksum	2007.06.28
+3FF21C	3FF220	CODE	N	Routines used if save data checksum check passes	2007.06.28
+3FF221	3FF225	CODE	N	"Routines used when no save data in slot (307FF8,x != $E41B)"	2007.06.28
+3FF226	3FF228	CODE	N	"Routines used when checksum check fails (307FF0,x != save)"	2007.06.28
+3FF229	3FF22E	CODE	N	Routines that exit save data loading	2007.06.28
+3FF22F	3FF28A	CODE	N	Unknown routines	2007.06.28
+3FF28B	3FF2AE	CODE	N	Routines used to save checksum and misc. data to save files	2007.06.28
+3FF2AF	3FF2D6	DATA	N	Memory addresses and lengths of save data to copy (8 total)	2007.06.28
+3FF2D7	3FF3F4	CODE	N	Unknown routines	2007.06.28
+3FF3F5	3FF402	DATA	N	"Unknown data, loaded on New Game+ (copied to 7E9890-7E989D)"	2007.06.28
+3FF403	3FF406	DATA	N	Data related to loading PC equipment for New Game+	2007.06.28
+3FF407	3FF414	CODE	N	Routines load pointers to save files	2007.06.28
+3FF415	3FF41A	PTR	N	Pointers to save files in SRAM (+300000)	2007.06.28
+3FF41B	3FF437	CODE	N	Routines load save data from SRAM ($A00 bytes each file)	2007.06.28
+3FF438	3FF48A	CODE	N	"Routines load HDMA table for ""Enter a name..."" dialog box?"	2007.06.28
+3FF48B	3FF49A	DATA	N	"HDMA table for ""Enter a name..."" dialog box?"	2007.06.28
+3FF49B	3FFAD7	JUNK?	N	Duplicate 3FEDFB-3FF437 (1597 bytes)	2007.06.28
+3FFAD8	3FFD52	JUNK?	?		2007.06.28
+3FFD53	3FFD79	JUNK?	N	Duplicate 3FF411-3FF437 (39 bytes)	2007.06.28
+3FFD7A	3FFFF4	JUNK?	?	Duplicate 3FFAD8-3FFD52 (635 bytes)	2007.06.28
+3FFFF5	3FFFFF	JUNK?	?		2007.06.28

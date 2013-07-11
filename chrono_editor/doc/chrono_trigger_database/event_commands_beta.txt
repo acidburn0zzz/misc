@@ -1,0 +1,257 @@
+Command	Address	Bytes	Pseudo	Summary	Description	Modified
+00	541C	1	00	return	5900 context - null command (not executed) . 5AA3 context - unknown	2008.02.25
+01	5416	1	01	color crash	unknown - probably a debug hold-over designed to let the event command programmer know when something went terribly wrong	2008.02.20
+02	545E	3	02 aa po	call event	"aa - part of the offset to event pointer to load . p - priority . o - part of the offset to event pointer to load . will wait only if new thread has higher priority, instantly returns if object is dead or busy"	2008.02.25
+03	5529	3	03 aa po	call event	aa - part of the offset to event pointer to load . p - priority . o - part of the offset to event pointer to load . waits until execution starts (will wait indefinitely if current thread has lower priority than new one)	2008.02.25
+04	55B7	3	04 aa po	call event	aa - part of the offset to event pointer to load . p - priority . o - part of the offset to event pointer to load . will wait on execution	2008.02.25
+05	569D	3	05 cc po	call PC event	"cc - PC . p - priority . o - part of the offset to event pointer to load . will wait only if new thread has higher priority, instantly returns if object is dead or busy"	2008.02.25
+06	56B7	3	06 cc po	call PC event	cc - PC . p - priority . o - part of the offset to event pointer to load . waits until execution starts (will wait indefinitely if current thread has lower priority than new one)	2008.02.25
+07	56D2	3	07 cc po	call PC event	cc - PC . p - priority . o - part of the offset to event pointer to load . will wait on execution	2008.02.25
+08	5706	1	08	object activation	turn off object activate & touch (PC can't interact)	2008.02.25
+09	5711	1	09	object activation	turn on object activate & touch	2008.02.25
+0A	571A	2	0A oo	remove object	oo - object to stop drawing and remove (/2)	2008.02.25
+0B	5734	2	0B oo	script processing	turn off processing   oo - object (/2) to turn off	2008.02.25
+0C	5755	2	0C oo	script processing	turn on processing   oo - object (/2) to turn on	2008.02.25
+0D	5772	2	0D pp	npc move props	pp - npc movement properties	2008.02.25
+0E	5784	2	0E pp	npc positioning	pp - position on tile	2008.02.25
+0F	5416	1	0F	alias	same as 01	2008.02.20
+10	5796	2	10 jj	jump fwd	jj - bytes to jump forwards . partial overlap with 11	2008.02.25
+11	57AC	2	11 jj	jump back	jj - bytes to jump backwards . partial overlap with 10	2008.02.25
+12	57BF	5	12 aa vv oo jj	if statement	"aa - offset into SNES memory (*2, +7F0200) . vv - value used in operation . oo - index for operation pointer (+006667) . jj - bytes to jump to next command if operation equates false . partial overlap with 16"	2008.02.25
+13	57F4	6	13 aa vvvv oo jj	if statement	"aa - offset into SNES memory (*2, +7F0200) . vvvv - value used in operation . oo - index for operation pointer (+006667) . jj - bytes to jump to next command if operation equates false . two byte version of 12"	2008.02.25
+14	5842	5	14 aa bb oo jj	if statement	"aa - offset into SNES memory (*2, +7F0200) . bb - offset into SNES memory (*2, +7F0200) . oo - index for operation pointer (+006667) . jj - bytes to jump to next command if operation equates false . partial overlap with 16"	2008.02.25
+15	5885	5	15 aa bb oo jj	if statement	"aa - offset into SNES memory (*2, +7F0200) . bb - offset into SNES memory (*2, +7F0200) . oo - index for operation pointer (+006667) . jj - bytes to jump to next command if operation equates false . partial overlap with 16 . two byte version of 14"	2008.02.25
+16	58C7	5	16 aa vv oo jj	if statement	aa - offset into SNES memory (+7F0000) . vv - value used in operation . oo - index for operation pointer (+006667) . jj - bytes to jump to next command if operation equates false . partial overlap with 12	2008.02.25
+17	5923	6	17 aa vvvv oo jj	if statement	aa - offset into SNES memory (+7F0000) . vvvv - value used in operation . oo - index for operation pointer (+006667) . jj - bytes to jump to next command if operation equates false . Two byte version of 16	2008.02.25
+18	5984	3	18 vv jj	check storyline	vv - storyline point to check for . jj - bytes to jump if storyline point already reached (or passed)	2008.02.25
+19	5A7D	2	19 aa	get result	"aa - address to load result from (*2, +7F0200) . Overlaps 1C"	2008.02.25
+1A	5AB7	3	1A rr jj	result	rr - target result . jj - bytes to jump if result does not match target	2008.02.25
+1B	5ADE	4	1B rrrr jj	result	rrrr - target result . jj - bytes to jump if result does not match target . Two byte version of 1A	2008.02.25
+1C	5A90	3	1C aaaa	get result	aaaa - address to load result from (+7F0000) . Overlapped by 19	2008.02.25
+1D	5AA9	1	1D	set result to story		2008.02.25
+1E	5416	1	1E	alias	same as 01	2008.02.20
+1F	5416	1	1F	alias	same as 01	2008.02.20
+20	5B0B	2	20 oo	get pc1	"oo - offset to store to (*2, +7F0200) . gets PC1 value and stores in memory"	2008.02.25
+21	5B34	4	21 oo aa bb	get object coord	"oo - object (/2) . aa - offset to store X Coord to (*2, +7F0200) . bb - offset to store Y Coord to (*2, +7F0200) . overlapped by 22"	2008.02.25
+22	5B7A	4	22 cc aa bb	get pc coord	"cc - PC (/2) . aa - offset to store X Coord to (*2, +7F0200) . bb - offset to store Y Coord to (*2, +7F0200) . overlaps 21"	2008.02.25
+23	5B8C	3	23 oo aa	get obj facing	"oo - object (/2) . aa - offset to store to (*2, +7F0200) . overlapped by 24"	2008.02.25
+24	5BB8	3	24 cc aa	get pc facing	"cc - PC (/2) . aa - offset to store to (*2, +7F0200) . overlaps 23"	2008.02.25
+25	5BCA	4	25 ?? cc jj		"jj - bytes to jump if condition not met . cc - range of 00 - 06, possibly character releated.  Unknown conditional"	2008.07.11
+26	5416	1	26	alias	same as 01	2008.02.20
+27	5CA1	3	27 oo jj	check object status	"oo - object number (/2) . jj - bytes to jump if object is offscreen, not loaded ""ex: PC not in party"", or has drawstatus hide"	2008.02.25
+28	5416	1	28	alias	same as 01	2008.02.20
+29	5416	1	29	alias	same as 01	2008.02.20
+2A	5416	1	2A	alias	same as 01	2008.02.20
+2B	5416	1	2B	alias	same as 01	2008.02.20
+2C	5416	1	2C	alias	same as 01	2008.02.20
+2D	5416	1	2D	alias	same as 01	2008.02.20
+2E	3DE8	2	2E m? …	color math	m - mode . (see long notes)	2008.03.03
+2F	5E0F	2	2F vv		vv - value stored to 7E0166	2008.02.25
+30	5CCF	2	30 jj	check Dash btn	jj - bytes to jump if not pressed . Checks to see if Dash is pressed	2008.02.25
+31	5CDB	2	31 jj	check Confirm btn	jj - bytes to jump if not pressed . Checks to see if Confirm is pressed	2008.02.25
+32	5CE7	2	32 jj	check Cancel btn	jj - bytes to jump if not pressed . Checks to see if Cancel is pressed	2008.02.25
+33	5CF3	2	33 jj	check Map btn	jj - bytes to jump if not pressed . Checks to see if Map is pressed	2008.02.25
+34	5CFF	2	34 jj	check a btn	jj - bytes to jump if check fails . Checks to see if A is pressed	2008.02.25
+35	5D20	2	35 jj	check b btn	jj - bytes to jump if check fails . Checks to see if B is pressed	2008.02.25
+36	5D2C	2	36 jj	check x btn	jj - bytes to jump if check fails . Checks to see if X is pressed	2008.02.25
+37	5D38	2	37 jj	check y btn	jj - bytes to jump if check fails . Checks to see if Y is pressed	2008.02.25
+38	5D44	2	38 jj	check l btn	jj - bytes to jump if check fails . Checks to see if L is pressed	2008.02.25
+39	5D50	2	39 jj	check r btn	jj - bytes to jump if check fails . Checks to see if R is pressed	2008.02.25
+3A	5D5C	2	3A jj	check select btn	jj - bytes to jump if check fails . Checks to see if Select is pressed	2008.02.25
+3B	5D68	2	3B jj	check Dash btn	jj - bytes to jump if not pressed . Checks to see if Dash has been pressed since last check	2008.02.25
+3C	5D75	2	3C jj	check Confirm btn	jj - bytes to jump if not pressed . Checks to see if Confirm has been pressed since last check	2008.02.25
+3D	5D82	2	3D jj	check Cancel btn	jj - bytes to jump if not pressed . Checks to see if Cancel has been pressed since last check	2008.02.25
+3E	5D8F	2	3E jj	check Map btn	jj - bytes to jump if not pressed . Checks to see if Map has been pressed since last check	2008.02.25
+3F	5D9F	2	3F jj	check a btn	jj - bytes to jump if check fails . Checks to see if A has been pressed since last check	2008.02.25
+40	5DAF	2	40 jj	check b btn	jj - bytes to jump if check fails . Checks to see if B has been pressed since last check	2008.02.25
+41	5DBF	2	41 jj	check x btn	jj - bytes to jump if check fails . Checks to see if X has been pressed since last check	2008.02.25
+42	5DCF	2	42 jj	check y btn	jj - bytes to jump if check fails . Checks to see if Y has been pressed since last check	2008.02.25
+43	5DDF	2	43 jj	check l btn	jj - bytes to jump if check fails . Checks to see if L has been pressed since last check	2008.02.25
+44	5DEF	2	44 jj	check r btn	jj - bytes to jump if check fails . Checks to see if R has been pressed since last check	2008.02.25
+45	5DFF	2	45 jj	check select btn	jj - bytes to jump if check fails . Checks to see if Select has been pressed since last check	2008.02.25
+46	5E1B	2	46 vv		vv - value stored to 7E0167	2008.02.25
+47	5E27	2	47 ll	animation limiter	"ll - limit on animations . range and meaning of value not currently known, plays a part in avoiding slowdown when there is a lot of activity on screen . stores value to 7E0169"	2008.02.25
+48	5E33	5	48 aaaaaa oo	assignment	"aaaaaa - address to load from . oo - offset to store to (*2, +7F0200)"	2008.02.25
+49	5E68	5	49 aaaaaa oo	assignment	"aaaaaa - address to load from . oo - offset to store to (/2 +7F0200), two byte version of 48"	2008.02.25
+4A	5E78	5	4A aaaaaa vv	assignment	aaaaaa - SNES memory address to store to . vv - value to load	2008.02.25
+4B	5E9C	6	4B aaaaaa vvvv	assignment	aaaaaa - SNES memory address to store to . vvvv - value to load	2008.02.25
+4C	5EAD	5	4C aaaaaa oo	assignment	"aaaaaa - address to store to . oo - offset to load from (*2, +7F0200) .  loads one byte"	2008.02.25
+4D	5ECA	5	4D aaaaaa oo	assignment	"aaaaaa - address to store to . oo - offset to load from (*2, +7F0200) . loads two bytes"	2008.02.25
+4E	5EE7	6	4E aaaa bb cccc …	memcpy	aaaa - destination bank address . bb - destination bank (7E or 7F only) . cccc - bytes to copy +2 (source data immediately follows command)	2008.02.25
+4F	5F46	3	4F vv oo	assignment	"vv - value to store . oo - offset to store to (*2, +7F0200)"	2008.02.25
+50	5F67	4	50 vvvv oo	assignment	"vvvv - value to store . oo - offset to store to (*2, +7F0200) . two byte version of 4F"	2008.02.25
+51	5F8A	3	51 aa oo	assignment	"aa - offset to load from (*2, +7F0200) . oo - offset to store to (*2, +7F0200) . mem-to-mem assignment"	2008.02.25
+52	5FB4	3	52 aa oo	assignment	"aa - offset to load from (*2, +7F0200) . oo - offset to store to (*2, +7F0200) . mem-to-mem assignment . two byte version of 51"	2008.02.25
+53	5FDE	4	53 aaaa oo	assignment	"aaaa - address to load from (+7F0000) . oo - offset to store to (*2, +7F0200) . mem-to-mem assignment"	2008.02.25
+54	6005	4	54 aaaa oo	assignment	"aaaa - address to load from (+7F0000) . oo - offset to store to (*2, +7F0200) . mem-to-mem assignment . two byte version of 53"	2008.02.25
+55	602C	2	55 oo	get storyline ctr	"oo - offset to store to (*2, +7F0200) . stores storyline ctr in specified memory address"	2008.02.25
+56	6047	4	56 vv aaaa	assignment	vv - value to store . aaaa - address to store to (+7F0000) . local memory assignment	2008.08.01
+57	6065	5	57 vvvv aaaa	assignment	vvvv - value to store . aaaa - address to store to (+7F0000)	2008.02.25
+58	6085	4	58 oo aaaa	assignment	"oo - offset to load from (*2, +7F0200) . aaaa - address to store to (+7F0000) . inverse action of command 53"	2008.02.25
+59	60AC	4	59 oo aaaa	assignment	"oo - offset to load from (*2, +7F0200) . aaaa - address to store to (+7F0000) . two byte version of 58"	2008.02.25
+5A	60D3	2	5A vv	assign storyline ctr	vv - value to assign . sets 7F0000 (storyline ctr) to value vv	2008.02.25
+5B	60E0	3	5B vv oo	add	"vv - value to add . oo - offset in memory (*2, +7F0200) to add to"	2008.02.25
+5C	6106	4	5C vvvv oo	add	"vvvv - value to add . oo - offset in memory (*2, +7F0200) to add to"	2008.02.25
+5D	612E	3	5D oo aa	add	"oo - offset to load from (*2, +7F0200) . aa - offset to add to (*2, +7F0200) . unused"	2008.02.25
+5E	615D	3	5E oo aa	add	"oo - offset to load from (*2, +7F0200) . aa - offset to add to (*2, +7F0200) . two byte version of 5D"	2008.02.25
+5F	618C	3	5F vv oo	subtract	"vv - value to subtract . oo - offset in memory (*2, +7F0200) to subtract from"	2008.02.25
+60	61B2	4	60 vvvv oo	subtract	"vvvv - value to subtract . oo - offset in memory (*2, +7F0200) to subtract from . two byte version of 5F"	2008.02.25
+61	61DA	3	61 oo aa	subtract	"oo - offset in memory to load (*2, +7F0200) . aa - offset in memory to subtract from (*2, +7F0200)"	2008.02.25
+62	6209	3	62 oo aa	subtract	"oo - offset in memory to load (*2, +7F0200) . aa - offset in memory to subtract from (*2, +7F0200) . Two byte version of 61"	2008.02.25
+63	6238	3	63 bb oo	set bit	"bb - bit to set . oo - offset to set bit in (*2, +7F0200)"	2008.02.25
+64	6268	3	64 bb oo	reset bit	"bb - bit to reset . oo - offset to set bit in (*2, +7F0200)"	2008.02.25
+65	6298	3	65 bb aa	set bit	bb - 80 - local memory to address (adds 0x100 to aa) . 7F - bit to set . aa - offset to set bit in (+7F0000)	2008.02.25
+66	62CB	3	66 bb aa	reset bit	bb - 80 - local memory to address (adds 0x100 to aa) . 7F - bit to reset . aa - offset to reset bit in (+7F0000)	2008.02.25
+67	62FE	3	67 bb oo	reset bits	"bb - bits to keep . oo - offset to reset bits in (*2, +7F0200)"	2008.02.25
+68	6323	3	68 oo aa	reset bits	"oo - offset in memory to load bits-to-keep from (*2, +7F0200) . aa - offset to reset bits in (*2, +7F0200)"	2008.02.25
+69	6351	3	6B bb oo	set bits	"bb - bit mask to set . oo - offset to set bits in (*2, +7F0200)"	2008.02.25
+6A	6376	3	6A oo aa	set bits	"oo - offset in memory to load bits-to-set from (*2, +7F0200) . aa - offset to set bits in (*2, +7F0200)"	2008.02.25
+6B	63A4	3	6B bb oo	toggle bits	"bb - bits to toggle . oo - offset to toggle bits in (*2, +7F0200)"	2008.02.25
+6C	63C9	3	6C oo aa	toggle bits	"oo - offset in memory to load bits-to-toggle from (*2, +7F0200) . aa - offset to toggle bits in (*2, +7F0200)"	2008.02.25
+6D	63F7	3	6D ss oo	left shift	"ss - bits to left shift . oo - offset to left shift (*2, +7F0200)"	2008.02.26
+6E	641F	3	6E ss oo	left shift	"ss - bits to left shift . oo - offset to left shift (*2, +7F0200) . Two byte version of 6D"	2008.02.26
+6F	6447	3	6F ss oo	right shift	"ss - bits to right shift . oo - offset to right shift (*2, +7F0200)"	2008.02.26
+70	646F	3	70 ss oo	right shift	"ss - bits to right shift . oo - offset to right shift (*2, +7F0200) . Two byte version of 6F"	2008.02.26
+71	6497	2	71 oo	increment	"oo - offset to increment (*2, +7F0200)"	2008.02.25
+72	64B3	2	72 oo	increment	"oo - offset to increment (*2, +7F0200) . two byte version of 71"	2008.02.25
+73	64CF	2	73 oo	decrement	"oo - offset to decrement (*2, +7F0200)"	2008.02.25
+74	64EB	2	74 oo	decrement	"oo - offset to decrement (*2, +7F0200) . Two byte version of 73"	2008.02.25
+75	6507	2	75 oo	set byte	"oo - offset to set to 1 (*2, +7F0200)"	2008.02.25
+76	6520	2	76 oo	set byte	"oo - offset to set to 1 (*2, +7F0200) . two byte version of 75"	2008.02.25
+77	653A	2	77 oo	reset byte	"oo - offset to set to 0 (*2, +7F0200)"	2008.02.25
+78	6553	2	78 oo	reset byte	"oo - offset to set to 0 (*2, +7F0200) . Two byte version of 77"	2008.02.25
+79	5416	1	79	alias	same as 01	2008.02.20
+7A	5416	1	7A	alias	same as 01	2008.02.20
+7B	40AA	5	7B dd ee ff gg	npc jump	"dd, ee - related to destination? . ff, gg - speed and height? . unused"	2008.02.22
+7C	4086	2	7C oo	object drawing	oo - object to turn drawing on for . overlaps 90	2008.02.22
+7D	4098	2	7D oo	object drawing	oo - object to turn drawing off for . overlaps 90	2008.02.22
+7E	4080	1	7E	object drawing	Turns object drawing off . uses value 80 . overlaps 90	2008.02.22
+7F	656D	2	7F oo	random	"oo - offset to store to (*2, +7F0200)"	2008.02.25
+80	35B8	2	80 cc	load pc	cc - pc to load (if in party)	2008.02.22
+81	3810	2	81 xx	load pc	xx - pc to load	2008.02.22
+82	392A	2	82 xx	load npc	xx - npc to load	2008.02.22
+83	3A79	3	83 ee ii	load enemy	ee - enemy to load . ii - enemy battle data . 80 - Static enemy . 7F - Enemy target index (Values 03:0A valid)	2008.02.22
+84	3C01	2	84 pp	npc solid props	pp - npc solidity properties	2008.02.22
+85	5416	1	85	alias	same as 01	2008.02.20
+86	5416	1	86	alias	same as 01	2008.02.20
+87	3C10	2	87 ss	script timing	Values 0-7F set speed (0 being fastest) while 80 seems to pause processing altogether.	2008.02.22
+88	3C2C	2	88 m? …	memcpy	m - mode (see long notes)	2008.02.22
+89	3EE3	2	89 ss	set npc speed	ss - speed of movement . sets speed of movement for NPCs	2008.02.22
+8A	3EF2	2	8A aa	set npc speed	"aa - offset to load npc speed from (*2, 7F0200)"	2008.02.22
+8B	3F0E	3	8B xx yy	set object coord	xx - x coord . yy - y coord	2008.02.22
+8C	3F5D	3	8C aa bb	set object coord	"aa - offset to load x coord from (*2, 7F0200) . bb - offset to load y coord from (*2, 7F0200)"	2008.02.22
+8D	3FC1	5	8D xxxx yyyy	set object coord	xxxx - x coord in pixels (*16) . yyyy - y coord in pixels (*16)	2008.02.22
+8E	400E	2	8E pp	sprite priority	pp - sets sprite priority . 80 - determines mode . 40 - ??? . 30 - top half . 0C - ??? . 03 - bottom half	2008.02.22
+8F	5416	1	8F	alias	same as 01	2008.02.20
+90	406F	1	90	object drawing	Turns object drawing on	2008.02.22
+91	407A	1	91	object drawing	Turns object drawing off . uses value 00 . overlaps 90	2008.02.22
+92	40F8	3	92 dd mm	vector move	"dd - direction of movement in degrees (where 0x40 = 90 deg, and 0 = right) . mm - magnitude"	2008.02.22
+93	414C	3	93 oo aa	vector move	"oo - offset to load direction from (*2, +7F0200) . aa - offset to load magnitude from (*2, +7F0200)"	2008.02.25
+94	46BF	2	94 oo	object follow	oo - object to follow	2008.02.22
+95	4971	2	95 cc	pc follow	cc - PC to follow . appears to overlap 94	2008.02.25
+96	4250	3	96 xx yy	move npc	xx - x coord . yy - y coord	2008.02.22
+97	43EC	3	97 aa bb	move sprite	"aa - offset to load x coord from (*2, 7F0200) . bb - offset to load y coord from (*2, 7F0200)"	2008.02.22
+98	47FE	3	98 oo mm	move to object	oo - object . mm - distance to travel (magnitude?)	2008.02.22
+99	49B3	3	99 cc mm	move to pc	cc - PC . mm - distance to travel (magnitude?) . overlaps 98	2008.02.25
+9A	42D9	4	9A xx yy mm	move to coord	xx - x coord . yy - y coord . mm - distance to travel (magnitude?)	2008.02.22
+9B	4491	4	9B aa bb mm	move to coord	"aa - offset to load x coord from (*2, 7F0200) . bb - offset to load y coord from (*2, 7F0200) . mm - distance to travel (magnitude?) . Looks similar to 9A."	2008.02.25
+9C	41B6	3	9C dd mm	vector move	"dd - direction of movement in degrees (where 0x40 = 90 deg, and 0 = right) . mm - magnitude . does not change facing"	2008.02.22
+9D	41F9	3	9D aa bb	vector move	"aa - offset to load direction from (*2, +7F0200) . bb - offset to load magnitude from (*2, +7F0200) . does not change facing"	2008.02.22
+9E	476F	2	9E oo	vector move to object	"oo - object (/2) to move to . does not change facing, overlapped by 9F"	2008.02.22
+9F	4992	2	9F cc	vector move to pc	"cc - PC (/2) to move to .  does not change facing, overlaps 9E"	2008.02.25
+A0	45D3	3	A0 xx yy	animated move	xx - x coord . yy - y coord . move npc while playing animation	2008.02.22
+A1	463B	3	A1 aa bb	animated move	"aa - offset to load x coord from (*2, +7F0200) . bb - offset to load y coord from (*2, +7F0200) . used in End of Time for Robo"	2008.02.22
+A2	48C9	3	A2 oo mm	move to object	oo - object . mm - distance to travel (magnitude?) . Looks similar to 98	2008.02.25
+A3	49E2	3	A3 cc mm	move to pc	cc - PC . mm - distance to travel (magnitude?) . overlaps A2	2008.02.25
+A4	4373	4	A4 xx yy mm	move to coord	xx - x coord . yy - y coord . mm - distance to travel (magnitude?) . Looks similar to 9A.	2008.02.25
+A5	453E	4	A5 aa bb mm	move to coord	"aa - offset to load x coord from (*2, 7F0200) . bb - offset to load y coord from (*2, 7F0200) . mm - distance to travel (magnitude?) . From-mem version of A4."	2008.02.25
+A6	4A11	2	A6 ff	npc facing	ff - facing . 00 - up . 01 - down . 02 - left . 03 - right . overlapped by 17	2008.02.25
+A7	4A23	2	A7 oo	npc facing	"oo - offset to load facing from (*2, +7F0200) . overlaps A6"	2008.02.25
+A8	4A38	2	A8 oo	face object	oo - object (/2) to face . overlapped by A9	2008.02.25
+A9	4AA2	2	A9 cc	face pc	cc - PC (/2) to face . overlaps A8	2008.02.25
+AA	2547	2	AA aa	animation	aa - animation to play . loops	2008.02.20
+AB	2575	2	AB aa	animation	aa - animation to play	2008.02.20
+AC	264C	2	AC aa	static animation	aa - animation to play . static animations like sleeping	2008.02.20
+AD	2671	2	AD tt	pause	tt - time to wait in 1/16 seconds . Party PCs are measured in 1/64 seconds	2008.02.20
+AE	2561	1	AE	reset animation	resets animation for current object	2008.02.20
+AF	26A1	1	AF	exploration	allows player to control PCs (single controller check)	2008.02.20
+B0	26A6	1	B0	exploration	allows player to control PCs (infinite controller check)	2008.02.20
+B1	2B23	1	B1	break	"end command for arbitrary access context (sets conditions for loop to end), advances to next command"	2008.02.20
+B2	2B27	1	B2	end	end command for arbitrary access context (sets conditions for loop to end)	2008.02.20
+B3	5416	1	B3	alias	same as 01	2008.02.20
+B4	5416	1	B4	alias	same as 01	2008.02.20
+B5	2B2A	2	B5 oo	move to object	loops 94	2008.02.20
+B6	2B33	2	B6 cc	move to pc	loops 95	2008.02.20
+B7	25DC	3	B7 aa ll	loop animation	aa - animation to play . ll - loops	2008.02.20
+B8	2B3B	4	B8 aaaaaa	string index	aaaaaa - address to set string index to	2008.02.20
+B9	5416	1	B9	alias	same as 01	2008.02.20
+BA	5416	1	BA	alias	same as 01	2008.02.20
+BB	2B54	2	BB ss	textbox auto	ss - string displayed	2008.02.20
+BC	5416	1	BC	alias	same as 01	2008.02.20
+BD	5416	1	BD	alias	same as 01	2008.02.20
+BE	5416	1	BE	alias	same as 01	2008.02.20
+BF	5416	1	BF	alias	same as 01	2008.02.20
+C0	2C21	3	C0 ss ll	dec box auto	ss - string displayed . ll - 03 - last line . 0C - first line	2008.02.20
+C1	2B97	2	C1 ss	textbox top	ss - string displayed	2008.02.20
+C2	2BDC	2	C2 ss	textbox bottom	ss - string displayed	2008.02.20
+C3	5416	1	C3	alias	same as 01	2008.02.20
+C4	5416	1	C4	alias	same as 01	2008.02.20
+C5	5416	1	C5	alias	same as 01	2008.02.20
+C6	5416	1	C6	alias	same as 01	2008.02.20
+C7	5416	1	C7	alias	same as 01	2008.02.20
+C8	2C84	2	C8 dd	special dialog	dd - dialog to display	2008.02.22
+C9	2CAD	3	C9 ii jj	check item	ii - item to check for . jj - byte to jump if item missing	2008.02.22
+CA	2CE3	2	CA ii	add item	ii - item added to inventory	2008.02.22
+CB	2CFE	2	CB ii	remove item	ii - item to remove from inventory	2008.02.22
+CC	2D19	4	CC gggg jj	check gold	gggg - gold amount to check for . jj - bytes to jump if PC does not have enough gold	2008.02.22
+CD	2D4D	3	CD gggg	add gold	gggg - gold to add	2008.02.22
+CE	2D66	3	CE gggg	subtract gold	gggg - gold to subtract	2008.02.22
+CF	2D7F	3	CF cc jj	check recruited pc	cc - PC to check for	2008.02.22
+D0	2DB5	2	D0 cc	add reserve pc	cc - PC to add to reserve party	2008.02.22
+D1	2DCF	2	D1 cc	remove pc	cc - PC to remove	2008.02.22
+D2	2DE9	3	D2 cc jj	check active pc	cc - character to check for . jj - bytes to jump forward . May actually be check and load	2008.02.22
+D3	2E1F	2	D3 cc	add active pc	cc - character to add to party	2008.02.22
+D4	2E57	2	D4 cc	move pc to reserve	cc - character to remove . switches character from active party to reserve	2008.02.22
+D5	2F76	3	D5 cc ii	equip item	cc - character to equip on . ii - item to equip	2008.02.22
+D6	2F15	2	D6 cc	remove active pc	cc - PC to remove from active party	2008.02.22
+D7	5416	1	D7	alias	same as 01	2008.02.20
+D8	2F91	3	D8 ffff	battle	ffff - various bit flags for battle . see long notes	2008.02.22
+D9	2852	7	D9 uu vv ww xx yy zz	move party	uu - pc1 x coord . vv - pc1 y coord . ww - pc2 x . xx - pc2 y . yy - pc3 x . zz - pc3 y	2008.02.20
+DA	2A3E	1	DA	party follow	causes PC2 and PC3 to follow PC1 around on the map	2008.02.20
+DB	5416	1	DB	alias	same as 01	2008.02.20
+DC	3001	5	DC llll xx yy	change location	"llll - 01FF - location to change to, 0600 - facing, 1800 - ???, 8000 - unused . xx - x coord . yy - y coord . instantly moves party to another location"	2008.02.22
+DD	302B	5	DD llll xx yy	change location	"llll - 01FF - location to change to, 0600 - facing, 1800 - ???, 8000 - unused . xx - x coord . yy - y coord . instantly moves party to another location"	2008.02.22
+DE	3055	5	DE llll xx yy	change location	"llll - 01FF - location to change to, 0600 - facing, 1800 - ???, 8000 - unused . xx - x coord . yy - y coord . instantly moves party to another location . overlaps DD"	2008.02.22
+DF	30A8	5	DF llll xx yy	change location	"llll - 01FF - location to change to, 0600 - facing, 1800 - ???, 8000 - unused . xx - x coord . yy - y coord . instantly moves party to another location . overlaps E1"	2008.02.22
+E0	2FC7	5	E0 llll xx yy	change location	"llll - 01FF - location to change to, 0600 - facing, 1800 - ???, 8000 - ??? . xx - x coord . yy - y coord . instantly moves party to another location"	2008.02.22
+E1	305B	5	E1 llll xx yy	change location	"llll - 01FF - location to change to, 0600 - facing, 1800 - ???, 8000 - unused . xx - x coord . yy - y coord . instantly moves party to another location . waits for vsync"	2008.02.22
+E2	30AE	5	E2 aa bb cc dd	change location	"change location from memory . each byte is an offset to load data from (*2, +7F0200)"	2008.02.22
+E3	3115	2	E3 tt	explore mode	"tt - toggle value . when on, party can explore. when off, party cannot do anything"	2008.02.22
+E4	32D4	8	E4 ll tt rr bb xx yy ff	copy tiles	ll - left . tt - top . rr - right . bb - bottom . xx - dest x . yy - dest y . ff - bitfield (see long notes)	2008.02.22
+E5	3302	8	E5 ll tt rr bb xx yy ff	copy tiles	ll - left . tt - top . rr - right . bb - bottom . xx - dest x . yy - dest y . ff - bitfield (see long notes)	2008.02.22
+E6	3331	5	E6 ???? ll ??	scroll layers	ll - layers to scroll (bitfield) . 01 - Layer 1 . 02 - Layer 2 . 04 - Layer 3	2008.02.22
+E7	336D	3	E7 xx yy	scroll screen	xx - x coord . yy - y coord	2008.02.22
+E8	3121	2	E8 ss	play sound	ss - sound effect	2008.02.22
+E9	313F	2	E9 oo	play sound	oo - offset to load sound index from	2008.02.25
+EA	3156	2	EA ss	play song	ss - song	2008.02.22
+EB	3173	3	EB ss vv	music volume	ss - speed of change . vv - volume . FF = normal volume	2008.02.22
+EC	31BF	4	EC cc ?? ??	all purpose sound	cc - command . All purpose sound command	2008.02.22
+ED	31E3	1	ED	wait for silence	"if this works the way I think it does, this waits until the SPC chip has been told to stop before it continues with the next command"	2008.02.22
+EE	5416	1	EE	alias	same as 01	2008.02.20
+EF	5416	1	EF	alias	same as 01	2008.02.20
+F0	31EC	2	F0 bb	darken	bb - amount to darken . gradually turns screen black (00 = completely dark)	2008.02.22
+F1	322B	2	F1 cc (dd)	color addition	"cc - E0 - Three bit BGR color to display . 1F - intensity of color overlay . dd - 80 - add/sub mode . 7F - duration .  variable length command . If cc = 00, then the command is only 2 bytes"	2008.02.22
+F2	3221	1	F2	fade out screen	fades screen out	2008.02.22
+F3	32B7	1	F3	wait for brighten end		2008.02.22
+F4	32C1	2	F4 rr	shake	rr - shake screen . (00 = off)	2008.02.22
+F5	5416	1	F5	alias	same as 01	2008.02.20
+F6	5416	1	F6	alias	same as 01	2008.02.20
+F7	5416	1	F7	alias	same as 01	2008.02.20
+F8	3399	1	F8	restore hp / mp	Restores party to full hp and mp	2008.02.22
+F9	33AB	1	F9	restore hp	Restores party to full hp	2008.02.22
+FA	33B7	1	FA	restore mp	Restores party to full mp . overlaps F8	2008.02.22
+FB	5416	1	FB	alias	same as 01	2008.02.20
+FC	5416	1	FC	alias	same as 01	2008.02.20
+FD	5416	1	FD	alias	same as 01	2008.02.20
+FE	5416	1	FE	alias	same as 01	2008.02.20
+FF	33C3	2	FF ss …	mode 7 scene	"ss - scene . When value is 90 or higher, calls subroutines and may read more bytes, unknown behavior"	2008.02.22

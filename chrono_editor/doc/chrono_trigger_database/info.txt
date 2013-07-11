@@ -1,0 +1,67 @@
+Chrono Trigger Database
+by Michael Springer (t.geiger@gmail.com)
+
+. Data Format.txt (Tab-delimited) - Structure descriptions for the various bits of data floating around in the ROM
+. Enemy AI Actions Long Notes.txt - Extra information for Enemy AI Actions that does not easily fit into a table format
+. Enemy AI Actions.txt (Tab delimited) - Lists all actions used for Enemy AI and describes the format of their operands
+. Event Command Long Notes.txt - Extra information for Location event commands that does not easily fit into a table format
+. Event Commands, BETA.txt (Tab-delimited) - Lists all commands used for Location events and describes the format of their operands, according to the Japanese Beta release
+. Event Commands.txt (Tab-delimited) - Lists all commands used for Location events and describes the format of their operands, according to the North American and Japanese releases
+. Game Notes.txt - Sort of a miscellaneous info file
+. Lists.txt - Lists of various things, as used by Temporal Flux
+. Memory Locations Long Notes.txt (Tab-delimited) - Extra information for memory locations that does not easily fit into a table format
+. Memory Locations, BETA.txt (Tab-delimited) - Format descriptions of information held in memory, according to the Japanese Beta release
+. Memory Locations.txt (Tab-delimited) - Format descriptions of information held in memory, according to the North American and Japanese releases
+. Offset Long Notes.txt - Extra information for offsets that do not easily fit into a table format
+. Offsets, BETA.txt (Tab-delimited) - Raw locations and descriptions for data in the CT ROM, according to the Japanese Beta release
+. Offsets, JPN.txt (Tab-delimited) - Raw locations and descriptions for data in the CT ROM, according to the Japanese release
+. Offsets, NA.txt (Tab-delimited) - Raw locations and descriptions for data in the CT ROM, according to the North American release
+. Overworld Command Long Notes.txt - Extra information for Overworld event commands that does not easily fit into a table format
+. Overworld Commands.txt (Tab-delimited) - Lists all commands used for Overworld events and describes the format of their operands
+. Tech Animation.txt (Tab-delimited) - Lists all commands used for Tech Animations and describes the format of their operands
+. Unknowns, Help Needed.txt - Summary of unknown items we could use help on
+
+Feel free to send me information about errors and additions.  When you contribute, other people don't have to waste time figuring out the same stuff.
+
+
+
+Release 2011.03.03
+...And maybe it will actually make it to the website this time.  New entries include location object memory.  Proper usage allows NPC parties.
+
+Release 2008.07.17
+Preliminary information on Enemy AI and Tech Animations.
+
+Release 2008.02.14
+A number of topics covered in this release, including string handling and battle data.
+
+Release 2007.06.12
+Has it really been 2.5 years since I updated the public file?  Yeash.  Contains all information we know about Chrono Trigger as of this date, including some information not yet incorporated into Temporal Flux.
+
+Release 2004.11.23
+Contains all information used to make Temporal Flux.  Amount of information has grown to 2.5 times its previous size.
+
+Release 2003.07.10
+Lots of new stuff found, now that compression has been reverse engineered
+
+Release 2003.06.02
+Instrument table found, couple of SPCs identified, BRRs expanded in anticipation of identification
+
+Release 2003.05.23
+Quite a bit of uncompressed data catalogued.  Most notably strings, character and menu graphics, and SPC information.
+
+
+
+
+Contributers:
+Chickenlump
+FuSoYa
+Jigglysaint
+JLukas
+JPSondag
+Justin3009
+Mauron
+Vagla
+Vehek
+Venture930
+WaddlerD
+...and various members of the Chrono Compendium forums

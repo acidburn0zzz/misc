@@ -1,0 +1,24 @@
+Command	Address	Address 2	Bytes	Pseudo	Summary	Description	Modified
+00	9810	99B8	4	00 ?? ?? ??	wander mode		2008.07.17
+01	983A	99BE	4	01 ii tt ??	attack mode	ii - attack index . tt - target	2008.07.17
+02	983A	9A39	6	02 ii tt ?? ?? ss	tech mode	ii - tech index . tt - target . ss - battle enemy message	2008.07.17
+03	98C4	9B46	1	03	nothing	no routines	2008.07.17
+04	98C5	9B47	1	04	random action	uses a random number to determine which of the following actions in the section to start on	2008.07.17
+05	9960	9B48	0	05		possibly 3 bytes	2008.07.17
+06	9961	9B8C	1	06	nothing	no routines	2008.07.17
+07	9962	9B8D	4	07 ii ?? Hh	become monster	ii - monster index . hh - reset hp flag	2008.07.30
+08	9966	9C6E	1	08	nothing	no routines	2008.07.17
+09	9967	9C6F	2	09 ??		display attack animation flashes?	2008.07.17
+0A	9978	9CB3	3	0A aa ss	run away	aa - action to show . ss - battle enemy message string	2008.07.17
+0B	9979	9D1B	5	0B oo vv mm ss	set stat	"oo - offset from enemy stat set start . vv - value to set/bitwise OR . mm - mode,  00 - set, 01 - bitwise OR . ss - battle enemy message string"	2008.07.31
+0C	997D	9D72	4	0C oo vv ss	stat math	"oo - offset from enemy stat set start . vv - multi-purpose byte, 80 . Subtract flag, 7F . value to add/sub . ss - battle enemy message string"	2008.07.31
+0D	997E	9DCE	3	0D ?? ss		state change? . ss - battle enemy message string	2008.07.17
+0E	997F	9E62	1	0E	nothing	no routines	2008.07.17
+0F	9980	9E63	2	0F ss	display text	ss - battle enemy message string	2008.07.17
+10	9981	9E78	4	10 vv ee ss	revive support enemies	vv - unknown value stored to 7E000E . ee - battle sound effect . ss - battle enemy message string	2008.07.30
+11	99B4	9F5A	10	11 ?? ?? ?? ?? ?? ?? ?? ?? ??			2008.07.17
+12	99B4	9FD2	16	12 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ss		ss - battle enemy message string	2008.07.17
+13	99B4	A14E	0	13 mm vv		appears to be a 3 byte command   mm - multipurpose byte (see long notes) vv - value to use in unknown calculation	2008.07.30
+14	99B4	A188	10	14 ?? ?? ?? ?? ?? ?? ?? ?? ??			2008.07.17
+15	99B4	A20B	22	15 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??			2008.07.17
+16	9981	A396	12	16 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ??			2008.07.17

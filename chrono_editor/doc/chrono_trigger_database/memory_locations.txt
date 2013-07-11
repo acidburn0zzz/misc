@@ -1,0 +1,890 @@
+Byte Offset	Bytes	Bits	Mode	Description	Modified
+7E0000	80	FF	All	Temporary values	2007.02.09
+7E0006	01	FF	Battle	Item index string to display after using Charm	2007.06.29
+7E0016	03	FF	Menu	Pointer to routines for current menu	2007.06.29
+7E0016	01	FF	Battle	Current Tech % chance (copied from 7EAEE7)	2008.07.17
+7E0026	1	FF	Battle	Random value (copied from 7E29AD)	2008.07.17
+7E0067	01	FF	Menu	Menu value obtained from 02808F-028095 data	2007.06.29
+7E0079	01	FF	Save Menu	Currently selected save slot (copied to 7E0414)	2007.08.16
+7E007F	01	FF	Save Menu	Currently selected save slot	2007.08.16
+7E009A	01	03	Mode 7	"Jet Bike Race Boosts available, range: 00-03"	2008.02.14
+7E00ED	03	FF	Overworld	Pointer to Overworld data	2007.06.12
+7E00F2	1	01	Location	Controller 1 Start button	2007.06.29
+7E00F2	1	02	Location	Controller 1 Select button	2007.06.29
+7E00F2	1	04	Location	Controller 1 Y button (Event Command 37)	2007.06.29
+7E00F2	1	08	Location	Controller 1 B button (Event Command 35)	2007.06.29
+7E00F2	1	10	Location	Controller 1 R shoulder button (Event Command 39)	2007.06.29
+7E00F2	1	20	Location	Controller 1 L shoulder button (Event Command 38)	2007.06.29
+7E00F2	1	40	Location	Controller 1 X button (Event Command 36)	2007.06.29
+7E00F2	1	80	Location	Controller 1 A button (Event Command 34)	2007.06.29
+7E00F3	1	01	Location	Controller 1 right	2007.06.29
+7E00F3	1	02	Location	Controller 1 left	2007.06.29
+7E00F3	1	04	Location	Controller 1 down	2007.06.29
+7E00F3	1	08	Location	Controller 1 up	2007.06.29
+7E00F8	1	01	Location	"Controller 1 Y button (Event Command 2D, entire byte)"	2007.06.29
+7E00F8	1	04	Location	Controller 1 Select button	2007.06.29
+7E00F8	1	0A	Location	"Controller 1 B button (Event Command 30, bit 02)"	2007.06.29
+7E00F8	1	10	Location	Controller 1 R shoulder button	2007.06.29
+7E00F8	1	20	Location	Controller 1 L shoulder button	2007.06.29
+7E00F8	1	40	Location	Controller 1 X button	2007.06.29
+7E00F8	1	80	Location	Controller 1 A button (Event Command 31)	2007.06.29
+7E00F9	1	01	Location	"Controller 1 right (Event Command 2D, entire byte)"	2007.06.29
+7E00F9	1	02	Location	Controller 1 left	2007.06.29
+7E00F9	1	04	Location	Controller 1 down	2007.06.29
+7E00F9	1	08	Location	Controller 1 up	2007.06.29
+7E00FD	1	FF	Location	Appears to be a counter for how long a button is held	2007.06.29
+7E00FE	1	01	Location	Controller 1 Start button	2007.06.29
+7E00FE	1	02	Location	Controller 1 Select button	2007.06.29
+7E00FE	1	04	Location	Controller 1 Y button	2007.06.29
+7E00FE	1	08	Location	Controller 1 B button	2007.06.29
+7E00FE	1	10	Location	Controller 1 R shoulder button	2007.06.29
+7E00FE	1	20	Location	Controller 1 L shoulder button	2007.06.29
+7E00FE	1	40	Location	Controller 1 X button	2007.06.29
+7E00FE	1	80	Location	Controller 1 A button	2007.06.29
+7E00FF	1	01	Location	Controller 1 right	2007.06.29
+7E00FF	1	02	Location	Controller 1 left	2007.06.29
+7E00FF	1	04	Location	Controller 1 down	2007.06.29
+7E00FF	1	08	Location	Controller 1 up	2007.06.29
+7E0100	2	FF	All	Current Location	2007.01.11
+7E0102	1	FF	All	Starting X Coord	2007.01.29
+7E0103	1	FF	All	Starting Y Coord	2007.01.29
+7E0104	1	03	All	Starting facing	2007.01.29
+7E0105	02	FF	"Loc., OW"	Previous location	2007.06.29
+7E0107	01	FF	"Loc., OW"	Previous starting X coord	2007.06.29
+7E0108	01	FF	"Loc., OW"	Previous starting Y coord	2007.06.29
+7E0109	01	03	"Loc., OW"	Previous starting facing	2007.06.29
+7E010A	02	FF	"Loc., OW"	Last location visited (not overworld)	2007.06.29
+7E010C	01	FF	"Loc., OW"	Last location visited starting X coord	2007.06.29
+7E010D	01	FF	"Loc., OW"	Last location visited starting Y coord	2007.06.29
+7E010E	01	03	"Loc., OW"	Last location visited starting facing	2007.06.29
+7E0110	1	01		Set to disable menu access	2006.12.21
+7E0111	1	FF		Set to disable pause	2007.01.29
+7E0112	02	FF	"Loc., OW"	"Current location, or previous overworld map, unknown purpose"	2007.06.29
+7E0114	01	FF	"Loc., OW"	Starting X coord	2007.06.29
+7E0115	01	FF	"Loc., OW"	Starting Y coord	2007.06.29
+7E0116	01	03	"Loc., OW"	Starting facing	2007.06.29
+7E0117	01	01	Location	"Bit set after touching enemy, entering battle (0x20 also set)"	2007.06.29
+7E0117	01	02	Location	Bit set when opening treasure chest	2007.06.29
+7E0117	01	10	Location	Bit set when touching treasure chest/door	2007.06.29
+7E0117	01	20	Location	"Bit set when hidden treasure chamber in Ozzie's Fort revealed, and battles"	2007.06.29
+7E0117	01	40	Location	Bit set when Event Command C8 Special Dialog loads	2007.06.29
+7E0117	01	80	Location	Bit set when using location exit	2007.06.29
+7E0118	01	01	Location	Bit checked by Event Command D8 Battle	2007.06.29
+7E0118	01	08	Location	"Screen brighten in progress, checked by event command F3"	2007.06.29
+7E0118	01	40	Location	Bit set when Event Command C8 Special Dialog exits	2007.06.29
+7E0119	01	08	Location	Game is paused when bit not set	2007.06.29
+7E011E	01	01	Location	"Bit set by Event Commands DE, DF WarpParty"	2007.06.29
+7E011F	1	01	Location	Explore Mode	2007.06.29
+7E0120	1	01	Location	"when reset, can walk through walls, debug flag?"	2007.06.29
+7E0121	01	FF	Location	Event Command F1 Brighten - byte 1 (color/intensity)	2007.06.29
+7E0122	01	FF	Location	Event Command F1 Brighten - byte 1 (color/intensity)	2007.06.29
+7E0123	01	FF	Location	Event Command F1 Brighten - byte 2 (duration/???)	2007.06.29
+7E0124	01	FF	Location	Event Command F1 Brighten - byte 2 (duration/???)	2007.06.29
+7E0125	01	FF	Location	Event Command C8 Special Dialog byte	2007.06.29
+7E0126	01	03	Location	"Textbox window position (01 top, 02 bottom)"	2007.06.29
+7E0127	01	FF	Location	"Textbox related, possibly a counter for opening/closing a text window"	2007.06.29
+7E0128	01	5F	Location	"When entering a location, $5F stored"	2007.06.29
+7E0128	01	80	Location	Unknown bit - Event Command FF subroutines?	2007.06.29
+7E0129	01	FF	Location	"Textbox related, possibly bits for textbox open/close status"	2007.06.29
+7E012A	1	FF	Location	Holds string index for current textbox	2007.02.09
+7E012B	3	FF	Location	Event Command B8 StringIndex	2007.02.09
+7E0130	01	03	Location	"Stores a value for decision box Event Commands C0 (00), C3, (01) C4 (02)"	2007.06.29
+7E0131	01	03	Location	Number of text lines currently displayed (00-03)	2007.06.29
+7E0148	02	FF	Location	"$2116, VRAM address"	2008.02.14
+7E014A	01	FF	Location	"$43x0, DMA channel number"	2008.02.14
+7E014B	02	FF	Location	Holds window background type data obtained from $006EA0-006EAF range	2007.06.29
+7E014D	01	FF	Location	"$43x4, DMA"	2008.02.14
+7E0150	1	01	Location	Controller 1 Y button pressed	2007.06.29
+7E0150	1	04	Location	Controller 1 Select button pressed	2007.06.29
+7E0150	1	0A	Location	"Controller 1 B button pressed (Event Command 3B, bit 02)"	2008.02.14
+7E0150	1	10	Location	Controller 1 R shoulder button pressed	2007.06.29
+7E0150	1	20	Location	Controller 1 L shoulder button pressed	2007.06.29
+7E0150	1	40	Location	Controller 1 X button pressed	2007.06.29
+7E0150	1	80	Location	Controller 1 A button pressed (Event Command 3C)	2007.06.29
+7E0151	1	01	Location	Controller 1 Start button pressed	2007.06.29
+7E0151	1	02	Location	Controller 1 Select button pressed	2007.06.29
+7E0151	1	04	Location	Controller 1 Y button pressed (Event Command 42)	2007.06.29
+7E0151	1	08	Location	Controller 1 B button pressed (Event Command 40)	2007.06.29
+7E0151	1	10	Location	Controller 1 R shoulder button pressed (Event Command 44)	2008.02.14
+7E0151	1	20	Location	Controller 1 L shoulder button pressed (Event Command 43)	2008.02.14
+7E0151	1	40	Location	Controller 1 X button pressed (Event Command 41)	2007.06.29
+7E0151	1	80	Location	Controller 1 A button pressed (Event Command 3F)	2007.06.29
+7E0152	1	01	Location	Bit set when game is paused	2007.06.29
+7E0154	01	04	Location	Event Command 2A - L3 ASCII text related	2008.02.14
+7E0154	01	08	Location	Event Command 2B - L3 ASCII text related	2008.02.14
+7E0154	01	10	Location	Event Command 32 - L3 ASCII text related	2008.02.14
+7E0154	01	E3	Location	"Unknown, various bits set for use with ending credits text, L3 related?"	2008.02.14
+7E0155	1	FF	Location	Z-plane	2007.08.15
+7E0158	2	FF	Location	Idle time	2007.01.30
+7E0163	01	03	Location	Textbox decision box line currently selected	2007.06.29
+7E016B	1	FF	Location	"Unknown, always set to 78 on entering new location, set to 80 by Event Command 47"	2007.02.09
+7E016D	1	FF	Location	Location Event Current Object ID	2007.01.11
+7E0171	02	FF	Location	"Holds starting destination address of next packet to decompress, +7F0000,"	2007.06.29
+7E018D	01	FF	Location	Crono object x2	2008.02.14
+7E018E	01	FF	Location	Marle object x2	2008.02.14
+7E018F	01	FF	Location	Lucca object x2	2008.02.14
+7E0190	01	FF	Location	Robo object x2	2008.02.14
+7E0191	01	FF	Location	Frog object x2	2008.02.14
+7E0192	01	FF	Location	Ayla object x2	2008.02.14
+7E0193	01	FF	Location	Magus object x2	2008.02.14
+7E0194	01	FF	Location	PC1 index (copied from 7E2980 when loading location)	2007.06.29
+7E0195	01	FF	Location	PC2 index (copied from 7E2981 when loading location)	2007.06.29
+7E0196	01	FF	Location	PC3 index (copied from 7E2982 when loading location)	2007.06.29
+7E0197	1	FF	Location	PC1 Object Num	2007.01.11
+7E0199	1	FF	Location	PC2 Object Num	2007.01.11
+7E019B	1	FF	Location	PC3 Object Num	2007.01.11
+7E01AB	1	FF	Location	PC1 step counter	2007.06.29
+7E01AC	1	FF	Location	PC2 step counter	2007.06.29
+7E01AD	1	FF	Location	PC3 step counter	2007.06.29
+7E01AF	03	FF	Location	"Pointer to pc, npc and enemy graphics pointer table"	2007.06.29
+7E01B2	03	FF	Location	Pointer to sprite assembly pointer table	2007.06.29
+7E01B5	03	FF	Location	Pointer to animations pointer table	2007.06.29
+7E01B8	03	FF	Location	Pointer to unconfirmed animations pointer table	2007.06.29
+7E01BD	1	FF	Location	Location Event Total Objects	2007.01.11
+7E01C1	01	FF	Location	Jump height (Event Command 7A)	2008.02.14
+7E01C7	02	FF	Location	"Pointer in memory of last event command executed? (+7F2000) Used by Event Commands 7A, 7B"	2008.02.14
+7E01CD	3	FF	Location	Start address of graphics packet to process	2008.07.17
+7E01D9	1	FF	Location	"Temporary values, used for location index and other bits for WarpParty Event Commands, and also used to hold random value obtained from $00FE00-00FEFF data"	2008.07.17
+7E01DF	1	FF	Location	Mode7 scene index	2007.02.09
+7E01E1	01	FF	Location	Location Event Command 83 LoadEnemy param 2	2008.02.14
+7E01F2	01	FF	Location	Jump x coord (Event Command 7A)	2008.02.14
+7E01F3	01	FF	Location	Jump y coord (Event Command 7A)	2008.02.14
+7E01F4	01	FF	Location	"Location Event Command FE Draw Geometry parameter 1, stored to register $4206"	2008.02.14
+7E01F8	1	FF	Location	"Random value (current frame when entering location, copied from 7E0400)"	2008.07.17
+7E01FA	1	FF	Location	music to play when battle started	2008.07.17
+7E01FB	1	FF	Location	sound to play when treasure chest opened	2008.07.17
+7E01FC	1	FF	Location	sound to play when door opened	2008.07.17
+7E01FD	01	FF	Location	"In BETA ver., $52 stored, switch sound? unused in final?"	2008.02.14
+7E01FE	02	FF	Location	Related to loading location data from 360000-361BFF	2008.02.14
+7E0200	06	FF	Location	Holds values to display Value 8 16 24 text commands	2008.02.14
+7E020C	1	FF	"Inv, Tech menus"	Currently selected Item/Tech index	2007.08.16
+7E020D	3	FF	Location	Current StringIndex	2007.02.09
+7E0217	01	FF	Location	Counter for how many text characters have been displayed on the current line	2008.02.14
+7E0230	01	FF	Location	"Text character related, used to determine pointer in 025842-025849 range"	2008.02.14
+7E0231	03	FF	Location	Text character current location in string	2008.02.14
+7E0234	1	FF	Location	Cumulative string spacing measurement	2007.08.24
+7E0235	02	FF	Location	Text character to display 7E027C can be assigned Overworld mode	2008.02.14
+7E026C	02	FF	Location	"Text character value from 7E0235, x8, then + x2"	2008.02.14
+7E0276	03	FF	Location	Text character location in main font	2008.02.14
+7E0279	03	FF	Location	Text character location in main font	2008.02.14
+7E027C	1	FF	Overworld	Overworld action (see long notes)	2008.07.17
+7E027E	01	FF	Overworld	"Status of overworld movement, copied to SRAM"	2008.02.14
+7E027F	01	FF	Overworld	"Status of overworld movement, copied to SRAM"	2008.02.14
+7E0283	02	FF	Overworld	PC1 X Coord in pixels	2007.06.12
+7E0285	02	FF	Overworld	PC1 Y Coord in pixels	2007.06.12
+7E0290	2	FF	All	Epoch X Coord in pixels	2007.06.29
+7E0292	2	FF	All	Epoch Y Coord in pixels	2007.06.29
+7E0294	1	03	All	"PCs boarded Epoch 01 - PC1, 02 - PC2, 03 - PC3"	2007.06.29
+7E0294	1	04	All	"Unknown, checked and set when boarding Black Omen from Epoch"	2007.06.29
+7E0294	1	08	All	Epoch on Black Omen exit	2007.06.12
+7E0294	1	10	All	Time gauge menu accessed while in Epoch	2007.06.12
+7E0294	1	20	All	Epoch has been upgraded	2007.06.12
+7E0294	1	40	All	Epoch is currently flying	2007.06.12
+7E0294	1	80	All	Epoch has been obtained	2007.06.12
+7E029A	2	FF	All	Dactyl X Coord in pixels	2007.06.29
+7E029C	2	FF	All	Dactyl Y Coord in pixels	2007.06.29
+7E029E	1	03	All	"PCs boarded Dactyls 01 - PC1, 02 - PC2, 03 - PC3"	2007.06.29
+7E029E	1	1C	All	Unused Dactyl bits?	2007.06.29
+7E029E	1	20	All	Dactyls are landing	2007.06.12
+7E029E	1	40	All	Dactyls are currently flying	2007.06.12
+7E029E	1	80	All	Dactyls obtained	2007.06.12
+7E029F	2	FF	All	Epoch Map	2007.06.29
+7E02A1	01	FF	Location	"In Location 000 Load Screen, $00 stored, unknown purpose"	2008.02.14
+7E02AE	01	FF	Overworld	Currently playing song (copied from 7E29AE)	2007.06.12
+7E0300	3	FF	All	Start address of packet currently being decompressed	2007.02.09
+7E0303	03	FF	All	Start address in RAM to decompress packet to	2007.06.29
+7E0306	02	FF	All	Size of decompressed packet (checked on location event startup)	2007.06.29
+7E0380	01	01	Mode 7	Jet Bike Race Won	2008.02.14
+7E0380	01	02	Mode 7	Jet Bike Race Lost	2008.02.14
+7E0381	01	FF	Mode7	Jet Bike Race unknown setting	2008.02.14
+7E0382	01	FF	Mode7	"Temp value: 1. Index for Attract Mode credit screen to display, range $00-05 2. Jet Bike"	2008.02.14
+7E0383	01	FF	Mode7	Jet Bike Race High Score byte 2	2008.02.14
+7E0400	7	FF	All	"Gametime in digits, 0 . Frames (max 60), 1 . Seconds (max 60), 2 . Minutes (max 10), 3 . Ten Minutes (max 6), 4 . Hours (max 10), 5 . Ten Hours (max 10), 6 . Hundred Hours (max 1)"	2007.02.09
+7E0407	01	FF	All	"When set to $FF (ex: game paused), 7E0400-7E0406 game clock stopped"	2007.06.29
+7E0408	09	FF	All	"Controller data - unknown purpose, backup of 7E2993-7E299B data?"	2007.06.29
+7E0411	01	FF	Main menu	Currently selected menu (range 00-05)	2007.06.29
+7E0412	01	FF	Equip menu	Currently selected PC slot	2007.06.29
+7E0413	01	FF	Equip menu	Currently selected reserve PC slot	2007.06.29
+7E0414	01	FF	Save Menu	Last slot saved to (copied to 7E0079 and 7E007F)	2007.08.16
+7E0415	01	FF	Inventory	Currently selected slot (page 1)	2007.06.29
+7E0416	01	FF	Inventory	Currently selected slot (page 2 and beyond)	2007.06.29
+7E0417	01	FF	Config menu	Currently selected config option (range 00-09)	2007.06.29
+7E0418	01	FF	Tech menu	Tech type selected (range 00-02)	2007.06.29
+7E0419	01	FF	Tech menu	Currently selected PC slot byte 1	2007.06.29
+7E041A	01	FF	Tech menu	Currently selected PC slot byte 2	2007.06.29
+7E041F	01	10	Load menu	Controller 2 R shoulder button	2007.06.29
+7E041F	01	20	Load menu	Controller 2 L shoulder button	2007.06.29
+7E041F	1	40	Load menu	Controller 2 X button	2007.06.29
+7E041F	1	80	Load menu	Controller 2 A button	2007.06.29
+7E0420	1	01	Load menu	Controller 2 right	2007.06.29
+7E0420	1	02	Load menu	Controller 2 down	2007.06.29
+7E0420	1	04	Load menu	Controller 2 left	2007.06.29
+7E0420	1	08	Load menu	Controller 2 up	2007.06.29
+7E0420	01	10	Load menu	Controller 2 Start button	2007.06.29
+7E0420	01	20	Load menu	Controller 2 Select button	2007.06.29
+7E0420	1	40	Load menu	Controller 2 Y button	2007.06.29
+7E0420	1	80	Load menu	Controller 2 B button	2007.06.29
+7E0520	9	FF	Location	Location Event Loaded Sprites	2007.08.15
+7E0A00	01	FF	Menu	Holds index of menu to load	2007.06.29
+7E0A20	10	FF	Overworld	"Epoch, Year box, Location name palette A"	2008.02.14
+7E0A30	10	FF	Overworld	"Epoch, Year box, Location name palette B"	2008.02.14
+7E0A60	10	FF	Overworld	Ferry palette A (1000 AD)	2008.02.14
+7E0A70	10	FF	Overworld	Ferry palette B (1000 AD)	2008.02.14
+7E0A80	10	FF	Overworld	Vortex palette (1000AD)	2008.02.14
+7E0AA0	10	FF	Overworld	PC1 palette	2008.02.14
+7E0AB0	10	FF	Overworld	Dactyl 1 palette (65m BC)	2008.02.14
+7E0AC0	10	FF	Overworld	PC2 palette	2008.02.14
+7E0AD0	10	FF	Overworld	"Dactyl 2 palette (65m BC), Birds (1000 AD)"	2008.02.14
+7E0AE0	10	FF	Overworld	PC3 palette	2008.02.14
+7E0AF0	10	FF	Overworld	Dactyl 3 palette (65m BC)	2008.02.14
+7E0B40	0180	FF	Battle	Unknown data copied from 115800-11597F	2008.02.14
+7E0BE1	02	FF	Location	Counter for ASCII credits text character to display (+FDA000)	2008.02.14
+7E0BE3	01	FF	Location	Location Event Command 2F Param 1	2008.02.14
+7E0BE4	01	FF	Location	Location Event Command 2F Param 2	2008.02.14
+7E0BE5	02	FF	Location	ASCII text $2116 VRAM address	2008.02.14
+7E0BE7	02	FF	Location	ASCII text $4375 DMA bytes to transfer ($003C)	2008.02.14
+7E0D00	01	FF	Menus	Random number value for menus?	2007.08.16
+7E0F00	80	00FF	Location	Object draw status (and possibly other bit settings)	2007.08.15
+7E0F00	05	FF	Name menu	Current name	2008.02.14
+7E0F00	80	FF00	Location	Object current animation frame	2007.08.15
+7E0F06	01	FF	Name nenu	Current spot on character name	2008.02.14
+7E0F08	01	FF	Name menu	"Index on current row ($00-09), copied from 7E0051"	2008.02.14
+7E0F09	01	FF	Name menu	Index of current row ($00-07)	2008.02.14
+7E0F0B	01	FF	Name menu	"Unknown #$53 stored, and increases by 0x10 for each row going down"	2008.02.14
+7E0F0C	02	FF	Name menu	Pointer to name start address in memory (+7E0000)	2008.02.14
+7E0F81	1	FF	Location	Object Palette Number (Current Object?)	2007.08.15
+7E1000	80	007F	Location	Unknown	2007.08.15
+7E1000	80	0080	Location	Object script processing on	2007.08.15
+7E1000	80	FF00	Location	Unknown	2007.08.15
+7E1100	7E	00FF	Location	Object type	2007.08.15
+7E1100	7E	FF00	Location	Object LoadPC/NPC/Enemy index	2007.08.15
+7E1200	80	00FF	Location	Object pointer to PC/NPC Enemy graphics (bank)	2007.08.15
+7E1200	80	FF00	Location	Sprite size value from 24F000 sprite data	2007.08.15
+7E1280	80	FF	Location	Object pointer to PC/NPC Enemy graphics (2 bytes)	2007.08.15
+7E1300	80	00FF	Location	Object pointer to sprite assembly (bank)	2007.08.15
+7E1300	80	FF00	Location	Unknown	2007.08.15
+7E1380	80	FF	Location	Object pointer to sprite assembly (2 bytes)	2007.02.09
+7E1400	80	FF	Location	Object palette pointers (local pointers to bank E4)	2011.03.01
+7E1480	80	FF	Location	Object animation count?	2011.03.01
+7E1500	80	FF	Location	Object animation pointers (local pointers to bank E4)	2011.03.01
+7E1580	80	FF	Location	Object unconfirmed animation data (local pointers to bank E4)	2011.03.01
+7E1600	???	FF	Location	Object facing	2007.08.15
+7E1801	???	FF	Location	Object X Coord	2007.08.15
+7E1881	???	FF	Location	Object Y Coord	2007.08.15
+7E1A00	1	FF	Location	Object speed (current object only?)	2007.08.15
+7E1A01	1	FF	Location	Object movement length	2007.08.15
+7E1A80	80	00FF	Location	"Event Command 7A, 7B jump in progress related"	2008.02.14
+7E1A80	80	FF00	Location	"Event Command 7B Param 4, also used by Event Command 7A"	2008.02.14
+7E1A81	???	FF	Location	Object drawing mode	2007.08.15
+7E1B00	80	00FF	Location	Object unknown	2007.08.15
+7E1B00	80	FF00	Location	Object solidity props. (Event Command 84)	2007.08.15
+7E1B58	1	FF	Overworld	Index of location name on overworld map	2007.01.11
+7E1B80	80	00FF	Location	"Event Command 7A, 7B jump in progress related"	2008.02.14
+7E1B80	80	FF00	Location	"Unknown, Event Command 7B Param 3, Event Command 7A Param 3"	2008.02.14
+7E1B9B	8	FF	Overworld	Overworld music	2007.06.29
+7E1BA3	01	FF	Overworld?	PC1 index (copied from 7E2980)	2007.08.16
+7E1BA4	01	FF	Overworld?	PC2 index (copied from 7E2981)	2007.08.16
+7E1BA5	01	FF	Overworld?	PC3 index (copied from 7E2982)	2007.08.16
+7E1BA6	1	FF	Overworld	Overworld storyline counter (only during event processing)	2007.06.29
+7E1BA7	1	01	Overworld	Vortex Point active	2007.06.29
+7E1BA7	1	02	Overworld	Fiona's Forest revived	2007.06.29
+7E1BA7	1	04	Overworld	Ferry departs from Truce	2007.06.29
+7E1BA7	1	08	Overworld	Ferry departs from Porre	2007.06.29
+7E1BA7	1	10	Overworld	Computer locates Proto Dome	2007.06.29
+7E1BA7	1	20	Overworld	Record of Day of Lavos	2007.06.29
+7E1BA7	1	80	Overworld	Robo carried from Factory Ruins	2007.06.29
+7E1BA8	1	02	Overworld	Lavos erupting (Apocalypse)	2007.06.29
+7E1BA8	1	04	Overworld	Lavos rains destruction from the heavens	2007.06.29
+7E1BA8	1	08	Overworld	Black Omen rises	2007.06.29
+7E1BA8	1	10	Overworld	Porre's mayor has Sunstone	2007.06.29
+7E1BA8	1	20	Overworld	Lavos meteor crashes	2007.06.29
+7E1BA8	1	40	Overworld	Teleport to Ocean Palace	2007.06.29
+7E1BA9	1	01	Overworld	Walk up Mt. Woe chain	2007.06.29
+7E1BA9	1	02	Overworld	Walk down Mt. Woe chain	2007.06.29
+7E1BA9	1	40	Overworld	Attract mode Lavos erupting	2007.06.29
+7E1BA9	1	80	Overworld	Attract Mode Kingdom of Zeal map scroll	2007.06.29
+7E1BAA	1	01	Overworld	Robo carried into Proto Dome	2007.06.29
+7E1BAA	1	02	Overworld	Mt. Woe falls	2007.06.29
+7E1BAA	1	04	Overworld	Attract mode Epoch time warp	2007.06.29
+7E1BAA	1	08	Overworld	Attract mode Dactyls fly to Tyrano Lair	2007.06.29
+7E1BAA	1	20	Overworld	Lavos destroys Kingdom of Zeal	2007.06.29
+7E1BAA	1	40	Overworld	Kingdom of Zeal falls	2007.06.29
+7E1BAA	1	80	Overworld	Lavos erupts (Dark Ages)	2007.06.29
+7E1BAB	1	01	Overworld	Present 3D map	2007.06.29
+7E1BAB	1	02	Overworld	Time period selector	2007.06.29
+7E1BAB	1	04	Overworld	Kingdom of Zeal exploding and falling	2007.06.29
+7E1BAB	1	08	Overworld	Time period selector	2007.06.29
+7E1BAB	1	10	Overworld	Lavos erupting (Epoch parked)	2007.06.29
+7E1BAB	1	20	Overworld	Medina sidequest complete	2007.06.29
+7E1BAC	1	02	Overworld	Time period selector	2007.06.29
+7E1BAC	1	04	Overworld	Skyway to Enhasa - West (up)	2007.06.29
+7E1BAC	1	08	Overworld	Skyway to Enhasa - West (down)	2007.06.29
+7E1BAC	1	10	Overworld	Skyway to Enhasa - North (up)	2007.06.29
+7E1BAC	1	20	Overworld	Skyway to Enhasa - North (down)	2007.06.29
+7E1BAC	1	40	Overworld	Skyway to Zeal (up)	2007.06.29
+7E1BAC	1	80	Overworld	Skyway to Zeal (down)	2007.06.29
+7E1BAD	1	02	Overworld	Last Village scrolling map (unused?)	2007.06.29
+7E1BAD	1	04	Overworld	Black Omen floating	2007.06.29
+7E1BAD	1	08	Overworld	Black Omen gaining power	2007.06.29
+7E1BAD	1	10	Overworld	Black Omen destruction	2007.06.29
+7E1BAD	1	20	Overworld	Lavos erupting (Last Village)	2007.06.29
+7E1BAD	1	40	Overworld	Map focuses on North Palace	2007.06.29
+7E1BAE	1	01	Overworld	Map focuses on Sun Keep (Kingdom of Zeal)	2007.06.29
+7E1BAE	01	02	Overworld	Black Omen has appeared	2007.06.29
+7E1BAE	1	20	Overworld	Map scrolls to Keeper's Dome	2007.06.29
+7E1BAE	1	80	Overworld	Map focuses on Geno Dome	2007.06.29
+7E1BAF	1	04	Overworld	Map focuses on Sun Palace (Prehistoric)	2007.06.29
+7E1BF7	01	FF	Overworld	Year box timer	2008.02.14
+7E1C00	80	00FF	Location	Object priority	2007.08.15
+7E1C00	80	FF00	Location	Object activate status (Event Command 08/09)	2007.08.15
+7E1C80	80	00FF	Location	Object move props. (Event Command 0D)	2007.08.15
+7E1C80	80	FF00	Location	Object tile position props. (Event Command 0E)	2007.08.15
+7E1D1A	4	FF		Scroll Mask values	2006.12.20
+7E1D1E	6	FF		"Layer Size values (1, 2, 3), (H, W)"	2006.12.20
+7E1D24	6	FF		Layer Scrolling values	2006.12.20
+7E1D3F	01	FF	Location	Event Command 2C stores zero when executed	2008.02.14
+7E1D40	01	FF	Location	Event Command 2C stores zero when executed	2008.02.14
+7E1D8F	02	FF	Location	Event Command 2C Param 1 - x coord for L3 ASCII text?	2008.02.14
+7E1D91	02	FF	Location	Event Command 2C Param 2 - y coord or counter for L3 ASCII text?	2008.02.14
+7E1D92	01	FF	Location	Event Command 2C stores zero when executed	2008.02.14
+7E21A0	18	FF	Location	PC1 palette	2011.03.01
+7E21C0	18	FF	Location	PC2 palette	2011.03.01
+7E21E0	18	FF	Location	PC3 palette	2011.03.01
+7E235A	06	FF	Battle	Unknown 6 byte data copied from 1138F2-1138F7	2008.02.14
+7E237A	06	FF	Battle	Unknown 6 byte data copied from 1138FA-1138FF	2008.02.14
+7E23A0	18	FF	Location	PC1 battle palette	2011.03.01
+7E23BA	06	FF	Battle	PC1 weapon palette	2007.08.16
+7E23C0	18	FF	Location	PC2 battle palette	2011.03.01
+7E23DA	06	FF	Battle	PC2 weapon palette	2007.08.16
+7E23E0	18	FF	Location	PC3 battle palette	2011.03.01
+7E23FA	06	FF	Battle	PC3 weapon palette	2007.08.16
+7E2400	F2	FF	All	Inventory item	2007.06.12
+7E24F2	0E	FF	All	Inventory item UNUSED SPACE	2007.06.12
+7E2500	F2	FF	All	Inventory quantity	2007.06.12
+7E25F2	0E	FF	All	Inventory quantity UNUSED SPACE	2007.06.12
+7E2600	1	FF	All	Crono Portrait	2007.01.11
+7E2603	2	FF	All	Crono current HP	2007.01.11
+7E2605	2	FF	All	Crono max HP	2007.01.11
+7E2607	2	FF	All	Crono current MP	2007.01.11
+7E2609	2	FF	All	Crono max MP	2007.01.11
+7E260B	1	FF	All	Crono power	2007.01.11
+7E260C	1	FF	All	Crono stamina	2007.01.11
+7E260D	1	FF	All	Crono speed	2007.01.11
+7E260E	1	FF	All	Crono magic	2007.01.11
+7E260F	1	FF	All	Crono hit	2007.01.11
+7E2610	1	FF	All	Crono evade	2007.01.11
+7E2611	1	FF	All	Crono magic defense	2007.01.11
+7E2612	1	FF	All	Crono Level	2007.01.11
+7E2613	3	FF	All	Crono XP	2007.01.11
+7E2627	1	FF	All	Crono Helmet Equipped	2007.01.11
+7E2628	1	FF	All	Crono Armor Equipped	2007.01.11
+7E2629	1	FF	All	Crono Weapon Equipped	2007.01.11
+7E262A	1	FF	All	Crono Accessory Equipped	2007.01.11
+7E262B	2	FF	All	Crono Exp Next	2007.01.11
+7E262D	2	FF	All	Crono Skill Points Needed To Gain Next Tech	2007.01.11
+7E2650	50	FF	All	Marle's Data	2007.06.12
+7E26A0	50	FF	All	Lucca's Data	2007.06.12
+7E26F0	50	FF	All	Robo's Data	2007.06.12
+7E2740	50	FF	All	Frog's Data	2007.06.12
+7E2790	50	FF	All	Ayla's Data	2007.06.12
+7E27E0	50	FF	All	Magus's Data	2007.06.12
+7E2830	07	FF	All	Tech to learn next (1 byte per PC)	2007.06.12
+7E2837	07	FF	All	Single Techs learned (1 byte per PC)	2007.06.12
+7E283E	01	E0	All	Crono Marle Double Techs learned	2007.06.12
+7E283F	01	E0	All	Crono Lucca Double Techs learned	2007.06.12
+7E2840	01	E0	All	Crono Robo Double Techs learned	2007.06.12
+7E2841	01	E0	All	Crono Frog Double Techs learned	2007.06.12
+7E2842	01	E0	All	Crono Ayla Double Techs learned	2007.06.12
+7E2843	01	E0	All	Marle Lucca Double Techs learned	2007.06.12
+7E2844	01	E0	All	Marle Robo Double Techs learned	2007.06.12
+7E2845	01	E0	All	Marle Frog Double Techs learned	2007.06.12
+7E2846	01	E0	All	Marle Ayla Double Techs learned	2007.06.12
+7E2847	01	E0	All	Lucca Robo Double Techs learned	2007.06.12
+7E2848	01	E0	All	Lucca Ayla Double Techs learned	2007.06.12
+7E2849	01	E0	All	Robo Frog Double Techs learned	2007.06.12
+7E284A	01	E0	All	Robo Ayla Double Techs learned	2007.06.12
+7E284B	01	E0	All	Frog Ayla Double Techs learned	2007.06.12
+7E284C	01	E0	All	Lucca Frog Double Techs learned	2007.06.12
+7E284D	01	80	All	Delta Force - Crono Marle Lucca Triple Tech	2007.06.12
+7E284E	01	80	All	Lifeline - Crono Marle Robo Triple Tech	2007.06.12
+7E284F	01	80	All	Arc Impulse - Crono Marle Frog Triple Tech	2007.06.12
+7E2850	01	80	All	Final Kick - Crono Marle Ayla Triple Tech	2007.06.12
+7E2851	01	80	All	Fire Zone - Crono Lucca Robo Triple Tech	2007.06.12
+7E2852	01	80	All	Delta Storm - Crono Lucca Frog Triple Tech	2007.06.12
+7E2853	01	80	All	GatlingKick - Crono Lucca Ayla Triple Tech	2007.06.12
+7E2854	01	80	All	Triple Raid - Crono Robo Frog Triple Tech	2007.06.12
+7E2855	01	80	All	Twister - Crono Robo Ayla Triple Tech	2007.06.12
+7E2856	01	80	All	3D Attack - Crono Frog Ayla Triple Tech	2007.06.12
+7E2857	01	80	All	DarkEternal (Black Rock) - Marle Lucca Magus	2007.06.29
+7E2858	01	80	All	Omega Flare (Blue Rock) - Lucca Robo Magus	2007.06.12
+7E2859	01	80	All	Spin Strike (SilverRock) - Robo Frog Ayla	2007.06.12
+7E285A	01	80	All	PoyozoDance (White Rock) - Marle Lucca Ayla	2007.06.12
+7E285B	01	80	All	Grand Dream (Gold Rock) - Marle Frog Robo	2007.06.12
+7E285C	06	FF	All	"All $FF, copied from 0C025C-0C0261, unused?"	2007.06.12
+7E2862	1E	FF	All	"JUNK, Weapon Stats copied from 0C0262-0C027F"	2007.06.29
+7E2880	01	FF	Battle	"If not $00, experience, tech point, and gold granting is skipped"	2008.02.14
+7E2881	FF	FF	All	Appears to be unused space (included in SRAM)	2008.02.14
+7E2980	1	FF	All	PC1	2007.01.11
+7E2981	1	FF	All	PC2	2007.01.11
+7E2982	1	FF	All	PC3	2007.01.11
+7E2983	1	FF	All	Reserve PC1	2007.01.11
+7E2984	1	FF	All	Reserve PC2	2007.01.11
+7E2985	1	FF	All	Reserve PC3	2007.01.11
+7E2986	1	FF	All	Reserve PC4	2007.01.11
+7E2987	1	FF	All	Reserve PC5	2007.01.11
+7E2988	1	FF	All	Reserve PC6	2007.01.11
+7E2989	1	FF	Battle	Event Command D8 settings byte 1	2007.01.11
+7E298A	06	FF	All	Appears to be UNUSED SPACE (6 bytes)	2007.08.16
+7E2990	01	07	All	"Battle Speed (index, 1-8)"	2007.06.29
+7E2990	01	08	All	Stereo - Off	2007.06.29
+7E2990	01	10	All	Control Pad - Custom	2007.06.29
+7E2990	01	20	All	Save Menu Cursor - Yes	2007.06.29
+7E2990	01	40	All	Battle Mode - Active	2007.06.29
+7E2990	01	80	All	Skill/Item info. - On	2007.06.29
+7E2991	01	07	All	"Menu background style (index, 1-8)"	2007.06.29
+7E2991	01	40	All	Save Battle Cursor - Yes	2007.06.29
+7E2991	01	80	All	Save Skill/Item Cursor - Yes	2007.06.29
+7E2992	01	01	All	Battle Gauge 1	2007.06.29
+7E2992	01	02	All	Battle Gauge 2	2007.06.29
+7E2993	1	FF	All	Confirm button	2007.08.15
+7E2994	1	FF	All	Cancel button	2007.08.15
+7E2995	1	FF	All	Menu button	2007.08.15
+7E2996	1	FF	All	Dash button	2007.08.15
+7E2997	1	FF	All	Map button	2007.08.15
+7E2998	1	FF	All	Warp button	2007.08.15
+7E299A	01	FF	All	Unknown controller button? default 0x20	2007.08.16
+7E299B	01	FF	All	Unknown controller button? default 0x40 (possibly not used)	2007.08.16
+7E299C	02	FF	All	Number of times the game has been saved	2007.06.12
+7E299E	01	FF	All	"Copied from 307FE1 in SRAM, total times a new game has been started?"	2007.06.29
+7E299F	01	FF	All	"Unknown, related to new game ATB menu and character naming screens"	2007.06.29
+7E29A0	0C	FF	All	Appears to be UNUSED SPACE (12 bytes)	2007.08.16
+7E29AC	01	FF	All	"Attract mode battle data to use next . 00 - Flea, 01 - Zombor, 02 - Magus Castle"	2007.08.16
+7E29AD	01	FF	All	"Appears to be a random value stored when a save game is loaded, copied from 7E0D00"	2007.08.16
+7E29AE	01	FF	All	Currently playing song (Location)	2007.06.12
+7E29AF	01	FF	All	Characters who have joined your party	2007.06.12
+7E2A1F	1	FF	Battle	Event Command D8 settings byte 2	2007.01.11
+7E2A21	1	01	Location	Lavos 3rd form battle background and death	2007.02.09
+7E2A21	1	02	Location	"Lavos 2nd form and MotherBrain battles, unknown purpose"	2007.02.09
+7E2A21	1	7C	Location	"Unknown, possibly not used"	2007.02.09
+7E2A21	1	80	Location	Suspend music at battle end	2007.08.15
+7E2C23	5	FF	All	Crono's Name	2007.08.15
+7E2C29	5	FF	All	Marle's Name	2007.08.15
+7E2C2F	5	FF	All	Lucca's Name	2007.08.15
+7E2C35	5	FF	All	Robo's Name	2007.08.15
+7E2C3B	5	FF	All	Frog's Name	2007.08.15
+7E2C41	5	FF	All	Ayla's Name	2007.08.15
+7E2C47	5	FF	All	Magus's Name	2007.08.15
+7E2C4E	5	FF	All	Epoch's Name	2007.08.15
+7E2C53	3	FF	All	Gold	2007.08.15
+7E2C7C	1	FF	All	Crono Save Battle Cursor value (00 - Attack 01 - Tech 02 - Item)	2008.07.17
+7E2C7D	1	FF	All	Crono unknown Save Skill/Item Cursor setting	2008.07.17
+7E2C7E	1	FF	All	Crono unknown Save Skill/Item Cursor setting	2008.07.17
+7E2C7F	1	FF	All	Crono Save Skill/Item Cursor - Tech index	2008.07.17
+7E2C80	4	FF	All	Marle Save Cursor settings	2008.07.17
+7E2C84	4	FF	All	Lucca Save Cursor settings	2008.07.17
+7E2C88	4	FF	All	Robo Save Cursor settings	2008.07.17
+7E2C8C	4	FF	All	Frog Save Cursor settings	2008.07.17
+7E2C90	4	FF	All	Ayla Save Cursor settings	2008.07.17
+7E2C94	4	FF	All	Magus Save Cursor settings	2008.07.17
+7E2C98	2	FF	All	"Unknown data, Save Cursor related?  Included in SRAM"	2008.07.17
+7E3000	40	FF	Location	Layer 1 Tile	2007.01.11
+7E3040	40	FF	Location	Layer 2 Tile	2007.01.11
+7E3080	40	FF	Location	Layer 3 Tile	2007.01.11
+7E30C0	40	FF	Location	Tile Properties 1	2007.01.11
+7E3100	3F00	FF	Location	Repeat of previous pattern for each row	2007.01.11
+7E3100	0800	FF	Battle	Unknown data copied from 113900-1140FF	2008.02.14
+7E3E00	800	FF	Main Menu	Background tilemap	2008.07.17
+7E4000	1800	FF	Overworld	L2 Tiles	2007.01.11
+7E4E00	0600	FF	Menu	Magic type graphics data block	2008.02.14
+7E5800	1800	FF	Overworld	L1 Tiles	2007.01.11
+7E5E0A	1	04	Battle	PC1 has Stop status	2008.07.17
+7E5E2D	1	FF	Battle	PC1 portrait	2008.07.17
+7E5E2E	1	FF	Battle	PC1 unknown	2008.07.17
+7E5E2F	1	01	Battle	PC1 HP in critical status	2008.07.17
+7E5E30	2	FF	Battle	PC1 current HP	2008.07.17
+7E5E32	2	FF	Battle	PC1 max HP	2008.07.17
+7E5E34	2	FF	Battle	PC1 current MP	2008.07.17
+7E5E36	2	FF	Battle	PC1 max MP	2008.07.17
+7E5E38	1	FF	Battle	PC1 power	2008.07.17
+7E5E39	1	FF	Battle	PC1 stamina	2008.07.17
+7E5E3A	1	FF	Battle	PC1 speed	2008.07.17
+7E5E3B	1	FF	Battle	PC1 magic	2008.07.17
+7E5E3C	1	FF	Battle	PC1 hit	2008.07.17
+7E5E3D	1	FF	Battle	PC1 evade	2008.07.17
+7E5E3E	1	FF	Battle	PC1 magic defense	2008.07.17
+7E5E3F	1	FF	Battle	PC1 level	2008.07.17
+7E5E40	3	FF	Battle	PC1 experience	2008.07.17
+7E5E43	7	FF	Battle	PC1 - unknown	2008.07.17
+7E5E4A	1	80	Battle	PC1 laying on ground dead animation	2008.07.17
+7E5E4B	1	01	Battle	PC1 has blind status	2008.07.17
+7E5E4B	1	02	Battle	PC1 has sleep status	2008.07.17
+7E5E4B	1	04	Battle	PC1 has confuse status	2008.07.17
+7E5E4B	1	08	Battle	PC1 has lock status	2008.07.17
+7E5E4B	1	10	Battle	PC1 loses 1HP/second	2008.07.17
+7E5E4B	1	20	Battle	PC1 has slow status	2008.07.17
+7E5E4B	1	40	Battle	PC1 has poison status	2008.07.17
+7E5E4B	1	80	Battle	PC1 has stop status	2008.07.17
+7E5E4C	1	FF	Battle	"PC1 unknown, likely battle status effects"	2008.07.17
+7E5E4D	1	40	Battle	PC1 has 2x Evade status	2008.07.17
+7E5E4D	1	80	Battle	PC1 has haste status	2008.07.17
+7E5E4E	1	04	Battle	PC1 has protect status	2008.07.17
+7E5E4E	1	20	Battle	PC1 has MP regen status (SeraphSong)	2008.07.17
+7E5E4E	1	40	Battle	PC1 magic defense up	2008.07.17
+7E5E4E	1	80	Battle	PC1 has berserk status	2008.07.17
+7E5E4F	1	80	Battle	PC1 has auto-revive status	2008.07.17
+7E5E50	1	04	Battle	PC1 has Accessory $AB Berserker equipped	2008.07.17
+7E5E52	1	40	Battle	PC1 has 2x Evade (from Third Eye)	2008.07.17
+7E5E52	1	80	Battle	PC1 has Haste status (from Haste Helm)	2008.07.17
+7E5E53	1	04	Battle	PC1 has Protect/Shield status (from Safe Helm)	2008.07.17
+7E5E53	1	20	Battle	PC1 has MP Regen status (from SeraphSong)	2008.07.17
+7E5E54	1	FF	Battle	PC1 Helmet equipped	2008.07.17
+7E5E55	1	FF	Battle	PC1 Armor equipped	2008.07.17
+7E5E56	1	FF	Battle	PC1 Weapon equipped	2008.07.17
+7E5E57	1	FF	Battle	PC1 Accessory equipped	2008.07.17
+7E5E58	2	FF	Battle	PC1 experience next	2008.07.17
+7E5E5A	2	FF	Battle	PC1 tech experience next	2008.07.17
+7E5E5C	51	FF	Battle	PC1 - unknown	2008.07.30
+7E5EAD	80	FF	Battle	"PC2 data (Same as PC1, 7E5E2D)"	2008.07.30
+7E5F2D	80	FF	Battle	"PC3 data (Same as PC1, 7E5E2D)"	2008.07.30
+7E5FAD	01	FF	Battle	Enemy 03 enemy index	2008.07.30
+7E5FAE	02	FF	Battle	Enemy 03 unused	2008.07.30
+7E5FB0	02	FF	Battle	Enemy 03 current HP	2008.02.14
+7E5FB2	02	FF	Battle	Enemy 03 max HP	2008.02.14
+7E5FB4	0B	FF	Battle	Enemy 03 unused	2008.07.30
+7E5FBF	01	FF	Battle	Enemy 03 level	2008.02.14
+7E5FC0	06	FF	Battle	Enemy 03 unused	2008.07.30
+7E5FC6	1	FF	Battle	Enemy 03 Unknown	2008.07.30
+7E5FC7	01	01	Battle	Enemy 03 uses boss death animation	2008.02.14
+7E5FC7	01	02	Battle	Enemy 03 HP not visible with SightScope or Relic	2008.02.14
+7E5FC7	1	FC	Battle	Enemy 03 Unknown	2008.07.30
+7E5FC8	1	FF	Battle	Enemy 03 Unknown	2008.07.30
+7E5FC9	01	FF	Battle	Enemy 03 unused	2008.07.30
+7E5FCA	1	FF	Battle	Enemy 03 Unknown	2008.07.30
+7E5FCB	01	01	Battle	Enemy 03 has blind status	2008.02.14
+7E5FCB	01	02	Battle	Enemy 03 has sleep status	2008.02.14
+7E5FCB	01	04	Battle	Enemy 03 has confuse status	2008.02.14
+7E5FCB	01	10	Battle	Enemy 03 loses 1HP/second	2008.07.30
+7E5FCB	01	40	Battle	Enemy 03 has poison status	2008.07.30
+7E5FCB	1	A8	Battle	Enemy 03 Unknown	2008.07.30
+7E5FCC	1	FF	Battle	Enemy 03 Unknown	2008.07.30
+7E5FCD	01	FF	Battle	"Enemy 03 unknown, copied from 7E5FD2"	2008.07.30
+7E5FCE	01	FF	Battle	"Enemy 03 unknown, copied from 7E5FD3"	2008.07.30
+7E5FCF	1	FF	Battle	Enemy 03 Unknown	2008.07.30
+7E5FD0	01	02	Battle	Enemy 03 is immune to sleep	2008.07.30
+7E5FD0	1	FD	Battle	Enemy 03 Unknown	2008.07.30
+7E5FD1	3	FF	Battle	Enemy 03 Unknown	2008.07.30
+7E5FD4	10	FF	Battle	Enemy 03 unused	2008.07.30
+7E5FE4	01	FF	Battle	Enemy 03 unknown	2008.07.30
+7E5FE5	01	FF	Battle	Enemy 03 Speed	2008.07.30
+7E5FE6	01	FF	Battle	Enemy 03 Magic	2008.07.30
+7E5FE7	01	FF	Battle	Enemy 03 Hit %	2008.07.30
+7E5FE8	01	FF	Battle	Enemy 03 Evade	2008.07.30
+7E5FE9	01	FF	Battle	Enemy 03 Magic Def.	2008.07.30
+7E5FEA	01	FF	Battle	Enemy 03 Offense	2008.07.30
+7E5FEB	01	FF	Battle	Enemy 03 Defense	2008.07.30
+7E5FEC	01	FF	Battle	Enemy 03 Lightning Def.	2008.07.30
+7E5FED	01	FF	Battle	Enemy 03 Shadow Def.	2008.07.30
+7E5FEE	01	FF	Battle	Enemy 03 Water Def.	2008.07.30
+7E5FEF	01	FF	Battle	Enemy 03 Fire Def.	2008.07.30
+7E5FF0	3D	FF	Battle	Enemy 03 unused	2008.07.30
+7E602D	80	FF	Battle	Enemy 04 stats	2008.07.30
+7E60AD	80	FF	Battle	Enemy 05 stats	2008.07.30
+7E612D	80	FF	Battle	Enemy 06 stats	2008.07.30
+7E61AD	80	FF	Battle	Enemy 07 stats	2008.07.30
+7E622D	80	FF	Battle	Enemy 08 stats	2008.07.30
+7E62AD	80	FF	Battle	Enemy 09 stats	2008.07.30
+7E632D	80	FF	Battle	Enemy 0A stats	2008.07.30
+7E7000	40	FF	Location	Tile Properties 2	2007.01.11
+7E7000	0200	FF	Overworld	Tile properties	2007.01.11
+7E7040	40	FF	Location	Tile Properties 3	2007.01.11
+7E7080	80	FF	Location	???	2007.01.11
+7E7100	3F00	FF	Location	Repeat of previous pattern for each row	2007.01.11
+7E7200	0C00	FF	Overworld	Music transition data	2007.01.11
+7E7E00	???	FF	Overworld	Exits	2007.01.15
+7E9499	02	FF	Battle	PC current HP	2008.02.14
+7E95DF	1	FF	Battle	PC1 cursor position on current page in Tech menu (range $00-02)	2008.07.17
+7E95E0	1	FF	Battle	PC2 cursor position on current page in Tech menu (range $00-02)	2008.07.17
+7E95E1	1	FF	Battle	PC3 cursor position on current page in Tech menu (range $00-02)	2008.07.17
+7E95E5	1	FF	Battle	PC1 cursor position on current page in Inv. menu (range $00-02)	2008.07.17
+7E95E6	1	FF	Battle	PC1 number of lines scrolled from top of Inv. menu (range $00-FA)	2008.07.17
+7E95E7	1	FF	Battle	PC2 cursor position on current page in Inv. menu (range $00-02)	2008.07.17
+7E95E8	1	FF	Battle	PC2 number of lines scrolled from top of Inv. menu (range $00-FA)	2008.07.17
+7E95E9	1	FF	Battle	PC3 cursor position on current page in Inv. menu (range $00-02)	2008.07.17
+7E95EA	1	FF	Battle	PC3 number of lines scrolled from top of Inv. menu (range $00-FA)	2008.07.17
+7E95EB	1	FF	Battle	PC1 number of lines scrolled from top of Tech menu	2008.07.17
+7E95EC	1	FF	Battle	PC2 number of lines scrolled from top of Tech menu	2008.07.17
+7E95ED	1	FF	Battle	PC3 number of lines scrolled from top of Tech menu	2008.07.17
+7E987F	02	FF	Battle	Pointer obtained from 110000-1100FF range	2008.02.14
+7E9916	1	FF	Battle	PC1 Save Battle Cursor value (00 - Attack 01 - Tech 02 - Item)	2008.07.17
+7E9917	1	FF	Battle	PC2 Save Battle Cursor value (00 - Attack 01 - Tech 02 - Item)	2008.07.17
+7E9918	1	FF	Battle	PC3 Save Battle Cursor value (00 - Attack 01 - Tech 02 - Item)	2008.07.17
+7E99E1	1	FF	Battle	Battle Mode setting	2008.07.17
+7E9D96	3	FF	Load Menu	Total gold (copied from 7E2C53-7E2C55)	2008.07.17
+7E9F20	1	FF	Battle	Battle Gauge display type (range $00-02)	2008.07.17
+7EA0A7	1	01	Battle	"When set to 01, Tech and Item disabled (0300 in Enemy Special Set"	2008.07.17
+7EA0D1	1	01	Battle	PC1 has Lock status	2008.07.17
+7EA0D4	1	FF	Battle	Save Battle Cursor setting	2008.07.17
+7EA0D5	1	FF	Battle	Save Skill/Item Cursor setting	2008.07.17
+7EA0DB	1	FF	Battle	Skill/Item info. setting	2008.07.17
+7EAE5D	1	40	Battle	Enemy 03 drop reward available	2008.07.17
+7EAE5D	1	80	Battle	Enemy 03 charm reward available	2008.07.17
+7EAE7A	1	04	Battle	PC1 has Confuse status	2008.07.17
+7EAE93	1	FF	Battle	Current tech animation [Crono]	2007.01.11
+7EAEC5	01	FF	Battle	Total number of PCs	2008.02.14
+7EAEE7	1	FF	Battle	Current Tech % chance (from 0C213F 12 byte Tech Data sets)	2008.07.17
+7EAEF7	02	FF	Battle	Total amount of gold won in battle (copied from 7EB2A5)	2008.02.14
+7EAEFF	01	FF	Battle	PC1 current index (dead if $FF)	2008.07.17
+7EAF00	01	FF	Battle	PC2 current index (dead if $FF)	2008.07.17
+7EAF01	01	FF	Battle	PC3 current index (dead if $FF)	2008.07.17
+7EAF02	01	FF	Battle	Enemy 03 current index (dead if $FF)	2008.07.17
+7EAF03	01	FF	Battle	Enemy 04 current index (dead if $FF)	2008.07.17
+7EAF04	01	FF	Battle	Enemy 05 current index (dead if $FF)	2008.07.17
+7EAF05	01	FF	Battle	Enemy 06 current index (dead if $FF)	2008.07.17
+7EAF06	01	FF	Battle	Enemy 07 current index (dead if $FF)	2008.07.17
+7EAF07	01	FF	Battle	Enemy 08 current index (dead if $FF)	2008.07.17
+7EAF08	01	FF	Battle	Enemy 09 current index (dead if $FF)	2008.07.17
+7EAF09	01	FF	Battle	Enemy 0A current index (dead if $FF)	2008.07.17
+7EAF0A	01	FF	Battle	PC1 original index	2008.07.17
+7EAF0B	01	FF	Battle	PC2 original index	2008.07.17
+7EAF0C	01	FF	Battle	PC3 original index	2008.07.17
+7EAF0D	01	FF	Battle	Enemy 03 original index	2008.07.17
+7EAF0E	01	FF	Battle	Enemy 04 original index	2008.07.17
+7EAF0F	01	FF	Battle	Enemy 05 original index	2008.07.17
+7EAF10	01	FF	Battle	Enemy 06 original index	2008.07.17
+7EAF11	01	FF	Battle	Enemy 07 original index	2008.07.17
+7EAF12	01	FF	Battle	Enemy 08 original index	2008.07.17
+7EAF13	01	FF	Battle	Enemy 09 original index	2008.07.17
+7EAF14	01	FF	Battle	Enemy 0A original index	2008.07.17
+7EAFAB	1	FF	Battle	Character 1 attack bar value	2007.01.11
+7EAFAC	1	FF	Battle	Character 2 attack bar value	2007.01.11
+7EAFAD	1	FF	Battle	Character 3 attack bar value	2007.01.11
+7EAFAE	1	FF	Battle	Enemy 03 attack bar value	2008.07.17
+7EAFAF	1	FF	Battle	Enemy 04 attack bar value	2008.07.17
+7EAFB0	1	FF	Battle	Enemy 05 attack bar value	2008.07.17
+7EAFB1	1	FF	Battle	Enemy 06 attack bar value	2008.07.17
+7EAFB2	1	FF	Battle	Enemy 07 attack bar value	2008.07.17
+7EAFB3	1	FF	Battle	Enemy 08 attack bar value	2008.07.17
+7EAFB4	1	FF	Battle	Enemy 09 attack bar value	2008.07.17
+7EAFB5	1	FF	Battle	Enemy 0A attack bar value	2008.07.17
+7EAFB6	1	01	Battle	PC1 has Stop status	2008.07.17
+7EAFC1	1	01	Battle	PC1 has Poison status	2008.07.17
+7EAFCC	1	01	Battle	PC1 has Slow status	2008.07.17
+7EAFD7	1	01	Battle	PC1 has Haste status	2008.07.17
+7EAFE2	1	01	Battle	PC1 has 2x Evade status	2008.07.17
+7EAFED	1	01	Battle	PC1 has M. Def. Up/Barrier status	2008.07.17
+7EB00E	1	01	Battle	PC1 has HP Loss status	2008.07.17
+7EB019	1	01	Battle	PC1 has MP Regen status	2008.07.17
+7EB024	1	01	Battle	PC1 has Protect/Shield status	2008.07.17
+7EB02F	1	01	Battle	PC1 has (unknown) status	2008.07.17
+7EB03A	01	FF	Battle	"PC1 - attack timer status (00 - dead or sleeping, 80 - ready to attack)"	2008.07.17
+7EB03B	01	FF	Battle	PC2 - attack timer status	2008.02.14
+7EB03C	01	FF	Battle	PC3 - attack timer status	2008.02.14
+7EB03D	01	FF	Battle	Enemy 03 - attack timer status	2008.02.14
+7EB03E	01	FF	Battle	Enemy 04 - attack timer status	2008.02.14
+7EB03F	01	FF	Battle	Enemy 05 - attack timer status	2008.02.14
+7EB040	01	FF	Battle	Enemy 06 - attack timer status	2008.02.14
+7EB041	01	FF	Battle	Enemy 07 - attack timer status	2008.02.14
+7EB042	01	FF	Battle	Enemy 08 - attack timer status	2008.02.14
+7EB043	01	FF	Battle	Enemy 09 - attack timer status	2008.02.14
+7EB044	01	FF	Battle	Enemy 0A - attack timer status	2008.02.14
+7EB1BE	01	FF	Battle	Crono battle index	2008.02.14
+7EB1BF	01	FF	Battle	Marle battle index	2008.02.14
+7EB1C0	01	FF	Battle	Lucca battle index	2008.02.14
+7EB1C1	01	FF	Battle	Robo battle index	2008.02.14
+7EB1C2	01	FF	Battle	Frog battle index	2008.02.14
+7EB1C3	01	FF	Battle	Ayla battle index	2008.02.14
+7EB1C4	01	FF	Battle	Magus battle index	2008.02.14
+7EB268	1	FF	Battle	Set to $FF when PC1 has Confuse status	2008.07.17
+7EB28C	2	FF	Battle	Total amount of exp. won in battle	2008.07.17
+7EB2A5	02	FF	Battle	Total amount of gold won in battle	2008.02.14
+7EB2C3	2	FF	Battle	"Current Tech index in use x $0B, + $0B"	2008.07.17
+7EB2DB	2	FF	Battle	Total amount of tech points won in battle	2008.07.17
+7EB316	02	FF	Battle	PC1 max HP (copied from 7E5E32)	2008.02.14
+7EB318	02	FF	Battle	PC2 max HP (copied from 7E5EB2)	2008.02.14
+7EB31A	02	FF	Battle	PC3 max HP (copied from 7E5F32)	2008.02.14
+7EB31E	1	FF	Battle	Critical hit % chance	2008.07.17
+7EB3BA	01	FF	Battle	PC1 Accessory (copied from 7E5E57)	2008.02.14
+7EB3BB	01	FF	Battle	PC2 Accessory (copied from 7E5ED7)	2008.02.14
+7EB3BC	01	FF	Battle	PC3 Accessory (copied from 7E5F57)	2008.02.14
+7EB3BD	01	FF	Battle	Counter for number of PCs with Wallet equipped (range $00-$03)	2008.02.14
+7EB3BF	1	01	Battle	Charm - set on charm success	2008.07.17
+7EB3BF	1	03	Battle	"Charm - ""Got 1x {item}!"""	2008.07.17
+7EB3BF	1	FE	Battle	Charm - MISS!	2008.07.17
+7EB3BF	1	FF	Battle	"Charm - ""It was the thought that counted..."""	2008.07.17
+7EB3E6	1	FF	Battle	Random value (copied from 7E29AD)	2008.07.17
+7ED800	3C	FF	Location	"ASCII 2 byte sets, first byte is value -$40, second byte $2C, DMA to VRAM"	2008.02.14
+7F0000	1	FF	All	Storyline Counter (keeps track of storyline progress)	2007.01.11
+7F0001	4F	FF	All	"Treasure chest status flags (unused starting at 7F0020, bit 02)"	2007.06.29
+7F0050	1	01	All	Marle bumped into Crono . Said never stole anything . Juror 7 - Guilty	2007.01.11
+7F0050	1	02	All	"Tempted by Marle's fortune . Juror 4, 5 - Guilty"	2007.01.11
+7F0050	1	04	All	Just a bit tempted by Marle's fortune . Juror 1 - Guilty	2007.01.11
+7F0050	1	08	All	Found out the Chancellor is framing King Gaurdia	2007.01.11
+7F0050	1	10	All	Used to trigger screen wipes during King Guardia's trial	2007.08.30
+7F0050	1	20	All	Interrupted King's trial first time	2007.08.30
+7F0050	1	40	All	King's trial ended	2007.08.30
+7F0050	1	80	All	Picked up Yakra's Key	2007.08.30
+7F0051	1	FF	All	Trial innocent votes	2007.01.11
+7F0052	1	FF	All	Silver Points	2007.01.11
+7F0053	1	FF	All	Kittens	2007.01.11
+7F0054	1	01	All	Brought the girl her cat back . Juror 2 - Innocent	2007.01.11
+7F0054	1	02	All	Talked to the girl who lost her cat before bringing it back to her . Juror 2 - Guilty	2007.01.11
+7F0054	1	04	All	Ate the old man's lunch . Juror 6 - Guilty	2007.01.11
+7F0054	1	08	All	Lucca asks Crono to try the Telepod	2007.08.30
+7F0054	1	10	All	Pendant has not been found	2007.08.30
+7F0054	1	20	All	Picked up pendant	2007.08.30
+7F0054	1	40	All	Have not given Marle her pendant	2007.08.30
+7F0054	1	80	All	Have not bumped into Marle yet	2007.08.30
+7F0055	1	01	All	Tried to sell Marle's pendant . Juror 1 - Guilty	2007.01.11
+7F0055	1	02	All	Picked up pendant before talking to Marle . Juror 4 - Guilty	2007.01.11
+7F0055	1	04	All	Talked to Marle about missing pendant	2007.01.11
+7F0055	1	08	All	Marle wants some candy	2007.08.30
+7F0055	1	10	All	"Events related to ""Marle's fortune"""	2007.08.30
+7F0055	1	20	All	Marle yells about being kidnapped . Juror 3 - Guilty	2007.01.11
+7F0055	1	40	All	Given Marle her pendant / Juror 5 - Guilty	2007.01.11
+7F0055	1	80	All	Shown Marle around the fair	2007.08.30
+7F0056	1	01	All	Lucca asks Crono to try the telepod	2008.01.29
+7F0056	1	02	All	Crono tried out the telepod	2008.01.29
+7F0056	1	FC	All	Unused	2008.01.29
+7F0057	01	04	All	Attract mode scenes	2008.02.14
+7F005A	1	01	All	Lucca has not permanently joined the party	2007.08.30
+7F005A	1	02	All	Lucca is trying to change the past	2007.08.30
+7F005A	1	04	All	Taban has come home	2007.08.31
+7F005A	1	08	All	Lucca wants to make the Wondershot	2007.08.31
+7F005A	1	20	All	Lucca has tried to change the past	2007.08.30
+7F005A	1	40	All	Lara has started to get sucked into Taban's machine	2007.08.31
+7F005A	1	90	All	Unused	2007.08.31
+7F005D	1	01	All	Crono Poyozo	2007.01.11
+7F005D	1	02	All	Marle Poyozo	2007.01.11
+7F005D	1	04	All	Lucca Poyozo	2007.01.11
+7F005D	1	08	All	Robo Poyozo	2007.01.11
+7F005D	1	10	All	Frog Poyozo	2007.01.11
+7F005D	1	20	All	Ayla Poyozo	2007.01.11
+7F005D	1	40	All	Magus Poyozo	2007.01.11
+7F005D	1	80	All	Crono won cat at fair	2007.01.11
+7F005E	1	01	All	Crono Clone	2007.01.11
+7F005E	1	02	All	Marle Clone	2007.01.11
+7F005E	1	04	All	Lucca Clone	2007.01.11
+7F005E	1	08	All	Robo Clone	2007.01.11
+7F005E	1	10	All	Frog Clone	2007.01.11
+7F005E	1	20	All	Ayla Clone	2007.01.11
+7F005E	1	40	All	Magus Clone	2007.01.11
+7F005E	1	80	All	Unused	2007.08.31
+7F005F	1	FF	All	Cat Food	2007.01.11
+7F0060	01	FF	All	"Status byte used by Load Screen 000 and Title Screen 1B1 - 00 = Attract Mode, 01 = Load Screen"	2008.07.17
+7F0061	01	FF	All	"Status byte used by Load Screen 000 and Title Screen 1B1 - 00 = Title Screen, 01 = New Game/Battle Mode, 02 = Load Screen"	2008.07.17
+7F0062	01	FF	All	Counter used to display attract mode scenes - uses values 00 01 2C 38 39 40 48 4C 50 58	2008.02.14
+7F006D	1	01	All	Lucca decides to try to change the past	2007.08.31
+7F006D	1	02	All	Lucca gets Party's attention at Moonlight Parade	2007.08.31
+7F006D	1	04	All	Finished conversation with ancestors at Moonlight Parade (used for Telepod Exhibit)	2007.08.31
+7F006D	1	08	All	Finished conversation with ancestors at Moonlight Parade (used for Leene's Square)	2007.08.31
+7F006D	1	10	All	Melchior is looking over the Rainbow Shell	2007.08.31
+7F006D	1	20	All	Melchior has made Prism Dress/Helms	2007.08.31
+7F006D	1	40	All	"Moonlight ""Parade"" finished"	2007.08.31
+7F006D	1	80	All	Epoch crashed into Lavos	2007.08.31
+7F006E	1	FF	All	"Result used for Beyond Time / Reunion ending, Successor of Guardia ending, see Game Notes"	2007.06.29
+7F007C	1	40	All	Lara loses her legs	2007.01.11
+7F00AF	01	10	All	PCs acted sick to trick the guards outside Blackbird cell	2008.02.14
+7F00AF	01	40	All	"PCs learned all equipment, inventory and money stolen on Blackbird"	2008.02.14
+7F00BA	01	01	All	Inventory lost on Blackbird	2008.02.14
+7F00BB	01	FF	All	PC1 lost Helmet on Blackbird	2008.02.14
+7F00BC	01	FF	All	PC1 lost Armor on Blackbird	2008.02.14
+7F00BD	01	FF	All	PC1 lost Weapon on Blackbird	2008.02.14
+7F00BE	01	FF	All	PC1 lost Accessory on Blackbird	2008.02.14
+7F00BF	01	FF	All	PC2 lost Helmet on Blackbird	2008.02.14
+7F00C0	01	FF	All	PC2 lost Armor on Blackbird	2008.02.14
+7F00C1	01	FF	All	PC2 lost Weapon on Blackbird	2008.02.14
+7F00C2	01	FF	All	PC2 lost Accessory on Blackbird	2008.02.14
+7F00C3	01	FF	All	PC3 lost Helmet on Blackbird	2008.02.14
+7F00C4	01	FF	All	PC3 lost Armor on Blackbird	2008.02.14
+7F00C5	01	FF	All	PC3 lost Weapon on Blackbird	2008.02.14
+7F00C6	01	FF	All	PC3 lost Accessory on Blackbird	2008.02.14
+7F00C7	01	FF	All	PC1 character index on Blackbird	2008.02.14
+7F00C8	01	FF	All	PC2 character index on Blackbird	2008.02.14
+7F00C9	01	FF	All	PC3 character index on Blackbird	2008.02.14
+7F00CA	02	FF	All	"Gold lost (7E2C53, 7E2C54) on Blackbird"	2008.02.14
+7F00DC	01	FF	All	Gold lost (7E2C55) on Blackbird	2008.02.14
+7F00E1	1	02	All	Met Spekkio	2007.01.11
+7F00E1	1	04	All	Beat Spekkio E0	2007.01.11
+7F00E1	1	08	All	Beat Spekkio E1	2007.01.11
+7F00E1	1	10	All	Beat Spekkio E2	2007.01.11
+7F00E1	1	20	All	Beat Spekkio E3	2007.01.11
+7F00E1	1	40	All	Beat Spekkio E4	2007.01.11
+7F00E1	1	80	All	Beat Spekkio E5	2007.01.11
+7F00E2	1	01	All	Spekkio has met Robo	2007.01.11
+7F00E2	1	02	All	Spekkio has met Ayla	2007.01.11
+7F00E2	1	04	All	Spekkio has met Magus	2007.01.11
+7F00F7	1	02	All	Told sapling woman to plant the tree	2007.01.11
+7F00FE	1	02	All	Naga-ette Bromide obtained	2007.06.12
+7F0130	02	FF	All	Jet Bike Race 1st High Score	2008.02.14
+7F0132	02	FF	All	Jet Bike Race 2nd High Score	2008.02.14
+7F0134	02	FF	All	Jet Bike Race 3rd High Score	2008.02.14
+7F0136	01	01	All	Talked to Rx-xR the Log Keeper	2008.02.14
+7F0136	01	02	All	Received Power tab from breaking 1500 or 2000 points in Jet Bike Race	2008.02.14
+7F0136	01	80	All	Jet Bike Race Mode 2 without boost (Mode7 Scene 09)	2008.02.14
+7F013A	1	01	All	Fought Son of Sun	2007.01.11
+7F0140	1	01	All	Mom mentioned Lucca dropping by	2007.01.11
+7F0140	1	02	All	Mom gave Crono allowance	2007.01.11
+7F0140	1	04	All	Mom has met Marle	2007.01.11
+7F0140	1	08	All	Mom has met Lucca	2007.01.11
+7F0140	1	10	All	Mom has met Robo	2007.01.11
+7F0140	1	20	All	Mom has met Frog	2007.01.11
+7F0140	1	40	All	Mom has met Ayla	2007.01.11
+7F0140	1	80	All	Mom has met Magus	2007.01.11
+7F0142	1	01	All	Crono's Mom has seen Crono after his trial	2008.01.29
+7F0142	1	04	All	Talked to NPC demonstrating save points	2008.01.29
+7F0142	1	10	All	Talked to Fritz after saving him from Prison	2008.01.29
+7F0142	1	40	All	Crono's curtains are open	2008.01.29
+7F0142	1	AA	All	Unused	2008.01.29
+7F014A	1	08	All	Power Tab in long Geno Dome hallway	2007.01.11
+7F014A	01	20	All	Truce Inn 1000 AD Sealed Chest - Blue Vest or Blue Mail (if 0x40 set) obtained	2008.02.14
+7F014A	01	40	All	Truce Inn 600 AD Sealed Chest activated but not opened	2008.02.14
+7F014A	01	80	All	Truce Inn 600 AD Sealed Chest - Blue Vest obtained	2008.02.14
+7F014E	1	08	All	Mother speaks to PCs in long Geno Dome hallway	2007.01.11
+7F014F	1	01	All	Crono's Mom gave permission to take Clone	2008.01.29
+7F014F	1	02	All	Crono's Mom is still upstairs after giving permission	2008.01.29
+7F014F	1	FC	All	Unused	2008.01.29
+7F015C	01	07	All	"Counter used with 10F Special Purpose Area for Reptite Ending scenes, range: 00-07"	2008.02.14
+7F0166	01	FF	All	"Resting at Truce Inn 600AD, 1000AD or Crono's House, used in 10F Special Purpose Area for Event Command E2 (Location)"	2008.07.17
+7F0168	01	FF	All	"Resting at Truce Inn 600AD, 1000AD or Crono's House, used in 10F Special Purpose Area for Event Command E2 (Location)"	2008.07.17
+7F016A	01	FF	All	"Resting at Truce Inn 600AD, 1000AD or Crono's House, used in 10F Special Purpose Area for Event Command E2 (Location)"	2008.07.17
+7F016C	01	FF	All	"Resting at Truce Inn 600AD, 1000AD or Crono's House, used in 10F Special Purpose Area for Event Command E2 (Location)"	2008.07.17
+7F0190	1	01	All	Brought to Prison	2007.01.11
+7F0198	1	02	All	Mid Tonics on Prison Supervisor	2007.01.11
+7F0198	1	20	All	Defeated Guards in Prison Supervisor's Office	2007.01.11
+7F01A2	1	10	All	Fought Medina Merchant	2007.01.11
+7F01A8	01	80	All	"Defeated Mammon M., and allows New G"	2008.07.30
+7F01CF	01	10	All	New Game+ right telepod active to warp to Lavos	2008.02.14
+7F01CF	1	80	All	Saving available	2007.01.11
+7F01D1	01	20	All	Guardia Forest dead end 1000 AD Sealed Chest - Power Ring obtained	2008.02.14
+7F01D2	1	04	All	Gave Jerky away	2007.01.11
+7F01D2	01	80	All	Guardia Forest 600 AD Sealed Chest - Speed Tab obtained	2008.02.14
+7F01D3	01	04	All	Guardia Forest 1000 AD Power Tab found	2008.02.14
+7F01D3	01	08	All	Guardia Forest 600 AD Power Tab found	2008.02.14
+7F01DF	01	01	All	Character lock - Unused	2008.02.14
+7F01DF	01	02	All	Character lock - Magus	2008.02.14
+7F01DF	01	04	All	Character lock - Ayla	2008.02.14
+7F01DF	01	08	All	Character lock - Frog	2008.02.14
+7F01DF	01	10	All	Character lock - Robo	2008.02.14
+7F01DF	01	20	All	Character lock - Lucca	2008.02.14
+7F01DF	01	40	All	Character lock - Marle	2008.02.14
+7F01DF	01	80	All	Character lock - Crono	2008.02.14
+7F01E0	1	01	All	Spekkio has given Crono magic	2007.01.11
+7F01E0	1	02	All	Spekkio has given Marle magic	2007.01.11
+7F01E0	1	04	All	Spekkio has given Lucca magic	2007.01.11
+7F01E0	1	08	All	Spekkio has given Robo magic	2007.01.11
+7F01E0	1	10	All	Spekkio has given Frog magic	2007.01.11
+7F01E0	1	20	All	Spekkio has given Ayla magic	2007.01.11
+7F01E0	1	40	All	Spekkio has given Magus magic	2007.01.11
+7F01EC	1	FF	All	"Status of last battle fought 00 - You won/ran away, 01 - defeated"	2007.01.11
+7F01ED	1	FF	All	"Keep Current Song flag - 00 off, 01 on"	2007.01.11
+7F01EE	01	FF	All	"Unknown, loaded and stored after battle ends  In Location 1DF Tesseract, bits 0x01, 0x08, 0x10 checked in Object 00 Activate"	2008.07.17
+7F01F0	10	FF	All	Overworld storyline flags (copied to 7E1BA7-7E1BB6 when loading an overworld)	2007.08.16
+7F0200	1	FF	Location	Index for Item text control code	2007.01.11
+7F0400	1900	FF	Overworld	Event Data	2007.01.11
+7F0A80	1	FF	Location	Event result byte	2007.01.11
+7F0B00	80	00FF	Location	Unknown	2007.08.15
+7F0B00	80	FF00	Location	Object animation loops left (Event Command B7)	2007.08.15
+7F1CE8	01	FF	Location	Location Event Command FE Draw Geometry parameter 1	2008.02.14
+7F2000	1700	FF	Location	Event Data	2007.06.29
+7F5080	0400	FF	Location	"Decompressed ASCII credits text font, loaded by Event Command 29"	2008.02.14
+7F8000	8000	FF	Location	Decompressed NPC and enemy graphics	2007.06.29

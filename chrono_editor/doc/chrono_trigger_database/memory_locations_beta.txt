@@ -1,0 +1,10 @@
+Mode	Byte Offset	Bytes	Bits	Description	Modified
+Location	7E011B	1	01	"When reset, can walk through walls, debug flag?"	2008.07.11
+Location	7E0165	1	FF	"Unknown, copied from 7E0166"	2008.07.11
+Location	7E0166	1	FF	"Set to $05 in Location Memory Initialization, related to animation speed, Event Command 2F"	2008.07.11
+Location	7E0167	2	FF	"Unknown related to sprite movement and animation, set to $0048 default when entering a location, Event Command 46."	2008.07.11
+Location	7E0169	2	FF	"Always set to $0078 on entering a location, Event Command 47 animation limiter value"	2008.07.11
+Location	7E016B	1	FF	Location event current Object ID	2008.07.11
+Location	7E01C2	1	FF	"Event Command 25 parameter 2, range $00-06"	2008.07.11
+Location	7E01E8	1	FF	Event Command 25 parameter 1	2008.07.11
+All	7E2C4D	3	FF	Total gold (max $98967F)	2008.07.11

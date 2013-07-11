@@ -1,0 +1,63 @@
+C02E1E - Color Crash
+
+The following routines store a color index and jump to C02E1E color crash code.
+
+Dark Blue - Location index > $01FF
+C00077 - This code may not be reachable.  The routines right before it will jump to the overworld code if the map is 01F0 or higher
+
+Light Blue - No string index set (7E012D bank byte = $00)
+C03574 - Event Command BB, textbox
+C035B9 - Event Command C1, textbox
+C03600 - Event Command C2, textbox
+C03647 - Event Command C0, dec box
+C036AE - Event Command C3, dec box
+C036E1 - Event Command C4, dec box
+
+Pink - Packet isn't being decompressed to 7F8000-7FFFFF range
+C046CF - Event Command 82, load NPC
+C04838 - Event Command 83, load enemy
+
+Purple - Related to loaded sprite graphics?
+C05CB0 - Event Command 82 & 83 subroutines
+
+Dark Yellow - Packet begins with $0D0A BETA format
+C05CD7 - Event startup
+
+Red - Decompressed event packet too large, > $1700
+C05CE5 - Event startup
+
+Light Yellow - Event command not valid
+C05F6E - Event Command 01 and others
+
+
+
+C05C90 
+
+Seems to be responsible for checking if a sprite's graphics are already loaded, and if not the next available slot.  This function is called by Load NPC and probably the other Load Sprite functions as well.
+
+
+
+Menu and Battle Routine Observations
+
+In general, routines and data in the 3DA800-3DBFFF range is battle related (mainly battle initialization it appears) that there was too much of to fit into bank $01
+
+In general, the data in bank $3F is used by routines in the second half of bank $02, mainly menu related.  In addition, the end of bank $3F contains some routines for saving, etc. that there was too much of to fit into bank $02
+
+
+
+Debug battle flags:
+
+01FFFF set to non-zero value to enable
+When Select is pressed on Controller 2, all enemies are instantly defeated. In the BETA version, this feature is on by default
+
+0D3FFF set to non-zero value to enable
+When R shoulder button is pressed on Controller 1, $00 stored to 7ECD02 and 7ECD03, unknown purpose
+
+0FFFFD set to non-zero value to enable
+Stores $00 to 7EAE9B and 7EAE94, attack related?
+
+0FFFFE set to non-zero value to enable
+Stores $40 to 7EAE94 and $00 to 7EAE9B, attack related?
+
+0FFFFF set to non-zero value to enable
+Stores $80 to 7EAE9B and $00 to 7EAE94, attack related?
