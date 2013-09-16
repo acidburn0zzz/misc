@@ -1,5 +1,3 @@
-#include "WProgram.h"
-
 unsigned char ledPin = 9; //Change to a pin supporting PWM ie. 3, 5, 6, 9-11
 unsigned char brightness = 0;
 

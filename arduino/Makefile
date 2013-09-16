@@ -9,7 +9,7 @@
 #
 #   - Give your program's file a .cpp extension (e.g. foo.cpp).
 #
-#   - Put this line at top of your code: #include <WProgram.h>
+#   - Put this line at top of your code: #include <Arduino.h>
 #
 #   - Write prototypes for all your functions (or define them before you
 #     call them).  A prototype declares the types of parameters a
@@ -46,18 +46,42 @@
 # $Id$
 
 PORT = /dev/ttyUSB0
-#PORT = /dev/tty.usbserial-*
-TARGET = main
+TARGET = display
 
-ARDUINO = /home/mathieu/src/dev/arduino
+ARDUINO = /home/mathieu/opt/arduino
 ARDUINO_SRC = $(ARDUINO)/hardware/arduino/cores/arduino
-ARDUINO_LIB_SRC = $(ARDUINO)/hardware/libraries
+ARDUINO_LIB_SRC = $(ARDUINO)/libraries
 
-UPLOAD_RATE = 57600
+
+# Board (and processor) information: see $(ARDUINO_PATH)hardware/arduino/boards.txt
+# Some examples:
+#	BOARD		DESCRIPTION
+#	uno			Arduino Uno
+#	atmega328	Arduino Duemilanove or Nano w/ ATmega328
+#	diecimila		Arduino Diecimila, Duemilanove, or Nano w/ ATmega168
+#	mega		Arduino Mega
+#	mini			Arduino Mini
+#	lilypad328	LilyPad Arduino w/ ATmega328
+BOARD = atmega328
+
+#=== fetch parameter from boards.txt processor parameter ===
+# the basic idea is to get most of the information from boards.txt
+
+BOARDS_TXT = $(ARDUINO)/hardware/arduino/boards.txt
+
+#MCU = $(shell sed -n -e "s/$(BOARD).build.mcu=\(.*\)/\1/p" $(BOARDS_TXT))
+#F_CPU = $(shell sed -n -e "s/$(BOARD).build.f_cpu=\(.*\)/\1/p" $(BOARDS_TXT))
+#BUILD_VARIANT = $(shell sed -n -e "s/$(BOARD).build.variant=\(.*\)/\1/p" $(BOARDS_TXT))
+#AVRDUDE_UPLOAD_RATE = $(shell sed -n -e "s/$(BOARD).upload.speed=\(.*\)/\1/p" $(BOARDS_TXT))
+MCU = $(shell grep $(BOARD).build.mcu $(BOARDS_TXT) | sed 's/.*=//')
+F_CPU = $(shell grep $(BOARD).build.f_cpu $(BOARDS_TXT) | sed 's/.*=//')
+BUILD_VARIANT = $(shell grep $(BOARD).build.variant $(BOARDS_TXT) | sed 's/.*=//')
+AVRDUDE_UPLOAD_RATE = $(shell grep $(BOARD).upload.speed $(BOARDS_TXT) | sed 's/.*=//')
 AVRDUDE_PROGRAMMER = stk500v1
-MCU = atmega328p
-F_CPU = 16000000
 FORMAT = ihex
+
+# List of all libaries which should be included.
+EXTRA_DIRS=$(ARDUINO)/libraries/LiquidCrystal
 
 ############################################################################
 # Below here nothing should be changed...
@@ -68,12 +92,19 @@ AVR_TOOLS_PATH = /usr/bin
 ############################
 SRC = $(wildcard $(ARDUINO_SRC)/*.c)
 
-CXXSRC = applet/$(TARGET).cpp $(ARDUINO_SRC)/HardwareSerial.cpp \
-	$(ARDUINO_SRC)/WMath.cpp
+CXXSRC = applet/$(TARGET).cpp \
+	$(wildcard $(ARDUINO_SRC)/*.cpp)
+
+# Place -I options here
+INCLUDE = -I$(ARDUINO_SRC) -I$(ARDUINO)/hardware/tools/avr/avr/include \
+	-I$(ARDUINO)/hardware/arduino/variants/$(BUILD_VARIANT) \
+	-I$(ARDUINO_LIB_SRC)
 
 # External Arduino Libraries
 ############################
 #~ SRC     += $(ARDUINO_LIB_SRC)/Wire/utility/twi.c
+CXXSRC += $(ARDUINO_LIB_SRC)/LiquidCrystal/LiquidCrystal.cpp
+INCLUDE += -I$(ARDUINO_LIB_SRC)/LiquidCrystal
 #~ CXXSRC	+= $(ARDUINO_LIB_SRC)/Wire/Wire.cpp
 
 # CRAL Libraries
@@ -109,10 +140,6 @@ OPT = s -mcall-prologues
 CDEFS = -DF_CPU=$(F_CPU)
 CXXDEFS = -DF_CPU=$(F_CPU)
 
-# Place -I options here
-INCLUDE = -I$(ARDUINO_SRC) -I$(ARDUINO)/hardware/tools/avr/avr/include \
-	-I$(ARDUINO_LIB_SRC)
-
 HEADERS = $(wildcard $(ARDUINO_SRC)/*.h) $(wildcard $(ARDUINO_LIB_SRC)/*/*.h)
 
 # Compiler flag to set the C Standard level.
@@ -129,14 +156,14 @@ CTUNING = -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 CFLAGS = $(CDEBUG) $(CDEFS) $(INCLUDE) -O$(OPT) $(CWARN) $(CSTANDARD) $(CEXTRA)
 CXXFLAGS = $(CDEFS) $(INCLUDE) -O$(OPT)
 #ASFLAGS = -Wa,-adhlns=$(<:.S=.lst),-gstabs
-LDFLAGS = -lm
+LDFLAGS = -O$(OPT) -lm -Wl,--gc-sections
 
 # Programming support using avrdude. Settings and variables.
 AVRDUDE_PORT = $(PORT)
 AVRDUDE_WRITE_FLASH = -U flash:w:applet/$(TARGET).hex
 AVRDUDE_FLAGS = -V -F -C /etc/avrdude.conf \
 -p $(MCU) -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER) \
--b $(UPLOAD_RATE)
+-b $(AVRDUDE_UPLOAD_RATE)
 
 # Program settings
 CC = avr-gcc
@@ -170,13 +197,13 @@ build: elf hex bin s
 applet_files: $(TARGET).cpp
 	# Here is the "preprocessing".
 	# It creates a .cpp file based with the same name as the .pde file.
-	# On top of the new .cpp file comes the WProgram.h header.
+	# On top of the new .cpp file comes the Arduino.h header.
 	# At the end there is a generic main() function attached.
 	# Then the .cpp file will be compiled. Errors during compile will
 	# refer to this new, automatically generated, file.
 	# Not the original .pde file you actually edit...
 	test -d applet || mkdir applet
-	echo '#include "WProgram.h"' > applet/$(TARGET).cpp
+	echo '#include "Arduino.h"' > applet/$(TARGET).cpp
 	cat $(TARGET).cpp >> applet/$(TARGET).cpp
 	#cat $(ARDUINO_SRC)/main.cpp >> applet/$(TARGET).cpp
 
@@ -222,7 +249,7 @@ extcoff: $(TARGET).elf
 .SUFFIXES: .elf .hex .eep .lss .sym .bin .s
 
 .elf.hex:
-	$(OBJCOPY) -O $(FORMAT) -R .eeprom $< $@
+	$(OBJCOPY) -O $(FORMAT) -S -R .eeprom $< $@
 
 .elf.eep:
 	-$(OBJCOPY) -j .eeprom --set-section-flags=.eeprom="alloc,load" \
@@ -241,7 +268,8 @@ extcoff: $(TARGET).elf
 
 	# Link: create ELF output file from library.
 applet/$(TARGET).elf: $(TARGET).cpp applet/libcore.a
-	$(CC) $(ALL_CFLAGS) -o $@ applet/$(TARGET).cpp -L. -L./applet -lcore $(LDFLAGS)
+	$(CC) $(ALL_CFLAGS) -s -o $@ applet/$(TARGET).cpp -L. -L./applet -lcore $(LDFLAGS)
+	avr-strip --strip-all $@
 
 applet/libcore.a: $(OBJ)
 	@for i in $(OBJ); do echo $(AR) rcs applet/libcore.a $$i; $(AR) rcs applet/libcore.a $$i; done
