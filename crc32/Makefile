@@ -14,7 +14,10 @@ PREFIX=/usr/local
 
 all:	$(PROGRAM)
 
-crc32: $(OBJS)
+libhash:
+	make -C ../libs/libhash
+
+crc32: $(OBJS) libhash
 	$(CC) -o $(PROGRAM) $(OBJS) $(LDFLAGS)
 
 .c.o:
