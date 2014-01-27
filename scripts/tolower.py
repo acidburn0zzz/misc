@@ -29,7 +29,7 @@ def enlever_accents(strname):
     strname = re.sub("[íìîï]", "i", strname)
     strname = re.sub("[ýÿ]", "y", strname)
     strname = re.sub("[ç]", "c", strname)
-    strname = re.sub("[&]", "and", strname) 
+    strname = re.sub("[&]", "and", strname)
 
     return strname
 
