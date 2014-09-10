@@ -9,11 +9,6 @@ from urllib.error import URLError
 
 VLCODE = ''
 
-def pdebug(*args, **kwargs):
-    return
-    print('{}: '.format(datetime.now()), end = '')
-    print(*args, **kwargs)
-
 if __name__ == '__main__':
     if not bool(VLCODE):
         sys.stderr.write('error: VL code not specified\n')
@@ -30,9 +25,7 @@ if __name__ == '__main__':
         else:
             sys.stderr.write('error: unknown error (HTTP status: ' + err.code + ')\n')
             sys.exit(2)
-    pdebug('urlopen')
     html = resp.read().decode('iso-8859-1')
-    pdebug('read')
 
     # verify if service is online
     if 'indisponible' in html:
