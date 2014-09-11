@@ -10,8 +10,8 @@ ASFLAGS = $(CFLAGS)
 
 LIBDIR =
 LDFLAGS =
-STDLIBS= -lSDLmain -lSDL_image -lSDL_ttf -lSDL -lfreetype -lpng -ljpeg -lm -lz -lGL \
-    -lpspsdk -lpspctrl -lpsprtc -lpspgu -lpspaudio -lpsphprm -lpspvfpu
+STDLIBS= -lSDLmain -lSDL_image -lSDL_ttf -lSDL -lfreetype -lpng -ljpeg -lm -lz \
+    -lpspgu -lpspaudio -lpsphprm -lpspirkeyb -lpsppower
 LIBS=$(STDLIBS)$(YOURLIBS)
 
 
