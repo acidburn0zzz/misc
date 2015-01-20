@@ -38,7 +38,7 @@
 #include "game.h"
 #include "sramfile.h"
 #include "strings.h"
-#include "vue.h"
+#include "gui.h"
 
 Vue::Vue(QWidget *parent) : QMainWindow(parent) {
     init();
