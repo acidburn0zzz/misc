@@ -57,14 +57,14 @@ private:
     QString _name, _imageFile;
 
     QWidget *centralWidget;
-    QTabWidget *tabPersos;
-    QWidget *wPersos;
+    QTabWidget *tabCharacters;
+    QWidget *wCharacters;
 
-    QMenu   *mnuFichier;
-    QAction *actOuvrir;
-    QAction *actSauvegarder;
-    QAction *actQuitter;
-    QMenu   *mnuAide;
+    QMenu   *mnuFile;
+    QAction *actOpen;
+    QAction *actSave;
+    QAction *actQuit;
+    QMenu   *mnuHelp;
     QAction *actAbout;
     QAction *actAboutQt;
 

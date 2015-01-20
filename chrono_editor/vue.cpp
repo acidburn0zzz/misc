@@ -55,18 +55,21 @@ Vue::~Vue() {
 }
 
 void Vue::init() {
+    _sramFile = NULL;
+    _game = NULL;
+
     centralWidget = new QWidget();
     setCentralWidget(centralWidget);
     setWindowTitle("Chrono Trigger Save Game Editor");
 
     centralLayout = new QVBoxLayout();
-    tabPersos = new QTabWidget(centralWidget);
+    tabCharacters = new QTabWidget(centralWidget);
 
     //Creation des menus
     creerMenus();
 
     //Initialisation des tableaux d'objets pour les stats
-    wPersos = new QWidget[7];
+    wCharacters = new QWidget[7];
 
     hlayPerso = new QHBoxLayout[7];
     gridStatsBase = new QGridLayout[7];
@@ -121,40 +124,40 @@ void Vue::init() {
         img = img.scaled(QSize(100, 100), Qt::KeepAspectRatioByExpanding);
         lblImage[i].setPixmap(img);
 
-        lblLevel[i].setText("Level");
-        lblLevel[i].setParent(&wPersos[i]);
-        lblExp[i].setText("Experience");
-        lblExp[i].setParent(&wPersos[i]);
+        lblLevel[i].setText(tr("Level"));
+        lblLevel[i].setParent(&wCharacters[i]);
+        lblExp[i].setText(tr("Experience"));
+        lblExp[i].setParent(&wCharacters[i]);
         lblCurrentHP[i].setText("Current HP");
-        lblCurrentHP[i].setParent(&wPersos[i]);
+        lblCurrentHP[i].setParent(&wCharacters[i]);
         lblMaxHP[i].setText("Max HP");
-        lblMaxHP[i].setParent(&wPersos[i]);
+        lblMaxHP[i].setParent(&wCharacters[i]);
         lblCurrentMP[i].setText("Current MP");
-        lblCurrentMP[i].setParent(&wPersos[i]);
+        lblCurrentMP[i].setParent(&wCharacters[i]);
         lblMaxMP[i].setText("Max MP");
-        lblMaxMP[i].setParent(&wPersos[i]);
-        lblPower[i].setText("Power");
-        lblPower[i].setParent(&wPersos[i]);
-        lblStamina[i].setText("Stamina");
-        lblStamina[i].setParent(&wPersos[i]);
-        lblSpeed[i].setText("Speed");
-        lblSpeed[i].setParent(&wPersos[i]);
-        lblMagic[i].setText("Magic");
-        lblMagic[i].setParent(&wPersos[i]);
-        lblHit[i].setText("Hit");
-        lblHit[i].setParent(&wPersos[i]);
-        lblEvade[i].setText("Evade");
-        lblEvade[i].setParent(&wPersos[i]);
+        lblMaxMP[i].setParent(&wCharacters[i]);
+        lblPower[i].setText(tr("Power"));
+        lblPower[i].setParent(&wCharacters[i]);
+        lblStamina[i].setText(tr("Stamina"));
+        lblStamina[i].setParent(&wCharacters[i]);
+        lblSpeed[i].setText(tr("Speed"));
+        lblSpeed[i].setParent(&wCharacters[i]);
+        lblMagic[i].setText(tr("Magic"));
+        lblMagic[i].setParent(&wCharacters[i]);
+        lblHit[i].setText(tr("Hit"));
+        lblHit[i].setParent(&wCharacters[i]);
+        lblEvade[i].setText(tr("Evade"));
+        lblEvade[i].setParent(&wCharacters[i]);
         lblMagicDef[i].setText("Magic Def");
-        lblMagicDef[i].setParent(&wPersos[i]);
-        lblHelmet[i].setText("Helmet");
-        lblHelmet[i].setParent(&wPersos[i]);
-        lblArmor[i].setText("Armor");
-        lblArmor[i].setParent(&wPersos[i]);
-        lblWeapon[i].setText("Weapon");
-        lblWeapon[i].setParent(&wPersos[i]);
-        lblRelic[i].setText("Relic");
-        lblRelic[i].setParent(&wPersos[i]);
+        lblMagicDef[i].setParent(&wCharacters[i]);
+        lblHelmet[i].setText(tr("Helmet"));
+        lblHelmet[i].setParent(&wCharacters[i]);
+        lblArmor[i].setText(tr("Armor"));
+        lblArmor[i].setParent(&wCharacters[i]);
+        lblWeapon[i].setText(tr("Weapon"));
+        lblWeapon[i].setParent(&wCharacters[i]);
+        lblRelic[i].setText(tr("Relic"));
+        lblRelic[i].setParent(&wCharacters[i]);
 
         sbLevel[i].setRange(0, 99);
         sbExp[i].setRange(0, 9999999);
@@ -226,56 +229,56 @@ void Vue::init() {
         hlayPerso[i].addLayout(&gridItems[i]);
 
         //Ajouter le layout au widget du perso
-        wPersos[i].setLayout(&hlayPerso[i]);
+        wCharacters[i].setLayout(&hlayPerso[i]);
 
         //Ajouter le widget du perso au Tab
-        tabPersos->addTab(&wPersos[i], _name);
+        tabCharacters->addTab(&wCharacters[i], _name);
     }
 
     //Layout principal
-    centralLayout->addWidget(tabPersos, 1);
+    centralLayout->addWidget(tabCharacters, 1);
 
     centralWidget->setLayout(centralLayout);
     this->setMinimumSize(400, 300);
 }
 
 QString Vue::selectFile() {
-    return QFileDialog::getOpenFileName(0, tr("Ouvrir un fichier"), QString(), tr("Fichier SRAM (*.srm);;Tous (*.*)"));
+    return QFileDialog::getOpenFileName(0, tr("Choose a file"), QString(), tr("SRAM file (*.srm);;All files (*.*)"));
 }
 
 void Vue::creerMenus() {
-    actOuvrir = new QAction(tr("&Ouvrir"), this);
-    actOuvrir->setShortcut(tr("Ctrl+O"));
-    actOuvrir->setStatusTip(tr("Ouvrir une Save State"));
-    connect(actOuvrir, SIGNAL(triggered()), this, SLOT(open()));
+    actOpen = new QAction(tr("&Open"), this);
+    actOpen->setShortcut(tr("Ctrl+O"));
+    actOpen->setStatusTip(tr("Open a save file"));
+    connect(actOpen, SIGNAL(triggered()), this, SLOT(open()));
 
-    actSauvegarder = new QAction(tr("&Enregistrer"), this);
-    actSauvegarder->setShortcut(tr("Ctrl+S"));
-    actSauvegarder->setStatusTip(tr("Enregistrer la Save State"));
-    connect(actSauvegarder, SIGNAL(triggered()), this, SLOT(save()));
+    actSave = new QAction(tr("&Save"), this);
+    actSave->setShortcut(tr("Ctrl+S"));
+    actSave->setStatusTip(tr("Save the save file"));
+    connect(actSave, SIGNAL(triggered()), this, SLOT(save()));
 
-    actQuitter = new QAction(tr("&Quitter"), this);
-    actQuitter->setShortcut(tr("Ctrl+Q"));
-    actQuitter->setStatusTip(tr("Quitter"));
-    connect(actQuitter, SIGNAL(triggered()), qApp, SLOT(quit()));
+    actQuit = new QAction(tr("&Quit"), this);
+    actQuit->setShortcut(tr("Ctrl+Q"));
+    actQuit->setStatusTip(tr("Quit the application"));
+    connect(actQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
 
-    mnuFichier = new QMenu(tr("&Fichier"));
-    mnuFichier->addAction(actOuvrir);
-    mnuFichier->addAction(actSauvegarder);
-    mnuFichier->addAction(actQuitter);
-    menuBar()->addMenu(mnuFichier);
+    mnuFile = new QMenu(tr("&File"));
+    mnuFile->addAction(actOpen);
+    mnuFile->addAction(actSave);
+    mnuFile->addAction(actQuit);
+    menuBar()->addMenu(mnuFile);
 
-    actAbout = new QAction(tr("À &Propos de Chrono Editor"), this);
+    actAbout = new QAction(tr("&About Chrono Editor"), this);
     actAbout->setShortcut(tr("Ctrl+A"));
 
-    actAboutQt = new QAction(tr("À Propos de &Qt"), this);
+    actAboutQt = new QAction(tr("About &QT"), this);
     actAboutQt->setShortcut(tr("Ctrl+T"));
     connect(actAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
-    mnuAide = new QMenu(tr("&Aide"));
-    mnuAide->addAction(actAbout);
-    mnuAide->addAction(actAboutQt);
-    menuBar()->addMenu(mnuAide);
+    mnuHelp = new QMenu(tr("&Help"));
+    mnuHelp->addAction(actAbout);
+    mnuHelp->addAction(actAboutQt);
+    menuBar()->addMenu(mnuHelp);
 }
 
 void Vue::fillSpecificPerso(int perso) {
@@ -335,24 +338,28 @@ void Vue::selectItems(int perso) {
     for (int i=0; i<cmbHelmet[perso].count(); i++) {
         if (cmbHelmet[perso].itemData(i) == _game->getCharacter(perso).getHelmet()) {
             cmbHelmet[perso].setCurrentIndex(i);
+            break;
         }
     }
     //Armor
     for (int i=0; i<cmbArmor[perso].count(); i++) {
         if (cmbArmor[perso].itemData(i) == _game->getCharacter(perso).getArmor()) {
             cmbArmor[perso].setCurrentIndex(i);
+            break;
         }
     }
     //Weapon
     for (int i=0; i<cmbWeapon[perso].count(); i++) {
         if (cmbWeapon[perso].itemData(i) == _game->getCharacter(perso).getWeapon()) {
             cmbWeapon[perso].setCurrentIndex(i);
+            break;
         }
     }
     //Relic
     for (int i=0; i<cmbRelic[perso].count(); i++) {
         if (cmbRelic[perso].itemData(i) == _game->getCharacter(perso).getRelic()) {
             cmbRelic[perso].setCurrentIndex(i);
+            break;
         }
     }
 }

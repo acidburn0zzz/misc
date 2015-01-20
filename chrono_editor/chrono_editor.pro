@@ -19,4 +19,4 @@ OBJECTS_DIR = ./obj
 # Input
 HEADERS += character.h game.h sramfile.h struct.h vue.h
 SOURCES += character.cpp game.cpp main.cpp sramfile.cpp vue.cpp
-TRANSLATIONS += chrono_editor_en.ts
+TRANSLATIONS += chrono_editor_fr.ts
