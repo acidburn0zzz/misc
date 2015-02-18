@@ -1,14 +1,13 @@
 #! /usr/bin/env python3
-#-*- coding: utf-8 -*-
 
 """
 A script to make all the file names in the folder
 changed according to certain rules:
     all small letters
-    has only a-z, 0-9 and _
-    only one period
+    has only a-z, 0-9, - and _
 
 vsbabu AT hotmail DOT com
+acidrain1 AT gmail DOT com
 
 I use it fairly often to rename files sent to me by
 Microsoft Windows users, before uploading them to
@@ -18,10 +17,14 @@ Unhandled error conditions include:
 - no graceful processing if a target filename already exists.
 """
 import re
-import string
 import os
 
-def enlever_accents(strname):
+
+valid_chars = re.compile(r"^[a-zA-z0-9_-]+$")
+invalid_chars = re.compile(r"[^a-zA-z0-9_-]+")
+
+
+def replace_invalid_chars(strname):
     strname = re.sub("[éèêë]", "e", strname)
     strname = re.sub("[áàâä]", "a", strname)
     strname = re.sub("[úùûü]", "u", strname)
@@ -33,68 +36,93 @@ def enlever_accents(strname):
 
     return strname
 
+
 def cleanup_foldername(strname):
-    """cleans up the given folder name
-    folder name should start and end with an alphabet
-    and can have only a-z, 0-9 and _ in between
     """
-    valid_dir = re.compile(r"^[a-zA-z0-9_-]+$")
-    invalid_stuff = re.compile(r"[^a-zA-z0-9_-]+")
+    Cleans up the given folder name.
+    Folder name should start and end with an alphabet
+    and can have only a-z, 0-9 , - and _ in between.
+    """
+
     strname = strname.lower()
-    strname = enlever_accents(strname)
-    strname = re.sub("^[^\w]+","", strname) #trim the beginning
-    strname = re.sub("[^\w]+$","", strname) #trim the end
-    strname = invalid_stuff.sub("_", strname.strip()) #replace invalid stuff by _
-    strname = re.sub("_+","_", strname) #squeeze continuous _ to one _
-    if valid_dir.match(strname):
-        return strname
-    else:
-        return ''
+    strname = replace_invalid_chars(strname)
+    strname = re.sub("^[^\w]+", "", strname)  # trim the beginning
+    strname = re.sub("[^\w]+$", "", strname)  # trim the end
+    strname = invalid_chars.sub("_", strname.strip())  # replace invalid stuff by _
+    strname = re.sub("_+", "_", strname)  # squeeze continuous _ to one _
+
+    return strname if valid_chars.match(strname) else ""
+
 
 def cleanup_filename(strname):
-    """cleans up for a file name
-    file name rules are similar to folder names, but it
-    can and must have one extension"""
+    """
+    Cleans up for a file name.
+    File name rules are similar to folder names, but it
+    can have an extension.
+    """
+
     strname = strname.lower()
     (strfile, strext) = os.path.splitext(strname)
-    strext = strext.strip()
+
+    strext = strext[1:].strip()
     strfile = strfile.replace('.', '_')
-    if strext == '' or strext == '.' or strext[0]!='.':
-        return ''
+
     strfile = cleanup_foldername(strfile)
     if strfile == '':
         return ''
-    strext = cleanup_foldername(strext[1:])
-    if strext == '':
-        return ''
-    return strfile + '.' + strext
 
-def  ren_file(dir,f):
-    """rename the file according to the rules"""
-    c=cleanup_filename(f)
-    if (c != "" and c != f):
-        print("%s -> %s" % (f,c))
-        os.rename(dir+os.sep+f, dir+os.sep+c)
-    return
+    if strext != '':
+        strext = cleanup_foldername(strext)
+        if strext == '':
+            return ''
+
+    if strext != '':
+        strfile += '.' + strext
+
+    return strfile
 
 
-def process_dir(dir):
-    """process all files in the folder"""
+def ren_folder(basedir, f):
+    """
+    rename the folder according to the rules
+    """
 
-    for f in os.listdir(dir):
-        file = dir + os.sep + f
+    c = cleanup_foldername(f)
+    if c != '' and c != f:
+        src = os.path.join(basedir, f)
+        dst = os.path.join(basedir, c)
+
+        print("{} -> {}".format(src, dst))
+        os.rename(src, dst)
+
+
+def ren_file(basedir, f):
+    """
+    rename the file according to the rules
+    """
+
+    c = cleanup_filename(f)
+    if c != '' and c != f:
+        src = os.path.join(basedir, f)
+        dst = os.path.join(basedir, c)
+
+        print("{} -> {}".format(src, dst))
+        os.rename(src, dst)
+
+
+def process_dir(basedir):
+    """
+    process all files in the folder
+    """
+
+    for f in os.listdir(basedir):
+        file = os.path.join(basedir, f)
         if os.path.isdir(file):
             process_dir(file)
+            ren_folder(basedir, f)
         else:
-            ren_file(dir,f)
+            ren_file(basedir, f)
 
-    return
 
-def main():
-    """main routine"""
-
+if __name__ == '__main__':
     process_dir('.')
-    return
-
-if __name__=='__main__':
-    main()
