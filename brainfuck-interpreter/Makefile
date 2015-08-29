@@ -3,16 +3,15 @@ CFLAGS=-g -pedantic -std=c99 -Wall -Wshadow -Wpointer-arith -Wcast-qual -Wstrict
 CXXFLAGS=$(CFLAGS)
 LDFLAGS=
 
-PROGRAMS=bfint bfdbg
+PROGRAMS=bfint
 
 PREFIX=/usr/local
 
 all:
 	$(CC) -o bfint $(CFLAGS) main.c ../misc/hexdump.c $(LDFLAGS)
-	$(CC) -o bfdbg $(CFLAGS) -DDEBUG main.c ../misc/hexdump.c $(LDFLAGS)
 
 install:
 	$(INSTALL) -D $(PROGRAMS) $(PREFIX)/bin/$(PROGRAM)
 
 clean:
-	$(RM) bfint bfdbg *~
+	$(RM) bfint *~

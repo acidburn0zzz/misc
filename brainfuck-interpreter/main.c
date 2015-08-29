@@ -19,11 +19,7 @@
 
 /* Prototypes */
 void debug_print(const char *fmt, ...);
-void shell(void);
-void prompt(void);
-void get_user_command(void);
-int execute_debug_cmd(void);
-void interpret_next_command(void);
+void run(void);
 
 /* Globals */
 unsigned char *ptr, *buf, *_ptr, *_buf;
@@ -31,81 +27,22 @@ unsigned int break_pos;
 size_t buf_size;
 
 #ifdef DEBUG
-#define CMD_BUFFER_MAX_LENGTH 256
+    void debug_print(const char *fmt, ...) {
+        char msg[1024];
+        va_list va;
 
-static char *debug_cmd;
-static char cmd_buffer[CMD_BUFFER_MAX_LENGTH];
-static int cmd_buffer_len;
-static char user_input = '\0';
-
-void debug_print(const char *fmt, ...) {
-    char msg[1024];
-    va_list va;
-
-    va_start(va, fmt);
-    vsnprintf(msg, sizeof msg, fmt, va);
-    fprintf(stderr, "%s", msg);
-}
-
-void prompt() {
-    printf("bfint> ");
-}
-
-void get_user_command() {
-    cmd_buffer_len = 0;
-    while (user_input != '\n' && cmd_buffer_len < CMD_BUFFER_MAX_LENGTH) {
-        cmd_buffer[cmd_buffer_len++] = user_input;
-        user_input = getchar();
+        va_start(va, fmt);
+        vsnprintf(msg, sizeof msg, fmt, va);
+        fprintf(stderr, "%s", msg);
     }
-    cmd_buffer[cmd_buffer_len] = '\0';
-
-    debug_cmd = strtok(cmd_buffer, " ");
-}
-
-int execute_debug_cmd() {
-    if (strcmp("exit", debug_cmd) == 0) {
-        exit(EXIT_SUCCESS);
-    }
-    if (strcmp("q", debug_cmd) == 0) {
-        exit(EXIT_SUCCESS);
-    }
-    if (strcmp("cont", debug_cmd) == 0 || strcmp("continue", debug_cmd) == 0) {
-       return 0;
-    }
-    if (strcmp("dump", debug_cmd) == 0) {
-        hexdump((const char*)_ptr, 0, 256);
-        return 1;
-    }
-
-    printf("%s: Invalid command\n", debug_cmd);
-    return 1;
-}
-
-void shell() {
-    prompt();
-    while (1) {
-        user_input = getchar();
-        if (user_input == '\n') {
-            prompt();
-            continue;
-        }
-
-        get_user_command();
-        if (execute_debug_cmd() == 0)
-            break;
-        prompt();
-    }
-}
-            
 #else
-inline void debug_print(const char *fmt, ...) { }
-inline void shell() { }
+    inline void debug_print(const char *fmt, ...) { }
 #endif
 
-void interpret_next_command() {
+void run() {
     int i;
     char c;
-    
+
     while (buf - _buf < buf_size) {
         c = *buf;
 
@@ -178,13 +115,6 @@ void interpret_next_command() {
         }
 
         buf++;
-
-#ifdef DEBUG
-        if (buf - _buf == break_pos) {
-            printf("Breakpoint reached at char #%d (%c)\n", break_pos, c);
-            return;
-        }
-#endif
     }
 }
 
@@ -216,11 +146,7 @@ int main(int argc, char *argv[]) {
 
     fclose(file);
 
-    shell();
-    while (buf - _buf < buf_size) {
-        interpret_next_command();
-        shell();
-    }
+    run();
 
     free(_buf);
     free(_ptr);
