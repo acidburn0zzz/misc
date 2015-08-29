@@ -22,9 +22,9 @@ void debug_print(const char *fmt, ...);
 void run(void);
 
 /* Globals */
-unsigned char *ptr, *buf, *_ptr, *_buf;
+unsigned char *data_ptr, *ip, *data_array, *instr_array;
 unsigned int break_pos;
-size_t buf_size;
+size_t program_size;
 
 #ifdef DEBUG
     void debug_print(const char *fmt, ...) {
@@ -43,65 +43,65 @@ void run() {
     int i;
     char c;
 
-    while (buf - _buf < buf_size) {
-        c = *buf;
+    while (ip - instr_array < program_size) {
+        c = *ip;
 
         switch (c) {
         case '>':
-            ++ptr;
-            if (ptr >= _ptr + ARRAY_SIZE) {
+            ++data_ptr;
+            if (data_ptr >= data_array + ARRAY_SIZE) {
                 fprintf(stderr, "Error: Pointer can't go over 0x%x\n", ARRAY_SIZE);
                 exit(EXIT_FAILURE);
             }
-            debug_print("(%.3ld): %c | Pos. is %ld\n", buf - _buf, c, ptr - _ptr);
+            debug_print("(%.3ld): %c | Pos. is %ld\n", ip - instr_array, c, data_ptr - data_array);
             break;
         case '<':
-            --ptr;
-            if (ptr < _ptr) {
+            --data_ptr;
+            if (data_ptr < data_array) {
                 fprintf(stderr, "Error: Pointer can't go under 0\n");
                 exit(EXIT_FAILURE);
             }
-            debug_print("(%.3ld): %c | Pos. is %ld\n", buf - _buf, c, ptr - _ptr);
+            debug_print("(%.3ld): %c | Pos. is %ld\n", ip - instr_array, c, data_ptr - data_array);
             break;
         case '+':
-            ++(*ptr);
-            debug_print("(%.3ld): %c | v[%ld]=%d\n", buf - _buf, c, ptr - _ptr, *ptr);
+            ++(*data_ptr);
+            debug_print("(%.3ld): %c | v[%ld]=%d\n", ip - instr_array, c, data_ptr - data_array, *data_ptr);
             break;
         case '-':
-            --(*ptr);
-            debug_print("(%.3ld): %c | v[%ld]=%d\n", buf - _buf, c, ptr - _ptr, *ptr);
+            --(*data_ptr);
+            debug_print("(%.3ld): %c | v[%ld]=%d\n", ip - instr_array, c, data_ptr - data_array, *data_ptr);
             break;
         case '.':
-            putchar(*ptr);
-            debug_print("(%.3ld): %c | output '%d' %c\n", buf - _buf, c, *ptr, *ptr);
+            putchar(*data_ptr);
+            debug_print("(%.3ld): %c | output '%d' %c\n", ip - instr_array, c, *data_ptr, *data_ptr);
             break;
         case ',':
-            *ptr = getchar();
-            debug_print("(%.3ld): %c | read '%d' %c\n", buf - _buf, c, *ptr, *ptr);
+            *data_ptr = getchar();
+            debug_print("(%.3ld): %c | read '%d' %c\n", ip - instr_array, c, *data_ptr, *data_ptr);
             break;
         case '[':
-            if (*ptr == 0) {
+            if (*data_ptr == 0) {
                 i = 0;
-                c = *(++buf);
+                c = *(++ip);
                 while (c != ']' || i != 0) {
                     if (c == '[')
                         i++;
                     if (c == ']')
                         i--;
-                    c = *(++buf);
+                    c = *(++ip);
                 }
             }
             break;
         case ']':
-            if (*ptr != 0) {
+            if (*data_ptr != 0) {
                 i = 0;
-                c = *(--buf);
+                c = *(--ip);
                 while (c != '[' || i != 0) {
                     if (c == '[')
                         i--;
                     if (c == ']')
                         i++;
-                    c = *(--buf);
+                    c = *(--ip);
                 }
             }
             break;
@@ -109,12 +109,12 @@ void run() {
         case '#':
         case ';':
             while (c != 0x0a && c != 0x0d && c != 0x00)
-                c = *(++buf);
+                c = *(++ip);
             break;
 #endif
         }
 
-        buf++;
+        ip++;
     }
 }
 
@@ -133,13 +133,13 @@ int main(int argc, char *argv[]) {
     }
 
     fseek(file, 0, SEEK_END);
-    buf_size = ftell(file);
+    program_size = ftell(file);
     fseek(file, 0, SEEK_SET);
 
-    ptr = _ptr = (unsigned char*)calloc(1, ARRAY_SIZE);
-    buf = _buf = (unsigned char*)malloc(buf_size);
+    data_ptr = data_array = (unsigned char*)calloc(1, ARRAY_SIZE);
+    ip = instr_array = (unsigned char*)malloc(program_size);
 
-    if (fread(buf, buf_size, sizeof(char), file) != sizeof(char)) {
+    if (fread(ip, program_size, sizeof(char), file) != sizeof(char)) {
         fprintf(stderr, "Error: Unable to read from file: %s\n", argv[1]);
         return EXIT_FAILURE;
     }
@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
 
     run();
 
-    free(_buf);
-    free(_ptr);
+    free(instr_array);
+    free(data_array);
     return EXIT_SUCCESS;
 }
