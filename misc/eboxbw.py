@@ -38,10 +38,11 @@ if __name__ == '__main__':
         sys.exit(2)
 
     # find all stats
-    #m = re.findall(r'<td bgcolor="#FFFFFF" align="right" valign="top" class="reg">([^<]+)</td>', html)
-    m = re.findall(r'<span class=\'txtdata\'><b>Total</b><br>([0-9.]+) G<br>', html)
+    m = re.findall(r'([0-9.]+) G<div id=\'total_off\'', html)
     if len(m) == 0:
-        sys.stderr.write('error: wrong page format\n')
-        sys.exit(2)
+        m = re.findall(r'<span class=\'txtdata\'><b>Total</b><br>([0-9.]+) G<br>', html)
+        if len(m) == 0:
+            sys.stderr.write('error: wrong page format\n')
+            sys.exit(2)
 
     print('{} GiB'.format(m[0]))
