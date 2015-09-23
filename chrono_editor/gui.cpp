@@ -23,38 +23,31 @@
 #include <QComboBox>
 #include <QFileDialog>
 #include <QGridLayout>
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QMenu>
 #include <QMenuBar>
 #include <QSpinBox>
-#include <QString>
-#include <QTabWidget>
-#include <QVBoxLayout>
-#include <QWidget>
-
-#include <cstring>
 
 #include "game.h"
 #include "sramfile.h"
 #include "strings.h"
 #include "gui.h"
 
-Vue::Vue(QWidget *parent) : QMainWindow(parent) {
-    init();
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+    _init();
 }
 
-Vue::Vue(const char *fn, QWidget *parent) : QMainWindow(parent) {
-    init();
+MainWindow::MainWindow(const char *fn, QWidget *parent) : QMainWindow(parent) {
+    _init();
     open(QString(fn));
 }
 
-Vue::~Vue() {
+MainWindow::~MainWindow() {
     if (_sramFile) delete _sramFile;
     if (_game) delete _game;
 }
 
-void Vue::init() {
+void MainWindow::_init() {
     _sramFile = NULL;
     _game = NULL;
 
@@ -62,11 +55,42 @@ void Vue::init() {
     setCentralWidget(centralWidget);
     setWindowTitle("Chrono Trigger Save Game Editor");
 
+    // Menu bar
+    actOpen = new QAction(tr("&Open"), this);
+    actOpen->setShortcut(tr("Ctrl+O"));
+    actOpen->setStatusTip(tr("Open a save file"));
+    connect(actOpen, SIGNAL(triggered()), this, SLOT(open()));
+
+    actSave = new QAction(tr("&Save"), this);
+    actSave->setShortcut(tr("Ctrl+S"));
+    actSave->setStatusTip(tr("Save the save file"));
+    connect(actSave, SIGNAL(triggered()), this, SLOT(save()));
+
+    actQuit = new QAction(tr("&Quit"), this);
+    actQuit->setShortcut(tr("Ctrl+Q"));
+    actQuit->setStatusTip(tr("Quit the application"));
+    connect(actQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+
+    mnuFile = new QMenu(tr("&File"));
+    mnuFile->addAction(actOpen);
+    mnuFile->addAction(actSave);
+    mnuFile->addAction(actQuit);
+    menuBar()->addMenu(mnuFile);
+
+    actAbout = new QAction(tr("&About Chrono Editor"), this);
+    actAbout->setShortcut(tr("Ctrl+A"));
+
+    actAboutQt = new QAction(tr("About &QT"), this);
+    actAboutQt->setShortcut(tr("Ctrl+T"));
+    connect(actAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+
+    mnuHelp = new QMenu(tr("&Help"));
+    mnuHelp->addAction(actAbout);
+    mnuHelp->addAction(actAboutQt);
+    menuBar()->addMenu(mnuHelp);
+
     centralLayout = new QVBoxLayout();
     tabCharacters = new QTabWidget(centralWidget);
-
-    //Creation des menus
-    creerMenus();
 
     //Initialisation des tableaux d'objets pour les stats
     wCharacters = new QWidget[7];
@@ -116,7 +140,7 @@ void Vue::init() {
     //Initialisation des objets
     for (int i=0; i<7; i++) {
         //Options specifiques au perso
-        fillSpecificPerso(i);
+        _fillCharacterValues(i);
 
         //Pourrait enlever ca pour utiliser chaque 1 fois
 
@@ -242,129 +266,94 @@ void Vue::init() {
     this->setMinimumSize(400, 300);
 }
 
-QString Vue::selectFile() {
+QString MainWindow::selectFile() {
     return QFileDialog::getOpenFileName(0, tr("Choose a file"), QString(), tr("SRAM file (*.srm);;All files (*.*)"));
 }
 
-void Vue::creerMenus() {
-    actOpen = new QAction(tr("&Open"), this);
-    actOpen->setShortcut(tr("Ctrl+O"));
-    actOpen->setStatusTip(tr("Open a save file"));
-    connect(actOpen, SIGNAL(triggered()), this, SLOT(open()));
-
-    actSave = new QAction(tr("&Save"), this);
-    actSave->setShortcut(tr("Ctrl+S"));
-    actSave->setStatusTip(tr("Save the save file"));
-    connect(actSave, SIGNAL(triggered()), this, SLOT(save()));
-
-    actQuit = new QAction(tr("&Quit"), this);
-    actQuit->setShortcut(tr("Ctrl+Q"));
-    actQuit->setStatusTip(tr("Quit the application"));
-    connect(actQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
-
-    mnuFile = new QMenu(tr("&File"));
-    mnuFile->addAction(actOpen);
-    mnuFile->addAction(actSave);
-    mnuFile->addAction(actQuit);
-    menuBar()->addMenu(mnuFile);
-
-    actAbout = new QAction(tr("&About Chrono Editor"), this);
-    actAbout->setShortcut(tr("Ctrl+A"));
-
-    actAboutQt = new QAction(tr("About &QT"), this);
-    actAboutQt->setShortcut(tr("Ctrl+T"));
-    connect(actAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-
-    mnuHelp = new QMenu(tr("&Help"));
-    mnuHelp->addAction(actAbout);
-    mnuHelp->addAction(actAboutQt);
-    menuBar()->addMenu(mnuHelp);
-}
-
-void Vue::fillSpecificPerso(int perso) {
-    switch (perso) {
+void MainWindow::_fillCharacterValues(int charId) {
+    switch (charId) {
         case CRONO:
             _name = "Crono";
             _imageFile = "images/crono.png";
             for (int i=0x01; i<=0x10; i++)
-                cmbWeapon[perso].addItem(itemList[i], i);
-            cmbWeapon[perso].addItem(itemList[0x4f], 0x4f);
+                cmbWeapon[charId].addItem(itemList[i], i);
+            cmbWeapon[charId].addItem(itemList[0x4f], 0x4f);
             for (int i=0x53; i<=0x55; i++)
-                cmbWeapon[perso].addItem(itemList[i], i);
+                cmbWeapon[charId].addItem(itemList[i], i);
             break;
         case MARLE:
             _name = "Marle";
             _imageFile = "images/marle.png";
             for (int i=0x11; i<=0x1a; i++)
-                cmbWeapon[perso].addItem(itemList[i], i);
+                cmbWeapon[charId].addItem(itemList[i], i);
             break;
         case LUCCA:
             _name = "Lucca";
             _imageFile = "images/lucca.png";
             for (int i=0x1f; i<=0x29; i++)
-                cmbWeapon[perso].addItem(itemList[i], i);
+                cmbWeapon[charId].addItem(itemList[i], i);
             break;
         case ROBO:
             _name = "Robo";
             _imageFile = "images/robo.png";
             for (int i=0x2e; i<=0x39; i++)
-                cmbWeapon[perso].addItem(itemList[i], i);
+                cmbWeapon[charId].addItem(itemList[i], i);
             break;
         case FROG:
             _name = "Frog";
             _imageFile = "images/frog.png";
             for (int i=0x3b; i<=0x43; i++)
-                cmbWeapon[perso].addItem(itemList[i], i);
+                cmbWeapon[charId].addItem(itemList[i], i);
             for (int i=0x50; i<=0x52; i++)
-                cmbWeapon[perso].addItem(itemList[i], i);
+                cmbWeapon[charId].addItem(itemList[i], i);
             break;
         case AYLA:
             _name = "Ayla";
             _imageFile = "images/ayla.png";
             for (int i=0x44; i<=0x48; i++)
-                cmbWeapon[perso].addItem(itemList[i], i);
+                cmbWeapon[charId].addItem(itemList[i], i);
             break;
         case MAGUS:
             _name = "Magus";
             _imageFile = "images/magus.png";
             for (int i=0x4b; i<=0x4e; i++)
-                cmbWeapon[perso].addItem(itemList[i], i);
+                cmbWeapon[charId].addItem(itemList[i], i);
             break;
     }
 }
 
-void Vue::selectItems(int perso) {
+void MainWindow::selectItems(int charId) {
     //Helmet
-    for (int i=0; i<cmbHelmet[perso].count(); i++) {
-        if (cmbHelmet[perso].itemData(i) == _game->getCharacter(perso).getHelmet()) {
-            cmbHelmet[perso].setCurrentIndex(i);
+    for (int i=0; i<cmbHelmet[charId].count(); i++) {
+        if (cmbHelmet[charId].itemData(i) == _game->getCharacter(charId).getHelmet()) {
+            cmbHelmet[charId].setCurrentIndex(i);
             break;
         }
     }
     //Armor
-    for (int i=0; i<cmbArmor[perso].count(); i++) {
-        if (cmbArmor[perso].itemData(i) == _game->getCharacter(perso).getArmor()) {
-            cmbArmor[perso].setCurrentIndex(i);
+    for (int i=0; i<cmbArmor[charId].count(); i++) {
+        if (cmbArmor[charId].itemData(i) == _game->getCharacter(charId).getArmor()) {
+            cmbArmor[charId].setCurrentIndex(i);
             break;
         }
     }
     //Weapon
-    for (int i=0; i<cmbWeapon[perso].count(); i++) {
-        if (cmbWeapon[perso].itemData(i) == _game->getCharacter(perso).getWeapon()) {
-            cmbWeapon[perso].setCurrentIndex(i);
+    for (int i=0; i<cmbWeapon[charId].count(); i++) {
+        if (cmbWeapon[charId].itemData(i) == _game->getCharacter(charId).getWeapon()) {
+            cmbWeapon[charId].setCurrentIndex(i);
             break;
         }
     }
     //Relic
-    for (int i=0; i<cmbRelic[perso].count(); i++) {
-        if (cmbRelic[perso].itemData(i) == _game->getCharacter(perso).getRelic()) {
-            cmbRelic[perso].setCurrentIndex(i);
+    for (int i=0; i<cmbRelic[charId].count(); i++) {
+        if (cmbRelic[charId].itemData(i) == _game->getCharacter(charId).getRelic()) {
+            cmbRelic[charId].setCurrentIndex(i);
             break;
         }
     }
 }
 
-void Vue::open(QString fn) {
+void MainWindow::open(QString fn) {
     if (fn.isEmpty())
         fn = selectFile();
 
@@ -381,7 +370,7 @@ void Vue::open(QString fn) {
     afficherInformations();
 }
 
-void Vue::save() {
+void MainWindow::save() {
     if (!_sramFile)
         return;
 
@@ -389,7 +378,7 @@ void Vue::save() {
     _sramFile->write();
 }
 
-void Vue::selectGame(int n) {
+void MainWindow::selectGame(int n) {
     if (_game) {
         updateGame();
     }/* else {
@@ -399,7 +388,7 @@ void Vue::selectGame(int n) {
     _game = _sramFile->getGame(n);
 }
 
-void Vue::afficherInformations() {
+void MainWindow::afficherInformations() {
     if (!_game)
         return;
 
@@ -424,7 +413,7 @@ void Vue::afficherInformations() {
     }
 }
 
-void Vue::updateGame() {
+void MainWindow::updateGame() {
     if (!_game)
         return;
 

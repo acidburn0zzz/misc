@@ -18,8 +18,8 @@
  * You can contact the original author at acidrain1@gmail.com              *
  ***************************************************************************/
 
-#ifndef __VUE_H__
-#define __VUE_H_
+#ifndef __GUI_H__
+#define __GUI_H_
 
 #include <QMainWindow>
 
@@ -39,13 +39,13 @@ class QWidget;
 class SRAMFile;
 class Game;
 
-class Vue : public QMainWindow {
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    Vue(QWidget *parent = 0);
-    Vue(const char *fn, QWidget *parent = 0);
-    ~Vue();
+    MainWindow(QWidget *parent = 0);
+    MainWindow(const char *fn, QWidget *parent = 0);
+    ~MainWindow();
 
 private slots:
     void open(QString fn = "");
@@ -114,12 +114,12 @@ private:
     SRAMFile *_sramFile;
     Game *_game;
 
-    void init();
+    void _init();
     void creerMenus();
-    void fillSpecificPerso(int perso);
-    void selectItems(int perso);
+    void _fillCharacterValues(int charId);
+    void selectItems(int charId);
     void afficherInformations();
     void updateGame();
 };
 
-#endif //__VUE_H__
+#endif //__GUI_H__

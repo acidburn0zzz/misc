@@ -4,10 +4,9 @@ PROJECT(ctse)
 FIND_PACKAGE(Qt4 REQUIRED)
 
 SET(ctse_SOURCES character.cpp game.cpp gui.cpp main.cpp sramfile.cpp)
-#SET(ctse_HEADERS character.h game.h gui.h sramfile.h strings.h struct.h)
-SET(ctse_HEADERS gui.h)
+SET(ctse_HEADERS character.h game.h gui.h sramfile.h strings.h struct.h)
 
-QT4_WRAP_CPP(ctse_HEADERS_MOC ${ctse_HEADERS})
+QT4_WRAP_CPP(ctse_HEADERS_MOC gui.h)
 
 INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
