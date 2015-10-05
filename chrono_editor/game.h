@@ -31,11 +31,11 @@ public:
     Character getCharacter(u8 charId);
 
     char* getName(u8 charId);
-    void setName(char* name, u8 charId);
+    void setName(u8 charId, char* name);
     u8   getTechLevel(u8 charId);
-    void setTechLevel(u8 level, u8 charId);
-    u8   getPartyMember(int membNo);
-    void setPartyMember(u8 charId, int membNo);
+    void setTechLevel(u8 charId, u8 level);
+    u8   getPartyMember(u8 pos);
+    void setPartyMember(u8 pos, u8 charId);
 
     u16  getSaveCount();
     void setSaveCount(u16 count);

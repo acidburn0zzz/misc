@@ -46,7 +46,7 @@ char* Game::getName(u8 charId) {
     return _names[charId];
 }
 
-void Game::setName(char* name, u8 charId) {
+void Game::setName(u8 charId, char* name) {
     int len = strlen(name);
     int i;
 
@@ -89,7 +89,7 @@ u8 Game::getTechLevel(u8 charId) {
     }
 }
 
-void Game::setTechLevel(u8 level, u8 charId) {
+void Game::setTechLevel(u8 charId, u8 level) {
     if (charId > MAGUS)
         return;
 
@@ -127,8 +127,8 @@ void Game::setTechLevel(u8 level, u8 charId) {
     }
 }
 
-u8 Game::getPartyMember(int membNo) {
-    switch (membNo) {
+u8 Game::getPartyMember(u8 pos) {
+    switch (pos) {
         case 0:
             return _game->partyMember1;
         case 1:
@@ -140,11 +140,11 @@ u8 Game::getPartyMember(int membNo) {
     }
 }
 
-void Game::setPartyMember(u8 charId, int membNo) {
+void Game::setPartyMember(u8 pos, u8 charId) {
     if (charId > MAGUS)
         charId = 0x80;  // nobody
 
-    switch (membNo) {
+    switch (pos) {
         case 0:
             _game->partyMember1 = charId;
             break;
