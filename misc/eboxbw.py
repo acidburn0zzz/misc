@@ -15,9 +15,9 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # fetch URL
-    url = 'http://consocable.electronicbox.net/index.php?actions=list&lng=fr&codeVL={}'.format(VLCODE)
+    url = 'http://conso.electronicbox.net/index.php?actions=list&lng=fr'
     try:
-        resp = urlopen(url)
+        resp = urlopen(url, data = 'code={}'.format(VLCODE).encode())
     except URLError as err:
         if err.code == 403:
             sys.stderr.write('error: forbidden (probably too many attempts; retry later)\n')
