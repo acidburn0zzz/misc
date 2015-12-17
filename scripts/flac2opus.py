@@ -5,21 +5,21 @@ import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
 
-QUALITY = '10'
+BITRATE = '256'
 
 
-def has_oggenc():
+def has_opusenc():
     def is_exe(fpath):
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
-    oggenc = 'oggenc.exe' if sys.platform == 'win32' else 'oggenc'
+    opusenc = 'opusenc.exe' if sys.platform == 'win32' else 'opusenc'
 
-    if is_exe(oggenc):
+    if is_exe(opusenc):
         return True
     else:
         path = os.getenv('PATH').split(os.pathsep)
         for p in path:
-            if is_exe(os.path.join(p, oggenc)):
+            if is_exe(os.path.join(p, opusenc)):
                 return True
 
     return False
@@ -34,12 +34,14 @@ def convert_file(flac_file):
         print('{}: not a flac'.format(flac_file))
         return
 
-    subprocess.call(['oggenc', '-q', QUALITY, flac_file])
+    opus_file = os.path.splitext(flac_file)[0] + '.opus'
+
+    subprocess.call(['opusenc', '--bitrate', BITRATE, flac_file, opus_file])
 
 
 def main():
-    if not has_oggenc():
-        print('Error: oggenc not found')
+    if not has_opusenc():
+        print('Error: opusenc not found')
         exit(-1)
 
     with ThreadPoolExecutor(max_workers=8) as e:
