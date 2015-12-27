@@ -3,9 +3,13 @@
 import os
 import subprocess
 import sys
+import threading
 from concurrent.futures import ThreadPoolExecutor
 
 BITRATE = '256'
+
+cur_file = nb_files = 0
+mutex = threading.Lock()
 
 
 def has_opusenc():
@@ -25,6 +29,14 @@ def has_opusenc():
     return False
 
 
+def print_progress():
+    print('\rProgress: [{}{}] {:02d}/{:02d}'.format('.' * cur_file,
+                                                    ' ' * (nb_files - cur_file),
+                                                    cur_file,
+                                                    nb_files),
+          end='')
+
+
 def convert_file(flac_file):
     if not os.path.isfile(flac_file):
         print('{}: file not found'.format(flac_file))
@@ -36,7 +48,25 @@ def convert_file(flac_file):
 
     opus_file = os.path.splitext(flac_file)[0] + '.opus'
 
-    subprocess.call(['opusenc', '--bitrate', BITRATE, flac_file, opus_file])
+    try:
+        err_msg = None
+        subprocess.call(['opusenc', '--bitrate', BITRATE, flac_file, opus_file],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL)
+    except Exception as e:
+        err_msg = str(e)
+
+    global cur_file
+
+    mutex.acquire()
+
+    if err_msg is not None:
+        print('\n' + err_msg)
+
+    cur_file += 1
+    print_progress()
+
+    mutex.release()
 
 
 def main():
@@ -44,9 +74,19 @@ def main():
         print('Error: opusenc not found')
         exit(-1)
 
+    global nb_files
+    nb_files = len(sys.argv) - 1
+
+    if nb_files == 0:
+        print('No files specified')
+        exit(-2)
+
+    print_progress()
+
     with ThreadPoolExecutor(max_workers=8) as e:
         for f in sys.argv[1:]:
             e.submit(convert_file, f)
+    print('')
 
 if __name__ == '__main__':
     main()
