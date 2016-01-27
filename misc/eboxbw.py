@@ -15,9 +15,10 @@ if __name__ == '__main__':
         sys.exit(1)
 
     # fetch URL
-    url = 'http://conso.electronicbox.net/index.php?actions=list&lng=fr'
+    url = 'http://conso.ebox.ca/index.php'
+    data = 'actions=list&DELETE_lng=fr&lng=fr&code={}'.format(VLCODE).encode()
     try:
-        resp = urlopen(url, data = 'code={}'.format(VLCODE).encode())
+        resp = urlopen(url, data=data)
     except URLError as err:
         if err.code == 403:
             sys.stderr.write('error: forbidden (probably too many attempts; retry later)\n')
