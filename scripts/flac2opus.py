@@ -38,14 +38,6 @@ def print_progress():
 
 
 def convert_file(flac_file):
-    if not os.path.isfile(flac_file):
-        print('{}: file not found'.format(flac_file))
-        return
-
-    if os.path.splitext(flac_file)[1] != '.flac':
-        print('{}: not a flac'.format(flac_file))
-        return
-
     opus_file = os.path.splitext(flac_file)[0] + '.opus'
 
     try:
@@ -69,13 +61,30 @@ def convert_file(flac_file):
     mutex.release()
 
 
+def is_flac(path):
+    if not os.path.isfile(path):
+        print('{}: file not found'.format(path))
+        return False
+
+    if os.path.splitext(path)[1] != '.flac':
+        print('{}: not a flac'.format(path))
+        return False
+
+    return True
+
+
 def main():
     if not has_opusenc():
         print('Error: opusenc not found')
         exit(-1)
 
+    files = set(sys.argv[1:])
+    bad_files = set(f for f in files if not is_flac(f))
+
+    files = files.difference(bad_files)
+
     global nb_files
-    nb_files = len(sys.argv) - 1
+    nb_files = len(files)
 
     if nb_files == 0:
         print('No files specified')
@@ -84,7 +93,7 @@ def main():
     print_progress()
 
     with ThreadPoolExecutor(max_workers=8) as e:
-        for f in sys.argv[1:]:
+        for f in files:
             e.submit(convert_file, f)
     print('')
 
